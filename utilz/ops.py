@@ -2,7 +2,7 @@
 Common data operations and transformations. Often on pandas dataframes
 """
 
-from toolz import memoize, curry
+from cytoolz import memoize, curry
 
 @curry
 @memoize

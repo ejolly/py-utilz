@@ -1,7 +1,7 @@
 """
 import pandas as pd
 from pathlib import path
-from toolz import memoize, curry, pipe
+from cytoolz import memoize, curry, pipe
 from enguarde import unique, same_size, fixed_size
 
 # Functions
