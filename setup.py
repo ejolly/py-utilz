@@ -16,9 +16,9 @@ setup(
     install_requires=requirements,
     packages=find_packages(exclude=["utilz/tests"]),
     license="MIT",
-    description="R like pipes in Python",
-    long_description="R like pipes in Python",
-    keywords=["functional-programming", "pipes"],
+    description="Faster, easier, more robust python data analysis",
+    long_description="Faster, easier, more robust python data analysis",
+    keywords=["functional-programming", "pipes","defensive data analysis"],
     classifiers=[
         "Programming Language :: Python :: 3.6",
         "Operating System :: OS Independent",
