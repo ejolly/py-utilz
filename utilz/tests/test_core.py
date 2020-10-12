@@ -6,7 +6,7 @@ from utilz.pipe import Pipe
 o = Pipe()
 
 
-def test_pipe():
+def test_pipe(capsys):
     # Load iris dataset from Seaborn's data repo
     df = pd.read_csv(
         "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
@@ -34,7 +34,14 @@ def test_pipe():
     # smoke tests
     [1,2,3] >>o>> print
 
+    captured = capsys.readouterr()
+
+    assert '[1, 2, 3]' in captured.out
+
     'hi' >>o>> print
+
+    captured = capsys.readouterr()
+    assert 'hi' in captured.out
 
 
 
