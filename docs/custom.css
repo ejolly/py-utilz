@@ -1,0 +1,4 @@
+/* Smaller font for signatures */
+.md-typeset .admonition-title::before, .md-typeset summary::before {
+    content: none !important;
+}

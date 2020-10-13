@@ -1,5 +1,13 @@
 """
-Custom guard decorators compatible with bulwark
+Custom guards for defensive data analysis compatible with [bulwark](https://bulwark.readthedocs.io/en/latest/index.html). 
+
+Intended usage is as Python decorators, e.g.  
+
+```
+@log_df
+def myfunc(df):
+    do some stuff...
+```
 """
 
 # Convert from: https://github.com/ejolly/engarde
@@ -37,10 +45,9 @@ def log_df(func):
 
 def disk_cache(threshold=60, autoload=True, index=False, verbose=False):
     """
-    Save the result of a function to disk if it takes longer than delta to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function.
+    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function.
 
     Args:
-        func (callable): a function to run
         threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 60.
         autoload (bool, optional): whether to try to load a previously persisted result if all args and kwargs match in a subsequent function call. Default to True;
         index (bool; optional): whether to incluce the index when saving a dataframe. Default to False

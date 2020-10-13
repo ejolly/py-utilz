@@ -1,0 +1,35 @@
+site_name: Utilz
+site_description: "Utility library for faster, easier, and more reliable data analysis"
+site_url: "https://eshinjolly.com/utilz"
+repo_url: "https://github.com/ejolly/utilz"
+repo_name: "ejolly/utilz"
+theme:
+  name: material
+extra_css:
+  - custom.css
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.superfences
+  - pymdownx.highlight
+nav:
+  - Home: index.md
+  - API Reference:
+      - Guards and Decorators: api/guards.md
+      - Operations: api/ops.md
+      - Pipe Operator: api/pipe.md
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          selection:
+            filters:
+              - "!^_"
+          rendering:
+            show_source: true
+            show_if_no_docstring: true
+            heading_level: 4
+      watch:
+        - utilz
