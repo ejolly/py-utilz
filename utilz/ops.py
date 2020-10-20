@@ -36,7 +36,7 @@ def ploop(
     n_jobs=-1,
     loop_idx_available=True,
     backend="processes",
-    progress=True,
+    verbose=1
 ):
     """
     Call a function for n_iter using parallelization via joblib
@@ -48,13 +48,12 @@ def ploop(
         n_jobs (int, optional): number of cpus/threads; Default -1 (all cpus/threads)
         loop_idx_available (bool, optional): whether the value of the current iteration should be passed as the last argument to func; Default True
         backend (str, optional): 'processes' or 'threads'. Use 'threads' when you know you function releases Python's Global Interpreter Lock (GIL); Default 'cpus'
-        progress (bool, opional): whether to show progress; Default True
+        verbose (int): how verbosely to print progress messages (see joblib.Parallel verbose). Default 1
     """
 
     if backend not in ["processes", "threads"]:
         raise ValueError("backend must be one of cpu's threads")
 
-    verbose = 10 if progress else 0
     parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
 
     if func_args is None:
