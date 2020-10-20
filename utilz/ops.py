@@ -59,8 +59,8 @@ def ploop(
     func_args=None,
     n_iter=100,
     n_jobs=-1,
-    loop_idx_available=True,
-    randomize=False,
+    loop_idx=True,
+    loop_random_seed=False,
     backend="processes",
     progress=True,
     verbose=0,
@@ -74,8 +74,8 @@ def ploop(
         func_args (list/dict/None): arguments to the function provided as a list for unnamed args or a dict for named kwargs. If None, assumes func takes no arguments excepted loop_idx_available (if its True); Default None
         n_iter (int, optional): number of iterations; Default 100
         n_jobs (int, optional): number of cpus/threads; Default -1 (all cpus/threads)
-        loop_idx_available (bool, optional): whether the value of the current iteration should be passed as the last argumentto fun. Make sure func expects a integer as its last arg; Default True
-        randomize (bool, optional): if func depends on any randomization (e.g. np.random) this should be set to True to ensure that parallel processes/threads use independent random seeds. func should take a keyword argument 'seed' and use it internally. See example. Default False.
+        loop_idx (bool, optional): whether the value of the current iteration should be passed to func as the special kwarg 'idx'. Make sure func can handle a kwarg named 'idx'. Default True
+        loop_random_seed (bool, optional): whether a randomly initialized seed should be passed to func as the special kwarg 'seed'. If func depends on any randomization (e.g. np.random) this should be set to True to ensure that parallel processes/threads use independent random seeds. Make sure func can handle a kwarg named 'seed' and utilize it for randomization. See example. Default False.
         backend (str, optional): 'processes' or 'threads'. Use 'threads' when you know you function releases Python's Global Interpreter Lock (GIL); Default 'cpus'
         progress (bool): whether to show a tqdm progress bar note, this may be a bit inaccurate when n_jobs > 1. Default True.
         verbose (int): joblib.Parallel verbosity. Default 0
@@ -83,27 +83,27 @@ def ploop(
 
     Examples:
         How to use a random seed.
-        
-        First make sure your function takes a random seed as input and uses the utility function random_seed to perform randomization.
-        
+
         >>> from utilz.ops import ploop, random_seed
         
-        >>> def boot_sum(arr, seed):
-        >>>     "Sum up elements of array after resampling
+        First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops.random_seed function. Finally, use it internally where you would normally make a call to np.random.
+        
+        >>> def boot_sum(arr, seed=None):
+        >>>     "Sum up elements of array after resampling with replacement"
         >>>     new_seed = random_seed(seed)
         >>>     boot_arr = new_seed.choice(arr, len(arr), replace=True)
         >>>     return boot_arr.sum()
         
-        Then call it in a parallel fashion
+        Finally call it in a parallel fashion
         
-        >>> ploop(boot_sum, [np.arange(10)], n_iter=100, randomize=True)
+        >>> ploop(boot_sum, [np.arange(10)], n_iter=100, loop_random_seed=True, loop_idx=False)
     """
 
     if backend not in ["processes", "threads"]:
         raise ValueError("backend must be one of cpu's threads")
 
     parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
-    if randomize:
+    if loop_random_seed:
         seeds = random_seed(seed).randint(MAX_INT, size=n_iter)
 
     if progress:
@@ -112,31 +112,62 @@ def ploop(
         iterator = range(n_iter)
 
     if func_args is None:
-        if loop_idx_available:
-            if randomize:
-                out = parfor(delayed(func)(i, {"seed": seeds[i]}) for i in iterator)
+        if loop_idx:
+            if loop_random_seed:
+                out = parfor(
+                    delayed(func)(**{"idx": i, "seed": seeds[i]}) for i in iterator
+                )
             else:
-                out = parfor(delayed(func)(i) for i in iterator)
+                out = parfor(delayed(func)(**{"idx": i}) for i in iterator)
         else:
-            if randomize:
-                out = parfor(delayed(func)({"seed": seeds[i]}) for i in iterator)
+            if loop_random_seed:
+                out = parfor(delayed(func)(**{"seed": seeds[i]}) for i in iterator)
             else:
                 out = parfor(delayed(func) for i in iterator)
     else:
-        if loop_idx_available:
-            if randomize:
-                out = parfor(
-                    delayed(func)(*func_args, i, {"seed": seeds[i]}) for i in iterator
-                )
+        if loop_idx:
+            if loop_random_seed:
+                if isinstance(func_args, list):
+                    out = parfor(
+                        delayed(func)(*func_args, **{"idx": i, "seed": seeds[i]})
+                        for i in iterator
+                    )
+                elif isinstance(func_args, dict):
+                    out = parfor(
+                        delayed(func)(**func_args, **{"idx": i, "seed": seeds[i]})
+                        for i in iterator
+                    )
+                else:
+                    raise TypeError("func_args must be a list or dict")
             else:
-                out = parfor(delayed(func)(*func_args, i) for i in iterator)
+                if isinstance(func_args, list):
+                    out = parfor(
+                        delayed(func)(*func_args, **{"idx": i}) for i in iterator
+                    )
+                elif isinstance(func_args, dict):
+                    out = parfor(
+                        delayed(func)(**func_args, **{"idx": i}) for i in iterator
+                    )
         else:
-            if randomize:
-                out = parfor(
-                    delayed(func)(*func_args, {"seed": seeds[i]}) for i in iterator
-                )
-            out = parfor(delayed(func)(*func_args) for i in iterator)
-
+            if loop_random_seed:
+                if isinstance(func_args, list):
+                    out = parfor(
+                        delayed(func)(*func_args, **{"seed": seeds[i]})
+                        for i in iterator
+                    )
+                elif isinstance(func_args, dict):
+                    out = parfor(
+                        delayed(func)(**func_args, **{"seed": seeds[i]})
+                        for i in iterator
+                    )
+                else:
+                    raise TypeError("func_args must be a list or dict")
+            else:
+                if isinstance(func_args, list):
+                    out = parfor(delayed(func)(*func_args) for i in iterator)
+                elif isinstance(func_args, dict):
+                    out = parfor(delayed(func)(**func_args) for i in iterator)
+                else:
+                    raise TypeError("func_args must be a list or dict")
     return out
-
 
