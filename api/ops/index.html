@@ -273,8 +273,22 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#utilz.ops.MAX_INT" class="md-nav__link">
+    MAX_INT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#utilz.ops.ploop" class="md-nav__link">
     ploop()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.ops.random_seed" class="md-nav__link">
+    random_seed()
   </a>
   
 </li>
@@ -334,8 +348,22 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#utilz.ops.MAX_INT" class="md-nav__link">
+    MAX_INT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#utilz.ops.ploop" class="md-nav__link">
     ploop()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.ops.random_seed" class="md-nav__link">
+    random_seed()
   </a>
   
 </li>
@@ -364,11 +392,22 @@
 <div class="doc doc-contents first">
 <p>Common data operations and transformations. Often on pandas dataframes</p>
 <div class="doc doc-children">
+<div class="doc doc-object doc-attribute">
+<h4 class="doc doc-heading" id="utilz.ops.MAX_INT">
+
+        <code class="highlight">
+MAX_INT        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+    </div>
+</div>
 <div class="doc doc-object doc-function">
 <h4 class="doc doc-heading" id="utilz.ops.ploop">
 
         <code class="highlight language-python">
-ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">func_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">loop_idx_available</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'processes'</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>        </code>
+ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">func_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">loop_idx_available</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">randomize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'processes'</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>        </code>
 
 
       </h4>
@@ -421,9 +460,17 @@ ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span>
 <td><code>loop_idx_available</code></td>
 <td><code>bool</code></td>
 <td>
-<p>whether the value of the current iteration should be passed as the last argument to func; Default True</p>
+<p>whether the value of the current iteration should be passed as the last argumentto fun. Make sure func expects a integer as its last arg; Default True</p>
 </td>
 <td><code>True</code></td>
+</tr>
+<tr>
+<td><code>randomize</code></td>
+<td><code>bool</code></td>
+<td>
+<p>if func depends on any randomization (e.g. np.random) this should be set to True to ensure that parallel processes/threads use independent random seeds. func should take a keyword argument 'seed' and use it internally. See example. Default False.</p>
+</td>
+<td><code>False</code></td>
 </tr>
 <tr>
 <td><code>backend</code></td>
@@ -435,14 +482,50 @@ ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span>
 </tr>
 <tr>
 <td><code>progress</code></td>
-<td><code>bool, opional</code></td>
+<td><code>bool</code></td>
 <td>
-<p>whether to show progress; Default True</p>
+<p>whether to show a tqdm progress bar note, this may be a bit inaccurate when n_jobs &gt; 1. Default True.</p>
 </td>
 <td><code>True</code></td>
 </tr>
+<tr>
+<td><code>verbose</code></td>
+<td><code>int</code></td>
+<td>
+<p>joblib.Parallel verbosity. Default 0</p>
+</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>seed</code></td>
+<td><code>int/None</code></td>
+<td>
+<p>random seed for reproducibility</p>
+</td>
+<td><code>None</code></td>
+</tr>
 </tbody>
 </table>
+<p><strong>Examples:</strong></p>
+<p>How to use a random seed.</p>
+<p>First make sure your function takes a random seed as input and uses the utility function random_seed to perform randomization.</p>
+<div class="highlight">
+<pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">utilz.ops</span> <span class="kn">import</span> <span class="n">ploop</span><span class="p">,</span> <span class="n">random_seed</span>
+</code></pre>
+</div>
+<div class="highlight">
+<pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">boot_sum</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">seed</span><span class="p">):</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="s2">"Sum up elements of array after resampling</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">new_seed</span> <span class="o">=</span> <span class="n">random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">boot_arr</span> <span class="o">=</span> <span class="n">new_seed</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="k">return</span> <span class="n">boot_arr</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</code></pre>
+</div>
+<p>Then call it in a parallel fashion</p>
+<div class="highlight">
+<pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">ploop</span><span class="p">(</span><span class="n">boot_sum</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)],</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">randomize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre>
+</div>
 <details class="quote">
           <summary>Source code in <code>utilz/ops.py</code></summary>
           <div class="highlight">
@@ -452,8 +535,11 @@ ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span>
     <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">loop_idx_available</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">randomize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">backend</span><span class="o">=</span><span class="s2">"processes"</span><span class="p">,</span>
     <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Call a function for n_iter using parallelization via joblib</span>
@@ -463,29 +549,127 @@ ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span>
 <span class="sd">        func_args (list/dict/None): arguments to the function provided as a list for unnamed args or a dict for named kwargs. If None, assumes func takes no arguments excepted loop_idx_available (if its True); Default None</span>
 <span class="sd">        n_iter (int, optional): number of iterations; Default 100</span>
 <span class="sd">        n_jobs (int, optional): number of cpus/threads; Default -1 (all cpus/threads)</span>
-<span class="sd">        loop_idx_available (bool, optional): whether the value of the current iteration should be passed as the last argument to func; Default True</span>
+<span class="sd">        loop_idx_available (bool, optional): whether the value of the current iteration should be passed as the last argumentto fun. Make sure func expects a integer as its last arg; Default True</span>
+<span class="sd">        randomize (bool, optional): if func depends on any randomization (e.g. np.random) this should be set to True to ensure that parallel processes/threads use independent random seeds. func should take a keyword argument 'seed' and use it internally. See example. Default False.</span>
 <span class="sd">        backend (str, optional): 'processes' or 'threads'. Use 'threads' when you know you function releases Python's Global Interpreter Lock (GIL); Default 'cpus'</span>
-<span class="sd">        progress (bool, opional): whether to show progress; Default True</span>
+<span class="sd">        progress (bool): whether to show a tqdm progress bar note, this may be a bit inaccurate when n_jobs &gt; 1. Default True.</span>
+<span class="sd">        verbose (int): joblib.Parallel verbosity. Default 0</span>
+<span class="sd">        seed (int/None): random seed for reproducibility</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        How to use a random seed.</span>
+
+<span class="sd">        First make sure your function takes a random seed as input and uses the utility function random_seed to perform randomization.</span>
+
+<span class="sd">        &gt;&gt;&gt; from utilz.ops import ploop, random_seed</span>
+
+<span class="sd">        &gt;&gt;&gt; def boot_sum(arr, seed):</span>
+<span class="sd">        &gt;&gt;&gt;     "Sum up elements of array after resampling</span>
+<span class="sd">        &gt;&gt;&gt;     new_seed = random_seed(seed)</span>
+<span class="sd">        &gt;&gt;&gt;     boot_arr = new_seed.choice(arr, len(arr), replace=True)</span>
+<span class="sd">        &gt;&gt;&gt;     return boot_arr.sum()</span>
+
+<span class="sd">        Then call it in a parallel fashion</span>
+
+<span class="sd">        &gt;&gt;&gt; ploop(boot_sum, [np.arange(10)], n_iter=100, randomize=True)</span>
 <span class="sd">    """</span>
 
     <span class="k">if</span> <span class="n">backend</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"processes"</span><span class="p">,</span> <span class="s2">"threads"</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"backend must be one of cpu's threads"</span><span class="p">)</span>
 
-    <span class="n">verbose</span> <span class="o">=</span> <span class="mi">10</span> <span class="k">if</span> <span class="n">progress</span> <span class="k">else</span> <span class="mi">0</span>
     <span class="n">parfor</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">prefer</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">randomize</span><span class="p">:</span>
+        <span class="n">seeds</span> <span class="o">=</span> <span class="n">random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">MAX_INT</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_iter</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+        <span class="n">iterator</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">iterator</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">func_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">loop_idx_available</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">randomize</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">i</span><span class="p">,</span> <span class="p">{</span><span class="s2">"seed"</span><span class="p">:</span> <span class="n">seeds</span><span class="p">[</span><span class="n">i</span><span class="p">]})</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">randomize</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)({</span><span class="s2">"seed"</span><span class="p">:</span> <span class="n">seeds</span><span class="p">[</span><span class="n">i</span><span class="p">]})</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">loop_idx_available</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="o">*</span><span class="n">func_args</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">randomize</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span>
+                    <span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="o">*</span><span class="n">func_args</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="p">{</span><span class="s2">"seed"</span><span class="p">:</span> <span class="n">seeds</span><span class="p">[</span><span class="n">i</span><span class="p">]})</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterator</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="o">*</span><span class="n">func_args</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="o">*</span><span class="n">func_args</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">randomize</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span>
+                    <span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="o">*</span><span class="n">func_args</span><span class="p">,</span> <span class="p">{</span><span class="s2">"seed"</span><span class="p">:</span> <span class="n">seeds</span><span class="p">[</span><span class="n">i</span><span class="p">]})</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterator</span>
+                <span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="o">*</span><span class="n">func_args</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">out</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.ops.random_seed">
+
+        <code class="highlight language-python">
+random_seed<span class="p">(</span><span class="n">seed</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to sklearn.utils.check_random_state. Using the source here simply avoids an unecessary dependency.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>seed</code></td>
+<td><code>None, int, np.RandomState</code></td>
+<td>
+<p>iff seed is None, return the RandomState singleton used by np.random. If seed is an int, return a new RandomState instance seeded with seed. If seed is already a RandomState instance, return it. Otherwise raise ValueError.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/ops.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
+    <span class="sd">"""Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to sklearn.utils.check_random_state. Using the source here simply avoids an unecessary dependency.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        seed (None, int, np.RandomState): iff seed is None, return the RandomState singleton used by np.random. If seed is an int, return a new RandomState instance seeded with seed. If seed is already a RandomState instance, return it. Otherwise raise ValueError.</span>
+<span class="sd">    """</span>
+
+    <span class="kn">import</span> <span class="nn">numbers</span>
+
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">seed</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">mtrand</span><span class="o">.</span><span class="n">_rand</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="p">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">seed</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">"</span><span class="si">%r</span><span class="s2"> cannot be used to seed a numpy.random.RandomState"</span> <span class="s2">" instance"</span> <span class="o">%</span> <span class="n">seed</span>
+    <span class="p">)</span>
 </code></pre>
 </div>
 </details>
