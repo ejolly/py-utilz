@@ -272,6 +272,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#utilz.ops.ploop" class="md-nav__link">
+    ploop()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -326,6 +333,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#utilz.ops.ploop" class="md-nav__link">
+    ploop()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -349,6 +363,135 @@
         </h4>
 <div class="doc doc-contents first">
 <p>Common data operations and transformations. Often on pandas dataframes</p>
+<div class="doc doc-children">
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.ops.ploop">
+
+        <code class="highlight language-python">
+ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">func_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">loop_idx_available</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'processes'</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Call a function for n_iter using parallelization via joblib</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func</code></td>
+<td><code>callable</code></td>
+<td>
+<p>function to run</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>func_args</code></td>
+<td><code>list/dict/None</code></td>
+<td>
+<p>arguments to the function provided as a list for unnamed args or a dict for named kwargs. If None, assumes func takes no arguments excepted loop_idx_available (if its True); Default None</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>n_iter</code></td>
+<td><code>int</code></td>
+<td>
+<p>number of iterations; Default 100</p>
+</td>
+<td><code>100</code></td>
+</tr>
+<tr>
+<td><code>n_jobs</code></td>
+<td><code>int</code></td>
+<td>
+<p>number of cpus/threads; Default -1 (all cpus/threads)</p>
+</td>
+<td><code>-1</code></td>
+</tr>
+<tr>
+<td><code>loop_idx_available</code></td>
+<td><code>bool</code></td>
+<td>
+<p>whether the value of the current iteration should be passed as the last argument to func; Default True</p>
+</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td><code>backend</code></td>
+<td><code>str</code></td>
+<td>
+<p>'processes' or 'threads'. Use 'threads' when you know you function releases Python's Global Interpreter Lock (GIL); Default 'cpus'</p>
+</td>
+<td><code>'processes'</code></td>
+</tr>
+<tr>
+<td><code>progress</code></td>
+<td><code>bool, opional</code></td>
+<td>
+<p>whether to show progress; Default True</p>
+</td>
+<td><code>True</code></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/ops.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">ploop</span><span class="p">(</span>
+    <span class="n">func</span><span class="p">,</span>
+    <span class="n">func_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">loop_idx_available</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">backend</span><span class="o">=</span><span class="s2">"processes"</span><span class="p">,</span>
+    <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Call a function for n_iter using parallelization via joblib</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): function to run</span>
+<span class="sd">        func_args (list/dict/None): arguments to the function provided as a list for unnamed args or a dict for named kwargs. If None, assumes func takes no arguments excepted loop_idx_available (if its True); Default None</span>
+<span class="sd">        n_iter (int, optional): number of iterations; Default 100</span>
+<span class="sd">        n_jobs (int, optional): number of cpus/threads; Default -1 (all cpus/threads)</span>
+<span class="sd">        loop_idx_available (bool, optional): whether the value of the current iteration should be passed as the last argument to func; Default True</span>
+<span class="sd">        backend (str, optional): 'processes' or 'threads'. Use 'threads' when you know you function releases Python's Global Interpreter Lock (GIL); Default 'cpus'</span>
+<span class="sd">        progress (bool, opional): whether to show progress; Default True</span>
+<span class="sd">    """</span>
+
+    <span class="k">if</span> <span class="n">backend</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"processes"</span><span class="p">,</span> <span class="s2">"threads"</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"backend must be one of cpu's threads"</span><span class="p">)</span>
+
+    <span class="n">verbose</span> <span class="o">=</span> <span class="mi">10</span> <span class="k">if</span> <span class="n">progress</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">parfor</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">prefer</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">func_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">loop_idx_available</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">loop_idx_available</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="o">*</span><span class="n">func_args</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="o">*</span><span class="n">func_args</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">out</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+</div>
 </div>
 </div>
                 
