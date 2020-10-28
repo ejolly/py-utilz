@@ -1,13 +1,17 @@
 """
 Custom guards for defensive data analysis compatible with [bulwark](https://bulwark.readthedocs.io/en/latest/index.html). 
 
-Intended usage is as Python decorators, e.g.  
+Intended usage is as Python decorators:  
 
 ```
+from utilz.guards import log_df
+
 @log_df
 def myfunc(df):
     do some stuff...
 ```
+
+---
 """
 
 # Convert from: https://github.com/ejolly/engarde
@@ -45,7 +49,7 @@ def log_df(func):
 
 def disk_cache(threshold=60, autoload=True, index=False, verbose=False):
     """
-    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function.
+    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization.
 
     Args:
         threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 60.

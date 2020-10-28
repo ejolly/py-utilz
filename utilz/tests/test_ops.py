@@ -1,5 +1,5 @@
 from math import sqrt
-from utilz.ops import ploop, random_seed
+from utilz.ops import ploop, _random_seed
 
 
 def test_ploop(capsys):
@@ -16,7 +16,7 @@ def test_ploop(capsys):
 
     def mysqrt_seed(idx=None, double=False, seed=None):
         """math.sqrt modified to handle: idx, kwarg, and seed"""
-        new_seed = random_seed(seed)
+        new_seed = _random_seed(seed)
         elem = new_seed.choice(idx + 1, 1)
         if double:
             return sqrt(elem) * 2
