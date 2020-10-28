@@ -1,3 +1,7 @@
+[![Build Status](https://api.travis-ci.com/ejolly/utilz.svg?branch=master)](https://travis-ci.com/ejolly/utilz)
+[![Coverage Status](https://coveralls.io/repos/github/ejolly/utilz/badge.svg?branch=master)](https://coveralls.io/github/ejolly/utilz?branch=master)
+![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8-blue)
+
 # Utilz
 
 A python package that combines several key ideas to make data analysis faster, easier, and more reliable:  
