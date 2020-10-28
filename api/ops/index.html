@@ -291,6 +291,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#utilz.ops.random_seed" class="md-nav__link">
+    random_seed()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -348,6 +355,13 @@
         <li class="md-nav__item">
   <a href="#utilz.ops.ploop" class="md-nav__link">
     ploop()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.ops.random_seed" class="md-nav__link">
+    random_seed()
   </a>
   
 </li>
@@ -483,14 +497,14 @@ ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span>
 <p><strong>Examples:</strong></p>
 <p>How to use a random seed.</p>
 <div class="highlight">
-<pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">utilz.ops</span> <span class="kn">import</span> <span class="n">ploop</span><span class="p">,</span> <span class="n">_random_seed</span>
+<pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">utilz.ops</span> <span class="kn">import</span> <span class="n">ploop</span><span class="p">,</span> <span class="n">random_seed</span>
 </code></pre>
 </div>
-<p>First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops._random_seed function. Finally, use it internally where you would normally make a call to np.random.</p>
+<p>First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops.random_seed function. Finally, use it internally where you would normally make a call to np.random.</p>
 <div class="highlight">
 <pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">boot_sum</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="o">&gt;&gt;&gt;</span>     <span class="s2">"Sum up elements of array after resampling with replacement"</span>
-<span class="o">&gt;&gt;&gt;</span>     <span class="n">new_seed</span> <span class="o">=</span> <span class="n">_random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">new_seed</span> <span class="o">=</span> <span class="n">random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span>     <span class="n">boot_arr</span> <span class="o">=</span> <span class="n">new_seed</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span>     <span class="k">return</span> <span class="n">boot_arr</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </code></pre>
@@ -533,13 +547,13 @@ ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span>
 <span class="sd">    Examples:</span>
 <span class="sd">        How to use a random seed.</span>
 
-<span class="sd">        &gt;&gt;&gt; from utilz.ops import ploop, _random_seed</span>
+<span class="sd">        &gt;&gt;&gt; from utilz.ops import ploop, random_seed</span>
 
-<span class="sd">        First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops._random_seed function. Finally, use it internally where you would normally make a call to np.random.</span>
+<span class="sd">        First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops.random_seed function. Finally, use it internally where you would normally make a call to np.random.</span>
 
 <span class="sd">        &gt;&gt;&gt; def boot_sum(arr, seed=None):</span>
 <span class="sd">        &gt;&gt;&gt;     "Sum up elements of array after resampling with replacement"</span>
-<span class="sd">        &gt;&gt;&gt;     new_seed = _random_seed(seed)</span>
+<span class="sd">        &gt;&gt;&gt;     new_seed = random_seed(seed)</span>
 <span class="sd">        &gt;&gt;&gt;     boot_arr = new_seed.choice(arr, len(arr), replace=True)</span>
 <span class="sd">        &gt;&gt;&gt;     return boot_arr.sum()</span>
 
@@ -553,7 +567,7 @@ ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span>
 
     <span class="n">parfor</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">prefer</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">loop_random_seed</span><span class="p">:</span>
-        <span class="n">seeds</span> <span class="o">=</span> <span class="n">_random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">MAX_INT</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_iter</span><span class="p">)</span>
+        <span class="n">seeds</span> <span class="o">=</span> <span class="n">random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">MAX_INT</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_iter</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
         <span class="n">iterator</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">))</span>
@@ -619,6 +633,63 @@ ploop<span class="p">(</span><span class="n">func</span><span class="p">,</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"func_args must be a list or dict"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.ops.random_seed">
+
+        <code class="highlight language-python">
+random_seed<span class="p">(</span><span class="n">seed</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to <code>sklearn.utils.check_random_state</code>. Using the source here simply avoids an unecessary dependency.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>seed</code></td>
+<td><code>None, int, np.RandomState</code></td>
+<td>
+<p>iff seed is None, return the RandomState singleton used by np.random. If seed is an int, return a new RandomState instance seeded with seed. If seed is already a RandomState instance, return it. Otherwise raise ValueError.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/ops.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
+    <span class="sd">"""Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        seed (None, int, np.RandomState): iff seed is None, return the RandomState singleton used by np.random. If seed is an int, return a new RandomState instance seeded with seed. If seed is already a RandomState instance, return it. Otherwise raise ValueError.</span>
+<span class="sd">    """</span>
+
+    <span class="kn">import</span> <span class="nn">numbers</span>
+
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">seed</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">mtrand</span><span class="o">.</span><span class="n">_rand</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="p">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">seed</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">"</span><span class="si">%r</span><span class="s2"> cannot be used to seed a numpy.random.RandomState"</span> <span class="s2">" instance"</span> <span class="o">%</span> <span class="n">seed</span>
+    <span class="p">)</span>
 </code></pre>
 </div>
 </details>
