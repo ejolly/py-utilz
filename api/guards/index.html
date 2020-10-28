@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#guards-and-decorators" class="md-skip">
+        <a href="#utilzguards" class="md-skip">
           Skip to content
         </a>
       
@@ -221,6 +221,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../io/" class="md-nav__link">
+      Saving and Loading
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -371,19 +383,22 @@
                   </a>
                 
                 
-                <h1 id="guards-and-decorators">Guards and Decorators</h1>
+                <h1 id="utilzguards">utilz.guards</h1>
 <div class="doc doc-object doc-module">
 <h4 class="hidden-toc" href="#utilz.guards" id="utilz.guards" style="visibility: hidden; position: absolute;">
         </h4>
 <div class="doc doc-contents first">
 <p>Custom guards for defensive data analysis compatible with <a href="https://bulwark.readthedocs.io/en/latest/index.html">bulwark</a>. </p>
-<p>Intended usage is as Python decorators, e.g.  </p>
+<p>Intended usage is as Python decorators:  </p>
 <div class="highlight">
-<pre><span></span><code>@log_df
+<pre><span></span><code>from utilz.guards import log_df
+
+@log_df
 def myfunc(df):
     do some stuff...
 </code></pre>
 </div>
+<hr />
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
 <h4 class="doc doc-heading" id="utilz.guards.disk_cache">
@@ -394,7 +409,7 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
 
       </h4>
 <div class="doc doc-contents ">
-<p>Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function.</p>
+<p>Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -445,7 +460,7 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">disk_cache</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function.</span>
+<span class="sd">    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 60.</span>
@@ -488,6 +503,7 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
             <span class="k">return</span> <span class="n">result</span>
 
         <span class="k">return</span> <span class="n">wrapper</span>
+
     <span class="k">return</span> <span class="n">decorator</span>
 </code></pre>
 </div>
@@ -572,7 +588,7 @@ log_df<span class="p">(</span><span class="n">func</span><span class="p">)</span
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../.." class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../io/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -581,7 +597,7 @@ log_df<span class="p">(</span><span class="n">func</span><span class="p">)</span
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Home
+                Saving and Loading
               </div>
             </div>
           </a>

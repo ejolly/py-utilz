@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pipe" class="md-skip">
+        <a href="#utilzpipe" class="md-skip">
           Skip to content
         </a>
       
@@ -223,6 +223,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../io/" class="md-nav__link">
+      Saving and Loading
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../guards/" class="md-nav__link">
       Guards and Decorators
     </a>
@@ -343,13 +355,13 @@
                   </a>
                 
                 
-                <h1 id="pipe">Pipe</h1>
+                <h1 id="utilzpipe">utilz.pipe</h1>
 <p><code>utilz</code> proves a <em>pipe</em> operator similar to the <code>%&gt;%</code> operator from <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">magrittr</a> in R.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Doesn't currently work with numpy arrays. Other data types and pandas DataFrames are ok.</p>
 </div>
-<h3 id="example-usage">Example usage</h3>
+<h2 id="example-usage">Example usage</h2>
 <p>1) First create the pipe object at the top of your code and name it whatever you want. I like 'o'</p>
 <div class="highlight"><pre><span></span><code>from utilz.pipe import Pipe
 o = Pipe()
