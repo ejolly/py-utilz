@@ -12,7 +12,7 @@ import numpy as np
 MAX_INT = np.iinfo(np.int32).max
 
 
-def _random_seed(seed):
+def random_seed(seed):
     """Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.
 
     Args:
@@ -86,13 +86,13 @@ def ploop(
     Examples:
         How to use a random seed.
 
-        >>> from utilz.ops import ploop, _random_seed
+        >>> from utilz.ops import ploop, random_seed
 
-        First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops._random_seed function. Finally, use it internally where you would normally make a call to np.random.
+        First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops.random_seed function. Finally, use it internally where you would normally make a call to np.random.
 
         >>> def boot_sum(arr, seed=None):
         >>>     "Sum up elements of array after resampling with replacement"
-        >>>     new_seed = _random_seed(seed)
+        >>>     new_seed = random_seed(seed)
         >>>     boot_arr = new_seed.choice(arr, len(arr), replace=True)
         >>>     return boot_arr.sum()
 
@@ -106,7 +106,7 @@ def ploop(
 
     parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
     if loop_random_seed:
-        seeds = _random_seed(seed).randint(MAX_INT, size=n_iter)
+        seeds = random_seed(seed).randint(MAX_INT, size=n_iter)
 
     if progress:
         iterator = tqdm(range(n_iter))
