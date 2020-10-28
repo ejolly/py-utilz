@@ -1,0 +1,19 @@
+language: python
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+
+ install:
+  - pip install -r requirements.txt
+  - pip install coveralls pytest-cov black
+  - python setup.py install
+  - black --check --verbose .
+
+  script:
+    - pytest --cov=utilz
+  
+  after_success:
+    - coveralls
+    - codecov
