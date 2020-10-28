@@ -83,4 +83,3 @@ def test_ploop(capsys):
     )
     # Check seed is actually different
     assert [a != b for a, b in zip(my_out, my_out_two)]
-

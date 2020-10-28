@@ -170,4 +170,3 @@ def ploop(
                 else:
                     raise TypeError("func_args must be a list or dict")
     return out
-

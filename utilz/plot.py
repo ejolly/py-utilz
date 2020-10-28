@@ -2,6 +2,7 @@
 Boilerplate plotting code
 """
 
+
 def init_termplot():
     import matplotlib
 
@@ -50,5 +51,6 @@ def p(obj, *args, **kwargs):
 
 def setup(figsize=(8, 6), subplots=(1, 1)):
     import matplotlib.pyplt as plt
+
     f, ax = plt.subplots(*subplots, figsize=figsize)
     return f, ax

@@ -2,8 +2,8 @@
 Piping class similar to %>% in R.
 """
 
-class Pipe:
 
+class Pipe:
     def __init__(self, verbose=False):
         self.verbose = verbose
 

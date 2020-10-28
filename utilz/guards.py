@@ -88,4 +88,5 @@ def disk_cache(threshold=60, autoload=True, index=False, verbose=False):
             return result
 
         return wrapper
+
     return decorator
