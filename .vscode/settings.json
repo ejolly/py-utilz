@@ -2,6 +2,7 @@
     "python.testing.pytestArgs": [
         "utilz"
     ],
+    "editor.formatOnSave": true,
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": true,

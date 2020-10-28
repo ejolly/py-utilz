@@ -123,7 +123,7 @@ def ploop(
             if loop_random_seed:
                 out = parfor(delayed(func)(**{"seed": seeds[i]}) for i in iterator)
             else:
-                out = parfor(delayed(func) for i in iterator)
+                out = parfor(delayed(func) for _ in iterator)
     else:
         if loop_idx:
             if loop_random_seed:
@@ -164,9 +164,9 @@ def ploop(
                     raise TypeError("func_args must be a list or dict")
             else:
                 if isinstance(func_args, list):
-                    out = parfor(delayed(func)(*func_args) for i in iterator)
+                    out = parfor(delayed(func)(*func_args) for _ in iterator)
                 elif isinstance(func_args, dict):
-                    out = parfor(delayed(func)(**func_args) for i in iterator)
+                    out = parfor(delayed(func)(**func_args) for _ in iterator)
                 else:
                     raise TypeError("func_args must be a list or dict")
     return out
