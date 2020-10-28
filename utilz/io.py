@@ -10,32 +10,6 @@ import deepdish as dd
 import pickle
 import json
 
-# Construct path tree given base dir
-
-
-def _df_meta_to_arr(df):
-    """Check what kind of data exists in pandas columns or index. If string return as
-numpy array 'S' type, otherwise regular numpy array. Used for saving pandas as hdf5 objects
-    """
-
-    if len(df.columns):
-        if isinstance(df.columns[0], str):
-            columns = df.columns.values.astype("S")
-        else:
-            columns = df.columns.values
-    else:
-        columns = []
-
-    if len(df.index):
-        if isinstance(df.index[0], str):
-            index = df.index.values.astype("S")
-        else:
-            index = df.index.values
-    else:
-        index = []
-
-    return columns, index
-
 
 def load(
     f: Union[Path, str],
@@ -67,7 +41,7 @@ def load(
         pickle_encoding (str, optional): pickle encoding to use; Default 'rb'
         verbose (bool, optional): whether to print messages during load. Default False
         **kwargs: keyword arguments to pd.read_csv, np.loadtxt, dd.io.load, pickle, or open
-    
+
     Returns:
         out (Any): the loaded object
     """

@@ -85,17 +85,17 @@ def ploop(
         How to use a random seed.
 
         >>> from utilz.ops import ploop, random_seed
-        
+
         First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops.random_seed function. Finally, use it internally where you would normally make a call to np.random.
-        
+
         >>> def boot_sum(arr, seed=None):
         >>>     "Sum up elements of array after resampling with replacement"
         >>>     new_seed = random_seed(seed)
         >>>     boot_arr = new_seed.choice(arr, len(arr), replace=True)
         >>>     return boot_arr.sum()
-        
+
         Finally call it in a parallel fashion
-        
+
         >>> ploop(boot_sum, [np.arange(10)], n_iter=100, loop_random_seed=True, loop_idx=False)
     """
 
