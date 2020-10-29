@@ -280,8 +280,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#utilz.guards.log" class="md-nav__link">
+    log()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#utilz.guards.log_df" class="md-nav__link">
     log_df()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.guards.same_nunique" class="md-nav__link">
+    same_nunique()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.guards.same_size" class="md-nav__link">
+    same_size()
   </a>
   
 </li>
@@ -313,6 +334,30 @@
   <li class="md-nav__item">
     <a href="../pipe/" class="md-nav__link">
       Pipe Operator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../termplot/" class="md-nav__link">
+      Terminal Plots
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../plot/" class="md-nav__link">
+      Plotting Helpers
     </a>
   </li>
 
@@ -360,8 +405,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#utilz.guards.log" class="md-nav__link">
+    log()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#utilz.guards.log_df" class="md-nav__link">
     log_df()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.guards.same_nunique" class="md-nav__link">
+    same_nunique()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.guards.same_size" class="md-nav__link">
+    same_size()
   </a>
   
 </li>
@@ -388,8 +454,8 @@
 <h4 class="hidden-toc" href="#utilz.guards" id="utilz.guards" style="visibility: hidden; position: absolute;">
         </h4>
 <div class="doc doc-contents first">
-<p>Custom guards for defensive data analysis compatible with <a href="https://bulwark.readthedocs.io/en/latest/index.html">bulwark</a>. </p>
-<p>Intended usage is as Python decorators:  </p>
+<p>Custom guards for defensive data analysis compatible with <a href="https://bulwark.readthedocs.io/en/latest/index.html">bulwark</a>.</p>
+<p>Intended usage is as Python decorators:</p>
 <div class="highlight">
 <pre><span></span><code>from utilz.guards import log_df
 
@@ -511,6 +577,58 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
 </div>
 </div>
 <div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.guards.log">
+
+        <code class="highlight language-python">
+log<span class="p">(</span><span class="n">func</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Log the type and shape/size/len of the output from a function</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func</code></td>
+<td><code>callable</code></td>
+<td>
+<p>any pure function (i.e, has no side-effects)</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/guards.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Log the type and shape/size/len of the output from a function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): any pure function (i.e, has no side-effects)</span>
+<span class="sd">    """</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
 <h4 class="doc doc-heading" id="utilz.guards.log_df">
 
         <code class="highlight language-python">
@@ -560,6 +678,137 @@ log_df<span class="p">(</span><span class="n">func</span><span class="p">)</span
         <span class="n">time_taken</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">tic</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Func </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> df shape=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> took </span><span class="si">{</span><span class="n">time_taken</span><span class="si">}</span><span class="s2">s"</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.guards.same_nunique">
+
+        <code class="highlight language-python">
+same_nunique<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">val_col</span><span class="p">,</span> <span class="n">group_col</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Check if each group of group_col has the same number of unique values of val_col after running a function on a dataframe</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func</code></td>
+<td><code>callable</code></td>
+<td>
+<p>a function that operates on a dataframe</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>val_col</code></td>
+<td><code>str</code></td>
+<td>
+<p>column name to check for unique values in dataframe</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>group_call</code></td>
+<td><code>str</code></td>
+<td>
+<p>column name to group on in dataframe</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/guards.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">same_nunique</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">val_col</span><span class="p">,</span> <span class="n">group_col</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Check if each group of group_col has the same number of unique values of val_col after running a function on a dataframe</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): a function that operates on a dataframe</span>
+<span class="sd">        val_col (str): column name to check for unique values in dataframe</span>
+<span class="sd">        group_call (str): column name to group on in dataframe</span>
+<span class="sd">    """</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.guards.same_size">
+
+        <code class="highlight language-python">
+same_size<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">group_col</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Check if each group of group_col has the same dimensions after running a function on a dataframe</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func</code></td>
+<td><code>callable</code></td>
+<td>
+<p>a function that operates on a dataframe</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>group_call</code></td>
+<td><code>str</code></td>
+<td>
+<p>column name to group on in dataframe</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/guards.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">same_size</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">group_col</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Check if each group of group_col has the same dimensions after running a function on a dataframe</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): a function that operates on a dataframe</span>
+<span class="sd">        group_call (str): column name to group on in dataframe</span>
+<span class="sd">    """</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
 
     <span class="k">return</span> <span class="n">wrapper</span>
 </code></pre>

@@ -9,22 +9,22 @@
         <meta name="description" content="Utility library for faster, easier, and more reliable data analysis">
       
       
-        <link rel="canonical" href="https://eshinjolly.com/utilz/">
+        <link rel="canonical" href="https://eshinjolly.com/utilz/api/plot/">
       
       
-      <link rel="shortcut icon" href="assets/images/favicon.png">
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.2">
     
     
       
-        <title>Utilz</title>
+        <title>Plotting Helpers - Utilz</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.38780c08.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.38780c08.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.3f72e892.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f72e892.min.css">
         
       
     
@@ -39,7 +39,7 @@
     
     
     
-      <link rel="stylesheet" href="custom.css">
+      <link rel="stylesheet" href="../../custom.css">
     
     
       
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#utilz" class="md-skip">
+        <a href="#utilzplot" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +90,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Home
+              Plotting Helpers
             
           </span>
         </div>
@@ -186,20 +186,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="." class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
       Home
     </a>
-    
   </li>
 
     
@@ -207,10 +198,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       API Reference
@@ -230,7 +223,7 @@
 
 
   <li class="md-nav__item">
-    <a href="api/io/" class="md-nav__link">
+    <a href="../io/" class="md-nav__link">
       Saving and Loading
     </a>
   </li>
@@ -242,7 +235,7 @@
 
 
   <li class="md-nav__item">
-    <a href="api/guards/" class="md-nav__link">
+    <a href="../guards/" class="md-nav__link">
       Guards and Decorators
     </a>
   </li>
@@ -254,7 +247,7 @@
 
 
   <li class="md-nav__item">
-    <a href="api/ops/" class="md-nav__link">
+    <a href="../ops/" class="md-nav__link">
       Operations
     </a>
   </li>
@@ -266,7 +259,7 @@
 
 
   <li class="md-nav__item">
-    <a href="api/pipe/" class="md-nav__link">
+    <a href="../pipe/" class="md-nav__link">
       Pipe Operator
     </a>
   </li>
@@ -278,7 +271,7 @@
 
 
   <li class="md-nav__item">
-    <a href="api/termplot/" class="md-nav__link">
+    <a href="../termplot/" class="md-nav__link">
       Terminal Plots
     </a>
   </li>
@@ -288,11 +281,56 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="api/plot/" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Plotting Helpers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
       Plotting Helpers
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.plot" class="md-nav__link">
+    utilz.plot
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.plot.setup" class="md-nav__link">
+    setup()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -318,6 +356,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.plot" class="md-nav__link">
+    utilz.plot
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.plot.setup" class="md-nav__link">
+    setup()
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -328,23 +388,43 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/ejolly/utilz/edit/master/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/ejolly/utilz/edit/master/docs/api/plot.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="utilz">Utilz</h1>
-<p><a href="https://travis-ci.com/ejolly/utilz"><img alt="Build Status" src="https://api.travis-ci.com/ejolly/utilz.svg?branch=master" /></a>
-<a href="https://coveralls.io/github/ejolly/utilz?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/ejolly/utilz/badge.svg?branch=master" /></a>
-<img alt="Python Versions" src="https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8-blue" /></p>
-<p>A python package that combines several key ideas to make data analysis faster, easier, and more reliable:  </p>
-<ol>
-<li>Defensive data analysis through the likes of <a href="https://bulwark.readthedocs.io/en/latest/index.html">bulwark</a></li>
-<li>Minimization of boilerplate code, e.g. for plotting in <code>matplotlib</code> and <code>seaborn</code></li>
-<li>Common data operations in pandas, e.g. normalizing by group</li>
-<li>Common <code>i/o</code> operations like managing paths</li>
-<li>More concise and reusable code via functional programming ideas via <a href="https://toolz.readthedocs.io/en/latest/">toolz</a>, e.g. <code>&gt;&gt;o&gt;&gt;</code> as a pipe operator</li>
-</ol>
+                <h1 id="utilzplot">utilz.plot</h1>
+<div class="doc doc-object doc-module">
+<h4 class="hidden-toc" href="#utilz.plot" id="utilz.plot" style="visibility: hidden; position: absolute;">
+        </h4>
+<div class="doc doc-contents first">
+<p>Plotting convenience functions</p>
+<div class="doc doc-children">
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.plot.setup">
+
+        <code class="highlight language-python">
+setup<span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplots</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<details class="quote">
+          <summary>Source code in <code>utilz/plot.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplots</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+    <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="o">*</span><span class="n">subplots</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">,</span> <span class="n">ax</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
                 
               
               
@@ -363,20 +443,20 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-        
-          <a href="api/io/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../termplot/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
-                  Next
+                  Previous
                 </span>
-                Saving and Loading
+                Terminal Plots
               </div>
             </div>
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-            </div>
           </a>
+        
         
       </nav>
     </div>
@@ -397,15 +477,15 @@
       
     </div>
     
-      <script src="assets/javascripts/vendor.77e55a48.min.js"></script>
-      <script src="assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../assets/javascripts/vendor.77e55a48.min.js"></script>
+      <script src="../../assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
-          base: ".",
+          base: "../..",
           features: [],
           search: Object.assign({
-            worker: "assets/javascripts/worker/search.4ac00218.min.js"
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

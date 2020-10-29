@@ -267,6 +267,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#utilz.io.save" class="md-nav__link">
+    save()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -306,6 +313,30 @@
   <li class="md-nav__item">
     <a href="../pipe/" class="md-nav__link">
       Pipe Operator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../termplot/" class="md-nav__link">
+      Terminal Plots
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../plot/" class="md-nav__link">
+      Plotting Helpers
     </a>
   </li>
 
@@ -352,6 +383,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#utilz.io.save" class="md-nav__link">
+    save()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -385,9 +423,7 @@ load<span class="p">(</span><span class="n">f</span><span class="p">,</span> <sp
 
       </h4>
 <div class="doc doc-contents ">
-<p>A handy dandy all-in-one loading function. Simple pass a Path object to a file and
-you'll back a python object. Supported extensions are: .txt, .csv, .json, .p,
-.pickle, .h5, .hdf5, .gz</p>
+<p>A handy dandy all-in-one loading function. Simply pass a Path object to a file (or a string) and you'll back a python object. Supported extensions are: .txt, .csv, .json, .p, .pickle, .h5, .hdf5, .gz</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -485,7 +521,7 @@ you'll back a python object. Supported extensions are: .txt, .csv, .json, .p,
 <tr>
 <td><code>Any</code></td>
 <td>
-<p>out (Any): the loaded object</p>
+<p>the loaded object</p>
 </td>
 </tr>
 </tbody>
@@ -505,12 +541,10 @@ you'll back a python object. Supported extensions are: .txt, .csv, .json, .p,
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">"""</span>
-<span class="sd">    A handy dandy all-in-one loading function. Simple pass a Path object to a file and</span>
-<span class="sd">    you'll back a python object. Supported extensions are: .txt, .csv, .json, .p,</span>
-<span class="sd">    .pickle, .h5, .hdf5, .gz</span>
+<span class="sd">    A handy dandy all-in-one loading function. Simply pass a Path object to a file (or a string) and you'll back a python object. Supported extensions are: .txt, .csv, .json, .p, .pickle, .h5, .hdf5, .gz</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        f (str/Path): name or path object to load</span>
+<span class="sd">        f (Path/str): name or path object to load</span>
 <span class="sd">        as_df (bool, optional): treat a .hdf5, .h5 file as a Dataframe; Default False</span>
 <span class="sd">        as_arr (bool, optional): treat a .txt file as a numpy array;</span>
 <span class="sd">        Default False</span>
@@ -525,7 +559,7 @@ you'll back a python object. Supported extensions are: .txt, .csv, .json, .p,
 <span class="sd">        **kwargs: keyword arguments to pd.read_csv, np.loadtxt, dd.io.load, pickle, or open</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        out (Any): the loaded object</span>
+<span class="sd">        the loaded object</span>
 <span class="sd">    """</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -587,6 +621,53 @@ you'll back a python object. Supported extensions are: .txt, .csv, .json, .p,
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"File must end in one of: </span><span class="si">{</span><span class="n">supported_exts</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">out</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.io.save">
+
+        <code class="highlight language-python">
+save<span class="p">(</span><span class="n">f</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>A handy dandy all-in-one saving function. Simply pass a Path object to a file (or a string) and it will be saved based upon the file <em>extension</em> you provide. Suported extensions are : .txt, .csv, .json, .p, .pickle, .h5, .hd5f, .gz</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>f</code></td>
+<td><code>Union[pathlib.Path, str]</code></td>
+<td>
+<p>complete filepath to save to including extension</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/io.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">"""</span>
+<span class="sd">    A handy dandy all-in-one saving function. Simply pass a Path object to a file (or a string) and it will be saved based upon the file *extension* you provide. Suported extensions are : .txt, .csv, .json, .p, .pickle, .h5, .hd5f, .gz</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        f (Path/str): complete filepath to save to including extension</span>
+<span class="sd">    """</span>
+    <span class="k">pass</span>
 </code></pre>
 </div>
 </details>
