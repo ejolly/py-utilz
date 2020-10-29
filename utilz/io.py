@@ -1,7 +1,7 @@
 """
 I/O Module for working with Paths
 """
-
+__all__ = ["load", "save"]
 from pathlib import Path
 from typing import Union, Any
 import pandas as pd
@@ -23,12 +23,10 @@ def load(
     **kwargs,
 ) -> Any:
     """
-    A handy dandy all-in-one loading function. Simple pass a Path object to a file and
-    you'll back a python object. Supported extensions are: .txt, .csv, .json, .p,
-    .pickle, .h5, .hdf5, .gz
+    A handy dandy all-in-one loading function. Simply pass a Path object to a file (or a string) and you'll back a python object. Supported extensions are: .txt, .csv, .json, .p, .pickle, .h5, .hdf5, .gz
 
     Args:
-        f (str/Path): name or path object to load
+        f (Path/str): name or path object to load
         as_df (bool, optional): treat a .hdf5, .h5 file as a Dataframe; Default False
         as_arr (bool, optional): treat a .txt file as a numpy array;
         Default False
@@ -43,7 +41,7 @@ def load(
         **kwargs: keyword arguments to pd.read_csv, np.loadtxt, dd.io.load, pickle, or open
 
     Returns:
-        out (Any): the loaded object
+        the loaded object
     """
 
     if isinstance(f, str):
@@ -105,3 +103,14 @@ def load(
         raise TypeError(f"File must end in one of: {supported_exts}")
 
     return out
+
+
+# TODO: Write me
+def save(f: Union[Path, str]) -> None:
+    """
+    A handy dandy all-in-one saving function. Simply pass a Path object to a file (or a string) and it will be saved based upon the file *extension* you provide. Suported extensions are : .txt, .csv, .json, .p, .pickle, .h5, .hd5f, .gz
+
+    Args:
+        f (Path/str): complete filepath to save to including extension
+    """
+    pass

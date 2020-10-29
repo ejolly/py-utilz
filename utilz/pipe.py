@@ -2,8 +2,14 @@
 Piping class similar to %>% in R.
 """
 
+__all__ = ["Pipe"]
+
 
 class Pipe:
+    """
+    Pipe operator. Just initialize and assign to some variable to use immediately
+    """
+
     def __init__(self, verbose=False):
         self.verbose = verbose
 

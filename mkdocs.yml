@@ -19,6 +19,8 @@ nav:
       - Guards and Decorators: api/guards.md
       - Operations: api/ops.md
       - Pipe Operator: api/pipe.md
+      - Terminal Plots: api/termplot.md
+      - Plotting Helpers: api/plot.md
 plugins:
   - search
   - mkdocstrings:
@@ -31,7 +33,7 @@ plugins:
               - "!^MAX"
           rendering:
             show_source: true
-            show_if_no_docstring: false
+            show_if_no_docstring: true
             heading_level: 4
       watch:
         - utilz

@@ -1,7 +1,7 @@
 """
-Custom guards for defensive data analysis compatible with [bulwark](https://bulwark.readthedocs.io/en/latest/index.html). 
+Custom guards for defensive data analysis compatible with [bulwark](https://bulwark.readthedocs.io/en/latest/index.html).
 
-Intended usage is as Python decorators:  
+Intended usage is as Python decorators:
 
 ```
 from utilz.guards import log_df
@@ -13,11 +13,14 @@ def myfunc(df):
 
 ---
 """
-
+__all__ = [
+    "log",
+    "log_df",
+    "disk_cache",
+    "same_size",
+    "same_nunique",
+]
 # Convert from: https://github.com/ejolly/engarde
-# @same_size(group_col)
-# @same_nunique(col)
-# @log - print size after each function call
 
 from functools import wraps
 import datetime as dt
@@ -25,6 +28,21 @@ import pandas as pd
 import numpy as np
 import deepdish as dd
 from pathlib import Path
+
+
+def log(func):
+    """
+    Log the type and shape/size/len of the output from a function
+
+    Args:
+        func (callable): any pure function (i.e, has no side-effects)
+    """
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        pass
+
+    return wrapper
 
 
 def log_df(func):
@@ -47,6 +65,8 @@ def log_df(func):
     return wrapper
 
 
+# TODO: Make cache dir in cwd and save cache there
+# TODO: allow user to set cache location using kwargs
 def disk_cache(threshold=60, autoload=True, index=False, verbose=False):
     """
     Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization.
@@ -94,3 +114,38 @@ def disk_cache(threshold=60, autoload=True, index=False, verbose=False):
         return wrapper
 
     return decorator
+
+
+# TODO: write me
+def same_size(func, group_col):
+    """
+    Check if each group of group_col has the same dimensions after running a function on a dataframe
+
+    Args:
+        func (callable): a function that operates on a dataframe
+        group_call (str): column name to group on in dataframe
+    """
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        pass
+
+    return wrapper
+
+
+# TODO: write me
+def same_nunique(func, val_col, group_col):
+    """
+    Check if each group of group_col has the same number of unique values of val_col after running a function on a dataframe
+
+    Args:
+        func (callable): a function that operates on a dataframe
+        val_col (str): column name to check for unique values in dataframe
+        group_call (str): column name to group on in dataframe
+    """
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        pass
+
+    return wrapper

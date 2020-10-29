@@ -5,7 +5,9 @@
 !!! note
     Doesn't currently work with numpy arrays. Other data types and pandas DataFrames are ok.
 
-## Example usage
+::: utilz.pipe
+
+#### Example usage
 
 1) First create the pipe object at the top of your code and name it whatever you want. I like 'o'
 
