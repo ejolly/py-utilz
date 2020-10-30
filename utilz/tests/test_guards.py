@@ -20,6 +20,7 @@ def test_log_df(capsys):
     assert "Func group_mean df shape=(3, 2)" in captured.out
 
 
+# TODO: Update test to support new caching
 def test_disk_cache(tmp_path):
     # Dataframe
     @disk_cache(threshold=5, verbose=True)
