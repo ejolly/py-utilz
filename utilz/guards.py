@@ -87,7 +87,7 @@ def disk_cache(
     save_dir: str = ".utilz_cache",
 ) -> Any:
     """
-    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization.
+    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to .utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}
 
     Args:
         threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 30.
@@ -139,7 +139,6 @@ def disk_cache(
             result = func(*args, **kwargs)
             time_taken = dt.datetime.now() - tic
             if time_taken.seconds > threshold:
-                Path("__utilz_cache__").mkdir()
                 if isinstance(result, pd.DataFrame):
                     result.to_csv(str(key_csv), index=index)
                     print(f"Exceeded compute time. Result saved to {key_csv}")
