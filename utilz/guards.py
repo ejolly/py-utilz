@@ -16,6 +16,7 @@ def myfunc(df):
 __all__ = [
     "log",
     "log_df",
+    "maybe",
     "disk_cache",
     "same_size",
     "same_nunique",
@@ -23,15 +24,16 @@ __all__ = [
 # Convert from: https://github.com/ejolly/engarde
 
 from functools import wraps
+from typing import Union, Any
 import datetime as dt
 import pandas as pd
 import numpy as np
 import deepdish as dd
 from pathlib import Path
-from typing import Any
 from hashlib import sha256
 from json import dumps
 from inspect import getcallargs
+from .io import load
 
 
 def log(func):
@@ -80,6 +82,32 @@ def _hashobj(obj):
         return obj
 
 
+def maybe(filepath: Union[Path, str], force: bool = False) -> Any:
+    """
+    Run the decorated func only if filepath doesn't exist. Override to always run the function with force.
+
+    Args:
+        filepath (Path/str): filename or path to check existence for
+        force (bool, optional): always run the function even if filepath exists, possibly overwriting filepath (based on whatever func does internally. Defaults to False.
+    """
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            fpath = Path(filepath)
+            if not force:
+                if fpath.exists():
+                    return load(fpath)
+                else:
+                    return func(*args, **kwargs)
+            else:
+                return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
 def disk_cache(
     threshold: int = 30,
     autoload: bool = True,
@@ -87,7 +115,7 @@ def disk_cache(
     save_dir: str = ".utilz_cache",
 ) -> Any:
     """
-    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to .utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}
+    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to `.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}`
 
     Args:
         threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 30.

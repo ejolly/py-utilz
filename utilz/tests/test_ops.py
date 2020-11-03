@@ -1,8 +1,13 @@
 from math import sqrt
-from utilz.ops import ploop, random_seed
+from utilz.ops import prep, random_seed, pmap
 
 
-def test_ploop(capsys):
+# TODO:
+def test_pmap(capsys):
+    pass
+
+
+def test_prep(capsys):
     def mysqrt(idx=None):
         """math.sqrt modified to handle idx"""
         return sqrt(idx)
@@ -25,32 +30,32 @@ def test_ploop(capsys):
 
     # User forget idx
     try:
-        out = ploop(sqrt)
+        out = prep(sqrt)
     except TypeError as e:
         assert "no keyword arguments" in str(e)
 
     # Func that only takes idx; runs serially
-    out = ploop(mysqrt, n_iter=10000, n_jobs=1, verbose=10)
+    out = prep(mysqrt, n_iter=10000, n_jobs=1, verbose=10)
     captured = capsys.readouterr()
     assert "Parallel(n_jobs=1)]: Done 10000 out of 10000 | elapsed:" in captured.err
     assert len(out) == 10000
 
     # Func that only takes idx; parallel
-    out = ploop(mysqrt, n_iter=100000, n_jobs=-1, verbose=10)
+    out = prep(mysqrt, n_iter=100000, n_jobs=-1, verbose=10)
     captured = capsys.readouterr()
     assert "Parallel(n_jobs=-1)]: Done 100000 out of 100000 | elapsed:" in captured.err
     assert len(out) == 100000
 
     # Func that only takes args; parallel
     myfunc = lambda x: x
-    out = ploop(myfunc, [10], n_iter=100000, n_jobs=-1, loop_idx=False, verbose=10)
+    out = prep(myfunc, [10], n_iter=100000, n_jobs=-1, loop_idx=False, verbose=10)
     captured = capsys.readouterr()
     assert "Parallel(n_jobs=-1)]: Done 100000 out of 100000 | elapsed:" in captured.err
     assert sum(out) == 10 * 100000
 
     # Func that takes kwargs idx, but user forgets seed; parallel
     try:
-        my_out = ploop(
+        my_out = prep(
             mysqrt_missing_seed,
             {"double": True},
             n_iter=100000,
@@ -62,7 +67,7 @@ def test_ploop(capsys):
         assert "unexpected keyword argument" in str(e)
 
     # Func that takes kwargs, idx, and seed; parallel
-    my_out = ploop(
+    my_out = prep(
         mysqrt_seed,
         {"double": True},
         n_iter=100000,
@@ -73,7 +78,7 @@ def test_ploop(capsys):
     captured = capsys.readouterr()
     assert "Parallel(n_jobs=-1)]: Done 100000 out of 100000 | elapsed:" in captured.err
     assert sum(my_out) > sum(out)
-    my_out_two = ploop(
+    my_out_two = prep(
         mysqrt_seed,
         {"double": True},
         n_iter=100000,

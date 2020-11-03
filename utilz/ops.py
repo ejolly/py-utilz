@@ -3,11 +3,13 @@ Common data operations and transformations often on pandas dataframes
 
 ---
 """
-__all__ = ["random_seed", "norm_by_group", "ploop"]
-from cytoolz import memoize, curry
+__all__ = ["random_seed", "pmap", "prep", "norm_by_group"]
+# from cytoolz import curry
 from joblib import Parallel, delayed
 from tqdm import tqdm
 import numpy as np
+from typing import Union, Any
+from collections.abc import Callable, Iterable
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -32,8 +34,7 @@ def random_seed(seed):
     )
 
 
-@curry
-@memoize
+# @curry
 def norm_by_group(df, grpcols, valcol, center=True, scale=True):
     """
     Normalize values in a column separately per group
@@ -56,7 +57,118 @@ def norm_by_group(df, grpcols, valcol, center=True, scale=True):
     return df.groupby(grpcols)[valcol].transform(_norm, center, scale)
 
 
-def ploop(
+def pmap(
+    func: Callable,
+    iterme: Iterable,
+    func_args: list,
+    n_jobs: int = -1,
+    loop_idx: bool = True,
+    loop_random_seed: bool = False,
+    backend: str = "processes",
+    progress: bool = True,
+    verbose: int = 0,
+    seed: Union[None, int, np.random.RandomState] = None,
+) -> Any:
+    """
+    Map a function to iter me using parallelization via joblib. Note the only difference between pmap and prep is that that pmap explicitly operates on an iterable, such that the input to func changes each time (each element of iterme); where as prep just repeatedely executes func for n_iter operations with optional args/kwargs that are the same for each run of func.
+
+    Args:
+        func (callable): function to run
+        iterme (iterable): an iterable for which each element will be passed to func
+        func_args (list/dict/None): additional arguments to the function provided as a list for unnamed args or a dict for named kwargs. If None, assumes func takes no arguments excepted loop_idx_available (if its True); Default None
+        n_jobs (int, optional): number of cpus/threads; Default -1 (all cpus/threads)
+        loop_idx (bool, optional): whether the value of the current iteration should be passed to func as the special kwarg 'idx'. Make sure func can handle a kwarg named 'idx'. Default True
+        loop_random_seed (bool, optional): whether a randomly initialized seed should be passed to func as the special kwarg 'seed'. If func depends on any randomization (e.g. np.random) this should be set to True to ensure that parallel processes/threads use independent random seeds. Make sure func can handle a kwarg named 'seed' and utilize it for randomization. See example. Default False.
+        backend (str, optional): 'processes' or 'threads'. Use 'threads' when you know you function releases Python's Global Interpreter Lock (GIL); Default 'cpus'
+        progress (bool): whether to show a tqdm progress bar note, this may be a bit inaccurate when n_jobs > 1. Default True.
+        verbose (int): joblib.Parallel verbosity. Default 0
+        seed (int/None): random seed for reproducibility
+
+    """
+
+    if backend not in ["processes", "threads"]:
+        raise ValueError("backend must be one of cpu's threads")
+
+    parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
+    if loop_random_seed:
+        seeds = random_seed(seed).randint(MAX_INT, size=len(iterme))
+
+    if progress:
+        iterator = tqdm(len(iterme))
+    else:
+        iterator = len(iterme)
+
+    if func_args is None:
+        if loop_idx:
+            if loop_random_seed:
+                out = parfor(
+                    delayed(func)(e, **{"idx": i, "seed": seeds[i]})
+                    for i, e in enumerate(iterme)
+                )
+            else:
+                out = parfor(
+                    delayed(func)(e, **{"idx": i}) for i, e in enumerate(iterme)
+                )
+        else:
+            if loop_random_seed:
+                out = parfor(
+                    delayed(func)(e, **{"seed": seeds[i]}) for i, e in enumerate(iterme)
+                )
+            else:
+                out = parfor(delayed(func) for _ in iterator)
+    else:
+        if loop_idx:
+            if loop_random_seed:
+                if isinstance(func_args, list):
+                    out = parfor(
+                        delayed(func)(e, *func_args, **{"idx": i, "seed": seeds[i]})
+                        for i, e in enumerate(iterme)
+                    )
+                elif isinstance(func_args, dict):
+                    out = parfor(
+                        delayed(func)(e, **func_args, **{"idx": i, "seed": seeds[i]})
+                        for i, e in enumerate(iterme)
+                    )
+                else:
+                    raise TypeError("func_args must be a list or dict")
+            else:
+                if isinstance(func_args, list):
+                    out = parfor(
+                        delayed(func)(e, *func_args, **{"idx": i})
+                        for i, e in enumerate(iterme)
+                    )
+                elif isinstance(func_args, dict):
+                    out = parfor(
+                        delayed(func)(e, **func_args, **{"idx": i})
+                        for i, e in enumerate(iterme)
+                    )
+                else:
+                    raise TypeError("func_args must be a list or dict")
+        else:
+            if loop_random_seed:
+                if isinstance(func_args, list):
+                    out = parfor(
+                        delayed(func)(e, *func_args, **{"seed": seeds[i]})
+                        for i, e in enumerate(iterme)
+                    )
+                elif isinstance(func_args, dict):
+                    out = parfor(
+                        delayed(func)(e, **func_args, **{"seed": seeds[i]})
+                        for i, e in enumerate(iterme)
+                    )
+                else:
+                    raise TypeError("func_args must be a list or dict")
+            else:
+                if isinstance(func_args, list):
+                    out = parfor(delayed(func)(e, *func_args) for e in iterme)
+                elif isinstance(func_args, dict):
+                    out = parfor(delayed(func)(e, **func_args) for e in iterator)
+                else:
+                    raise TypeError("func_args must be a list or dict")
+    return out
+
+
+def prep(
     func,
     func_args=None,
     n_iter=100,
@@ -69,7 +181,7 @@ def ploop(
     seed=None,
 ):
     """
-    Call a function for n_iter using parallelization via joblib
+    Call a function for n_iter using parallelization via joblib. Note the only difference between pmap and prep is that that pmap explicitly operates on an iterable, such that the input to func changes each time (each element of iterme); where as prep just repeatedely executes func for n_iter operations with optional args/kwargs that are the same for each run of func.
 
     Args:
         func (callable): function to run
@@ -150,6 +262,8 @@ def ploop(
                     out = parfor(
                         delayed(func)(**func_args, **{"idx": i}) for i in iterator
                     )
+                else:
+                    raise TypeError("func_args must be a list or dict")
         else:
             if loop_random_seed:
                 if isinstance(func_args, list):

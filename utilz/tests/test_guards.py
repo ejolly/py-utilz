@@ -1,5 +1,6 @@
 import pandas as pd
-from utilz.guards import log_df, disk_cache, _hashobj
+import numpy as np
+from utilz.guards import log_df, disk_cache, _hashobj, maybe
 from time import sleep
 from pathlib import Path
 import datetime as dt
@@ -22,7 +23,27 @@ def test_log_df(capsys):
     assert "Func group_mean df shape=(3, 2)" in captured.out
 
 
-# TODO: Update test to support new caching
+def test_maybe(tmp_path):
+    p = Path(f"{tmp_path}/test.csv")
+    if p.exists():
+        p.unlink()
+
+    @maybe(p)
+    def f():
+        pd.DataFrame(np.random.randn(5, 3)).to_csv(
+            tmp_path.joinpath("test.csv"), index=False
+        )
+        return None
+
+    out = f()
+    assert p.exists()
+    assert out is None
+    out = f()
+    assert isinstance(out, pd.DataFrame)
+    p.unlink()
+
+
+# TODO: Add additional tests
 def test_disk_cache(tmp_path):
     # Dataframe
     @disk_cache(threshold=5)
