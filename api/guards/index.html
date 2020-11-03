@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.2">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.38780c08.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.19190aaf.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f72e892.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.24b84193.min.css">
         
       
     
@@ -71,7 +71,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href="https://eshinjolly.com/utilz" title="Utilz" class="md-header-nav__button md-logo" aria-label="Utilz">
       
@@ -156,7 +158,9 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="https://eshinjolly.com/utilz" title="Utilz" class="md-nav__button md-logo" aria-label="Utilz">
       
@@ -294,6 +298,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#utilz.guards.maybe" class="md-nav__link">
+    maybe()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#utilz.guards.same_nunique" class="md-nav__link">
     same_nunique()
   </a>
@@ -419,6 +430,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#utilz.guards.maybe" class="md-nav__link">
+    maybe()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#utilz.guards.same_nunique" class="md-nav__link">
     same_nunique()
   </a>
@@ -470,12 +488,12 @@ def myfunc(df):
 <h4 class="doc doc-heading" id="utilz.guards.disk_cache">
 
         <code class="highlight language-python">
-disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>        </code>
+disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">'.utilz_cache'</span><span class="p">)</span>        </code>
 
 
       </h4>
 <div class="doc doc-contents ">
-<p>Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization.</p>
+<p>Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to <code>.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}</code></p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -491,9 +509,9 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
 <td><code>threshold</code></td>
 <td><code>int</code></td>
 <td>
-<p>threshold in seconds over which object is saved to disk. Defaults to 60.</p>
+<p>threshold in seconds over which object is saved to disk. Defaults to 30.</p>
 </td>
-<td><code>60</code></td>
+<td><code>30</code></td>
 </tr>
 <tr>
 <td><code>autoload</code></td>
@@ -505,67 +523,90 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
 </tr>
 <tr>
 <td><code>index</code></td>
-<td><code>bool; optional</code></td>
+<td><code>bool</code></td>
 <td>
 <p>whether to incluce the index when saving a dataframe. Default to False</p>
 </td>
 <td><code>False</code></td>
 </tr>
 <tr>
-<td><code>verbose</code></td>
-<td><code>bool; optional</code></td>
+<td><code>save_dir</code></td>
+<td><code>str</code></td>
 <td>
-<p>print debug messages; Default to False</p>
+<p>location to cache results; Default '.utilz_cache'</p>
 </td>
-<td><code>False</code></td>
+<td><code>'.utilz_cache'</code></td>
 </tr>
 </tbody>
 </table>
 <details class="quote">
           <summary>Source code in <code>utilz/guards.py</code></summary>
           <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">disk_cache</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">disk_cache</span><span class="p">(</span>
+    <span class="n">threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="n">autoload</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">save_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">".utilz_cache"</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">"""</span>
-<span class="sd">    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same arrangement of args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization.</span>
+<span class="sd">    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to `.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}`</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 60.</span>
+<span class="sd">        threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 30.</span>
 <span class="sd">        autoload (bool, optional): whether to try to load a previously persisted result if all args and kwargs match in a subsequent function call. Default to True;</span>
 <span class="sd">        index (bool; optional): whether to incluce the index when saving a dataframe. Default to False</span>
-<span class="sd">        verbose (bool; optional): print debug messages; Default to False</span>
+<span class="sd">        save_dir (str; optional): location to cache results; Default '.utilz_cache'</span>
 <span class="sd">    """</span>
 
     <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
         <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">filtered_args</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">args</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span>
-            <span class="p">]</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">filtered_args</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()))))</span>
-            <span class="n">key_csv</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">.csv"</span>
-            <span class="n">key_h5</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">.h5"</span>
+            <span class="n">saved_inputs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">getcallargs</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+            <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">cache_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">cache_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">saved_inputs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">"args"</span><span class="p">:</span>
+                    <span class="n">new_v</span> <span class="o">=</span> <span class="p">[</span><span class="n">_hashobj</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">v</span><span class="p">]</span>
+                    <span class="n">inputs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_v</span>
+                <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">"kwargs"</span><span class="p">:</span>
+                    <span class="n">new_v</span> <span class="o">=</span> <span class="p">{</span><span class="n">kk</span><span class="p">:</span> <span class="n">_hashobj</span><span class="p">(</span><span class="n">vv</span><span class="p">)</span> <span class="k">for</span> <span class="n">kk</span><span class="p">,</span> <span class="n">vv</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+                    <span class="n">inputs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_v</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">inputs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">_hashobj</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">dumps</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'"'</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"{"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"}"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"["</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"]"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">":"</span><span class="p">,</span> <span class="s2">"__"</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">","</span><span class="p">,</span> <span class="s2">"--"</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">key_csv</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">___</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">.csv"</span>
+            <span class="n">key_csv</span> <span class="o">=</span> <span class="n">cache_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">key_csv</span><span class="p">)</span>
+            <span class="n">key_h5</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">___</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">.h5"</span>
+            <span class="n">key_h5</span> <span class="o">=</span> <span class="n">cache_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">key_h5</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">autoload</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">key_csv</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s2">"Returning cached result"</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">"Returning previously saved result"</span><span class="p">)</span>
                     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">key_csv</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">Path</span><span class="p">(</span><span class="n">key_h5</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s2">"Returning cached result"</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">"Returning previously saved result"</span><span class="p">)</span>
                     <span class="k">return</span> <span class="n">dd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">key_h5</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">"No cached result...executing"</span><span class="p">)</span>
             <span class="n">tic</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="n">time_taken</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">tic</span>
             <span class="k">if</span> <span class="n">time_taken</span><span class="o">.</span><span class="n">seconds</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-                    <span class="n">fname</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">.csv"</span>
-                    <span class="n">result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key_csv</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exceeded compute time. Result saved to </span><span class="si">{</span><span class="n">key_csv</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">fname</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">.h5"</span>
-                    <span class="n">dd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">"zlib"</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exceeded threshold. Result cached to </span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                    <span class="n">dd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key_h5</span><span class="p">),</span> <span class="n">result</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">"zlib"</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exceeded compute time. Result saved to </span><span class="si">{</span><span class="n">key_h5</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">result</span>
 
         <span class="k">return</span> <span class="n">wrapper</span>
@@ -680,6 +721,77 @@ log_df<span class="p">(</span><span class="n">func</span><span class="p">)</span
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">return</span> <span class="n">wrapper</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.guards.maybe">
+
+        <code class="highlight language-python">
+maybe<span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Run the decorated func only if filepath doesn't exist. Override to always run the function with force.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filepath</code></td>
+<td><code>Union[pathlib.Path, str]</code></td>
+<td>
+<p>filename or path to check existence for</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>force</code></td>
+<td><code>bool</code></td>
+<td>
+<p>always run the function even if filepath exists, possibly overwriting filepath (based on whatever func does internally. Defaults to False.</p>
+</td>
+<td><code>False</code></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/guards.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">maybe</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">"""</span>
+<span class="sd">    Run the decorated func only if filepath doesn't exist. Override to always run the function with force.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filepath (Path/str): filename or path to check existence for</span>
+<span class="sd">        force (bool, optional): always run the function even if filepath exists, possibly overwriting filepath (based on whatever func does internally. Defaults to False.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">fpath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">fpath</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                    <span class="k">return</span> <span class="n">load</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span>
 </code></pre>
 </div>
 </details>
@@ -885,8 +997,8 @@ same_size<span class="p">(</span><span class="n">func</span><span class="p">,</s
       
     </div>
     
-      <script src="../../assets/javascripts/vendor.77e55a48.min.js"></script>
-      <script src="../../assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c1ccee15.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
