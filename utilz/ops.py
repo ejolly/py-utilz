@@ -3,13 +3,15 @@ Common data operations and transformations often on pandas dataframes
 
 ---
 """
-__all__ = ["random_seed", "pmap", "prep", "norm_by_group"]
+__all__ = ["random_seed", "pmap", "prep", "norm_by_group", "concat"]
 # from cytoolz import curry
 from joblib import Parallel, delayed
 from tqdm import tqdm
 import numpy as np
+import pandas as pd
 from typing import Union, Any
 from collections.abc import Callable, Iterable
+from warnings import warn
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -285,4 +287,39 @@ def prep(
                     out = parfor(delayed(func)(**func_args) for _ in iterator)
                 else:
                     raise TypeError("func_args must be a list or dict")
+    return out
+
+
+# TODO: test me
+def concat(
+    func, iterme, as_df=True, as_arr=False, axis=0, reset_index=True, ignore_index=True
+):
+    """
+    Maps func to iterme and combines the result into a single DataFrame or array.
+
+    Args:
+        func (callable): function to apply
+        iterme (iterable): an iterable for which func will be called on each element
+        as_df (bool; optional): combine result into a DataFrame; Default True
+        as_arr (bool; optional): combine result into an array; Default False
+        axis (int; optional): what axis to concatenate over; Default 0 (first)
+        reset_index (bool; optional): reset the DataFrame index after concat; Default True
+        ignore_index (bool; optional): ignore the index when combining DataFrames; Default True
+    """
+    if as_df and as_arr:
+        raise ValueError("as_df and as_arr cannot both be True")
+
+    if as_df:
+        out = pd.concat(list(map(func, iterme)), axis=axis, ignore_index=ignore_index)
+        if reset_index:
+            out = out.reset_index()
+    elif as_arr:
+        try:
+            out = np.concatenate(list(map(func, iterme)), axis=axis)
+        except np.AxisError as e:  # noqa
+            warn(
+                "Created new axis because requested concatenation axis > existing axes"
+            )
+            out = np.stack(list(map(func, iterme)), axis=axis - 1)
+
     return out
