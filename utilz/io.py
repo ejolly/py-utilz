@@ -9,8 +9,10 @@ import numpy as np
 import deepdish as dd
 import pickle
 import json
+from toolz.functoolz import memoize
 
 
+@memoize
 def load(
     f: Union[Path, str],
     as_df: bool = False,

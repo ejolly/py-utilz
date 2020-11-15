@@ -18,7 +18,7 @@ __all__ = [
     "log_df",
     "maybe",
     "disk_cache",
-    "same_size",
+    "same_shape",
     "same_nunique",
 ]
 # Convert from: https://github.com/ejolly/engarde
@@ -36,6 +36,7 @@ from inspect import getcallargs
 from .io import load
 
 
+# TODO: Write me
 def log(func):
     """
     Log the type and shape/size/len of the output from a function
@@ -181,7 +182,7 @@ def disk_cache(
 
 
 # TODO: write me
-def same_size(func, group_col):
+def same_shape(grpcols, shape=None):
     """
     Check if each group of group_col has the same dimensions after running a function on a dataframe
 
@@ -190,11 +191,24 @@ def same_size(func, group_col):
         group_call (str): column name to group on in dataframe
     """
 
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        pass
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            df = func(*args, **kwargs)
+            grouped = df.groupby(grpcols).size()
+            if shape is None:
+                if not grouped.sum() % grouped.shape[0] == 0:
+                    raise AssertionError("Groups dont have the same shape", grouped)
+            else:
+                if not all(grouped == shape):
+                    raise AssertionError(
+                        f"All groups dont match shape {shape}", grouped
+                    )
+            return df
 
-    return wrapper
+        return wrapper
+
+    return decorator
 
 
 # TODO: write me

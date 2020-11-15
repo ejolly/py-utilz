@@ -3,7 +3,8 @@ Common data operations and transformations often on pandas dataframes
 
 ---
 """
-__all__ = ["random_seed", "pmap", "prep", "norm_by_group", "concat"]
+__all__ = ["random_seed", "norm_by_group", "splitdf", "pmap", "prep", "apply"]
+
 # from cytoolz import curry
 from joblib import Parallel, delayed
 from tqdm import tqdm
@@ -12,6 +13,7 @@ import pandas as pd
 from typing import Union, Any
 from collections.abc import Callable, Iterable
 from warnings import warn
+from itertools import chain
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -62,7 +64,7 @@ def norm_by_group(df, grpcols, valcol, center=True, scale=True):
 def pmap(
     func: Callable,
     iterme: Iterable,
-    func_args: list,
+    func_args: list = None,
     n_jobs: int = -1,
     loop_idx: bool = True,
     loop_random_seed: bool = False,
@@ -291,35 +293,80 @@ def prep(
 
 
 # TODO: test me
-def concat(
-    func, iterme, as_df=True, as_arr=False, axis=0, reset_index=True, ignore_index=True
-):
+def splitdf(df, X=None, Y=None):
     """
-    Maps func to iterme and combines the result into a single DataFrame or array.
+    Split a dataframe into X and Y arrays given column names. Useful for using a pandas dataframe for sklearn. If Y is None, assumes its in the *first* column.
 
     Args:
-        func (callable): function to apply
+        df (Dataframe): input dataframe that's at least 2d
+        Y (string, optional): name(s) of the columns for the Y array. Defaults to df.iloc[:, 0]
+        X (string/list, optional): name(s) of columns for the X array. Defaults to df.iloc[:,1:]
+
+    Raises:
+        ValueError: If df is not 2 dimensional
+
+    Returns:
+        tuple: (X, Y)
+    """
+
+    if df.ndim != 2:
+        raise ValueError("df must 2 dimensional")
+
+    if X is not None:
+        x = df.loc[:, X].to_numpy(copy=True)
+    else:
+        x = df.iloc[:, 1:].to_numpy(copy=True)
+
+    if Y is not None:
+        y = df.loc[:, Y].to_numpy(copy=True)
+    else:
+        y = df.iloc[:, 0].to_numpy(copy=True)
+
+    return x, y
+
+
+# TODO: test me
+def apply(func, iterme, as_df=False, as_arr=False, axis=0, ignore_index=True):
+    """
+    Applys func to iterme and combines the result into a single, list, dataFrame or array. Iterme can be a list of elements, list of dataframes, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.
+
+    A a few interesting use cases include:
+
+    - Passing None for the value of func acts as a shortcut to flatten nested lists.
+    - Using in place of map acts like a call to list(map(...))
+    - Passing in pd.read_csv to list of files to get back a single dataframe
+
+    Args:
+        func (callable): function to apply. If None, will attempt to flatten a nested list
         iterme (iterable): an iterable for which func will be called on each element
-        as_df (bool; optional): combine result into a DataFrame; Default True
+        as_df (bool; optional): combine result into a DataFrame; Default False
         as_arr (bool; optional): combine result into an array; Default False
         axis (int; optional): what axis to concatenate over; Default 0 (first)
-        reset_index (bool; optional): reset the DataFrame index after concat; Default True
         ignore_index (bool; optional): ignore the index when combining DataFrames; Default True
     """
+
     if as_df and as_arr:
         raise ValueError("as_df and as_arr cannot both be True")
 
+    if func is None:
+        return list(chain.from_iterable(iterme))
+
+    if isinstance(iterme[0], list):
+        op = map(func, chain.from_iterable(iterme))
+    else:
+        op = map(func, iterme)
+
+    op = list(op)
+
     if as_df:
-        out = pd.concat(list(map(func, iterme)), axis=axis, ignore_index=ignore_index)
-        if reset_index:
-            out = out.reset_index()
+        op = pd.concat(op, axis=axis, ignore_index=ignore_index)
     elif as_arr:
         try:
-            out = np.concatenate(list(map(func, iterme)), axis=axis)
+            op = np.concatenate(op, axis=axis)
         except np.AxisError as e:  # noqa
             warn(
                 "Created new axis because requested concatenation axis > existing axes"
             )
-            out = np.stack(list(map(func, iterme)), axis=axis - 1)
+            op = np.stack(op, axis=axis - 1)
 
-    return out
+    return op
