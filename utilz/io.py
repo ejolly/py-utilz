@@ -1,7 +1,7 @@
 """
 I/O Module for working with Paths
 """
-__all__ = ["load", "save"]
+__all__ = ["load", "save", "nbsave", "nbload"]
 from pathlib import Path
 from typing import Union, Any
 import pandas as pd
@@ -10,6 +10,43 @@ import deepdish as dd
 import pickle
 import json
 from toolz.functoolz import memoize
+import scrapbook as sb
+
+
+# TODO: test me
+def nbload(varname, fname, to_arr=False):
+    """
+    Load a variable previously saved in a notebook's json meta-data using scrapbook
+
+    Args:
+        varname (string): variable to load
+        fname (string/Path): notebook path to load
+        to_arr (bool, optional): whether to cast the loaded variable to a numpy array; Default False
+
+    Returns:
+        Any: the loaded variable
+    """
+    if isinstance(fname, Path):
+        fname = str(Path)
+    if to_arr:
+        return np.array(sb.read_notebook(fname).scraps[varname].data)
+    else:
+        return sb.read_notebook(fname).scraps[varname].data
+
+
+# TODO: Test me
+# TODO: implement check to see if data is saved by calling nbload. Tricky thing is figuring out how to auto-get name of current notebook
+def nbsave(var, varname):
+    """
+    Save a variable within a notebook's json meta-data using scrapbook. Auto-converts numpy arrays to lists before saving
+
+    Args:
+        var (Any): variable to save
+        varname (string): what to call the variable in the notebook meta-data
+    """
+    if isinstance(var, np.ndarray):
+        var = var.tolist()
+    sb.glue(varname, var)
 
 
 @memoize
