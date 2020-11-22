@@ -12,10 +12,6 @@
      <lastmod>2020-11-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://eshinjolly.com/utilz/api/goodpipes/</loc>
-     <lastmod>2020-11-22</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
      <loc>https://eshinjolly.com/utilz/api/guards/</loc>
      <lastmod>2020-11-22</lastmod>
      <changefreq>daily</changefreq>
@@ -33,6 +29,10 @@
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://eshinjolly.com/utilz/api/plot/</loc>
+     <lastmod>2020-11-22</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://eshinjolly.com/utilz/api/fp_data_analysis/</loc>
      <lastmod>2020-11-22</lastmod>
      <changefreq>daily</changefreq>
     </url>

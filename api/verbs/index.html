@@ -266,18 +266,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../goodpipes/" class="md-nav__link">
-      Functional-programming-style data analysis
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
     <a href="../guards/" class="md-nav__link">
       Guards and Decorators
     </a>
@@ -328,6 +316,18 @@
   <li class="md-nav__item">
     <a href="../plot/" class="md-nav__link">
       Plotting Helpers
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../fp_data_analysis/" class="md-nav__link">
+      Functional-programming-style demo notebook
     </a>
   </li>
 
@@ -384,78 +384,19 @@
 <h4 class="hidden-toc" href="#utilz.verbs" id="utilz.verbs" style="visibility: hidden; position: absolute;">
         </h4>
 <div class="doc doc-contents first">
-<p>dplyr like <em>verbs</em> for working with pandas dataframes. Designed to be piped together using the <code>pipe</code> function from the <code>toolz</code> package. Provides a broad use-case alternative to plydata or larger packages while use mostly native pandas methods under-the-hood.</p>
-<p><em>Note</em>: the current version unfortunately does borrow the select, and define functions from plydata</p>
+<p>dplyr like <em>verbs</em> for working with pandas dataframes. Designed to be piped together using the <code>pipe</code> function from the <code>toolz</code> package. While not being as feature-complete, <code>utilz.verbse</code> provides limited alternative to other libraries like <code>plydata</code> because it just wraps mostly native pandas methods under-the-hood.</p>
+<p><em>Note: the current version unfortunately does borrow the <code>select</code> and <code>define</code> functions from plydata</em></p>
 <h1 id="workhorses">Workhorses</h1>
 <ul>
-<li><strong>rows</strong>: subset rows based on some conditions (str), ranges (tuples), or indices (list)</li>
-<li><strong>cols</strong>: subset cols based on some conditions (str), ranges (tuples), or indices (list); support "-col" inversion -&gt; <em>from plydata</em></li>
-<li><strong>summarize</strong>: create a new column(s) thats the result of a operation that returns a <em>scalar</em> value and assigns it back to df. Accepts dfs or grouped dfs</li>
-<li><strong>assign</strong>: create a new column(s) thats the result of a operation that returns a <em>series</em> value and assigns it back to df. Accepts dfs or grouped dfs</li>
+<li><code>rows</code>: subset rows based on some conditions (str), ranges (tuples), or indices (list)</li>
+<li><code>cols</code>: subset cols based on some conditions (str), ranges (tuples), or indices (list); support "-col" inversion -&gt; <em>from plydata</em></li>
+<li><code>summarize</code>: create a new column(s) thats the result of a operation that returns a <em>scalar</em> value and assigns it back to df. Accepts dfs or grouped dfs</li>
+<li><code>assign</code>: create a new column(s) thats the result of a operation that returns a <em>series</em> value and assigns it back to df. Accepts dfs or grouped dfs</li>
+<li><code>apply</code>: to apply artbitrary functions on a df or grouped df (just a wrapper around <code>df.apply</code>)</li>
 </ul>
-<p><em>I think summarize -&gt; aggregate and assign -&gt; mutate in dplyr land</em>  </p>
-<h1 id="secondary">Secondary</h1>
-<ul>
-<li><strong>apply</strong>: to apply artbitrary functions on a df or grouped df (just a wrapper around df.apply)</li>
-</ul>
-<h1 id="example-verb-based-analysis-of-a-dataframe">Example Verb-based analysis of a dataframe</h1>
-<div class="highlight">
-<pre><span></span><code><span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">pipe</span>
-<span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span>
-
-<span class="c1"># Basic slicing/subsetting</span>
-
-<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
-    <span class="n">rows</span><span class="p">(</span><span class="s2">"group == 'c' or group == 'b'"</span><span class="p">),</span> 
-    <span class="n">cols</span><span class="p">(</span><span class="s2">"rt"</span><span class="p">,</span> <span class="s2">"speed"</span><span class="p">)</span>
-    <span class="p">)</span>
-
-<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
-    <span class="n">rows</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">14</span><span class="p">]),</span> 
-    <span class="n">cols</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-    <span class="p">)</span>
-
-<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
-    <span class="n">rows</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-    <span class="p">)</span>
-
-<span class="c1"># Perform scalar operation that always return back a *smaller* dataframe or series than the original</span>
-<span class="c1"># Non-grouped inputs produce series results, while grouped inputs produce dataframe results</span>
-
-<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
-    <span class="n">rows</span><span class="p">(</span><span class="s2">"group == 'c' or group == 'b'"</span><span class="p">),</span> 
-    <span class="n">summarize</span><span class="p">(</span><span class="n">rt</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">,</span><span class="n">speed</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span>
-    <span class="p">)</span>
-
-<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
-    <span class="n">groupby</span><span class="p">(</span><span class="s1">'group'</span><span class="p">),</span> 
-    <span class="n">summarize</span><span class="p">(</span><span class="n">score</span> <span class="o">=</span> <span class="s1">'mean'</span><span class="p">,</span> <span class="n">rt</span> <span class="o">=</span> <span class="s1">'std'</span><span class="p">)</span>
-    <span class="p">)</span>
-
-<span class="c1"># Perform series operations that always return back a dataframe thats the *same* size as the original</span>
-<span class="c1"># To preserve input size, use assign instead. It will "broadcast" a smaller set of values over the length of the entire input dataframe, while respecting groups if the input is grouped</span>
-<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">assign</span><span class="p">(</span><span class="n">score_centered</span><span class="o">=</span><span class="s1">'score.mean()'</span><span class="p">))</span>
-<span class="c1"># In this case the return values are computed and broadcasted within group rather than across the entire frame</span>
-
-<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
-    <span class="n">groupby</span><span class="p">(</span><span class="s1">'group'</span><span class="p">),</span> 
-    <span class="n">assign</span><span class="p">(</span>
-        <span class="n">score_centered</span><span class="o">=</span><span class="s1">'score - score.mean()'</span><span class="p">,</span> 
-        <span class="n">score_norm</span> <span class="o">=</span> <span class="s1">'score/score.std()'</span>
-        <span class="p">)</span>
-
-    <span class="p">)</span>
-
-<span class="c1"># e.g. the mean in sub-group</span>
-
-<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
-    <span class="n">groupby</span><span class="p">(</span><span class="s1">'group'</span><span class="p">),</span> 
-    <span class="n">assign</span><span class="p">(</span><span class="n">speed_per_group</span><span class="o">=</span><span class="s1">'speed.mean()'</span><span class="p">)</span>
-    <span class="p">)</span>
-</code></pre>
 </div>
 </div>
-</div>
+<h2 id="see-the-demo-notebook-for-usage">See the <a href="../fp_data_analysis/">demo notebook</a> for usage.</h2>
                 
               
               
@@ -489,13 +430,13 @@
           </a>
         
         
-          <a href="../goodpipes/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../guards/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Functional-programming-style data analysis
+                Guards and Decorators
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
