@@ -202,29 +202,6 @@
       
       
 
-  
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
-    
-    <label class="md-nav__link" for="nav-2">
-      API Reference
-      <span class="md-nav__icon md-icon"></span>
-    </label>
-    <nav class="md-nav" aria-label="API Reference" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        <span class="md-nav__icon md-icon"></span>
-        API Reference
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
 
   <li class="md-nav__item">
     <a href="../io/" class="md-nav__link">
@@ -232,10 +209,34 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../verbs/" class="md-nav__link">
+      Data analysis "verbs"
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../goodpipes/" class="md-nav__link">
+      Functional-programming-style data analysis
+    </a>
+  </li>
+
+    
+      
+      
+      
 
   
 
@@ -312,8 +313,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#utilz.guards.same_size" class="md-nav__link">
-    same_size()
+  <a href="#utilz.guards.same_shape" class="md-nav__link">
+    same_shape()
   </a>
   
 </li>
@@ -324,10 +325,10 @@
     
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
@@ -336,10 +337,10 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
@@ -348,10 +349,10 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
@@ -360,21 +361,16 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
     <a href="../plot/" class="md-nav__link">
       Plotting Helpers
     </a>
-  </li>
-
-        
-      </ul>
-    </nav>
   </li>
 
     
@@ -444,8 +440,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#utilz.guards.same_size" class="md-nav__link">
-    same_size()
+  <a href="#utilz.guards.same_shape" class="md-nav__link">
+    same_shape()
   </a>
   
 </li>
@@ -493,7 +489,8 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
 
       </h4>
 <div class="doc doc-contents ">
-<p>Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to <code>.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}</code></p>
+<p>Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to <code>.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}</code>.</p>
+<p>Very similar in spirit to @memory.cache decorator in joblib but instead uses csv's to persist Dataframes and hd5f to persist everything else rather than pickles. Also works better in combination with the @curry decorator from toolz/cytoolz</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -549,7 +546,9 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
     <span class="n">save_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">".utilz_cache"</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">"""</span>
-<span class="sd">    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to `.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}`</span>
+<span class="sd">    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to `.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}`.</span>
+
+<span class="sd">    Very similar in spirit to @memory.cache decorator in joblib but instead uses csv's to persist Dataframes and hd5f to persist everything else rather than pickles. Also works better in combination with the @curry decorator from toolz/cytoolz</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 30.</span>
@@ -592,10 +591,10 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
             <span class="n">key_h5</span> <span class="o">=</span> <span class="n">cache_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">key_h5</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">autoload</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">key_csv</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">"Returning previously saved result"</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Returning </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> cached result"</span><span class="p">)</span>
                     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">key_csv</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">Path</span><span class="p">(</span><span class="n">key_h5</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">"Returning previously saved result"</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Returning </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> cached result"</span><span class="p">)</span>
                     <span class="k">return</span> <span class="n">dd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">key_h5</span><span class="p">)</span>
             <span class="n">tic</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -603,10 +602,10 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
             <span class="k">if</span> <span class="n">time_taken</span><span class="o">.</span><span class="n">seconds</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key_csv</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exceeded compute time. Result saved to </span><span class="si">{</span><span class="n">key_csv</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exceeded compute time. Result cached to </span><span class="si">{</span><span class="n">key_csv</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">dd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key_h5</span><span class="p">),</span> <span class="n">result</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">"zlib"</span><span class="p">)</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exceeded compute time. Result saved to </span><span class="si">{</span><span class="n">key_h5</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exceeded compute time. Result cached to </span><span class="si">{</span><span class="n">key_h5</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">result</span>
 
         <span class="k">return</span> <span class="n">wrapper</span>
@@ -868,10 +867,10 @@ same_nunique<span class="p">(</span><span class="n">func</span><span class="p">,
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.guards.same_size">
+<h4 class="doc doc-heading" id="utilz.guards.same_shape">
 
         <code class="highlight language-python">
-same_size<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">group_col</span><span class="p">)</span>        </code>
+same_shape<span class="p">(</span><span class="n">grpcols</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>        </code>
 
 
       </h4>
@@ -909,7 +908,7 @@ same_size<span class="p">(</span><span class="n">func</span><span class="p">,</s
 <details class="quote">
           <summary>Source code in <code>utilz/guards.py</code></summary>
           <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">same_size</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">group_col</span><span class="p">):</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">same_shape</span><span class="p">(</span><span class="n">grpcols</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Check if each group of group_col has the same dimensions after running a function on a dataframe</span>
 
@@ -918,11 +917,24 @@ same_size<span class="p">(</span><span class="n">func</span><span class="p">,</s
 <span class="sd">        group_call (str): column name to group on in dataframe</span>
 <span class="sd">    """</span>
 
-    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">grpcols</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">grouped</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">%</span> <span class="n">grouped</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">"Groups dont have the same shape"</span><span class="p">,</span> <span class="n">grouped</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">grouped</span> <span class="o">==</span> <span class="n">shape</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">"All groups dont match shape </span><span class="si">{</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">grouped</span>
+                    <span class="p">)</span>
+            <span class="k">return</span> <span class="n">df</span>
 
-    <span class="k">return</span> <span class="n">wrapper</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span>
 </code></pre>
 </div>
 </details>
@@ -949,7 +961,7 @@ same_size<span class="p">(</span><span class="n">func</span><span class="p">,</s
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../io/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../goodpipes/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -958,7 +970,7 @@ same_size<span class="p">(</span><span class="n">func</span><span class="p">,</s
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Saving and Loading
+                Functional-programming-style data analysis
               </div>
             </div>
           </a>

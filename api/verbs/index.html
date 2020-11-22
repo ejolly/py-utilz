@@ -9,7 +9,7 @@
         <meta name="description" content="Utility library for faster, easier, and more reliable data analysis">
       
       
-        <link rel="canonical" href="https://eshinjolly.com/utilz/api/pipe/">
+        <link rel="canonical" href="https://eshinjolly.com/utilz/api/verbs/">
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
@@ -17,7 +17,7 @@
     
     
       
-        <title>Pipe Operator - Utilz</title>
+        <title>Data analysis "verbs" - Utilz</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#utilzpipe" class="md-skip">
+        <a href="#utilzverbs" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +92,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Pipe Operator
+              Data analysis "verbs"
             
           </span>
         </div>
@@ -214,11 +214,49 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../verbs/" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Data analysis "verbs"
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
       Data analysis "verbs"
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs" class="md-nav__link">
+    utilz.verbs
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
     
@@ -262,63 +300,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Pipe Operator
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
-    <a href="./" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../pipe/" class="md-nav__link">
       Pipe Operator
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.pipe" class="md-nav__link">
-    utilz.pipe
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.pipe.Pipe" class="md-nav__link">
-    Pipe
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-usage" class="md-nav__link">
-    Example usage
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -370,22 +356,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#utilz.pipe" class="md-nav__link">
-    utilz.pipe
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.pipe.Pipe" class="md-nav__link">
-    Pipe
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-usage" class="md-nav__link">
-    Example usage
+  <a href="#utilz.verbs" class="md-nav__link">
+    utilz.verbs
   </a>
   
 </li>
@@ -402,89 +374,88 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/ejolly/utilz/edit/master/docs/api/pipe.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/ejolly/utilz/edit/master/docs/api/verbs.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="utilzpipe">utilz.pipe</h1>
-<p><code>utilz</code> proves a <em>pipe</em> operator similar to the <code>%&gt;%</code> operator from <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">magrittr</a> in R.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Doesn't currently work with numpy arrays. Other data types and pandas DataFrames are ok.</p>
-</div>
+                <h1 id="utilzverbs">utilz.verbs</h1>
 <div class="doc doc-object doc-module">
-<h4 class="hidden-toc" href="#utilz.pipe" id="utilz.pipe" style="visibility: hidden; position: absolute;">
+<h4 class="hidden-toc" href="#utilz.verbs" id="utilz.verbs" style="visibility: hidden; position: absolute;">
         </h4>
 <div class="doc doc-contents first">
-<p>Piping class similar to %&gt;% in R.</p>
-<div class="doc doc-children">
-<div class="doc doc-object doc-class">
-<h4 class="doc doc-heading" id="utilz.pipe.Pipe">
-
-        <code>Pipe</code>
-
-
-      </h4>
-<div class="doc doc-contents ">
-<p>Pipe operator. Just initialize and assign to some variable to use immediately</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<h4 id="example-usage">Example usage</h4>
-<p>1) First create the pipe object at the top of your code and name it whatever you want. I like 'o'</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz.pipe</span> <span class="kn">import</span> <span class="n">Pipe</span>
-<span class="n">o</span> <span class="o">=</span> <span class="n">Pipe</span><span class="p">()</span>
-
-<span class="c1"># Some data to work with</span>
-<span class="kn">from</span> <span class="nn">seaborn</span> <span class="kn">import</span> <span class="n">load_dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;iris&#39;</span><span class="p">)</span>
-</code></pre></div>
-<p>2) Then use it with the <code>&gt;&gt;o&gt;&gt;</code> syntax  </p>
+<p>dplyr like <em>verbs</em> for working with pandas dataframes. Designed to be piped together using the <code>pipe</code> function from the <code>toolz</code> package. Provides a broad use-case alternative to plydata or larger packages while use mostly native pandas methods under-the-hood.</p>
+<p><em>Note</em>: the current version unfortunately does borrow the select, and define functions from plydata</p>
+<h1 id="workhorses">Workhorses</h1>
 <ul>
-<li>
-<p>pipe to another function including lambdas (wrapped in parens)  </p>
-<div class="codehilite"><pre><span></span><code><span class="n">df</span> <span class="o">&gt;&gt;</span><span class="n">o</span><span class="o">&gt;&gt;</span> <span class="n">print</span>
-
-<span class="n">df</span> <span class="o">&gt;&gt;</span><span class="n">o</span><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div>
-
-</li>
-<li>
-<p>pipe to a method and call it as a string (without the '.')    </p>
-<div class="codehilite"><pre><span></span><code><span class="err">df &gt;&gt;o&gt;&gt; &#39;head&#39;</span>
-</code></pre></div>
-
-</li>
-<li>
-<p>pass <code>args</code> and <code>kwargs</code> to the method or function as a tuple. The first item in the tuple should be the method name (str) or function (callable). Subsequent items are interpreted as kwargs if they're dicts, or args if they're anything else.  </p>
-<div class="codehilite"><pre><span></span><code><span class="n">df</span> <span class="o">&gt;&gt;</span><span class="n">o</span><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
-<span class="o">#</span> <span class="n">equivalent</span> <span class="k">to</span> <span class="n">df</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">df</span> <span class="o">&gt;&gt;</span><span class="n">o</span><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="err">{</span><span class="s1">&#39;numeric_only&#39;</span><span class="p">:</span> <span class="k">True</span><span class="err">}</span><span class="p">)</span> 
-<span class="o">#</span> <span class="n">df</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numeric_only</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
-
-<span class="n">df</span> <span class="o">&gt;&gt;</span><span class="n">o</span><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">pd</span><span class="p">.</span><span class="n">melt</span><span class="p">,</span> <span class="err">{</span><span class="s1">&#39;id_vars&#39;</span><span class="p">:</span> <span class="s1">&#39;species&#39;</span><span class="err">}</span><span class="p">,</span> <span class="err">{</span><span class="s1">&#39;value_vars&#39;</span><span class="p">:</span> <span class="s1">&#39;petal_length&#39;</span><span class="err">}</span><span class="p">)</span>
-<span class="o">#</span> <span class="n">pd</span><span class="p">.</span><span class="n">melt</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">,</span> <span class="n">value_vars</span><span class="o">=</span><span class="s1">&#39;petal_length&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-</li>
-<li>
-<p>this is the same as above since melt is both a method on DataFrames and a module function in pandas</p>
-<div class="codehilite"><pre><span></span><code><span class="err">df &gt;&gt;o&gt;&gt; (&#39;melt&#39;, {&#39;id_vars&#39;: &#39;species&#39;}, {&#39;value_vars&#39;: &#39;petal_length&#39;})</span>
-<span class="err"># df.melt(id_vars=&#39;species&#39;, value_vars=&#39;petal_length&#39;)</span>
-</code></pre></div>
-
-</li>
-<li>
-<p>You can also combine kwargs into a single dict </p>
-<div class="codehilite"><pre><span></span><code><span class="err">df &gt;&gt;o&gt;&gt; (pd.melt, {&#39;id_vars&#39;: &#39;species&#39;, &#39;value_vars&#39;: &#39;petal_length&#39;})</span>
-</code></pre></div>
-
-</li>
+<li><strong>rows</strong>: subset rows based on some conditions (str), ranges (tuples), or indices (list)</li>
+<li><strong>cols</strong>: subset cols based on some conditions (str), ranges (tuples), or indices (list); support "-col" inversion -&gt; <em>from plydata</em></li>
+<li><strong>summarize</strong>: create a new column(s) thats the result of a operation that returns a <em>scalar</em> value and assigns it back to df. Accepts dfs or grouped dfs</li>
+<li><strong>assign</strong>: create a new column(s) thats the result of a operation that returns a <em>series</em> value and assigns it back to df. Accepts dfs or grouped dfs</li>
 </ul>
+<p><em>I think summarize -&gt; aggregate and assign -&gt; mutate in dplyr land</em>  </p>
+<h1 id="secondary">Secondary</h1>
+<ul>
+<li><strong>apply</strong>: to apply artbitrary functions on a df or grouped df (just a wrapper around df.apply)</li>
+</ul>
+<h1 id="example-verb-based-analysis-of-a-dataframe">Example Verb-based analysis of a dataframe</h1>
+<div class="highlight">
+<pre><span></span><code><span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">pipe</span>
+<span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span>
+
+<span class="c1"># Basic slicing/subsetting</span>
+
+<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
+    <span class="n">rows</span><span class="p">(</span><span class="s2">"group == 'c' or group == 'b'"</span><span class="p">),</span> 
+    <span class="n">cols</span><span class="p">(</span><span class="s2">"rt"</span><span class="p">,</span> <span class="s2">"speed"</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
+    <span class="n">rows</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">14</span><span class="p">]),</span> 
+    <span class="n">cols</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="p">)</span>
+
+<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
+    <span class="n">rows</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+    <span class="p">)</span>
+
+<span class="c1"># Perform scalar operation that always return back a *smaller* dataframe or series than the original</span>
+<span class="c1"># Non-grouped inputs produce series results, while grouped inputs produce dataframe results</span>
+
+<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
+    <span class="n">rows</span><span class="p">(</span><span class="s2">"group == 'c' or group == 'b'"</span><span class="p">),</span> 
+    <span class="n">summarize</span><span class="p">(</span><span class="n">rt</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">,</span><span class="n">speed</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
+    <span class="n">groupby</span><span class="p">(</span><span class="s1">'group'</span><span class="p">),</span> 
+    <span class="n">summarize</span><span class="p">(</span><span class="n">score</span> <span class="o">=</span> <span class="s1">'mean'</span><span class="p">,</span> <span class="n">rt</span> <span class="o">=</span> <span class="s1">'std'</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="c1"># Perform series operations that always return back a dataframe thats the *same* size as the original</span>
+<span class="c1"># To preserve input size, use assign instead. It will "broadcast" a smaller set of values over the length of the entire input dataframe, while respecting groups if the input is grouped</span>
+<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">assign</span><span class="p">(</span><span class="n">score_centered</span><span class="o">=</span><span class="s1">'score.mean()'</span><span class="p">))</span>
+<span class="c1"># In this case the return values are computed and broadcasted within group rather than across the entire frame</span>
+
+<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
+    <span class="n">groupby</span><span class="p">(</span><span class="s1">'group'</span><span class="p">),</span> 
+    <span class="n">assign</span><span class="p">(</span>
+        <span class="n">score_centered</span><span class="o">=</span><span class="s1">'score - score.mean()'</span><span class="p">,</span> 
+        <span class="n">score_norm</span> <span class="o">=</span> <span class="s1">'score/score.std()'</span>
+        <span class="p">)</span>
+
+    <span class="p">)</span>
+
+<span class="c1"># e.g. the mean in sub-group</span>
+
+<span class="n">pipe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> 
+    <span class="n">groupby</span><span class="p">(</span><span class="s1">'group'</span><span class="p">),</span> 
+    <span class="n">assign</span><span class="p">(</span><span class="n">speed_per_group</span><span class="o">=</span><span class="s1">'speed.mean()'</span><span class="p">)</span>
+    <span class="p">)</span>
+</code></pre>
+</div>
+</div>
+</div>
                 
               
               
@@ -503,7 +474,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../ops/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../io/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -512,19 +483,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Operations
+                Saving and Loading
               </div>
             </div>
           </a>
         
         
-          <a href="../termplot/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../goodpipes/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Terminal Plots
+                Functional-programming-style data analysis
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

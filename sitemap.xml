@@ -1,31 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://eshinjolly.com/utilz/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://eshinjolly.com/utilz/api/io/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-22</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://eshinjolly.com/utilz/api/verbs/</loc>
+     <lastmod>2020-11-22</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://eshinjolly.com/utilz/api/goodpipes/</loc>
+     <lastmod>2020-11-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://eshinjolly.com/utilz/api/guards/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://eshinjolly.com/utilz/api/ops/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://eshinjolly.com/utilz/api/pipe/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://eshinjolly.com/utilz/api/termplot/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://eshinjolly.com/utilz/api/plot/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

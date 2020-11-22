@@ -205,29 +205,6 @@
   
 
 
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
-    
-    <label class="md-nav__link" for="nav-2">
-      API Reference
-      <span class="md-nav__icon md-icon"></span>
-    </label>
-    <nav class="md-nav" aria-label="API Reference" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        <span class="md-nav__icon md-icon"></span>
-        API Reference
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-  
-
-
   <li class="md-nav__item md-nav__item--active">
     
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
@@ -265,8 +242,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#utilz.io.load" class="md-nav__link">
-    load()
+  <a href="#utilz.io.nbload" class="md-nav__link">
+    nbload()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.io.nbsave" class="md-nav__link">
+    nbsave()
   </a>
   
 </li>
@@ -284,10 +268,34 @@
     
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../verbs/" class="md-nav__link">
+      Data analysis "verbs"
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../goodpipes/" class="md-nav__link">
+      Functional-programming-style data analysis
+    </a>
+  </li>
+
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
@@ -296,10 +304,10 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
@@ -308,10 +316,10 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
@@ -320,10 +328,10 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
@@ -332,21 +340,16 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
     <a href="../plot/" class="md-nav__link">
       Plotting Helpers
     </a>
-  </li>
-
-        
-      </ul>
-    </nav>
   </li>
 
     
@@ -381,8 +384,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#utilz.io.load" class="md-nav__link">
-    load()
+  <a href="#utilz.io.nbload" class="md-nav__link">
+    nbload()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.io.nbsave" class="md-nav__link">
+    nbsave()
   </a>
   
 </li>
@@ -419,15 +429,15 @@
 <p>I/O Module for working with Paths</p>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.io.load">
+<h4 class="doc doc-heading" id="utilz.io.nbload">
 
         <code class="highlight language-python">
-load<span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">as_df</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">h5_key</span><span class="o">=</span><span class="s1">'data'</span><span class="p">,</span> <span class="n">json_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pickle_encoding</span><span class="o">=</span><span class="s1">'rb'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>        </code>
+nbload<span class="p">(</span><span class="n">varname</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">to_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>        </code>
 
 
       </h4>
 <div class="doc doc-contents ">
-<p>A handy dandy all-in-one loading function. Simply pass a Path object to a file (or a string) and you'll back a python object. Supported extensions are: .txt, .csv, .json, .p, .pickle, .h5, .hdf5, .gz</p>
+<p>Load a variable previously saved in a notebook's json meta-data using scrapbook</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -440,76 +450,28 @@ load<span class="p">(</span><span class="n">f</span><span class="p">,</span> <sp
 </thead>
 <tbody>
 <tr>
-<td><code>f</code></td>
-<td><code>Union[pathlib.Path, str]</code></td>
+<td><code>varname</code></td>
+<td><code>string</code></td>
 <td>
-<p>name or path object to load</p>
+<p>variable to load</p>
 </td>
 <td><em>required</em></td>
 </tr>
 <tr>
-<td><code>as_df</code></td>
+<td><code>fname</code></td>
+<td><code>string/Path</code></td>
+<td>
+<p>notebook path to load</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>to_arr</code></td>
 <td><code>bool</code></td>
 <td>
-<p>treat a .hdf5, .h5 file as a Dataframe; Default False</p>
+<p>whether to cast the loaded variable to a numpy array; Default False</p>
 </td>
 <td><code>False</code></td>
-</tr>
-<tr>
-<td><code>as_arr</code></td>
-<td><code>bool</code></td>
-<td>
-<p>treat a .txt file as a numpy array;</p>
-</td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>as_str</code></td>
-<td><code>bool</code></td>
-<td>
-<p>open txt as a single string instead of</p>
-</td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>json_str</code></td>
-<td><code>bool</code></td>
-<td>
-<p>treat a json file as a string (i.e use json.loads</p>
-</td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>h5_key</code></td>
-<td><code>str</code></td>
-<td>
-<p>the key within the h5 file to load when if using as_df;</p>
-</td>
-<td><code>'data'</code></td>
-</tr>
-<tr>
-<td><code>pickle_encoding</code></td>
-<td><code>str</code></td>
-<td>
-<p>pickle encoding to use; Default 'rb'</p>
-</td>
-<td><code>'rb'</code></td>
-</tr>
-<tr>
-<td><code>verbose</code></td>
-<td><code>bool</code></td>
-<td>
-<p>whether to print messages during load. Default False</p>
-</td>
-<td><code>False</code></td>
-</tr>
-<tr>
-<td><code>**kwargs</code></td>
-<td><code></code></td>
-<td>
-<p>keyword arguments to pd.read_csv, np.loadtxt, dd.io.load, pickle, or open</p>
-</td>
-<td><code>{}</code></td>
 </tr>
 </tbody>
 </table>
@@ -525,7 +487,7 @@ load<span class="p">(</span><span class="n">f</span><span class="p">,</span> <sp
 <tr>
 <td><code>Any</code></td>
 <td>
-<p>the loaded object</p>
+<p>the loaded variable</p>
 </td>
 </tr>
 </tbody>
@@ -533,98 +495,82 @@ load<span class="p">(</span><span class="n">f</span><span class="p">,</span> <sp
 <details class="quote">
           <summary>Source code in <code>utilz/io.py</code></summary>
           <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
-    <span class="n">f</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-    <span class="n">as_df</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">as_arr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">as_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">h5_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"data"</span><span class="p">,</span>
-    <span class="n">json_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">pickle_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"rb"</span><span class="p">,</span>
-    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">nbload</span><span class="p">(</span><span class="n">varname</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">to_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    A handy dandy all-in-one loading function. Simply pass a Path object to a file (or a string) and you'll back a python object. Supported extensions are: .txt, .csv, .json, .p, .pickle, .h5, .hdf5, .gz</span>
+<span class="sd">    Load a variable previously saved in a notebook's json meta-data using scrapbook</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        f (Path/str): name or path object to load</span>
-<span class="sd">        as_df (bool, optional): treat a .hdf5, .h5 file as a Dataframe; Default False</span>
-<span class="sd">        as_arr (bool, optional): treat a .txt file as a numpy array;</span>
-<span class="sd">        Default False</span>
-<span class="sd">        as_str (bool, optional): open txt as a single string instead of</span>
-<span class="sd">        splitting on newlines; Default False</span>
-<span class="sd">        json_str (bool, optional): treat a json file as a string (i.e use json.loads</span>
-<span class="sd">        instead of json.load); Default False</span>
-<span class="sd">        h5_key (str, optional): the key within the h5 file to load when if using as_df;</span>
-<span class="sd">        Default 'data'</span>
-<span class="sd">        pickle_encoding (str, optional): pickle encoding to use; Default 'rb'</span>
-<span class="sd">        verbose (bool, optional): whether to print messages during load. Default False</span>
-<span class="sd">        **kwargs: keyword arguments to pd.read_csv, np.loadtxt, dd.io.load, pickle, or open</span>
+<span class="sd">        varname (string): variable to load</span>
+<span class="sd">        fname (string/Path): notebook path to load</span>
+<span class="sd">        to_arr (bool, optional): whether to cast the loaded variable to a numpy array; Default False</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        the loaded object</span>
+<span class="sd">        Any: the loaded variable</span>
 <span class="sd">    """</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Input must be a string or Path object"</span><span class="p">)</span>
-
-    <span class="n">supported_exts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">".txt"</span><span class="p">,</span> <span class="s2">".json"</span><span class="p">,</span> <span class="s2">".p"</span><span class="p">,</span> <span class="s2">".pickle"</span><span class="p">,</span> <span class="s2">".csv"</span><span class="p">,</span> <span class="s2">".h5"</span><span class="p">,</span> <span class="s2">"hdf5"</span><span class="p">,</span> <span class="s2">".gz"</span><span class="p">]</span>
-
-    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".csv"</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"csv file - using pandas"</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-    <span class="k">elif</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".h5"</span> <span class="ow">or</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".hdf5"</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">as_df</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">"h5 file as df - using pandas"</span><span class="p">)</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">h5_key</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">"h5 file - using deepdish"</span><span class="p">)</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-
-    <span class="k">elif</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".txt"</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">as_arr</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">"txt file - using numpy"</span><span class="p">)</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">"txt file using - open"</span><span class="p">)</span>
-            <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">as_str</span><span class="p">:</span>
-                    <span class="n">out</span> <span class="o">=</span> <span class="n">file_handle</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">out</span> <span class="o">=</span> <span class="n">file_handle</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
-
-    <span class="k">elif</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".p"</span> <span class="ow">or</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".pickle"</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"pickle file - using pickle"</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">pickle_encoding</span><span class="p">))</span>
-
-    <span class="k">elif</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".json"</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"json file - using pickle"</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">json_str</span><span class="p">:</span>
-                <span class="n">out</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file_handle</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">out</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
-
-    <span class="k">elif</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".gz"</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"gz file - using numpy"</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to_arr</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">read_notebook</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">scraps</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"File must end in one of: </span><span class="si">{</span><span class="n">supported_exts</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="n">read_notebook</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">scraps</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.io.nbsave">
 
-    <span class="k">return</span> <span class="n">out</span>
+        <code class="highlight language-python">
+nbsave<span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">varname</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Save a variable within a notebook's json meta-data using scrapbook. Auto-converts numpy arrays to lists before saving</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>var</code></td>
+<td><code>Any</code></td>
+<td>
+<p>variable to save</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>varname</code></td>
+<td><code>string</code></td>
+<td>
+<p>what to call the variable in the notebook meta-data</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/io.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">nbsave</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">varname</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Save a variable within a notebook's json meta-data using scrapbook. Auto-converts numpy arrays to lists before saving</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        var (Any): variable to save</span>
+<span class="sd">        varname (string): what to call the variable in the notebook meta-data</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">sb</span><span class="o">.</span><span class="n">glue</span><span class="p">(</span><span class="n">varname</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
 </code></pre>
 </div>
 </details>
@@ -713,13 +659,13 @@ save<span class="p">(</span><span class="n">f</span><span class="p">)</span>    
           </a>
         
         
-          <a href="../guards/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../verbs/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Guards and Decorators
+                Data analysis "verbs"
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

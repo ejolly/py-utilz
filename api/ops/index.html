@@ -202,29 +202,6 @@
       
       
 
-  
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
-    
-    <label class="md-nav__link" for="nav-2">
-      API Reference
-      <span class="md-nav__icon md-icon"></span>
-    </label>
-    <nav class="md-nav" aria-label="API Reference" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        <span class="md-nav__icon md-icon"></span>
-        API Reference
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
 
   <li class="md-nav__item">
     <a href="../io/" class="md-nav__link">
@@ -232,10 +209,34 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../verbs/" class="md-nav__link">
+      Data analysis "verbs"
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../goodpipes/" class="md-nav__link">
+      Functional-programming-style data analysis
+    </a>
+  </li>
+
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
@@ -244,10 +245,10 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
   
 
@@ -289,6 +290,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#utilz.ops.apply" class="md-nav__link">
+    apply()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#utilz.ops.norm_by_group" class="md-nav__link">
     norm_by_group()
   </a>
@@ -316,16 +324,23 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#utilz.ops.splitdf" class="md-nav__link">
+    splitdf()
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
     
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
@@ -334,10 +349,10 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
@@ -346,21 +361,16 @@
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
     <a href="../plot/" class="md-nav__link">
       Plotting Helpers
     </a>
-  </li>
-
-        
-      </ul>
-    </nav>
   </li>
 
     
@@ -395,6 +405,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#utilz.ops.apply" class="md-nav__link">
+    apply()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#utilz.ops.norm_by_group" class="md-nav__link">
     norm_by_group()
   </a>
@@ -418,6 +435,13 @@
         <li class="md-nav__item">
   <a href="#utilz.ops.random_seed" class="md-nav__link">
     random_seed()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.ops.splitdf" class="md-nav__link">
+    splitdf()
   </a>
   
 </li>
@@ -447,6 +471,135 @@
 <p>Common data operations and transformations often on pandas dataframes</p>
 <hr />
 <div class="doc doc-children">
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.ops.apply">
+
+        <code class="highlight language-python">
+apply<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">as_df</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Applys func to iterme and combines the result into a single, list, dataFrame or array. Iterme can be a list of elements, list of dataframes, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</p>
+<p>A a few interesting use cases include:</p>
+<ul>
+<li>Passing None for the value of func acts as a shortcut to flatten nested lists.</li>
+<li>Using in place of map acts like a call to list(map(...))</li>
+<li>Passing in pd.read_csv to list of files to get back a single dataframe</li>
+</ul>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func</code></td>
+<td><code>callable</code></td>
+<td>
+<p>function to apply. If None, will attempt to flatten a nested list</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>iterme</code></td>
+<td><code>iterable</code></td>
+<td>
+<p>an iterable for which func will be called on each element</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>as_df</code></td>
+<td><code>bool; optional</code></td>
+<td>
+<p>combine result into a DataFrame; Default False</p>
+</td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>as_arr</code></td>
+<td><code>bool; optional</code></td>
+<td>
+<p>combine result into an array; Default False</p>
+</td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>axis</code></td>
+<td><code>int; optional</code></td>
+<td>
+<p>what axis to concatenate over; Default 0 (first)</p>
+</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>ignore_index</code></td>
+<td><code>bool; optional</code></td>
+<td>
+<p>ignore the index when combining DataFrames; Default True</p>
+</td>
+<td><code>True</code></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/ops.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">as_df</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Applys func to iterme and combines the result into a single, list, dataFrame or array. Iterme can be a list of elements, list of dataframes, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</span>
+
+<span class="sd">    A a few interesting use cases include:</span>
+
+<span class="sd">    - Passing None for the value of func acts as a shortcut to flatten nested lists.</span>
+<span class="sd">    - Using in place of map acts like a call to list(map(...))</span>
+<span class="sd">    - Passing in pd.read_csv to list of files to get back a single dataframe</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): function to apply. If None, will attempt to flatten a nested list</span>
+<span class="sd">        iterme (iterable): an iterable for which func will be called on each element</span>
+<span class="sd">        as_df (bool; optional): combine result into a DataFrame; Default False</span>
+<span class="sd">        as_arr (bool; optional): combine result into an array; Default False</span>
+<span class="sd">        axis (int; optional): what axis to concatenate over; Default 0 (first)</span>
+<span class="sd">        ignore_index (bool; optional): ignore the index when combining DataFrames; Default True</span>
+<span class="sd">    """</span>
+
+    <span class="k">if</span> <span class="n">as_df</span> <span class="ow">and</span> <span class="n">as_arr</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"as_df and as_arr cannot both be True"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">iterme</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterme</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">iterme</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">)</span>
+
+    <span class="n">op</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">as_df</span><span class="p">:</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="n">ignore_index</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">as_arr</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">op</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">AxisError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># noqa</span>
+            <span class="n">warn</span><span class="p">(</span>
+                <span class="s2">"Created new axis because requested concatenation axis &gt; existing axes"</span>
+            <span class="p">)</span>
+            <span class="n">op</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">op</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
 <div class="doc doc-object doc-function">
 <h4 class="doc doc-heading" id="utilz.ops.norm_by_group">
 
@@ -542,7 +695,7 @@ norm_by_group<span class="p">(</span><span class="n">df</span><span class="p">,<
 <h4 class="doc doc-heading" id="utilz.ops.pmap">
 
         <code class="highlight language-python">
-pmap<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">func_args</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">loop_idx</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">loop_random_seed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'processes'</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>        </code>
+pmap<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">func_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">loop_idx</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">loop_random_seed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'processes'</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>        </code>
 
 
       </h4>
@@ -581,7 +734,7 @@ pmap<span class="p">(</span><span class="n">func</span><span class="p">,</span> 
 <td>
 <p>additional arguments to the function provided as a list for unnamed args or a dict for named kwargs. If None, assumes func takes no arguments excepted loop_idx_available (if its True); Default None</p>
 </td>
-<td><em>required</em></td>
+<td><code>None</code></td>
 </tr>
 <tr>
 <td><code>n_jobs</code></td>
@@ -647,7 +800,7 @@ pmap<span class="p">(</span><span class="n">func</span><span class="p">,</span> 
 <pre><span></span><code><span class="k">def</span> <span class="nf">pmap</span><span class="p">(</span>
     <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
     <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
-    <span class="n">func_args</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="n">func_args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">loop_idx</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">loop_random_seed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1059,6 +1212,125 @@ random_seed<span class="p">(</span><span class="n">seed</span><span class="p">)<
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
         <span class="s2">"</span><span class="si">%r</span><span class="s2"> cannot be used to seed a numpy.random.RandomState"</span> <span class="s2">" instance"</span> <span class="o">%</span> <span class="n">seed</span>
     <span class="p">)</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.ops.splitdf">
+
+        <code class="highlight language-python">
+splitdf<span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Split a dataframe into X and Y arrays given column names. Useful for using a pandas dataframe for sklearn. If Y is None, assumes its in the <em>first</em> column.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df</code></td>
+<td><code>Dataframe</code></td>
+<td>
+<p>input dataframe that's at least 2d</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>Y</code></td>
+<td><code>string</code></td>
+<td>
+<p>name(s) of the columns for the Y array. Defaults to df.iloc[:, 0]</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>X</code></td>
+<td><code>string/list</code></td>
+<td>
+<p>name(s) of columns for the X array. Defaults to df.iloc[:,1:]</p>
+</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ValueError</code></td>
+<td>
+<p>If df is not 2 dimensional</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tuple</code></td>
+<td>
+<p>(X, Y)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>utilz/ops.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">splitdf</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Split a dataframe into X and Y arrays given column names. Useful for using a pandas dataframe for sklearn. If Y is None, assumes its in the *first* column.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (Dataframe): input dataframe that's at least 2d</span>
+<span class="sd">        Y (string, optional): name(s) of the columns for the Y array. Defaults to df.iloc[:, 0]</span>
+<span class="sd">        X (string/list, optional): name(s) of columns for the X array. Defaults to df.iloc[:,1:]</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If df is not 2 dimensional</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: (X, Y)</span>
+<span class="sd">    """</span>
+
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"df must 2 dimensional"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">X</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">Y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">Y</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
 </code></pre>
 </div>
 </details>
