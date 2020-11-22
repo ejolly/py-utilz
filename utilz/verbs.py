@@ -1,76 +1,15 @@
 """
-dplyr like *verbs* for working with pandas dataframes. Designed to be piped together using the `pipe` function from the `toolz` package. Provides a broad use-case alternative to plydata or larger packages while use mostly native pandas methods under-the-hood.
+dplyr like *verbs* for working with pandas dataframes. Designed to be piped together using the `pipe` function from the `toolz` package. While not being as feature-complete, `utilz.verbse` provides limited alternative to other libraries like `plydata` because it just wraps mostly native pandas methods under-the-hood.
 
-*Note*: the current version unfortunately does borrow the select, and define functions from plydata
+*Note: the current version unfortunately does borrow the `select` and `define` functions from plydata*
 
 # Workhorses
 
-- **rows**: subset rows based on some conditions (str), ranges (tuples), or indices (list)
-- **cols**: subset cols based on some conditions (str), ranges (tuples), or indices (list); support "-col" inversion -> *from plydata*
-- **summarize**: create a new column(s) thats the result of a operation that returns a *scalar* value and assigns it back to df. Accepts dfs or grouped dfs
-- **assign**: create a new column(s) thats the result of a operation that returns a *series* value and assigns it back to df. Accepts dfs or grouped dfs
-
-*I think summarize -> aggregate and assign -> mutate in dplyr land*  
-
-# Secondary
-- **apply**: to apply artbitrary functions on a df or grouped df (just a wrapper around df.apply)
-
-# Example Verb-based analysis of a dataframe
-
-```python
-from toolz import pipe
-from utilz import rows, cols
-
-# Basic slicing/subsetting
-
-pipe(x, 
-    rows("group == 'c' or group == 'b'"), 
-    cols("rt", "speed")
-    )
-
-pipe(x, 
-    rows([1,9,14]), 
-    cols((3,5))
-    )
-
-pipe(x, 
-    rows((1,11,2))
-    )
-
-# Perform scalar operation that always return back a *smaller* dataframe or series than the original
-# Non-grouped inputs produce series results, while grouped inputs produce dataframe results
-
-pipe(x, 
-    rows("group == 'c' or group == 'b'"), 
-    summarize(rt='mean',speed='mean')
-    )
-
-pipe(x, 
-    groupby('group'), 
-    summarize(score = 'mean', rt = 'std')
-    )
-
-# Perform series operations that always return back a dataframe thats the *same* size as the original
-# To preserve input size, use assign instead. It will "broadcast" a smaller set of values over the length of the entire input dataframe, while respecting groups if the input is grouped
-pipe(x, assign(score_centered='score.mean()'))
-# In this case the return values are computed and broadcasted within group rather than across the entire frame
-
-pipe(x, 
-    groupby('group'), 
-    assign(
-        score_centered='score - score.mean()', 
-        score_norm = 'score/score.std()'
-        )
-        
-    )
-
-# e.g. the mean in sub-group
-
-pipe(x, 
-    groupby('group'), 
-    assign(speed_per_group='speed.mean()')
-    )
-```
+- `rows`: subset rows based on some conditions (str), ranges (tuples), or indices (list)
+- `cols`: subset cols based on some conditions (str), ranges (tuples), or indices (list); support "-col" inversion -> *from plydata*
+- `summarize`: create a new column(s) thats the result of a operation that returns a *scalar* value and assigns it back to df. Accepts dfs or grouped dfs
+- `assign`: create a new column(s) thats the result of a operation that returns a *series* value and assigns it back to df. Accepts dfs or grouped dfs
+- `apply`: to apply artbitrary functions on a df or grouped df (just a wrapper around `df.apply`)
 
 """
 
@@ -152,7 +91,7 @@ def assign(dfg, *args, **kwargs):
             else:
                 res.columns = [res.columns[0]] + [k]
                 prev = prev.merge(res, on=group_col)
-        prev = prev.sort_values(by="index").drop(columns="index")
+        prev = prev.sort_values(by="index").drop(columns="index").reset_index(drop=True)
         return prev
     else:
         from plydata import define

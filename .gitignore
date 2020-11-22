@@ -3,3 +3,5 @@
 *.egg*
 *.pytest*
 site/
+*.csv
+*.utilz_cache

@@ -145,11 +145,16 @@ def load(
 
 
 # TODO: Write me
-def save(f: Union[Path, str]) -> None:
+def save(f: Union[Path, str], obj: Any, save_index: bool = False) -> None:
     """
     A handy dandy all-in-one saving function. Simply pass a Path object to a file (or a string) and it will be saved based upon the file *extension* you provide. Suported extensions are : .txt, .csv, .json, .p, .pickle, .h5, .hd5f, .gz
 
     Args:
         f (Path/str): complete filepath to save to including extension
     """
-    pass
+
+    if isinstance(obj, pd.DataFrame):
+        if f.endswith(".csv"):
+            obj.to_csv(str(f), index=save_index)
+        elif f.endswith(".h5"):
+            obj.to_hdf(str(f), key="dataframe", mode="w")
