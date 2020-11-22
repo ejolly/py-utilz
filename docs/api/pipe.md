@@ -1,9 +1,10 @@
 # utilz.pipe
 
+!!! warning "Warning highly experimental"
+      Not really ready for real-world usage and doesn't work with numpy arrays. Unlikely to have continued development
+
 `utilz` proves a *pipe* operator similar to the `%>%` operator from [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) in R.
 
-!!! note
-    Doesn't currently work with numpy arrays. Other data types and pandas DataFrames are ok.
 
 ::: utilz.pipe
 

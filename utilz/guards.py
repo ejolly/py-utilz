@@ -3,7 +3,7 @@ Custom guards for defensive data analysis compatible with [bulwark](https://bulw
 
 Intended usage is as Python decorators:
 
-```
+```python
 from utilz.guards import log_df
 
 @log_df

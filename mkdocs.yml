@@ -21,7 +21,7 @@ nav:
   - Pipe Operator: api/pipe.md
   - Terminal Plots: api/termplot.md
   - Plotting Helpers: api/plot.md
-  - Functional-programming-style demo notebook: api/fp_data_analysis.ipynb
+  - Functional style demo notebook: api/fp_data_analysis.ipynb
 plugins:
   - mkdocs-jupyter
   - search
