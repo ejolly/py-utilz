@@ -11,7 +11,7 @@
 
 1) First create the pipe object at the top of your code and name it whatever you want. I like 'o'
 
-```
+```python
 from utilz.pipe import Pipe
 o = Pipe()
 

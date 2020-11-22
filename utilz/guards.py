@@ -116,7 +116,9 @@ def disk_cache(
     save_dir: str = ".utilz_cache",
 ) -> Any:
     """
-    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to `.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}`
+    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to `.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}`.
+
+    Very similar in spirit to @memory.cache decorator in joblib but instead uses csv's to persist Dataframes and hd5f to persist everything else rather than pickles. Also works better in combination with the @curry decorator from toolz/cytoolz
 
     Args:
         threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 30.
@@ -159,10 +161,10 @@ def disk_cache(
             key_h5 = cache_dir.joinpath(key_h5)
             if autoload:
                 if Path(key_csv).exists():
-                    print("Returning previously saved result")
+                    print(f"Returning {func.__name__} cached result")
                     return pd.read_csv(key_csv)
                 elif Path(key_h5).exists():
-                    print("Returning previously saved result")
+                    print(f"Returning {func.__name__} cached result")
                     return dd.io.load(key_h5)
             tic = dt.datetime.now()
             result = func(*args, **kwargs)
@@ -170,10 +172,10 @@ def disk_cache(
             if time_taken.seconds > threshold:
                 if isinstance(result, pd.DataFrame):
                     result.to_csv(str(key_csv), index=index)
-                    print(f"Exceeded compute time. Result saved to {key_csv}")
+                    print(f"Exceeded compute time. Result cached to {key_csv}")
                 else:
                     dd.io.save(str(key_h5), result, compression="zlib")
-                    print(f"Exceeded compute time. Result saved to {key_h5}")
+                    print(f"Exceeded compute time. Result cached to {key_h5}")
             return result
 
         return wrapper
