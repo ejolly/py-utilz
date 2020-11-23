@@ -15,20 +15,19 @@ dplyr like *verbs* for working with pandas dataframes. Designed to be piped toge
 
 __all__ = ["groupby", "rows", "cols", "rename", "save", "summarize", "assign", "apply"]
 
-from cytoolz import curry
 import numpy as np
 import pandas as pd
 
 
 # We curry these because intend them to be used with pipe which implicitly passes an argument in
 # df is second for functions that don't have keyword args because thats how each function will receive it from pipe
-@curry
+
+
 def groupby(cols, df):
     """Call a dataframe's `.groupby` method"""
     return df.groupby(cols)
 
 
-@curry
 def rows(query, df):
     """Select rows using a query (str), slice (tuple), or indices (list) """
     if isinstance(query, str):
@@ -39,7 +38,6 @@ def rows(query, df):
         return df.iloc[slice(*query), :]
 
 
-@curry
 def cols(query, df):
     """Select columns using a query (str), slice (tuple), or indices (list) """
     if isinstance(query, str):
@@ -52,26 +50,22 @@ def cols(query, df):
         return df.iloc[:, slice(*query)]
 
 
-@curry
 def rename(cols, df):
     """Call a dataframe's `.rename(columns={})` method"""
     return df.rename(columns=cols)
 
 
-@curry
 def save(path, df):
     """Call a dataframe's `.to_csv(index=False)` method"""
     df.to_csv(f"{path}.csv", index=False)
     return df
 
 
-@curry
 def summarize(df, **stats):
     """Call a dataframe or groupby object's `.agg` method"""
     return df.agg(stats)
 
 
-@curry
 def assign(dfg, *args, **kwargs):
     """
     Creates a new column(s) in df based on a function of existing columns in df.
@@ -99,7 +93,6 @@ def assign(dfg, *args, **kwargs):
         return define(dfg, *args, **kwargs)
 
 
-@curry
 def apply(func, df):
     """Call a dataframe or groupby object's `.apply` method"""
     return df.apply(func)
