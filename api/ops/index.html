@@ -290,8 +290,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#utilz.ops.apply" class="md-nav__link">
-    apply()
+  <a href="#utilz.ops.mapcat" class="md-nav__link">
+    mapcat()
   </a>
   
 </li>
@@ -443,8 +443,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#utilz.ops.apply" class="md-nav__link">
-    apply()
+  <a href="#utilz.ops.mapcat" class="md-nav__link">
+    mapcat()
   </a>
   
 </li>
@@ -510,20 +510,20 @@
 <hr />
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.ops.apply">
+<h4 class="doc doc-heading" id="utilz.ops.mapcat">
 
         <code class="highlight language-python">
-apply<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">as_df</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>        </code>
+mapcat<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">as_df</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>        </code>
 
 
       </h4>
 <div class="doc doc-contents ">
-<p>Applys <code>func</code> to <code>iterme</code> and combines the result into a single, list, DataFrame or array. <code>iterme</code> can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</p>
+<p><strong>map</strong>s <code>func</code> to <code>iterme</code> and con<strong>cat</strong>enates the result into a single, list, DataFrame or array. <code>iterme</code> can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</p>
 <p>A a few interesting use cases include:</p>
 <ul>
 <li>Passing None for the value of func acts as a shortcut to flatten nested lists.</li>
-<li>Using in place of map acts like a call to list(map(...))</li>
-<li>Passing in pd.read_csv to list of files to get back a single dataframe</li>
+<li>Using in place of <code>map</code> acts like a call to <code>list(map(...))</code></li>
+<li>Passing in <code>pd.read_csv</code> to list of files to get back a single dataframe</li>
 </ul>
 <p><strong>Parameters:</strong></p>
 <table>
@@ -589,15 +589,15 @@ apply<span class="p">(</span><span class="n">func</span><span class="p">,</span>
 <details class="quote">
           <summary>Source code in <code>utilz/ops.py</code></summary>
           <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">as_df</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">as_df</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Applys `func` to `iterme` and combines the result into a single, list, DataFrame or array. `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</span>
+<span class="sd">    **map**s `func` to `iterme` and con**cat**enates the result into a single, list, DataFrame or array. `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</span>
 
 <span class="sd">    A a few interesting use cases include:</span>
 
 <span class="sd">    - Passing None for the value of func acts as a shortcut to flatten nested lists.</span>
-<span class="sd">    - Using in place of map acts like a call to list(map(...))</span>
-<span class="sd">    - Passing in pd.read_csv to list of files to get back a single dataframe</span>
+<span class="sd">    - Using in place of `map` acts like a call to `list(map(...))`</span>
+<span class="sd">    - Passing in `pd.read_csv` to list of files to get back a single dataframe</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        func (callable): function to apply. If None, will attempt to flatten a nested list</span>
@@ -1264,7 +1264,7 @@ splitdf<span class="p">(</span><span class="n">df</span><span class="p">,</span>
 
       </h4>
 <div class="doc doc-contents ">
-<p>Split a dataframe into X and Y arrays given column names. Useful for using a pandas dataframe for sklearn. If Y is None, assumes its in the <em>first</em> column.</p>
+<p>Split a dataframe into X and Y arrays given column names. Useful for splitting up a a pandas dataframe as a <code>sklearn</code> pipeline step. If <code>Y</code> is <code>None</code>, assumes its in the <em>first</em> column of <code>df</code>.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -1341,7 +1341,7 @@ splitdf<span class="p">(</span><span class="n">df</span><span class="p">,</span>
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">splitdf</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Split a dataframe into X and Y arrays given column names. Useful for using a pandas dataframe for sklearn. If Y is None, assumes its in the *first* column.</span>
+<span class="sd">    Split a dataframe into X and Y arrays given column names. Useful for splitting up a a pandas dataframe as a `sklearn` pipeline step. If `Y` is `None`, assumes its in the *first* column of `df`.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        df (Dataframe): input dataframe that's at least 2d</span>

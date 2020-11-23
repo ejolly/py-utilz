@@ -247,22 +247,65 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#see-the-demo-notebook-for-usage" class="md-nav__link">
-    See the demo notebook for usage.
-  </a>
-  
-    <nav class="md-nav" aria-label="See the demo notebook for usage.">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#utilz.verbs" class="md-nav__link">
     utilz.verbs
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.apply" class="md-nav__link">
+    apply()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.assign" class="md-nav__link">
+    assign()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.cols" class="md-nav__link">
+    cols()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.groupby" class="md-nav__link">
+    groupby()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.rename" class="md-nav__link">
+    rename()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.rows" class="md-nav__link">
+    rows()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.save" class="md-nav__link">
+    save()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.summarize" class="md-nav__link">
+    summarize()
+  </a>
   
 </li>
       
@@ -407,22 +450,65 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#see-the-demo-notebook-for-usage" class="md-nav__link">
-    See the demo notebook for usage.
-  </a>
-  
-    <nav class="md-nav" aria-label="See the demo notebook for usage.">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#utilz.verbs" class="md-nav__link">
     utilz.verbs
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.apply" class="md-nav__link">
+    apply()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.assign" class="md-nav__link">
+    assign()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.cols" class="md-nav__link">
+    cols()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.groupby" class="md-nav__link">
+    groupby()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.rename" class="md-nav__link">
+    rename()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.rows" class="md-nav__link">
+    rows()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.save" class="md-nav__link">
+    save()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilz.verbs.summarize" class="md-nav__link">
+    summarize()
+  </a>
   
 </li>
       
@@ -444,21 +530,217 @@
                 
                 
                 <h1 id="utilzverbs">utilz.verbs</h1>
-<h2 id="see-the-demo-notebook-for-usage">See the <a href="../fp_data_analysis/">demo notebook</a> for usage.</h2>
 <div class="doc doc-object doc-module">
 <h4 class="hidden-toc" href="#utilz.verbs" id="utilz.verbs" style="visibility: hidden; position: absolute;">
         </h4>
 <div class="doc doc-contents first">
-<p>dplyr like <em>verbs</em> for working with pandas dataframes. Designed to be piped together using the <code>pipe</code> function from the <code>toolz</code> package. While not being as feature-complete, <code>utilz.verbse</code> provides limited alternative to other libraries like <code>plydata</code> because it just wraps mostly native pandas methods under-the-hood.</p>
-<p><em>Note: the current version unfortunately does borrow the <code>select</code> and <code>define</code> functions from plydata</em></p>
-<h1 id="workhorses">Workhorses</h1>
-<ul>
-<li><code>rows</code>: subset rows based on some conditions (str), ranges (tuples), or indices (list)</li>
-<li><code>cols</code>: subset cols based on some conditions (str), ranges (tuples), or indices (list); support "-col" inversion -&gt; <em>from plydata</em></li>
-<li><code>summarize</code>: create a new column(s) thats the result of a operation that returns a <em>scalar</em> value and assigns it back to df. Accepts dfs or grouped dfs</li>
-<li><code>assign</code>: create a new column(s) thats the result of a operation that returns a <em>series</em> value and assigns it back to df. Accepts dfs or grouped dfs</li>
-<li><code>apply</code>: to apply artbitrary functions on a df or grouped df (just a wrapper around <code>df.apply</code>)</li>
-</ul>
+<p>dplyr like <em>verbs</em> for working with pandas dataframes. Designed to be piped together using the <code>pipe</code> function from the <code>toolz</code> package. While not being as feature-complete, <code>utilz.verbse</code> provides limited alternative to other libraries like <code>plydata</code> because it just wraps mostly native pandas methods under-the-hood. Note: the current version unfortunately does borrow the <code>select</code> and <code>define</code> functions from plydata</p>
+<div class="doc doc-children">
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.verbs.apply">
+
+        <code class="highlight language-python">
+apply<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Call a dataframe or groupby object's <code>.apply</code> method</p>
+<details class="quote">
+          <summary>Source code in <code>utilz/verbs.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="sd">"""Call a dataframe or groupby object's `.apply` method"""</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.verbs.assign">
+
+        <code class="highlight language-python">
+assign<span class="p">(</span><span class="n">dfg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses <code>plydata.define/mutate</code> unless the input is a grouped DataFrame
+in which case it falls back to pandas methods because <code>plydata</code> can only handle
+grouped inputs resulting from its own (slow) <code>group_by</code> function</p>
+<details class="quote">
+          <summary>Source code in <code>utilz/verbs.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">assign</span><span class="p">(</span><span class="n">dfg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses `plydata.define/mutate` unless the input is a grouped DataFrame</span>
+<span class="sd">    in which case it falls back to pandas methods because `plydata` can only handle</span>
+<span class="sd">    grouped inputs resulting from its own (slow) `group_by` function</span>
+<span class="sd">    """</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dfg</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">groupby</span><span class="o">.</span><span class="n">generic</span><span class="o">.</span><span class="n">DataFrameGroupBy</span><span class="p">):</span>
+        <span class="n">prev</span> <span class="o">=</span> <span class="n">dfg</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">dfg</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">group</span><span class="p">:</span> <span class="n">group</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+            <span class="n">group_col</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">"level_1"</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"index"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="n">prev</span> <span class="o">=</span> <span class="n">prev</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">group_col</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="s2">"index"</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="n">prev</span> <span class="o">=</span> <span class="n">prev</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="n">group_col</span><span class="p">)</span>
+        <span class="n">prev</span> <span class="o">=</span> <span class="n">prev</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">"index"</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"index"</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">prev</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">plydata</span> <span class="kn">import</span> <span class="n">define</span>
+
+        <span class="k">return</span> <span class="n">define</span><span class="p">(</span><span class="n">dfg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.verbs.cols">
+
+        <code class="highlight language-python">
+cols<span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Select columns using a <code>.query</code> (str), slicerange (start,stop,step), or indices (list). Uses <code>plydata.select</code> </p>
+<details class="quote">
+          <summary>Source code in <code>utilz/verbs.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">cols</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="sd">"""Select columns using a `.query` (str), slicerange (start,stop,step), or indices (list). Uses `plydata.select` """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">plydata</span> <span class="kn">import</span> <span class="n">select</span>
+
+        <span class="k">return</span> <span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">query</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">query</span><span class="p">)]</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.verbs.groupby">
+
+        <code class="highlight language-python">
+groupby<span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Call a dataframe's <code>.groupby</code> method</p>
+<details class="quote">
+          <summary>Source code in <code>utilz/verbs.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">groupby</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="sd">"""Call a dataframe's `.groupby` method"""</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.verbs.rename">
+
+        <code class="highlight language-python">
+rename<span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Call a dataframe's <code>.rename(columns={})</code> method</p>
+<details class="quote">
+          <summary>Source code in <code>utilz/verbs.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">rename</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="sd">"""Call a dataframe's `.rename(columns={})` method"""</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.verbs.rows">
+
+        <code class="highlight language-python">
+rows<span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Select rows using a <code>.query</code> (str), slicerange (start,stop,step), or indices (list) </p>
+<details class="quote">
+          <summary>Source code in <code>utilz/verbs.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">rows</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="sd">"""Select rows using a `.query` (str), slicerange (start,stop,step), or indices (list) """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">query</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">query</span><span class="p">),</span> <span class="p">:]</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.verbs.save">
+
+        <code class="highlight language-python">
+save<span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Call a dataframe's <code>.to_csv(index=False)</code> method</p>
+<details class="quote">
+          <summary>Source code in <code>utilz/verbs.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="sd">"""Call a dataframe's `.to_csv(index=False)` method"""</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h4 class="doc doc-heading" id="utilz.verbs.summarize">
+
+        <code class="highlight language-python">
+summarize<span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">**</span><span class="n">stats</span><span class="p">)</span>        </code>
+
+
+      </h4>
+<div class="doc doc-contents ">
+<p>Call a dataframe or groupby object's <code>.agg</code> method</p>
+<details class="quote">
+          <summary>Source code in <code>utilz/verbs.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">**</span><span class="n">stats</span><span class="p">):</span>
+    <span class="sd">"""Call a dataframe or groupby object's `.agg` method"""</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+</div>
 </div>
 </div>
                 

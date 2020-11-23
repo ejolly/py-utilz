@@ -527,8 +527,8 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
 
       </h4>
 <div class="doc doc-contents ">
-<p>Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to <code>.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}</code>.</p>
-<p>Very similar in spirit to @memory.cache decorator in joblib but instead uses csv's to persist Dataframes and hd5f to persist everything else rather than pickles. Also works better in combination with the @curry decorator from toolz/cytoolz</p>
+<p>Save the result of a function to disk if it takes longer than <code>threshold</code> to run. Then on subsequent runs given the same <code>args</code> and <code>kwargs</code>, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to <code>.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}</code>.</p>
+<p>Very similar in spirit to <code>@memory.cache</code> decorator in <code>joblib</code> but instead uses csv's to persist Dataframes and hdf5 to persist everything else rather than pickles. Also works better in combination with the <code>@curry</code> decorator from <code>toolz/cytoolz</code></p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -584,9 +584,9 @@ disk_cache<span class="p">(</span><span class="n">threshold</span><span class="o
     <span class="n">save_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">".utilz_cache"</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">"""</span>
-<span class="sd">    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to `.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}`.</span>
+<span class="sd">    Save the result of a function to disk if it takes longer than `threshold` to run. Then on subsequent runs given the same `args` and `kwargs`, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to `.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}`.</span>
 
-<span class="sd">    Very similar in spirit to @memory.cache decorator in joblib but instead uses csv's to persist Dataframes and hd5f to persist everything else rather than pickles. Also works better in combination with the @curry decorator from toolz/cytoolz</span>
+<span class="sd">    Very similar in spirit to `@memory.cache` decorator in `joblib` but instead uses csv's to persist Dataframes and hdf5 to persist everything else rather than pickles. Also works better in combination with the `@curry` decorator from `toolz/cytoolz`</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 30.</span>
@@ -772,7 +772,7 @@ maybe<span class="p">(</span><span class="n">filepath</span><span class="p">,</s
 
       </h4>
 <div class="doc doc-contents ">
-<p>Run the decorated func only if filepath doesn't exist. Override to always run the function with force.</p>
+<p>Run the decorated <code>func</code> only if <code>filepath</code> doesn't exist. Override to always run the function with <code>force</code>.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -807,7 +807,7 @@ maybe<span class="p">(</span><span class="n">filepath</span><span class="p">,</s
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">maybe</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">"""</span>
-<span class="sd">    Run the decorated func only if filepath doesn't exist. Override to always run the function with force.</span>
+<span class="sd">    Run the decorated `func` only if `filepath` doesn't exist. Override to always run the function with `force`.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        filepath (Path/str): filename or path to check existence for</span>
@@ -843,7 +843,7 @@ same_nunique<span class="p">(</span><span class="n">func</span><span class="p">,
 
       </h4>
 <div class="doc doc-contents ">
-<p>Check if each group of group_col has the same number of unique values of val_col after running a function on a dataframe</p>
+<p>Check if each group of <code>group_col</code> has the same number of unique values of <code>val_col</code> after running a function on a dataframe</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -886,7 +886,7 @@ same_nunique<span class="p">(</span><span class="n">func</span><span class="p">,
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">same_nunique</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">val_col</span><span class="p">,</span> <span class="n">group_col</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Check if each group of group_col has the same number of unique values of val_col after running a function on a dataframe</span>
+<span class="sd">    Check if each group of `group_col` has the same number of unique values of `val_col` after running a function on a dataframe</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        func (callable): a function that operates on a dataframe</span>
@@ -913,7 +913,7 @@ same_shape<span class="p">(</span><span class="n">grpcols</span><span class="p">
 
       </h4>
 <div class="doc doc-contents ">
-<p>Check if each group of group_col has the same dimensions after running a function on a dataframe</p>
+<p>Check if each group of <code>group_col</code> has the same dimensions after running a function on a dataframe</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -948,7 +948,7 @@ same_shape<span class="p">(</span><span class="n">grpcols</span><span class="p">
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">same_shape</span><span class="p">(</span><span class="n">grpcols</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Check if each group of group_col has the same dimensions after running a function on a dataframe</span>
+<span class="sd">    Check if each group of `group_col` has the same dimensions after running a function on a dataframe</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        func (callable): a function that operates on a dataframe</span>
