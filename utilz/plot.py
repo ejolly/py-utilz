@@ -22,9 +22,23 @@ def stripbarplot(
     **kwargs,
 ):
     """
-    Combines a call to sns.barplot + sns.stripplot. Optionally set some axis level attributes during plot creation. Leaving these attributes None will return the default labels that seaborn sets.
-    """
+    Combines a call to `sns.barplot` + `sns.stripplot`. Optionally set some axis level attributes during plot creation. Leaving these attributes None will return the default labels that seaborn sets.
 
+    Args:
+        data (DataFrame): input data
+        pointcolor (str, optional): color of stripplot points. Defaults to "black".
+        xlabel ([type], optional): x-axis label. Defaults to seaborn's default.
+        ylabel ([type], optional): Defaults to seaborn's default.
+        xticklabels ([type], optional):  Defaults to seaborn's default.
+        yticklabels ([type], optional):  Defaults to seaborn's default.
+        xticks ([type], optional):  Defaults to seaborn's default.
+        yticks ([type], optional):  Defaults to seaborn's default.
+        xlim ([type], optional):  Defaults to seaborn's default.
+        ylim ([type], optional):  Defaults to seaborn's default.
+
+    Returns:
+        Axis: plot axis handle
+    """
     ax = sns.barplot(*args, **kwargs, data=data)
     ax = sns.stripplot(*args, **kwargs, color=pointcolor, data=data, ax=ax)
 

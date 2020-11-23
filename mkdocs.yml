@@ -17,11 +17,13 @@ nav:
   - Saving and Loading: api/io.md
   - Data analysis "verbs": api/verbs.md
   - Guards and Decorators: api/guards.md
-  - Operations: api/ops.md
-  - Pipe Operator: api/pipe.md
-  - Terminal Plots: api/termplot.md
   - Plotting Helpers: api/plot.md
-  - Functional style demo notebook: api/fp_data_analysis.ipynb
+  - Operations: api/ops.md
+  - Boilerplate: api/boilerplate.md
+  - Terminal Plots (experimental): api/termplot.md
+  - Pipe Operator (experimental): api/pipe.md
+  - Usage Examples:
+      - Declarative Data Analysis: api/fp_data_analysis.ipynb
 plugins:
   - mkdocs-jupyter
   - search

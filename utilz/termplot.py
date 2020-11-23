@@ -1,14 +1,14 @@
 """
-Plotting module dedicated to working with plots in an interactive terminal (not jupyter notebook!)
+Plotting module dedicated to working with plots in an interactive terminal (not jupyter notebook!). Only confirmed working on [ Iterm ](https://iterm2.com/) on macOS. It relies on the `imgcat` Iterm program, so if that program works in your non-Iterm terminal emulator, this module may work for you.
 """
 __all__ = ["init_termplot", "s", "p"]
 
 
 def init_termplot():
     """
-    Initilize terminal based plotting. **Import and run this before any other python plotting module!** e.g. before matplotlib.
+    Initilize terminal based plotting. **Import and run this before any other python plotting module!** e.g. *before* `import matplotlib`.
 
-    Requires the `imgcat` command line program available in Iterm.
+    Requires the `imgcat` command line program available in [ Iterm ](https://iterm2.com/).
     """
     import matplotlib
 

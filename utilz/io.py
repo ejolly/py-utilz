@@ -1,7 +1,7 @@
 """
 I/O Module for working with Paths
 """
-__all__ = ["load", "save", "nbsave", "nbload"]
+__all__ = ["load", "save", "nbsave", "nbload", "clear_cache"]
 from pathlib import Path
 from typing import Union, Any
 import pandas as pd
@@ -11,6 +11,20 @@ import pickle
 import json
 from toolz.functoolz import memoize
 import scrapbook as sb
+from shutil import rmtree
+
+
+def clear_cache(save_dir: str = ".utilz_cache"):
+    """
+    Quickly delete a utilz cache created by disk_cache()
+
+    Args:
+        save_dir (str, optional): Folder location. Defaults to ".utilz_cache".
+    """
+    try:
+        rmtree(str(save_dir))
+    except FileNotFoundError as _:  # noqa
+        print(f"{save_dir} doesn't exist nothing to clear")
 
 
 # TODO: test me
@@ -151,6 +165,8 @@ def save(f: Union[Path, str], obj: Any, save_index: bool = False) -> None:
 
     Args:
         f (Path/str): complete filepath to save to including extension
+        obj (Any): any Python object to save
+        save_index (bool; optional): whether to preserve a panda DataFrame's index to csv; Default False
     """
 
     if isinstance(obj, pd.DataFrame):

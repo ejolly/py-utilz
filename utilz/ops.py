@@ -74,7 +74,7 @@ def pmap(
     seed: Union[None, int, np.random.RandomState] = None,
 ) -> Any:
     """
-    Map a function to iter me using parallelization via joblib. Note the only difference between pmap and prep is that that pmap explicitly operates on an iterable, such that the input to func changes each time (each element of iterme); where as prep just repeatedely executes func for n_iter operations with optional args/kwargs that are the same for each run of func.
+    Map a `func` to `iterme` using parallelization via joblib. Note the only difference between `pmap` and `prep` is that that `pmap` explicitly operates on an iterable, such that the input to `func` changes each time (each element of `iterme`); where as `prep` just repeatedely executes `func` for `n_iter` operations with optional args/kwargs that are the same for each run of `func`.
 
     Args:
         func (callable): function to run
@@ -185,7 +185,7 @@ def prep(
     seed=None,
 ):
     """
-    Call a function for n_iter using parallelization via joblib. Note the only difference between pmap and prep is that that pmap explicitly operates on an iterable, such that the input to func changes each time (each element of iterme); where as prep just repeatedely executes func for n_iter operations with optional args/kwargs that are the same for each run of func.
+    Call a `func` for `n_iter` using parallelization via `joblib`. Note the only difference between `pmap` and `prep` is that that `pmap` explicitly operates on an iterable, such that the input to `func` changes each time (each element of `iterme`); where as `prep` just repeatedely executes `func` for `n_iter` operations with optional args/kwargs that are the same for each run of `func`.
 
     Args:
         func (callable): function to run
@@ -202,7 +202,7 @@ def prep(
     Examples:
         How to use a random seed.
 
-        >>> from utilz.ops import ploop, random_seed
+        >>> from utilz.ops import prep, random_seed
 
         First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops.random_seed function. Finally, use it internally where you would normally make a call to np.random.
 
@@ -214,7 +214,7 @@ def prep(
 
         Finally call it in a parallel fashion
 
-        >>> ploop(boot_sum, [np.arange(10)], n_iter=100, loop_random_seed=True, loop_idx=False)
+        >>> prep(boot_sum, [np.arange(10)], n_iter=100, loop_random_seed=True, loop_idx=False)
     """
 
     if backend not in ["processes", "threads"]:
@@ -328,7 +328,7 @@ def splitdf(df, X=None, Y=None):
 # TODO: test me
 def apply(func, iterme, as_df=False, as_arr=False, axis=0, ignore_index=True):
     """
-    Applys func to iterme and combines the result into a single, list, dataFrame or array. Iterme can be a list of elements, list of dataframes, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.
+    Applys `func` to `iterme` and combines the result into a single, list, DataFrame or array. `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.
 
     A a few interesting use cases include:
 
