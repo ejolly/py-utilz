@@ -3,7 +3,7 @@ Common data operations and transformations often on pandas dataframes
 
 ---
 """
-__all__ = ["random_seed", "norm_by_group", "splitdf", "pmap", "prep", "apply"]
+__all__ = ["random_seed", "norm_by_group", "splitdf", "pmap", "prep", "mapcat"]
 
 # from cytoolz import curry
 from joblib import Parallel, delayed
@@ -295,7 +295,7 @@ def prep(
 # TODO: test me
 def splitdf(df, X=None, Y=None):
     """
-    Split a dataframe into X and Y arrays given column names. Useful for using a pandas dataframe for sklearn. If Y is None, assumes its in the *first* column.
+    Split a dataframe into X and Y arrays given column names. Useful for splitting up a a pandas dataframe as a `sklearn` pipeline step. If `Y` is `None`, assumes its in the *first* column of `df`.
 
     Args:
         df (Dataframe): input dataframe that's at least 2d
@@ -326,15 +326,15 @@ def splitdf(df, X=None, Y=None):
 
 
 # TODO: test me
-def apply(func, iterme, as_df=False, as_arr=False, axis=0, ignore_index=True):
+def mapcat(func, iterme, as_df=False, as_arr=False, axis=0, ignore_index=True):
     """
-    Applys `func` to `iterme` and combines the result into a single, list, DataFrame or array. `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.
+    **map**s `func` to `iterme` and con**cat**enates the result into a single, list, DataFrame or array. `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.
 
     A a few interesting use cases include:
 
     - Passing None for the value of func acts as a shortcut to flatten nested lists.
-    - Using in place of map acts like a call to list(map(...))
-    - Passing in pd.read_csv to list of files to get back a single dataframe
+    - Using in place of `map` acts like a call to `list(map(...))`
+    - Passing in `pd.read_csv` to list of files to get back a single dataframe
 
     Args:
         func (callable): function to apply. If None, will attempt to flatten a nested list

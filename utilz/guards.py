@@ -85,7 +85,7 @@ def _hashobj(obj):
 
 def maybe(filepath: Union[Path, str], force: bool = False) -> Any:
     """
-    Run the decorated func only if filepath doesn't exist. Override to always run the function with force.
+    Run the decorated `func` only if `filepath` doesn't exist. Override to always run the function with `force`.
 
     Args:
         filepath (Path/str): filename or path to check existence for
@@ -116,9 +116,9 @@ def disk_cache(
     save_dir: str = ".utilz_cache",
 ) -> Any:
     """
-    Save the result of a function to disk if it takes longer than threshold to run. Then on subsequent runs given the same args and kwargs, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to `.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}`.
+    Save the result of a function to disk if it takes longer than `threshold` to run. Then on subsequent runs given the same `args` and `kwargs`, first try to load the last result and return that, rather than rerunning the function, i.e. processing-time based memoization. The resulting file is saved to `.utilz_cache/funcname___arg1__arg1val--arg2__arg2val__kwarg1__kwarg1val--kwarg2__kwarg2val.{csv/h5}`.
 
-    Very similar in spirit to @memory.cache decorator in joblib but instead uses csv's to persist Dataframes and hd5f to persist everything else rather than pickles. Also works better in combination with the @curry decorator from toolz/cytoolz
+    Very similar in spirit to `@memory.cache` decorator in `joblib` but instead uses csv's to persist Dataframes and hdf5 to persist everything else rather than pickles. Also works better in combination with the `@curry` decorator from `toolz/cytoolz`
 
     Args:
         threshold (int, optional): threshold in seconds over which object is saved to disk. Defaults to 30.
@@ -186,7 +186,7 @@ def disk_cache(
 # TODO: write me
 def same_shape(grpcols, shape=None):
     """
-    Check if each group of group_col has the same dimensions after running a function on a dataframe
+    Check if each group of `group_col` has the same dimensions after running a function on a dataframe
 
     Args:
         func (callable): a function that operates on a dataframe
@@ -216,7 +216,7 @@ def same_shape(grpcols, shape=None):
 # TODO: write me
 def same_nunique(func, val_col, group_col):
     """
-    Check if each group of group_col has the same number of unique values of val_col after running a function on a dataframe
+    Check if each group of `group_col` has the same number of unique values of `val_col` after running a function on a dataframe
 
     Args:
         func (callable): a function that operates on a dataframe

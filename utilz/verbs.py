@@ -1,15 +1,5 @@
 """
-dplyr like *verbs* for working with pandas dataframes. Designed to be piped together using the `pipe` function from the `toolz` package. While not being as feature-complete, `utilz.verbse` provides limited alternative to other libraries like `plydata` because it just wraps mostly native pandas methods under-the-hood.
-
-*Note: the current version unfortunately does borrow the `select` and `define` functions from plydata*
-
-# Workhorses
-
-- `rows`: subset rows based on some conditions (str), ranges (tuples), or indices (list)
-- `cols`: subset cols based on some conditions (str), ranges (tuples), or indices (list); support "-col" inversion -> *from plydata*
-- `summarize`: create a new column(s) thats the result of a operation that returns a *scalar* value and assigns it back to df. Accepts dfs or grouped dfs
-- `assign`: create a new column(s) thats the result of a operation that returns a *series* value and assigns it back to df. Accepts dfs or grouped dfs
-- `apply`: to apply artbitrary functions on a df or grouped df (just a wrapper around `df.apply`)
+dplyr like *verbs* for working with pandas dataframes. Designed to be piped together using the `pipe` function from the `toolz` package. While not being as feature-complete, `utilz.verbse` provides limited alternative to other libraries like `plydata` because it just wraps mostly native pandas methods under-the-hood. Note: the current version unfortunately does borrow the `select` and `define` functions from plydata
 
 """
 
@@ -19,17 +9,13 @@ import numpy as np
 import pandas as pd
 
 
-# We curry these because intend them to be used with pipe which implicitly passes an argument in
-# df is second for functions that don't have keyword args because thats how each function will receive it from pipe
-
-
 def groupby(cols, df):
     """Call a dataframe's `.groupby` method"""
     return df.groupby(cols)
 
 
 def rows(query, df):
-    """Select rows using a query (str), slice (tuple), or indices (list) """
+    """Select rows using a `.query` (str), slicerange (start,stop,step), or indices (list) """
     if isinstance(query, str):
         return df.query(query).reset_index(drop=True)
     elif isinstance(query, (list, np.ndarray)):
@@ -39,7 +25,7 @@ def rows(query, df):
 
 
 def cols(query, df):
-    """Select columns using a query (str), slice (tuple), or indices (list) """
+    """Select columns using a `.query` (str), slicerange (start,stop,step), or indices (list). Uses `plydata.select` """
     if isinstance(query, str):
         from plydata import select
 
@@ -68,10 +54,9 @@ def summarize(df, **stats):
 
 def assign(dfg, *args, **kwargs):
     """
-    Creates a new column(s) in df based on a function of existing columns in df.
-    Uses define (i.e. "mutate") in plydata unless the input is a grouped dataframe
-    in which case it falls back to pandas methods because plydata can only handle
-    grouped inputs resulting from its own (slow) group_by function
+    Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses `plydata.define/mutate` unless the input is a grouped DataFrame
+    in which case it falls back to pandas methods because `plydata` can only handle
+    grouped inputs resulting from its own (slow) `group_by` function
     """
 
     if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
