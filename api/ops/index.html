@@ -238,6 +238,18 @@
       
       
 
+
+  <li class="md-nav__item">
+    <a href="../plot/" class="md-nav__link">
+      Plotting Helpers
+    </a>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
@@ -332,8 +344,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../pipe/" class="md-nav__link">
-      Pipe Operator
+    <a href="../boilerplate/" class="md-nav__link">
+      Boilerplate
     </a>
   </li>
 
@@ -345,7 +357,7 @@
 
   <li class="md-nav__item">
     <a href="../termplot/" class="md-nav__link">
-      Terminal Plots
+      Terminal Plots (experimental)
     </a>
   </li>
 
@@ -356,8 +368,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../plot/" class="md-nav__link">
-      Plotting Helpers
+    <a href="../pipe/" class="md-nav__link">
+      Pipe Operator (experimental)
     </a>
   </li>
 
@@ -365,12 +377,38 @@
       
       
       
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+    
+    <label class="md-nav__link" for="nav-10">
+      Usage Examples
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Usage Examples" data-md-level="1">
+      <label class="md-nav__title" for="nav-10">
+        <span class="md-nav__icon md-icon"></span>
+        Usage Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
 
 
   <li class="md-nav__item">
     <a href="../fp_data_analysis/" class="md-nav__link">
-      Functional style demo notebook
+      Declarative Data Analysis
     </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -480,7 +518,7 @@ apply<span class="p">(</span><span class="n">func</span><span class="p">,</span>
 
       </h4>
 <div class="doc doc-contents ">
-<p>Applys func to iterme and combines the result into a single, list, dataFrame or array. Iterme can be a list of elements, list of dataframes, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</p>
+<p>Applys <code>func</code> to <code>iterme</code> and combines the result into a single, list, DataFrame or array. <code>iterme</code> can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</p>
 <p>A a few interesting use cases include:</p>
 <ul>
 <li>Passing None for the value of func acts as a shortcut to flatten nested lists.</li>
@@ -553,7 +591,7 @@ apply<span class="p">(</span><span class="n">func</span><span class="p">,</span>
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">as_df</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Applys func to iterme and combines the result into a single, list, dataFrame or array. Iterme can be a list of elements, list of dataframes, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</span>
+<span class="sd">    Applys `func` to `iterme` and combines the result into a single, list, DataFrame or array. `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</span>
 
 <span class="sd">    A a few interesting use cases include:</span>
 
@@ -700,7 +738,7 @@ pmap<span class="p">(</span><span class="n">func</span><span class="p">,</span> 
 
       </h4>
 <div class="doc doc-contents ">
-<p>Map a function to iter me using parallelization via joblib. Note the only difference between pmap and prep is that that pmap explicitly operates on an iterable, such that the input to func changes each time (each element of iterme); where as prep just repeatedely executes func for n_iter operations with optional args/kwargs that are the same for each run of func.</p>
+<p>Map a <code>func</code> to <code>iterme</code> using parallelization via joblib. Note the only difference between <code>pmap</code> and <code>prep</code> is that that <code>pmap</code> explicitly operates on an iterable, such that the input to <code>func</code> changes each time (each element of <code>iterme</code>); where as <code>prep</code> just repeatedely executes <code>func</code> for <code>n_iter</code> operations with optional args/kwargs that are the same for each run of <code>func</code>.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -810,7 +848,7 @@ pmap<span class="p">(</span><span class="n">func</span><span class="p">,</span> 
     <span class="n">seed</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">"""</span>
-<span class="sd">    Map a function to iter me using parallelization via joblib. Note the only difference between pmap and prep is that that pmap explicitly operates on an iterable, such that the input to func changes each time (each element of iterme); where as prep just repeatedely executes func for n_iter operations with optional args/kwargs that are the same for each run of func.</span>
+<span class="sd">    Map a `func` to `iterme` using parallelization via joblib. Note the only difference between `pmap` and `prep` is that that `pmap` explicitly operates on an iterable, such that the input to `func` changes each time (each element of `iterme`); where as `prep` just repeatedely executes `func` for `n_iter` operations with optional args/kwargs that are the same for each run of `func`.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        func (callable): function to run</span>
@@ -920,7 +958,7 @@ prep<span class="p">(</span><span class="n">func</span><span class="p">,</span> 
 
       </h4>
 <div class="doc doc-contents ">
-<p>Call a function for n_iter using parallelization via joblib. Note the only difference between pmap and prep is that that pmap explicitly operates on an iterable, such that the input to func changes each time (each element of iterme); where as prep just repeatedely executes func for n_iter operations with optional args/kwargs that are the same for each run of func.</p>
+<p>Call a <code>func</code> for <code>n_iter</code> using parallelization via <code>joblib</code>. Note the only difference between <code>pmap</code> and <code>prep</code> is that that <code>pmap</code> explicitly operates on an iterable, such that the input to <code>func</code> changes each time (each element of <code>iterme</code>); where as <code>prep</code> just repeatedely executes <code>func</code> for <code>n_iter</code> operations with optional args/kwargs that are the same for each run of <code>func</code>.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -1017,7 +1055,7 @@ prep<span class="p">(</span><span class="n">func</span><span class="p">,</span> 
 <p><strong>Examples:</strong></p>
 <p>How to use a random seed.</p>
 <div class="highlight">
-<pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">utilz.ops</span> <span class="kn">import</span> <span class="n">ploop</span><span class="p">,</span> <span class="n">random_seed</span>
+<pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">utilz.ops</span> <span class="kn">import</span> <span class="n">prep</span><span class="p">,</span> <span class="n">random_seed</span>
 </code></pre>
 </div>
 <p>First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops.random_seed function. Finally, use it internally where you would normally make a call to np.random.</p>
@@ -1031,7 +1069,7 @@ prep<span class="p">(</span><span class="n">func</span><span class="p">,</span> 
 </div>
 <p>Finally call it in a parallel fashion</p>
 <div class="highlight">
-<pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">ploop</span><span class="p">(</span><span class="n">boot_sum</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)],</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">loop_random_seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">loop_idx</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">prep</span><span class="p">(</span><span class="n">boot_sum</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)],</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">loop_random_seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">loop_idx</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre>
 </div>
 <details class="quote">
@@ -1050,7 +1088,7 @@ prep<span class="p">(</span><span class="n">func</span><span class="p">,</span> 
     <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Call a function for n_iter using parallelization via joblib. Note the only difference between pmap and prep is that that pmap explicitly operates on an iterable, such that the input to func changes each time (each element of iterme); where as prep just repeatedely executes func for n_iter operations with optional args/kwargs that are the same for each run of func.</span>
+<span class="sd">    Call a `func` for `n_iter` using parallelization via `joblib`. Note the only difference between `pmap` and `prep` is that that `pmap` explicitly operates on an iterable, such that the input to `func` changes each time (each element of `iterme`); where as `prep` just repeatedely executes `func` for `n_iter` operations with optional args/kwargs that are the same for each run of `func`.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        func (callable): function to run</span>
@@ -1067,7 +1105,7 @@ prep<span class="p">(</span><span class="n">func</span><span class="p">,</span> 
 <span class="sd">    Examples:</span>
 <span class="sd">        How to use a random seed.</span>
 
-<span class="sd">        &gt;&gt;&gt; from utilz.ops import ploop, random_seed</span>
+<span class="sd">        &gt;&gt;&gt; from utilz.ops import prep, random_seed</span>
 
 <span class="sd">        First make sure your function handles a 'seed' keyword argument. Then initialize it with the utilz.ops.random_seed function. Finally, use it internally where you would normally make a call to np.random.</span>
 
@@ -1079,7 +1117,7 @@ prep<span class="p">(</span><span class="n">func</span><span class="p">,</span> 
 
 <span class="sd">        Finally call it in a parallel fashion</span>
 
-<span class="sd">        &gt;&gt;&gt; ploop(boot_sum, [np.arange(10)], n_iter=100, loop_random_seed=True, loop_idx=False)</span>
+<span class="sd">        &gt;&gt;&gt; prep(boot_sum, [np.arange(10)], n_iter=100, loop_random_seed=True, loop_idx=False)</span>
 <span class="sd">    """</span>
 
     <span class="k">if</span> <span class="n">backend</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"processes"</span><span class="p">,</span> <span class="s2">"threads"</span><span class="p">]:</span>
@@ -1357,7 +1395,7 @@ splitdf<span class="p">(</span><span class="n">df</span><span class="p">,</span>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../guards/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../plot/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -1366,19 +1404,19 @@ splitdf<span class="p">(</span><span class="n">df</span><span class="p">,</span>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Guards and Decorators
+                Plotting Helpers
               </div>
             </div>
           </a>
         
         
-          <a href="../pipe/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../boilerplate/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Pipe Operator
+                Boilerplate
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

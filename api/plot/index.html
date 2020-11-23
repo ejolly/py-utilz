@@ -238,42 +238,6 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../ops/" class="md-nav__link">
-      Operations
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../pipe/" class="md-nav__link">
-      Pipe Operator
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../termplot/" class="md-nav__link">
-      Terminal Plots
-    </a>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
@@ -333,9 +297,83 @@
 
 
   <li class="md-nav__item">
-    <a href="../fp_data_analysis/" class="md-nav__link">
-      Functional style demo notebook
+    <a href="../ops/" class="md-nav__link">
+      Operations
     </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../boilerplate/" class="md-nav__link">
+      Boilerplate
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../termplot/" class="md-nav__link">
+      Terminal Plots (experimental)
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../pipe/" class="md-nav__link">
+      Pipe Operator (experimental)
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+    
+    <label class="md-nav__link" for="nav-10">
+      Usage Examples
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Usage Examples" data-md-level="1">
+      <label class="md-nav__title" for="nav-10">
+        <span class="md-nav__icon md-icon"></span>
+        Usage Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fp_data_analysis/" class="md-nav__link">
+      Declarative Data Analysis
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -409,7 +447,117 @@ stripbarplot<span class="p">(</span><span class="n">data</span><span class="p">,
 
       </h4>
 <div class="doc doc-contents ">
-<p>Combines a call to sns.barplot + sns.stripplot. Optionally set some axis level attributes during plot creation. Leaving these attributes None will return the default labels that seaborn sets.</p>
+<p>Combines a call to <code>sns.barplot</code> + <code>sns.stripplot</code>. Optionally set some axis level attributes during plot creation. Leaving these attributes None will return the default labels that seaborn sets.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>DataFrame</code></td>
+<td>
+<p>input data</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>pointcolor</code></td>
+<td><code>str</code></td>
+<td>
+<p>color of stripplot points. Defaults to "black".</p>
+</td>
+<td><code>'black'</code></td>
+</tr>
+<tr>
+<td><code>xlabel</code></td>
+<td><code>[type]</code></td>
+<td>
+<p>x-axis label. Defaults to seaborn's default.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>ylabel</code></td>
+<td><code>[type]</code></td>
+<td>
+<p>Defaults to seaborn's default.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>xticklabels</code></td>
+<td><code>[type]</code></td>
+<td>
+<p>Defaults to seaborn's default.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>yticklabels</code></td>
+<td><code>[type]</code></td>
+<td>
+<p>Defaults to seaborn's default.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>xticks</code></td>
+<td><code>[type]</code></td>
+<td>
+<p>Defaults to seaborn's default.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>yticks</code></td>
+<td><code>[type]</code></td>
+<td>
+<p>Defaults to seaborn's default.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>xlim</code></td>
+<td><code>[type]</code></td>
+<td>
+<p>Defaults to seaborn's default.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>ylim</code></td>
+<td><code>[type]</code></td>
+<td>
+<p>Defaults to seaborn's default.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Axis</code></td>
+<td>
+<p>plot axis handle</p>
+</td>
+</tr>
+</tbody>
+</table>
 <details class="quote">
           <summary>Source code in <code>utilz/plot.py</code></summary>
           <div class="highlight">
@@ -428,9 +576,23 @@ stripbarplot<span class="p">(</span><span class="n">data</span><span class="p">,
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Combines a call to sns.barplot + sns.stripplot. Optionally set some axis level attributes during plot creation. Leaving these attributes None will return the default labels that seaborn sets.</span>
-<span class="sd">    """</span>
+<span class="sd">    Combines a call to `sns.barplot` + `sns.stripplot`. Optionally set some axis level attributes during plot creation. Leaving these attributes None will return the default labels that seaborn sets.</span>
 
+<span class="sd">    Args:</span>
+<span class="sd">        data (DataFrame): input data</span>
+<span class="sd">        pointcolor (str, optional): color of stripplot points. Defaults to "black".</span>
+<span class="sd">        xlabel ([type], optional): x-axis label. Defaults to seaborn's default.</span>
+<span class="sd">        ylabel ([type], optional): Defaults to seaborn's default.</span>
+<span class="sd">        xticklabels ([type], optional):  Defaults to seaborn's default.</span>
+<span class="sd">        yticklabels ([type], optional):  Defaults to seaborn's default.</span>
+<span class="sd">        xticks ([type], optional):  Defaults to seaborn's default.</span>
+<span class="sd">        yticks ([type], optional):  Defaults to seaborn's default.</span>
+<span class="sd">        xlim ([type], optional):  Defaults to seaborn's default.</span>
+<span class="sd">        ylim ([type], optional):  Defaults to seaborn's default.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Axis: plot axis handle</span>
+<span class="sd">    """</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">pointcolor</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 
@@ -477,7 +639,7 @@ stripbarplot<span class="p">(</span><span class="n">data</span><span class="p">,
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../termplot/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../guards/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -486,19 +648,19 @@ stripbarplot<span class="p">(</span><span class="n">data</span><span class="p">,
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Terminal Plots
+                Guards and Decorators
               </div>
             </div>
           </a>
         
         
-          <a href="../fp_data_analysis/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../ops/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Functional style demo notebook
+                Operations
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

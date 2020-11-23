@@ -17,7 +17,7 @@
     
     
       
-        <title>Terminal Plots - Utilz</title>
+        <title>Terminal Plots (experimental) - Utilz</title>
       
     
     
@@ -92,7 +92,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Terminal Plots
+              Terminal Plots (experimental)
             
           </span>
         </div>
@@ -240,6 +240,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../plot/" class="md-nav__link">
+      Plotting Helpers
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../ops/" class="md-nav__link">
       Operations
     </a>
@@ -252,8 +264,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../pipe/" class="md-nav__link">
-      Pipe Operator
+    <a href="../boilerplate/" class="md-nav__link">
+      Boilerplate
     </a>
   </li>
 
@@ -273,12 +285,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Terminal Plots
+        Terminal Plots (experimental)
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="./" class="md-nav__link md-nav__link--active">
-      Terminal Plots
+      Terminal Plots (experimental)
     </a>
     
       
@@ -335,8 +347,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../plot/" class="md-nav__link">
-      Plotting Helpers
+    <a href="../pipe/" class="md-nav__link">
+      Pipe Operator (experimental)
     </a>
   </li>
 
@@ -346,10 +358,36 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+    
+    <label class="md-nav__link" for="nav-10">
+      Usage Examples
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Usage Examples" data-md-level="1">
+      <label class="md-nav__title" for="nav-10">
+        <span class="md-nav__icon md-icon"></span>
+        Usage Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
   <li class="md-nav__item">
     <a href="../fp_data_analysis/" class="md-nav__link">
-      Functional style demo notebook
+      Declarative Data Analysis
     </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -426,7 +464,7 @@
 <h4 class="hidden-toc" href="#utilz.termplot" id="utilz.termplot" style="visibility: hidden; position: absolute;">
         </h4>
 <div class="doc doc-contents first">
-<p>Plotting module dedicated to working with plots in an interactive terminal (not jupyter notebook!)</p>
+<p>Plotting module dedicated to working with plots in an interactive terminal (not jupyter notebook!). Only confirmed working on <a href="https://iterm2.com/"> Iterm </a> on macOS. It relies on the <code>imgcat</code> Iterm program, so if that program works in your non-Iterm terminal emulator, this module may work for you.</p>
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
 <h4 class="doc doc-heading" id="utilz.termplot.init_termplot">
@@ -437,16 +475,16 @@ init_termplot<span class="p">()</span>        </code>
 
       </h4>
 <div class="doc doc-contents ">
-<p>Initilize terminal based plotting. <strong>Import and run this before any other python plotting module!</strong> e.g. before matplotlib.</p>
-<p>Requires the <code>imgcat</code> command line program available in Iterm.</p>
+<p>Initilize terminal based plotting. <strong>Import and run this before any other python plotting module!</strong> e.g. <em>before</em> <code>import matplotlib</code>.</p>
+<p>Requires the <code>imgcat</code> command line program available in <a href="https://iterm2.com/"> Iterm </a>.</p>
 <details class="quote">
           <summary>Source code in <code>utilz/termplot.py</code></summary>
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">init_termplot</span><span class="p">():</span>
     <span class="sd">"""</span>
-<span class="sd">    Initilize terminal based plotting. **Import and run this before any other python plotting module!** e.g. before matplotlib.</span>
+<span class="sd">    Initilize terminal based plotting. **Import and run this before any other python plotting module!** e.g. *before* `import matplotlib`.</span>
 
-<span class="sd">    Requires the `imgcat` command line program available in Iterm.</span>
+<span class="sd">    Requires the `imgcat` command line program available in [ Iterm ](https://iterm2.com/).</span>
 <span class="sd">    """</span>
     <span class="kn">import</span> <span class="nn">matplotlib</span>
 
@@ -627,7 +665,7 @@ This <strong>has to be called</strong> immediately after any normal python plott
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../pipe/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../boilerplate/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -636,19 +674,19 @@ This <strong>has to be called</strong> immediately after any normal python plott
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Pipe Operator
+                Boilerplate
               </div>
             </div>
           </a>
         
         
-          <a href="../plot/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../pipe/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Plotting Helpers
+                Pipe Operator (experimental)
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
