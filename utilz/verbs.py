@@ -7,13 +7,16 @@ __all__ = ["groupby", "rows", "cols", "rename", "save", "summarize", "assign", "
 
 import numpy as np
 import pandas as pd
+from toolz import curry
 
 
+@curry
 def groupby(cols, df):
     """Call a dataframe's `.groupby` method"""
     return df.groupby(cols)
 
 
+@curry
 def rows(query, df):
     """Select rows using a `.query` (str), slicerange (start,stop,step), or indices (list) """
     if isinstance(query, str):
@@ -24,6 +27,7 @@ def rows(query, df):
         return df.iloc[slice(*query), :]
 
 
+@curry
 def cols(query, df):
     """Select columns using a `.query` (str), slicerange (start,stop,step), or indices (list). Uses `plydata.select` """
     if isinstance(query, str):
@@ -36,22 +40,26 @@ def cols(query, df):
         return df.iloc[:, slice(*query)]
 
 
+@curry
 def rename(cols, df):
     """Call a dataframe's `.rename(columns={})` method"""
     return df.rename(columns=cols)
 
 
+@curry
 def save(path, df):
     """Call a dataframe's `.to_csv(index=False)` method"""
     df.to_csv(f"{path}.csv", index=False)
     return df
 
 
+@curry
 def summarize(df, **stats):
     """Call a dataframe or groupby object's `.agg` method"""
     return df.agg(stats)
 
 
+@curry
 def assign(dfg, *args, **kwargs):
     """
     Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses `plydata.define/mutate` unless the input is a grouped DataFrame
@@ -78,6 +86,7 @@ def assign(dfg, *args, **kwargs):
         return define(dfg, *args, **kwargs)
 
 
+@curry
 def apply(func, df):
     """Call a dataframe or groupby object's `.apply` method"""
     return df.apply(func)
