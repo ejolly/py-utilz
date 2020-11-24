@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from utilz.guards import log_df, disk_cache, _hashobj, maybe
+from utilz.guards import time, disk_cache, _hashobj, maybe, log
 from time import sleep
 from pathlib import Path
 import datetime as dt
@@ -13,14 +13,42 @@ df = pd.read_csv(
 df_hash = _hashobj(df)
 
 
-def test_log_df(capsys):
-    @log_df
+def test_time(capsys):
+    @time
+    def myfunc(df):
+        sleep(3)
+        return df
+
+    _ = myfunc(df)
+    captured = capsys.readouterr()
+    assert "myfunc, took" in captured.out
+    assert "3" in captured.out
+
+
+def test_log(capsys):
+    @log
     def group_mean(df, grp_col, val_col):
         return df.groupby(grp_col)[val_col].mean().reset_index()
 
     _ = group_mean(df, "species", "petal_length")
     captured = capsys.readouterr()
-    assert "Func group_mean df shape=(3, 2)" in captured.out
+    assert "group_mean, (3, 2), df" in captured.out
+
+    @log
+    def empty(arr):
+        return arr
+
+    _ = empty(df.to_numpy())
+    captured = capsys.readouterr()
+    assert "empty, (150, 5), np" in captured.out
+
+    empty(df.to_dict())
+    captured = capsys.readouterr()
+    assert "empty, 5, {}" in captured.out
+
+    empty([df])
+    captured = capsys.readouterr()
+    assert "empty, 1, []" in captured.out
 
 
 def test_maybe(tmp_path):

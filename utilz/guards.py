@@ -15,7 +15,7 @@ def myfunc(df):
 """
 __all__ = [
     "log",
-    "log_df",
+    "time",
     "maybe",
     "disk_cache",
     "same_shape",
@@ -36,7 +36,6 @@ from inspect import getcallargs
 from .io import load
 
 
-# TODO: Write me
 def log(func):
     """
     Log the type and shape/size/len of the output from a function
@@ -47,17 +46,26 @@ def log(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        pass
+        result = func(*args, **kwargs)
+        if isinstance(result, pd.DataFrame):
+            print(f"{func.__name__}, {result.shape}, df")
+        elif isinstance(result, np.ndarray):
+            print(f"{func.__name__}, {result.shape}, np")
+        elif isinstance(result, list):
+            print(f"{func.__name__}, {len(result)}, []")
+        elif isinstance(result, dict):
+            print(f"{func.__name__}, {len(result.keys())}, {{}}")
+        return result
 
     return wrapper
 
 
-def log_df(func):
+def time(func):
     """
-    Log the shape and run time of a function that operates on a pandas dataframe
+    Log the run time of a function
 
     Args:
-        func (callable): a function that operates on a dataframe
+        func (callable): any pure function (i.e, has no side-effects)
 
     """
 
@@ -66,7 +74,7 @@ def log_df(func):
         tic = dt.datetime.now()
         result = func(*args, **kwargs)
         time_taken = str(dt.datetime.now() - tic)
-        print(f"Func {func.__name__} df shape={result.shape} took {time_taken}s")
+        print(f"{func.__name__}, took {time_taken}s")
         return result
 
     return wrapper
