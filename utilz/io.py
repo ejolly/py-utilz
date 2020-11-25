@@ -159,7 +159,9 @@ def load(
 
 
 # TODO: Write me
-def save(f: Union[Path, str], obj: Any, save_index: bool = False) -> None:
+def save(
+    f: Union[Path, str], obj: Any, save_index: bool = False, overwrite: bool = False
+) -> None:
     """
     A handy dandy all-in-one saving function. Simply pass a Path object to a file (or a string) and it will be saved based upon the file *extension* you provide. Suported extensions are : .txt, .csv, .json, .p, .pickle, .h5, .hd5f, .gz
 
@@ -167,10 +169,13 @@ def save(f: Union[Path, str], obj: Any, save_index: bool = False) -> None:
         f (Path/str): complete filepath to save to including extension
         obj (Any): any Python object to save
         save_index (bool; optional): whether to preserve a panda DataFrame's index to csv; Default False
+        overwrite (bool; optional): whether to overwrite an existing file; Default False
     """
 
+    if Path(f).exists() and not overwrite:
+        raise IOError("File exists. Set overwrite = True to save.")
     if isinstance(obj, pd.DataFrame):
-        if f.endswith(".csv"):
+        if str(f).endswith(".csv"):
             obj.to_csv(str(f), index=save_index)
-        elif f.endswith(".h5"):
+        elif str(f).endswith(".h5"):
             obj.to_hdf(str(f), key="dataframe", mode="w")
