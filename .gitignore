@@ -6,3 +6,5 @@ site/
 *.csv
 *.utilz_cache
 environment.yml
+env/
+environment-lock.yml
