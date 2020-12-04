@@ -5,3 +5,4 @@
 site/
 *.csv
 *.utilz_cache
+environment.yml
