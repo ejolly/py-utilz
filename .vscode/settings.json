@@ -9,5 +9,8 @@
     "python.linting.ignorePatterns": [
         "utilz/tests/test_pipe.py"
     ],
-    "python.pythonPath": "/Users/Esh/anaconda3/bin/python"
+    "python.pythonPath": "/Users/Esh/anaconda3/bin/python",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pycodestyleEnabled": false,
+    "python.linting.enabled": true
 }
