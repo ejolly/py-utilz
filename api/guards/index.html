@@ -905,7 +905,7 @@
 <div class="doc doc-object doc-function">
 <h4 class="doc doc-heading" id="utilz.guards.same_shape">
 
-<code class="highlight language-python"><span class="n">same_shape</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">group_cols</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">same_shape</span><span class="p">(</span><span class="n">group_cols</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
       </h4>
@@ -923,14 +923,6 @@
 </thead>
 <tbody>
 <tr>
-<td><code>func</code></td>
-<td><code>&lt;built-in function callable&gt;</code></td>
-<td>
-<p>a function that operates on a dataframe</p>
-</td>
-<td><em>required</em></td>
-</tr>
-<tr>
 <td><code>group_cols</code></td>
 <td><code>Union[str, list]</code></td>
 <td>
@@ -943,12 +935,11 @@
 <details class="quote">
           <summary>Source code in <code>utilz/guards.py</code></summary>
           <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">same_shape</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">callable</span><span class="p">,</span> <span class="n">group_cols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">same_shape</span><span class="p">(</span><span class="n">group_cols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Check if each group of `group_col` has the same dimensions after running a function on a dataframe</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        func (callable): a function that operates on a dataframe</span>
 <span class="sd">        group_cols (str/list): column names to group on in dataframe</span>
 <span class="sd">    """</span>
 
