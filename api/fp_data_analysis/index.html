@@ -1,357 +1,658 @@
 
-<!DOCTYPE html>
-
-<html class="no-js" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="Utility library for faster, easier, and more reliable data analysis" name="description"/>
-<link href="https://eshinjolly.com/utilz/api/fp_data_analysis/" rel="canonical"/>
-<link href="../../assets/images/favicon.png" rel="shortcut icon"/>
-<meta content="mkdocs-1.1.2, mkdocs-material-6.1.2" name="generator"/>
-<title>Declarative Data Analysis - Utilz</title>
-<link href="../../assets/stylesheets/main.19190aaf.min.css" rel="stylesheet"/>
-<link href="../../assets/stylesheets/palette.24b84193.min.css" rel="stylesheet"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
-<link href="../../custom.css" rel="stylesheet"/>
-</head>
-<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
-<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
-<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
-<label class="md-overlay" for="__drawer"></label>
-<div data-md-component="skip">
-<a class="md-skip" href="#functional-programming-style-data-analysis">
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Utility library for faster, easier, and more reliable data analysis">
+      
+      
+      
+      
+        <link rel="canonical" href="https://eshinjolly.com/utilz/api/fp_data_analysis/">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
+    
+    
+      
+        <title>Declarative Data Analysis - Utilz</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.cb6bc1d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#functional-programming-style-data-analysis" class="md-skip">
           Skip to content
         </a>
-</div>
-<div data-md-component="announce">
-</div>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
 <header class="md-header" data-md-component="header">
-<nav aria-label="Header" class="md-header-nav md-grid">
-<a aria-label="Utilz" class="md-header-nav__button md-logo" href="https://eshinjolly.com/utilz" title="Utilz">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
-</a>
-<label class="md-header-nav__button md-icon" for="__drawer">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
-</label>
-<div class="md-header-nav__title" data-md-component="header-title">
-<div class="md-header-nav__ellipsis">
-<span class="md-header-nav__topic md-ellipsis">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://eshinjolly.com/utilz" title="Utilz" class="md-header-nav__button md-logo" aria-label="Utilz">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             Utilz
           </span>
-<span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             
               Declarative Data Analysis
             
           </span>
-</div>
-</div>
-<label class="md-header-nav__button md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-</label>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
 <div class="md-search" data-md-component="search" role="dialog">
-<label class="md-search__overlay" for="__search"></label>
-<div class="md-search__inner" role="search">
-<form class="md-search__form" name="search">
-<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" spellcheck="false" type="text"/>
-<label class="md-search__icon md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</label>
-<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
-</button>
-</form>
-<div class="md-search__output">
-<div class="md-search__scrollwrap" data-md-scrollfix="">
-<div class="md-search-result" data-md-component="search-result">
-<div class="md-search-result__meta">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
             Initializing search
           </div>
-<ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="md-header-nav__source">
-<a class="md-source" href="https://github.com/ejolly/utilz/" title="Go to repository">
-<div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
-</div>
-<div class="md-source__repository">
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/ejolly/utilz/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
     ejolly/utilz
   </div>
 </a>
-</div>
-</nav>
+      </div>
+    
+  </nav>
 </header>
-<div class="md-container" data-md-component="container">
-<main class="md-main" data-md-component="main">
-<div class="md-main__inner md-grid">
-<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
-<label class="md-nav__title" for="__drawer">
-<a aria-label="Utilz" class="md-nav__button md-logo" href="https://eshinjolly.com/utilz" title="Utilz">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
-</a>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://eshinjolly.com/utilz" title="Utilz" class="md-nav__button md-logo" aria-label="Utilz">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
     Utilz
   </label>
-<div class="md-nav__source">
-<a class="md-source" href="https://github.com/ejolly/utilz/" title="Go to repository">
-<div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
-</div>
-<div class="md-source__repository">
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/ejolly/utilz/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
     ejolly/utilz
   </div>
 </a>
-</div>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../..">
-      Home
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../io/">
-      Saving and Loading
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../verbs/">
-      Data analysis "verbs"
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../guards/">
-      Guards and Decorators
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../plot/">
-      Plotting Helpers
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../ops/">
-      Operations
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../boilerplate/">
-      Boilerplate
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../termplot/">
-      Terminal Plots (experimental)
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../pipe/">
-      Pipe Operator (experimental)
-    </a>
-</li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-10" id="nav-10" type="checkbox"/>
-<label class="md-nav__link" for="nav-10">
-      Usage Examples
-      <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Usage Examples" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="nav-10">
-<span class="md-nav__icon md-icon"></span>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      
+      <label class="md-nav__link" for="nav-2">
         Usage Examples
-      </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-        Declarative Data Analysis
         <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
-      Declarative Data Analysis
-    </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Usage Examples" data-md-level="1">
+        <label class="md-nav__title" for="nav-2">
+          <span class="md-nav__icon md-icon"></span>
+          Usage Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Declarative Data Analysis
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Declarative Data Analysis
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#verb-based-dataframe-manipulation">
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#verb-based-dataframe-manipulation" class="md-nav__link">
     Verb-based dataframe manipulation
   </a>
-<nav aria-label="Verb-based dataframe manipulation" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#basic-slicingsubsetting">
+  
+    <nav class="md-nav" aria-label="Verb-based dataframe manipulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-slicingsubsetting" class="md-nav__link">
     Basic slicing/subsetting
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#summarizing-data">
+        
+          <li class="md-nav__item">
+  <a href="#summarizing-data" class="md-nav__link">
     Summarizing data
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#transforming-data">
+        
+          <li class="md-nav__item">
+  <a href="#transforming-data" class="md-nav__link">
     Transforming data
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#efficient-analyses-using-memoization-currying-and-caching">
+      
+        <li class="md-nav__item">
+  <a href="#efficient-analyses-using-memoization-currying-and-caching" class="md-nav__link">
     Efficient analyses using memoization, currying, and caching
   </a>
-<nav aria-label="Efficient analyses using memoization, currying, and caching" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#memoization">
+  
+    <nav class="md-nav" aria-label="Efficient analyses using memoization, currying, and caching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memoization" class="md-nav__link">
     Memoization
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#currying">
+        
+          <li class="md-nav__item">
+  <a href="#currying" class="md-nav__link">
     Currying
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#caching-outputs-to-disk">
+        
+          <li class="md-nav__item">
+  <a href="#caching-outputs-to-disk" class="md-nav__link">
     Caching outputs to disk
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#putting-it-together">
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-together" class="md-nav__link">
     Putting it together
   </a>
-<nav aria-label="Putting it together" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#pipeline-based-data-analysis-with-caching-and-memoization">
+  
+    <nav class="md-nav" aria-label="Putting it together">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-based-data-analysis-with-caching-and-memoization" class="md-nav__link">
     Pipeline based data analysis with caching and memoization
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#summary">
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
     Summary
   </a>
+  
 </li>
-</ul>
+      
+    </ul>
+  
 </nav>
-</li>
-</ul>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../io/" class="md-nav__link">
+        Saving and Loading
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../verbs/" class="md-nav__link">
+        Data analysis "verbs"
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guards/" class="md-nav__link">
+        Guards and Decorators
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plot/" class="md-nav__link">
+        Plotting Helpers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ops/" class="md-nav__link">
+        Operations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../boilerplate/" class="md-nav__link">
+        Boilerplate
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../termplot/" class="md-nav__link">
+        Terminal Plots (experimental)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipe/" class="md-nav__link">
+        Pipe Operator (experimental)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
 </nav>
-</li>
-</ul>
-</nav>
-</div>
-</div>
-</div>
-<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#verb-based-dataframe-manipulation">
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#verb-based-dataframe-manipulation" class="md-nav__link">
     Verb-based dataframe manipulation
   </a>
-<nav aria-label="Verb-based dataframe manipulation" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#basic-slicingsubsetting">
+  
+    <nav class="md-nav" aria-label="Verb-based dataframe manipulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-slicingsubsetting" class="md-nav__link">
     Basic slicing/subsetting
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#summarizing-data">
+        
+          <li class="md-nav__item">
+  <a href="#summarizing-data" class="md-nav__link">
     Summarizing data
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#transforming-data">
+        
+          <li class="md-nav__item">
+  <a href="#transforming-data" class="md-nav__link">
     Transforming data
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#efficient-analyses-using-memoization-currying-and-caching">
+      
+        <li class="md-nav__item">
+  <a href="#efficient-analyses-using-memoization-currying-and-caching" class="md-nav__link">
     Efficient analyses using memoization, currying, and caching
   </a>
-<nav aria-label="Efficient analyses using memoization, currying, and caching" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#memoization">
+  
+    <nav class="md-nav" aria-label="Efficient analyses using memoization, currying, and caching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memoization" class="md-nav__link">
     Memoization
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#currying">
+        
+          <li class="md-nav__item">
+  <a href="#currying" class="md-nav__link">
     Currying
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#caching-outputs-to-disk">
+        
+          <li class="md-nav__item">
+  <a href="#caching-outputs-to-disk" class="md-nav__link">
     Caching outputs to disk
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#putting-it-together">
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-together" class="md-nav__link">
     Putting it together
   </a>
-<nav aria-label="Putting it together" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#pipeline-based-data-analysis-with-caching-and-memoization">
+  
+    <nav class="md-nav" aria-label="Putting it together">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-based-data-analysis-with-caching-and-memoization" class="md-nav__link">
     Pipeline based data analysis with caching and memoization
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#summary">
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
     Summary
   </a>
+  
 </li>
-</ul>
+      
+    </ul>
+  
 </nav>
-</div>
-</div>
-</div>
-<div class="md-content">
-<article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/ejolly/utilz/edit/master/docs/api/fp_data_analysis.ipynb" title="Edit this page">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
-</a>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/ejolly/utilz/edit/master/docs/api/fp_data_analysis.ipynb" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                
 <div class="notebook-content">
 <style type="text/css">
-    .highlight .hll { background-color: var(--jp-cell-editor-active-background) }
-.highlight  { background: var(--jp-cell-editor-background); color: var(--jp-mirror-editor-variable-color) }
+    pre { line-height: 125%; margin: 0; }
+td.linenos pre { color: #000000; background-color: #f0f0f0; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #000000; background-color: #f0f0f0; padding-left: 5px; padding-right: 5px; }
+td.linenos pre.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: var(--jp-cell-editor-active-background) }
+.highlight { background: var(--jp-cell-editor-background); color: var(--jp-mirror-editor-variable-color) }
 .highlight .c { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment */
 .highlight .err { color: var(--jp-mirror-editor-error-color) } /* Error */
 .highlight .k { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword */
@@ -393,6 +694,8 @@
 .highlight .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */
 .highlight .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */
   </style>
+
+
 <style type="text/css">
 /*-----------------------------------------------------------------------------
 | Copyright (c) Jupyter Development Team.
@@ -14685,10 +14988,11 @@ h1:hover .anchor-link, h2:hover .anchor-link, h3:hover .anchor-link {
     background: none !important;
 }
 </style>
+
 <!-- Load mathjax -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML-full,Safe"> </script>
-<!-- MathJax configuration -->
-<script type="text/x-mathjax-config">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML-full,Safe"> </script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
     init_mathjax = function() {
         if (window.MathJax) {
         // MathJax loaded
@@ -14723,63 +15027,83 @@ h1:hover .anchor-link, h2:hover .anchor-link, h3:hover .anchor-link {
     }
     init_mathjax();
     </script>
-<!-- End of mathjax configuration -->
+    <!-- End of mathjax configuration -->
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="functional-programming-style-data-analysis">Functional programming-style data analysis<a class="anchor-link" href="#Functional-programming-style-data-analysis">¶</a></h1>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="functional-programming-style-data-analysis">Functional programming-style data analysis<a class="anchor-link" href="#Functional-programming-style-data-analysis">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>This notebook demonstrates a "realistic" set of operations and pipeline you might write using functions from <code>utilz</code> combined with the <code>toolz</code> package. It mimics the declarative style of functional-programming more recently popularized in <code>R</code> libraries like <code>dplyr</code>.</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">randdf</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">rename</span><span class="p">,</span> <span class="n">save</span>
 <span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">pipe</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="verb-based-dataframe-manipulation">Verb-based dataframe manipulation<a class="anchor-link" href="#Verb-based-dataframe-manipulation">¶</a></h2>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="verb-based-dataframe-manipulation">Verb-based dataframe manipulation<a class="anchor-link" href="#Verb-based-dataframe-manipulation">&#182;</a></h2>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="c1"># Setup some random data</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="c1"># Setup some random data</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
     <span class="n">randdf</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
-    <span class="n">assign</span><span class="p">(</span><span class="n">D</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">"abcde"</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">),</span>
-    <span class="n">rename</span><span class="p">({</span><span class="s2">"A"</span><span class="p">:</span> <span class="s2">"rt"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">:</span> <span class="s2">"score"</span><span class="p">,</span> <span class="s2">"C"</span><span class="p">:</span> <span class="s2">"speed"</span><span class="p">,</span> <span class="s2">"D"</span><span class="p">:</span> <span class="s2">"group"</span><span class="p">}),</span>
-    <span class="n">assign</span><span class="p">(</span><span class="n">rt_doubled</span><span class="o">=</span><span class="s2">"rt*2"</span><span class="p">),</span>
-    <span class="n">save</span><span class="p">(</span><span class="s2">"test"</span><span class="p">),</span>
+    <span class="n">assign</span><span class="p">(</span><span class="n">D</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;abcde&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="n">rename</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="s2">&quot;rt&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="s2">&quot;group&quot;</span><span class="p">}),</span>
+    <span class="n">assign</span><span class="p">(</span><span class="n">rt_doubled</span><span class="o">=</span><span class="s2">&quot;rt*2&quot;</span><span class="p">),</span>
+    <span class="n">save</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+
+
+
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -14793,93 +15117,111 @@ h1:hover .anchor-link, h2:hover .anchor-link, h3:hover .anchor-link {
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>rt</th>
-<th>score</th>
-<th>speed</th>
-<th>group</th>
-<th>rt_doubled</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>0.033274</td>
-<td>0.497035</td>
-<td>0.963030</td>
-<td>a</td>
-<td>0.066549</td>
-</tr>
-<tr>
-<th>1</th>
-<td>0.320243</td>
-<td>0.449792</td>
-<td>0.646103</td>
-<td>b</td>
-<td>0.640485</td>
-</tr>
-<tr>
-<th>2</th>
-<td>0.640274</td>
-<td>0.432569</td>
-<td>0.871540</td>
-<td>c</td>
-<td>1.280547</td>
-</tr>
-<tr>
-<th>3</th>
-<td>0.115659</td>
-<td>0.852093</td>
-<td>0.311823</td>
-<td>d</td>
-<td>0.231318</td>
-</tr>
-<tr>
-<th>4</th>
-<td>0.200713</td>
-<td>0.460636</td>
-<td>0.047897</td>
-<td>e</td>
-<td>0.401426</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>score</th>
+      <th>speed</th>
+      <th>group</th>
+      <th>rt_doubled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.033274</td>
+      <td>0.497035</td>
+      <td>0.963030</td>
+      <td>a</td>
+      <td>0.066549</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.320243</td>
+      <td>0.449792</td>
+      <td>0.646103</td>
+      <td>b</td>
+      <td>0.640485</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.640274</td>
+      <td>0.432569</td>
+      <td>0.871540</td>
+      <td>c</td>
+      <td>1.280547</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.115659</td>
+      <td>0.852093</td>
+      <td>0.311823</td>
+      <td>d</td>
+      <td>0.231318</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.200713</td>
+      <td>0.460636</td>
+      <td>0.047897</td>
+      <td>e</td>
+      <td>0.401426</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </div>
+
 </div>
+
 </div>
+
 </div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="basic-slicingsubsetting">Basic slicing/subsetting<a class="anchor-link" href="#Basic-slicing/subsetting">¶</a></h3><p><code>rows</code> and <code>cols</code> behave similarly and can index a Dataframe using queries, slices, or indices.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="basic-slicingsubsetting">Basic slicing/subsetting<a class="anchor-link" href="#Basic-slicing/subsetting">&#182;</a></h3><p><code>rows</code> and <code>cols</code> behave similarly and can index a Dataframe using queries, slices, or indices.</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span>
 
 <span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">rows</span><span class="p">(</span><span class="s2">"group == 'c' or group == 'b'"</span><span class="p">),</span> 
-    <span class="n">cols</span><span class="p">(</span><span class="s2">"rt"</span><span class="p">,</span> <span class="s2">"speed"</span><span class="p">)</span>
+    <span class="n">rows</span><span class="p">(</span><span class="s2">&quot;group == &#39;c&#39; or group == &#39;b&#39;&quot;</span><span class="p">),</span> 
+    <span class="n">cols</span><span class="p">(</span><span class="s2">&quot;rt&quot;</span><span class="p">,</span> <span class="s2">&quot;speed&quot;</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
+
+
+
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -14893,83 +15235,100 @@ h1:hover .anchor-link, h2:hover .anchor-link, h3:hover .anchor-link {
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>speed</th>
-<th>rt</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>0.646103</td>
-<td>0.320243</td>
-</tr>
-<tr>
-<th>1</th>
-<td>0.871540</td>
-<td>0.640274</td>
-</tr>
-<tr>
-<th>2</th>
-<td>0.327057</td>
-<td>0.945022</td>
-</tr>
-<tr>
-<th>3</th>
-<td>0.106485</td>
-<td>0.992307</td>
-</tr>
-<tr>
-<th>4</th>
-<td>0.642573</td>
-<td>0.212407</td>
-</tr>
-<tr>
-<th>5</th>
-<td>0.035261</td>
-<td>0.437660</td>
-</tr>
-<tr>
-<th>6</th>
-<td>0.087360</td>
-<td>0.928069</td>
-</tr>
-<tr>
-<th>7</th>
-<td>0.541594</td>
-<td>0.226964</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>speed</th>
+      <th>rt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.646103</td>
+      <td>0.320243</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.871540</td>
+      <td>0.640274</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.327057</td>
+      <td>0.945022</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.106485</td>
+      <td>0.992307</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.642573</td>
+      <td>0.212407</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.035261</td>
+      <td>0.437660</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.087360</td>
+      <td>0.928069</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.541594</td>
+      <td>0.226964</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </div>
+
 </div>
+
 </div>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
     <span class="n">rows</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">14</span><span class="p">]),</span> 
     <span class="n">cols</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
     <span class="p">)</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+
+
+
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -14983,57 +15342,74 @@ h1:hover .anchor-link, h2:hover .anchor-link, h3:hover .anchor-link {
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>group</th>
-<th>rt_doubled</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>1</th>
-<td>b</td>
-<td>0.640485</td>
-</tr>
-<tr>
-<th>9</th>
-<td>e</td>
-<td>1.584978</td>
-</tr>
-<tr>
-<th>14</th>
-<td>e</td>
-<td>0.629167</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>group</th>
+      <th>rt_doubled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>b</td>
+      <td>0.640485</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>e</td>
+      <td>1.584978</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>e</td>
+      <td>0.629167</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </div>
+
 </div>
+
 </div>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
     <span class="n">rows</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
     <span class="p">)</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+
+
+
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -15047,132 +15423,170 @@ h1:hover .anchor-link, h2:hover .anchor-link, h3:hover .anchor-link {
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>rt</th>
-<th>score</th>
-<th>speed</th>
-<th>group</th>
-<th>rt_doubled</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>1</th>
-<td>0.320243</td>
-<td>0.449792</td>
-<td>0.646103</td>
-<td>b</td>
-<td>0.640485</td>
-</tr>
-<tr>
-<th>3</th>
-<td>0.115659</td>
-<td>0.852093</td>
-<td>0.311823</td>
-<td>d</td>
-<td>0.231318</td>
-</tr>
-<tr>
-<th>5</th>
-<td>0.094301</td>
-<td>0.374459</td>
-<td>0.386620</td>
-<td>a</td>
-<td>0.188603</td>
-</tr>
-<tr>
-<th>7</th>
-<td>0.992307</td>
-<td>0.605558</td>
-<td>0.106485</td>
-<td>c</td>
-<td>1.984614</td>
-</tr>
-<tr>
-<th>9</th>
-<td>0.792489</td>
-<td>0.249192</td>
-<td>0.152526</td>
-<td>e</td>
-<td>1.584978</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>score</th>
+      <th>speed</th>
+      <th>group</th>
+      <th>rt_doubled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.320243</td>
+      <td>0.449792</td>
+      <td>0.646103</td>
+      <td>b</td>
+      <td>0.640485</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.115659</td>
+      <td>0.852093</td>
+      <td>0.311823</td>
+      <td>d</td>
+      <td>0.231318</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.094301</td>
+      <td>0.374459</td>
+      <td>0.386620</td>
+      <td>a</td>
+      <td>0.188603</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.992307</td>
+      <td>0.605558</td>
+      <td>0.106485</td>
+      <td>c</td>
+      <td>1.984614</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.792489</td>
+      <td>0.249192</td>
+      <td>0.152526</td>
+      <td>e</td>
+      <td>1.584978</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </div>
+
 </div>
+
 </div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="summarizing-data">Summarizing data<a class="anchor-link" href="#Summarizing-data">&#182;</a></h3><p>To perform an operation that results in a <em>scalar</em> output per column, use <code>summarize</code>. It always return a <em>smaller</em> dataframe or series than the original</p>
+
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="summarizing-data">Summarizing data<a class="anchor-link" href="#Summarizing-data">¶</a></h3><p>To perform an operation that results in a <em>scalar</em> output per column, use <code>summarize</code>. It always return a <em>smaller</em> dataframe or series than the original</p>
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Non-grouped inputs produce <em>Series</em> results:</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">summarize</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">summarize</span>
 
 <span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">rows</span><span class="p">(</span><span class="s2">"group == 'c' or group == 'b'"</span><span class="p">),</span> 
-    <span class="n">summarize</span><span class="p">(</span><span class="n">rt</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">,</span><span class="n">speed</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span>
+    <span class="n">rows</span><span class="p">(</span><span class="s2">&quot;group == &#39;c&#39; or group == &#39;b&#39;&quot;</span><span class="p">),</span> 
+    <span class="n">summarize</span><span class="p">(</span><span class="n">rt</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span><span class="n">speed</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+
+
+
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
 <pre>rt       0.587868
 speed    0.407247
 dtype: float64</pre>
 </div>
+
 </div>
+
 </div>
+
 </div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Grouped inputs product <em>DataFrame</em> results:</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">groupby</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">groupby</span>
 
 <span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">groupby</span><span class="p">(</span><span class="s1">'group'</span><span class="p">),</span> 
-    <span class="n">summarize</span><span class="p">(</span><span class="n">score</span> <span class="o">=</span> <span class="s1">'mean'</span><span class="p">,</span> <span class="n">rt</span> <span class="o">=</span> <span class="s1">'std'</span><span class="p">)</span>
+    <span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">),</span> 
+    <span class="n">summarize</span><span class="p">(</span><span class="n">score</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">rt</span> <span class="o">=</span> <span class="s1">&#39;std&#39;</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -15186,80 +15600,99 @@ dtype: float64</pre>
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>score</th>
-<th>rt</th>
-</tr>
-<tr>
-<th>group</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>a</th>
-<td>0.272993</td>
-<td>0.437812</td>
-</tr>
-<tr>
-<th>b</th>
-<td>0.387616</td>
-<td>0.389510</td>
-</tr>
-<tr>
-<th>c</th>
-<td>0.464710</td>
-<td>0.325779</td>
-</tr>
-<tr>
-<th>d</th>
-<td>0.343631</td>
-<td>0.274298</td>
-</tr>
-<tr>
-<th>e</th>
-<td>0.551664</td>
-<td>0.278721</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>score</th>
+      <th>rt</th>
+    </tr>
+    <tr>
+      <th>group</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>0.272993</td>
+      <td>0.437812</td>
+    </tr>
+    <tr>
+      <th>b</th>
+      <td>0.387616</td>
+      <td>0.389510</td>
+    </tr>
+    <tr>
+      <th>c</th>
+      <td>0.464710</td>
+      <td>0.325779</td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td>0.343631</td>
+      <td>0.274298</td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td>0.551664</td>
+      <td>0.278721</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </div>
+
 </div>
+
 </div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="transforming-data">Transforming data<a class="anchor-link" href="#Transforming-data">&#182;</a></h3><p>To perfom an operation that results in a <em>non-scalar</em> output per column, or to ensure that an operation with <em>scalar</em> output retains the original shape of the input, use <code>assign</code>. It always returns back a DataFrame the <em>same</em> size as the original via broadcasting.</p>
+
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="transforming-data">Transforming data<a class="anchor-link" href="#Transforming-data">¶</a></h3><p>To perfom an operation that results in a <em>non-scalar</em> output per column, or to ensure that an operation with <em>scalar</em> output retains the original shape of the input, use <code>assign</code>. It always returns back a DataFrame the <em>same</em> size as the original via broadcasting.</p>
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>With non-grouped inputs, the mean score is broadcasted across the <em>entire</em> DataFrame</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">assign</span><span class="p">(</span><span class="n">score_centered</span><span class="o">=</span><span class="s2">"score.mean()"</span><span class="p">))</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">assign</span><span class="p">(</span><span class="n">score_centered</span><span class="o">=</span><span class="s2">&quot;score.mean()&quot;</span><span class="p">))</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
+
+
+
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -15273,232 +15706,250 @@ dtype: float64</pre>
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>rt</th>
-<th>score</th>
-<th>speed</th>
-<th>group</th>
-<th>rt_doubled</th>
-<th>score_centered</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>0.033274</td>
-<td>0.497035</td>
-<td>0.963030</td>
-<td>a</td>
-<td>0.066549</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>1</th>
-<td>0.320243</td>
-<td>0.449792</td>
-<td>0.646103</td>
-<td>b</td>
-<td>0.640485</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>2</th>
-<td>0.640274</td>
-<td>0.432569</td>
-<td>0.871540</td>
-<td>c</td>
-<td>1.280547</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>3</th>
-<td>0.115659</td>
-<td>0.852093</td>
-<td>0.311823</td>
-<td>d</td>
-<td>0.231318</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>4</th>
-<td>0.200713</td>
-<td>0.460636</td>
-<td>0.047897</td>
-<td>e</td>
-<td>0.401426</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>5</th>
-<td>0.094301</td>
-<td>0.374459</td>
-<td>0.386620</td>
-<td>a</td>
-<td>0.188603</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>6</th>
-<td>0.945022</td>
-<td>0.622679</td>
-<td>0.327057</td>
-<td>b</td>
-<td>1.890043</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>7</th>
-<td>0.992307</td>
-<td>0.605558</td>
-<td>0.106485</td>
-<td>c</td>
-<td>1.984614</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>8</th>
-<td>0.457019</td>
-<td>0.192776</td>
-<td>0.995795</td>
-<td>d</td>
-<td>0.914038</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>9</th>
-<td>0.792489</td>
-<td>0.249192</td>
-<td>0.152526</td>
-<td>e</td>
-<td>1.584978</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>10</th>
-<td>0.190983</td>
-<td>0.167855</td>
-<td>0.827340</td>
-<td>a</td>
-<td>0.381967</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>11</th>
-<td>0.212407</td>
-<td>0.375698</td>
-<td>0.642573</td>
-<td>b</td>
-<td>0.424815</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>12</th>
-<td>0.437660</td>
-<td>0.819114</td>
-<td>0.035261</td>
-<td>c</td>
-<td>0.875319</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>13</th>
-<td>0.535583</td>
-<td>0.314200</td>
-<td>0.410386</td>
-<td>d</td>
-<td>1.071167</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>14</th>
-<td>0.314583</td>
-<td>0.588293</td>
-<td>0.865930</td>
-<td>e</td>
-<td>0.629167</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>15</th>
-<td>0.972126</td>
-<td>0.052625</td>
-<td>0.193718</td>
-<td>a</td>
-<td>1.944253</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>16</th>
-<td>0.928069</td>
-<td>0.102295</td>
-<td>0.087360</td>
-<td>b</td>
-<td>1.856139</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>17</th>
-<td>0.226964</td>
-<td>0.001599</td>
-<td>0.541594</td>
-<td>c</td>
-<td>0.453929</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>18</th>
-<td>0.779363</td>
-<td>0.015456</td>
-<td>0.770510</td>
-<td>d</td>
-<td>1.558725</td>
-<td>0.404123</td>
-</tr>
-<tr>
-<th>19</th>
-<td>0.654624</td>
-<td>0.908534</td>
-<td>0.044687</td>
-<td>e</td>
-<td>1.309247</td>
-<td>0.404123</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>score</th>
+      <th>speed</th>
+      <th>group</th>
+      <th>rt_doubled</th>
+      <th>score_centered</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.033274</td>
+      <td>0.497035</td>
+      <td>0.963030</td>
+      <td>a</td>
+      <td>0.066549</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.320243</td>
+      <td>0.449792</td>
+      <td>0.646103</td>
+      <td>b</td>
+      <td>0.640485</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.640274</td>
+      <td>0.432569</td>
+      <td>0.871540</td>
+      <td>c</td>
+      <td>1.280547</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.115659</td>
+      <td>0.852093</td>
+      <td>0.311823</td>
+      <td>d</td>
+      <td>0.231318</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.200713</td>
+      <td>0.460636</td>
+      <td>0.047897</td>
+      <td>e</td>
+      <td>0.401426</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.094301</td>
+      <td>0.374459</td>
+      <td>0.386620</td>
+      <td>a</td>
+      <td>0.188603</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.945022</td>
+      <td>0.622679</td>
+      <td>0.327057</td>
+      <td>b</td>
+      <td>1.890043</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.992307</td>
+      <td>0.605558</td>
+      <td>0.106485</td>
+      <td>c</td>
+      <td>1.984614</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.457019</td>
+      <td>0.192776</td>
+      <td>0.995795</td>
+      <td>d</td>
+      <td>0.914038</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.792489</td>
+      <td>0.249192</td>
+      <td>0.152526</td>
+      <td>e</td>
+      <td>1.584978</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.190983</td>
+      <td>0.167855</td>
+      <td>0.827340</td>
+      <td>a</td>
+      <td>0.381967</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.212407</td>
+      <td>0.375698</td>
+      <td>0.642573</td>
+      <td>b</td>
+      <td>0.424815</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.437660</td>
+      <td>0.819114</td>
+      <td>0.035261</td>
+      <td>c</td>
+      <td>0.875319</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.535583</td>
+      <td>0.314200</td>
+      <td>0.410386</td>
+      <td>d</td>
+      <td>1.071167</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.314583</td>
+      <td>0.588293</td>
+      <td>0.865930</td>
+      <td>e</td>
+      <td>0.629167</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.972126</td>
+      <td>0.052625</td>
+      <td>0.193718</td>
+      <td>a</td>
+      <td>1.944253</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.928069</td>
+      <td>0.102295</td>
+      <td>0.087360</td>
+      <td>b</td>
+      <td>1.856139</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.226964</td>
+      <td>0.001599</td>
+      <td>0.541594</td>
+      <td>c</td>
+      <td>0.453929</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.779363</td>
+      <td>0.015456</td>
+      <td>0.770510</td>
+      <td>d</td>
+      <td>1.558725</td>
+      <td>0.404123</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.654624</td>
+      <td>0.908534</td>
+      <td>0.044687</td>
+      <td>e</td>
+      <td>1.309247</td>
+      <td>0.404123</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </div>
+
 </div>
+
 </div>
+
 </div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>With grouped inputs, the mean score is broadcasted <em>within</em> each group:</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">groupby</span><span class="p">(</span><span class="s1">'group'</span><span class="p">),</span> 
-    <span class="n">assign</span><span class="p">(</span><span class="n">speed_per_group</span><span class="o">=</span><span class="s1">'speed.mean()'</span><span class="p">)</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+    <span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">),</span> 
+    <span class="n">assign</span><span class="p">(</span><span class="n">speed_per_group</span><span class="o">=</span><span class="s1">&#39;speed.mean()&#39;</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+
+
+
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -15512,236 +15963,254 @@ dtype: float64</pre>
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>rt</th>
-<th>score</th>
-<th>speed</th>
-<th>group</th>
-<th>rt_doubled</th>
-<th>speed_per_group</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>0.033274</td>
-<td>0.497035</td>
-<td>0.963030</td>
-<td>a</td>
-<td>0.066549</td>
-<td>0.592677</td>
-</tr>
-<tr>
-<th>1</th>
-<td>0.320243</td>
-<td>0.449792</td>
-<td>0.646103</td>
-<td>b</td>
-<td>0.640485</td>
-<td>0.425773</td>
-</tr>
-<tr>
-<th>2</th>
-<td>0.640274</td>
-<td>0.432569</td>
-<td>0.871540</td>
-<td>c</td>
-<td>1.280547</td>
-<td>0.388720</td>
-</tr>
-<tr>
-<th>3</th>
-<td>0.115659</td>
-<td>0.852093</td>
-<td>0.311823</td>
-<td>d</td>
-<td>0.231318</td>
-<td>0.622129</td>
-</tr>
-<tr>
-<th>4</th>
-<td>0.200713</td>
-<td>0.460636</td>
-<td>0.047897</td>
-<td>e</td>
-<td>0.401426</td>
-<td>0.277760</td>
-</tr>
-<tr>
-<th>5</th>
-<td>0.094301</td>
-<td>0.374459</td>
-<td>0.386620</td>
-<td>a</td>
-<td>0.188603</td>
-<td>0.592677</td>
-</tr>
-<tr>
-<th>6</th>
-<td>0.945022</td>
-<td>0.622679</td>
-<td>0.327057</td>
-<td>b</td>
-<td>1.890043</td>
-<td>0.425773</td>
-</tr>
-<tr>
-<th>7</th>
-<td>0.992307</td>
-<td>0.605558</td>
-<td>0.106485</td>
-<td>c</td>
-<td>1.984614</td>
-<td>0.388720</td>
-</tr>
-<tr>
-<th>8</th>
-<td>0.457019</td>
-<td>0.192776</td>
-<td>0.995795</td>
-<td>d</td>
-<td>0.914038</td>
-<td>0.622129</td>
-</tr>
-<tr>
-<th>9</th>
-<td>0.792489</td>
-<td>0.249192</td>
-<td>0.152526</td>
-<td>e</td>
-<td>1.584978</td>
-<td>0.277760</td>
-</tr>
-<tr>
-<th>10</th>
-<td>0.190983</td>
-<td>0.167855</td>
-<td>0.827340</td>
-<td>a</td>
-<td>0.381967</td>
-<td>0.592677</td>
-</tr>
-<tr>
-<th>11</th>
-<td>0.212407</td>
-<td>0.375698</td>
-<td>0.642573</td>
-<td>b</td>
-<td>0.424815</td>
-<td>0.425773</td>
-</tr>
-<tr>
-<th>12</th>
-<td>0.437660</td>
-<td>0.819114</td>
-<td>0.035261</td>
-<td>c</td>
-<td>0.875319</td>
-<td>0.388720</td>
-</tr>
-<tr>
-<th>13</th>
-<td>0.535583</td>
-<td>0.314200</td>
-<td>0.410386</td>
-<td>d</td>
-<td>1.071167</td>
-<td>0.622129</td>
-</tr>
-<tr>
-<th>14</th>
-<td>0.314583</td>
-<td>0.588293</td>
-<td>0.865930</td>
-<td>e</td>
-<td>0.629167</td>
-<td>0.277760</td>
-</tr>
-<tr>
-<th>15</th>
-<td>0.972126</td>
-<td>0.052625</td>
-<td>0.193718</td>
-<td>a</td>
-<td>1.944253</td>
-<td>0.592677</td>
-</tr>
-<tr>
-<th>16</th>
-<td>0.928069</td>
-<td>0.102295</td>
-<td>0.087360</td>
-<td>b</td>
-<td>1.856139</td>
-<td>0.425773</td>
-</tr>
-<tr>
-<th>17</th>
-<td>0.226964</td>
-<td>0.001599</td>
-<td>0.541594</td>
-<td>c</td>
-<td>0.453929</td>
-<td>0.388720</td>
-</tr>
-<tr>
-<th>18</th>
-<td>0.779363</td>
-<td>0.015456</td>
-<td>0.770510</td>
-<td>d</td>
-<td>1.558725</td>
-<td>0.622129</td>
-</tr>
-<tr>
-<th>19</th>
-<td>0.654624</td>
-<td>0.908534</td>
-<td>0.044687</td>
-<td>e</td>
-<td>1.309247</td>
-<td>0.277760</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>score</th>
+      <th>speed</th>
+      <th>group</th>
+      <th>rt_doubled</th>
+      <th>speed_per_group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.033274</td>
+      <td>0.497035</td>
+      <td>0.963030</td>
+      <td>a</td>
+      <td>0.066549</td>
+      <td>0.592677</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.320243</td>
+      <td>0.449792</td>
+      <td>0.646103</td>
+      <td>b</td>
+      <td>0.640485</td>
+      <td>0.425773</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.640274</td>
+      <td>0.432569</td>
+      <td>0.871540</td>
+      <td>c</td>
+      <td>1.280547</td>
+      <td>0.388720</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.115659</td>
+      <td>0.852093</td>
+      <td>0.311823</td>
+      <td>d</td>
+      <td>0.231318</td>
+      <td>0.622129</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.200713</td>
+      <td>0.460636</td>
+      <td>0.047897</td>
+      <td>e</td>
+      <td>0.401426</td>
+      <td>0.277760</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.094301</td>
+      <td>0.374459</td>
+      <td>0.386620</td>
+      <td>a</td>
+      <td>0.188603</td>
+      <td>0.592677</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.945022</td>
+      <td>0.622679</td>
+      <td>0.327057</td>
+      <td>b</td>
+      <td>1.890043</td>
+      <td>0.425773</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.992307</td>
+      <td>0.605558</td>
+      <td>0.106485</td>
+      <td>c</td>
+      <td>1.984614</td>
+      <td>0.388720</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.457019</td>
+      <td>0.192776</td>
+      <td>0.995795</td>
+      <td>d</td>
+      <td>0.914038</td>
+      <td>0.622129</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.792489</td>
+      <td>0.249192</td>
+      <td>0.152526</td>
+      <td>e</td>
+      <td>1.584978</td>
+      <td>0.277760</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.190983</td>
+      <td>0.167855</td>
+      <td>0.827340</td>
+      <td>a</td>
+      <td>0.381967</td>
+      <td>0.592677</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.212407</td>
+      <td>0.375698</td>
+      <td>0.642573</td>
+      <td>b</td>
+      <td>0.424815</td>
+      <td>0.425773</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.437660</td>
+      <td>0.819114</td>
+      <td>0.035261</td>
+      <td>c</td>
+      <td>0.875319</td>
+      <td>0.388720</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.535583</td>
+      <td>0.314200</td>
+      <td>0.410386</td>
+      <td>d</td>
+      <td>1.071167</td>
+      <td>0.622129</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.314583</td>
+      <td>0.588293</td>
+      <td>0.865930</td>
+      <td>e</td>
+      <td>0.629167</td>
+      <td>0.277760</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.972126</td>
+      <td>0.052625</td>
+      <td>0.193718</td>
+      <td>a</td>
+      <td>1.944253</td>
+      <td>0.592677</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.928069</td>
+      <td>0.102295</td>
+      <td>0.087360</td>
+      <td>b</td>
+      <td>1.856139</td>
+      <td>0.425773</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.226964</td>
+      <td>0.001599</td>
+      <td>0.541594</td>
+      <td>c</td>
+      <td>0.453929</td>
+      <td>0.388720</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.779363</td>
+      <td>0.015456</td>
+      <td>0.770510</td>
+      <td>d</td>
+      <td>1.558725</td>
+      <td>0.622129</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.654624</td>
+      <td>0.908534</td>
+      <td>0.044687</td>
+      <td>e</td>
+      <td>1.309247</td>
+      <td>0.277760</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </div>
+
 </div>
+
 </div>
+
 </div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Here no broadcasting occurs, but the result is reshaped while respecting groups like <code>transform</code> in pandas.</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">groupby</span><span class="p">(</span><span class="s1">'group'</span><span class="p">),</span> 
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+    <span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">),</span> 
     <span class="n">assign</span><span class="p">(</span>
-        <span class="n">score_centered</span><span class="o">=</span><span class="s1">'score - score.mean()'</span><span class="p">,</span> 
-        <span class="n">score_norm</span> <span class="o">=</span> <span class="s1">'score/score.std()'</span>
+        <span class="n">score_centered</span><span class="o">=</span><span class="s1">&#39;score - score.mean()&#39;</span><span class="p">,</span> 
+        <span class="n">score_norm</span> <span class="o">=</span> <span class="s1">&#39;score/score.std()&#39;</span>
         <span class="p">)</span>
         
     <span class="p">)</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+
+
+
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -15755,273 +16224,287 @@ dtype: float64</pre>
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>rt</th>
-<th>score</th>
-<th>speed</th>
-<th>group</th>
-<th>rt_doubled</th>
-<th>score_centered</th>
-<th>score_norm</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>0.033274</td>
-<td>0.497035</td>
-<td>0.963030</td>
-<td>a</td>
-<td>0.066549</td>
-<td>0.224041</td>
-<td>2.484073</td>
-</tr>
-<tr>
-<th>1</th>
-<td>0.320243</td>
-<td>0.449792</td>
-<td>0.646103</td>
-<td>b</td>
-<td>0.640485</td>
-<td>0.062176</td>
-<td>2.077163</td>
-</tr>
-<tr>
-<th>2</th>
-<td>0.640274</td>
-<td>0.432569</td>
-<td>0.871540</td>
-<td>c</td>
-<td>1.280547</td>
-<td>-0.032141</td>
-<td>1.247083</td>
-</tr>
-<tr>
-<th>3</th>
-<td>0.115659</td>
-<td>0.852093</td>
-<td>0.311823</td>
-<td>d</td>
-<td>0.231318</td>
-<td>0.508462</td>
-<td>2.363717</td>
-</tr>
-<tr>
-<th>4</th>
-<td>0.200713</td>
-<td>0.460636</td>
-<td>0.047897</td>
-<td>e</td>
-<td>0.401426</td>
-<td>-0.091028</td>
-<td>1.669169</td>
-</tr>
-<tr>
-<th>5</th>
-<td>0.094301</td>
-<td>0.374459</td>
-<td>0.386620</td>
-<td>a</td>
-<td>0.188603</td>
-<td>0.101466</td>
-<td>1.871467</td>
-</tr>
-<tr>
-<th>6</th>
-<td>0.945022</td>
-<td>0.622679</td>
-<td>0.327057</td>
-<td>b</td>
-<td>1.890043</td>
-<td>0.235063</td>
-<td>2.875564</td>
-</tr>
-<tr>
-<th>7</th>
-<td>0.992307</td>
-<td>0.605558</td>
-<td>0.106485</td>
-<td>c</td>
-<td>1.984614</td>
-<td>0.140848</td>
-<td>1.745804</td>
-</tr>
-<tr>
-<th>8</th>
-<td>0.457019</td>
-<td>0.192776</td>
-<td>0.995795</td>
-<td>d</td>
-<td>0.914038</td>
-<td>-0.150855</td>
-<td>0.534764</td>
-</tr>
-<tr>
-<th>9</th>
-<td>0.792489</td>
-<td>0.249192</td>
-<td>0.152526</td>
-<td>e</td>
-<td>1.584978</td>
-<td>-0.302472</td>
-<td>0.902976</td>
-</tr>
-<tr>
-<th>10</th>
-<td>0.190983</td>
-<td>0.167855</td>
-<td>0.827340</td>
-<td>a</td>
-<td>0.381967</td>
-<td>-0.105139</td>
-<td>0.838901</td>
-</tr>
-<tr>
-<th>11</th>
-<td>0.212407</td>
-<td>0.375698</td>
-<td>0.642573</td>
-<td>b</td>
-<td>0.424815</td>
-<td>-0.011918</td>
-<td>1.734994</td>
-</tr>
-<tr>
-<th>12</th>
-<td>0.437660</td>
-<td>0.819114</td>
-<td>0.035261</td>
-<td>c</td>
-<td>0.875319</td>
-<td>0.354404</td>
-<td>2.361481</td>
-</tr>
-<tr>
-<th>13</th>
-<td>0.535583</td>
-<td>0.314200</td>
-<td>0.410386</td>
-<td>d</td>
-<td>1.071167</td>
-<td>-0.029431</td>
-<td>0.871594</td>
-</tr>
-<tr>
-<th>14</th>
-<td>0.314583</td>
-<td>0.588293</td>
-<td>0.865930</td>
-<td>e</td>
-<td>0.629167</td>
-<td>0.036629</td>
-<td>2.131750</td>
-</tr>
-<tr>
-<th>15</th>
-<td>0.972126</td>
-<td>0.052625</td>
-<td>0.193718</td>
-<td>a</td>
-<td>1.944253</td>
-<td>-0.220369</td>
-<td>0.263007</td>
-</tr>
-<tr>
-<th>16</th>
-<td>0.928069</td>
-<td>0.102295</td>
-<td>0.087360</td>
-<td>b</td>
-<td>1.856139</td>
-<td>-0.285321</td>
-<td>0.472403</td>
-</tr>
-<tr>
-<th>17</th>
-<td>0.226964</td>
-<td>0.001599</td>
-<td>0.541594</td>
-<td>c</td>
-<td>0.453929</td>
-<td>-0.463111</td>
-<td>0.004610</td>
-</tr>
-<tr>
-<th>18</th>
-<td>0.779363</td>
-<td>0.015456</td>
-<td>0.770510</td>
-<td>d</td>
-<td>1.558725</td>
-<td>-0.328175</td>
-<td>0.042874</td>
-</tr>
-<tr>
-<th>19</th>
-<td>0.654624</td>
-<td>0.908534</td>
-<td>0.044687</td>
-<td>e</td>
-<td>1.309247</td>
-<td>0.356871</td>
-<td>3.292182</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>score</th>
+      <th>speed</th>
+      <th>group</th>
+      <th>rt_doubled</th>
+      <th>score_centered</th>
+      <th>score_norm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.033274</td>
+      <td>0.497035</td>
+      <td>0.963030</td>
+      <td>a</td>
+      <td>0.066549</td>
+      <td>0.224041</td>
+      <td>2.484073</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.320243</td>
+      <td>0.449792</td>
+      <td>0.646103</td>
+      <td>b</td>
+      <td>0.640485</td>
+      <td>0.062176</td>
+      <td>2.077163</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.640274</td>
+      <td>0.432569</td>
+      <td>0.871540</td>
+      <td>c</td>
+      <td>1.280547</td>
+      <td>-0.032141</td>
+      <td>1.247083</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.115659</td>
+      <td>0.852093</td>
+      <td>0.311823</td>
+      <td>d</td>
+      <td>0.231318</td>
+      <td>0.508462</td>
+      <td>2.363717</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.200713</td>
+      <td>0.460636</td>
+      <td>0.047897</td>
+      <td>e</td>
+      <td>0.401426</td>
+      <td>-0.091028</td>
+      <td>1.669169</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.094301</td>
+      <td>0.374459</td>
+      <td>0.386620</td>
+      <td>a</td>
+      <td>0.188603</td>
+      <td>0.101466</td>
+      <td>1.871467</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.945022</td>
+      <td>0.622679</td>
+      <td>0.327057</td>
+      <td>b</td>
+      <td>1.890043</td>
+      <td>0.235063</td>
+      <td>2.875564</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.992307</td>
+      <td>0.605558</td>
+      <td>0.106485</td>
+      <td>c</td>
+      <td>1.984614</td>
+      <td>0.140848</td>
+      <td>1.745804</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.457019</td>
+      <td>0.192776</td>
+      <td>0.995795</td>
+      <td>d</td>
+      <td>0.914038</td>
+      <td>-0.150855</td>
+      <td>0.534764</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.792489</td>
+      <td>0.249192</td>
+      <td>0.152526</td>
+      <td>e</td>
+      <td>1.584978</td>
+      <td>-0.302472</td>
+      <td>0.902976</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.190983</td>
+      <td>0.167855</td>
+      <td>0.827340</td>
+      <td>a</td>
+      <td>0.381967</td>
+      <td>-0.105139</td>
+      <td>0.838901</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.212407</td>
+      <td>0.375698</td>
+      <td>0.642573</td>
+      <td>b</td>
+      <td>0.424815</td>
+      <td>-0.011918</td>
+      <td>1.734994</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.437660</td>
+      <td>0.819114</td>
+      <td>0.035261</td>
+      <td>c</td>
+      <td>0.875319</td>
+      <td>0.354404</td>
+      <td>2.361481</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.535583</td>
+      <td>0.314200</td>
+      <td>0.410386</td>
+      <td>d</td>
+      <td>1.071167</td>
+      <td>-0.029431</td>
+      <td>0.871594</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.314583</td>
+      <td>0.588293</td>
+      <td>0.865930</td>
+      <td>e</td>
+      <td>0.629167</td>
+      <td>0.036629</td>
+      <td>2.131750</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.972126</td>
+      <td>0.052625</td>
+      <td>0.193718</td>
+      <td>a</td>
+      <td>1.944253</td>
+      <td>-0.220369</td>
+      <td>0.263007</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.928069</td>
+      <td>0.102295</td>
+      <td>0.087360</td>
+      <td>b</td>
+      <td>1.856139</td>
+      <td>-0.285321</td>
+      <td>0.472403</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.226964</td>
+      <td>0.001599</td>
+      <td>0.541594</td>
+      <td>c</td>
+      <td>0.453929</td>
+      <td>-0.463111</td>
+      <td>0.004610</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.779363</td>
+      <td>0.015456</td>
+      <td>0.770510</td>
+      <td>d</td>
+      <td>1.558725</td>
+      <td>-0.328175</td>
+      <td>0.042874</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.654624</td>
+      <td>0.908534</td>
+      <td>0.044687</td>
+      <td>e</td>
+      <td>1.309247</td>
+      <td>0.356871</td>
+      <td>3.292182</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </div>
+
 </div>
+
 </div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="efficient-analyses-using-memoization-currying-and-caching">Efficient analyses using memoization, currying, and caching<a class="anchor-link" href="#Efficient-analyses-using-memoization,-currying,-and-caching">&#182;</a></h2>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="efficient-analyses-using-memoization-currying-and-caching">Efficient analyses using memoization, currying, and caching<a class="anchor-link" href="#Efficient-analyses-using-memoization,-currying,-and-caching">¶</a></h2>
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>It's convenient to combine these operations using <code>pipe</code>, but what if some operations take longer than others? It would be annoying to have to rerun expensive i/o or computate operations while you're debugging or adding another step to your pipeline. This section demonstrates three ways that can dramatically improve efficiency.</p>
+
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="memoization">Memoization<a class="anchor-link" href="#Memoization">¶</a></h3><p><strong>Memoize</strong> a function to save its last input in memory (RAM) and recall it when called with the same arguments rather than re-executing a potentially long running function. Memoized outputs <em>do not</em> persist across kernel restarts, and aren't great for functions that have very large or non-pickleable inputs and outputs. A nice use case is simply loading a file. Given the filepath, you're loading the same file each time, so lets just memoize the result, especially if it takes a long time to reread the file:</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="memoization">Memoization<a class="anchor-link" href="#Memoization">&#182;</a></h3><p><strong>Memoize</strong> a function to save its last input in memory (RAM) and recall it when called with the same arguments rather than re-executing a potentially long running function. Memoized outputs <em>do not</em> persist across kernel restarts, and aren't great for functions that have very large or non-pickleable inputs and outputs. A nice use case is simply loading a file. Given the filepath, you're loading the same file each time, so lets just memoize the result, especially if it takes a long time to reread the file:</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">memoize</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">memoize</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 
 <span class="nd">@memoize</span>
 <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="s2">"Simulate slow loading a file..."</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"loading from disk"</span><span class="p">)</span>
+    <span class="s2">&quot;Simulate slow loading a file...&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loading from disk&quot;</span><span class="p">)</span>
     <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="currying">Currying<a class="anchor-link" href="#Currying">¶</a></h3><p><strong>Curry</strong>, also called <em>partial function application</em>, is helpful when writing custom functions you want to add to a <code>pipe</code>. When curried, a function operates normally when it receives all its required arguments, but turns into a <em>partial</em> function when it gets fewer than all its required arguments. This partial function behaves just like the original except with a subset of its arguments "fixed". Because <code>pipe</code> implicitly passes the output of the last function to the next function in the pipeline, it's not possible to manipulate secondary arguments to a function in the pipeline without currying:</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="currying">Currying<a class="anchor-link" href="#Currying">&#182;</a></h3><p><strong>Curry</strong>, also called <em>partial function application</em>, is helpful when writing custom functions you want to add to a <code>pipe</code>. When curried, a function operates normally when it receives all its required arguments, but turns into a <em>partial</em> function when it gets fewer than all its required arguments. This partial function behaves just like the original except with a subset of its arguments "fixed". Because <code>pipe</code> implicitly passes the output of the last function to the next function in the pipeline, it's not possible to manipulate secondary arguments to a function in the pipeline without currying:</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">curry</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">curry</span>
 
 <span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">calc_mean</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -16038,94 +16521,122 @@ dtype: float64</pre>
 <span class="k">def</span> <span class="nf">calc_mean</span><span class="p">(</span><span class="n">norm_value</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="caching-outputs-to-disk">Caching outputs to disk<a class="anchor-link" href="#Caching-outputs-to-disk">¶</a></h3><p><strong>Cache</strong> so the result of a function is stored to disk in a file made unique by hash of the args and kwargs to the function. Use <code>utilz.disk_cache</code> to decorate a function so it caches, which works similar to <code>toolz.memoize</code> but stores the result to a file (rather than in memory) and loads the file when called with the same inputs. Essentially you're trading computation time for i/o time. This is usually preferable to <code>memoize</code> for larger memory hungry inputs and outputs, and necessary if input or outputs cannot be pickled (e.g. dataframes, arrays, deep objects, etc). Setting the threshold to something like 1 essentially always caches the result.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="caching-outputs-to-disk">Caching outputs to disk<a class="anchor-link" href="#Caching-outputs-to-disk">&#182;</a></h3><p><strong>Cache</strong> so the result of a function is stored to disk in a file made unique by hash of the args and kwargs to the function. Use <code>utilz.disk_cache</code> to decorate a function so it caches, which works similar to <code>toolz.memoize</code> but stores the result to a file (rather than in memory) and loads the file when called with the same inputs. Essentially you're trading computation time for i/o time. This is usually preferable to <code>memoize</code> for larger memory hungry inputs and outputs, and necessary if input or outputs cannot be pickled (e.g. dataframes, arrays, deep objects, etc). Setting the threshold to something like 1 essentially always caches the result.</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">disk_cache</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">disk_cache</span>
 
-<span class="c1"># We're also using the curry decorator so norm works in the pipeline below</span>
-<span class="c1"># It's not needed to use the disk_cache decorator</span>
+<span class="c1"># We&#39;re also using the curry decorator so norm works in the pipeline below</span>
+<span class="c1"># It&#39;s not needed to use the disk_cache decorator</span>
 
 <span class="nd">@curry</span>
 <span class="nd">@disk_cache</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">denom</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
-    <span class="s2">"Simulate expensive function that takes args"</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"computing..."</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">denom</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="s2">&quot;Simulate expensive function that takes args&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;computing...&quot;</span><span class="p">)</span>
     <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"norm"</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="n">denom</span><span class="p">]})</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;norm&quot;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="n">denom</span><span class="p">]})</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
+
 </div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="putting-it-together">Putting it together<a class="anchor-link" href="#Putting-it-together">&#182;</a></h2><h3 id="pipeline-based-data-analysis-with-caching-and-memoization">Pipeline based data analysis with caching and memoization<a class="anchor-link" href="#Pipeline-based-data-analysis-with-caching-and-memoization">&#182;</a></h3>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="putting-it-together">Putting it together<a class="anchor-link" href="#Putting-it-together">¶</a></h2><h3 id="pipeline-based-data-analysis-with-caching-and-memoization">Pipeline based data analysis with caching and memoization<a class="anchor-link" href="#Pipeline-based-data-analysis-with-caching-and-memoization">¶</a></h3>
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>First you might want to clear any local cache, i.e. the <code>.utilz_cache</code> folder. Not neccessary, but important so you don't accidently load a disk-cached output without realizing. <code>utilz</code> will always let you know if it's caching or loading a cached result to help you.</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">clear_cache</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">clear_cache</span>
 
 <span class="c1"># Clear any existing cache</span>
 <span class="n">clear_cache</span><span class="p">()</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Because we used the <code>memoize</code> decorator when defining <code>load</code> above, only the first run of this pipeline actually loads the data and incurs an i/o cost. Likewise because <code>norm</code> is decorated with <code>disk_cache</code> only the first run of norm (with the same prior pipeline outputs) incurs a compute cost.</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="n">summary</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
-    <span class="s2">"test.csv"</span><span class="p">,</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">summary</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
+    <span class="s2">&quot;test.csv&quot;</span><span class="p">,</span>
     <span class="n">load</span><span class="p">,</span>
-    <span class="n">groupby</span><span class="p">(</span><span class="s2">"group"</span><span class="p">),</span>
+    <span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">),</span>
     <span class="n">assign</span><span class="p">(</span>
-        <span class="n">score_centered</span><span class="o">=</span><span class="s2">"score - score.mean()"</span><span class="p">,</span> 
-        <span class="n">score_mean</span><span class="o">=</span><span class="s2">"score.mean()"</span><span class="p">,</span> 
-        <span class="n">score_std</span><span class="o">=</span><span class="s2">"score.std()"</span><span class="p">),</span>
-    <span class="n">norm</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="s1">'rt'</span><span class="p">,</span><span class="n">denom</span><span class="o">=</span><span class="s1">'score'</span><span class="p">)</span>
+        <span class="n">score_centered</span><span class="o">=</span><span class="s2">&quot;score - score.mean()&quot;</span><span class="p">,</span> 
+        <span class="n">score_mean</span><span class="o">=</span><span class="s2">&quot;score.mean()&quot;</span><span class="p">,</span> 
+        <span class="n">score_std</span><span class="o">=</span><span class="s2">&quot;score.std()&quot;</span><span class="p">),</span>
+    <span class="n">norm</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span><span class="n">denom</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="n">summary</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>loading from disk
 computing...
@@ -16133,11 +16644,17 @@ Exceeded compute time. Result cached to .utilz_cache/norm___denom__score--df__9c
 </pre>
 </div>
 </div>
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[22]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[22]:</div>
+
+
+
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -16151,141 +16668,164 @@ Exceeded compute time. Result cached to .utilz_cache/norm___denom__score--df__9c
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>norm</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>0.876757</td>
-</tr>
-<tr>
-<th>4</th>
-<td>0.219101</td>
-</tr>
-<tr>
-<th>8</th>
-<td>1.803562</td>
-</tr>
-<tr>
-<th>12</th>
-<td>0.080123</td>
-</tr>
-<tr>
-<th>16</th>
-<td>1.397509</td>
-</tr>
-<tr>
-<th>1</th>
-<td>0.013055</td>
-</tr>
-<tr>
-<th>5</th>
-<td>0.293790</td>
-</tr>
-<tr>
-<th>9</th>
-<td>0.678440</td>
-</tr>
-<tr>
-<th>13</th>
-<td>1.044078</td>
-</tr>
-<tr>
-<th>17</th>
-<td>0.495721</td>
-</tr>
-<tr>
-<th>2</th>
-<td>6.042852</td>
-</tr>
-<tr>
-<th>6</th>
-<td>2.151508</td>
-</tr>
-<tr>
-<th>10</th>
-<td>1.042623</td>
-</tr>
-<tr>
-<th>14</th>
-<td>17.611897</td>
-</tr>
-<tr>
-<th>18</th>
-<td>0.978583</td>
-</tr>
-<tr>
-<th>3</th>
-<td>0.782465</td>
-</tr>
-<tr>
-<th>7</th>
-<td>0.155521</td>
-</tr>
-<tr>
-<th>11</th>
-<td>2.701494</td>
-</tr>
-<tr>
-<th>15</th>
-<td>1.126293</td>
-</tr>
-<tr>
-<th>19</th>
-<td>7.057653</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>norm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.876757</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.219101</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1.803562</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.080123</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1.397509</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.013055</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.293790</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.678440</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1.044078</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.495721</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6.042852</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2.151508</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1.042623</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>17.611897</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.978583</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.782465</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.155521</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2.701494</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1.126293</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>7.057653</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </div>
+
 </div>
+
 </div>
+
 </div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Notice how no data loading or expensive computation needs to happen on a second run of this pipeline (no print messages aside from <code>utilz</code> telling you it's loading <code>norm</code> last cached result):</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight highlight-ipynb hl-python"><pre><span></span><span class="n">summary</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
-    <span class="s2">"test.csv"</span><span class="p">,</span>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
+    <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+    <div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">summary</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
+    <span class="s2">&quot;test.csv&quot;</span><span class="p">,</span>
     <span class="n">load</span><span class="p">,</span>
-    <span class="n">groupby</span><span class="p">(</span><span class="s2">"group"</span><span class="p">),</span>
+    <span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">),</span>
     <span class="n">assign</span><span class="p">(</span>
-        <span class="n">score_centered</span><span class="o">=</span><span class="s2">"score - score.mean()"</span><span class="p">,</span> 
-        <span class="n">score_mean</span><span class="o">=</span><span class="s2">"score.mean()"</span><span class="p">,</span> 
-        <span class="n">score_std</span><span class="o">=</span><span class="s2">"score.std()"</span><span class="p">),</span>
-    <span class="n">norm</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="s1">'rt'</span><span class="p">,</span><span class="n">denom</span><span class="o">=</span><span class="s1">'score'</span><span class="p">)</span>
+        <span class="n">score_centered</span><span class="o">=</span><span class="s2">&quot;score - score.mean()&quot;</span><span class="p">,</span> 
+        <span class="n">score_mean</span><span class="o">=</span><span class="s2">&quot;score.mean()&quot;</span><span class="p">,</span> 
+        <span class="n">score_std</span><span class="o">=</span><span class="s2">&quot;score.std()&quot;</span><span class="p">),</span>
+    <span class="n">norm</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span><span class="n">denom</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="n">summary</span>
 </pre></div>
+
+        </div>
+    </div>
+
 </div>
 </div>
-</div>
-</div>
+
 <div class="jp-Cell-outputWrapper">
+
+
 <div class="jp-OutputArea jp-Cell-outputArea">
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>Returning norm cached result
 </pre>
 </div>
 </div>
+
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[24]:</div>
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[24]:</div>
+
+
+
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -16299,159 +16839,201 @@ Exceeded compute time. Result cached to .utilz_cache/norm___denom__score--df__9c
     }
 </style>
 <table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>norm</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>0.876757</td>
-</tr>
-<tr>
-<th>1</th>
-<td>0.219101</td>
-</tr>
-<tr>
-<th>2</th>
-<td>1.803562</td>
-</tr>
-<tr>
-<th>3</th>
-<td>0.080123</td>
-</tr>
-<tr>
-<th>4</th>
-<td>1.397509</td>
-</tr>
-<tr>
-<th>5</th>
-<td>0.013055</td>
-</tr>
-<tr>
-<th>6</th>
-<td>0.293790</td>
-</tr>
-<tr>
-<th>7</th>
-<td>0.678440</td>
-</tr>
-<tr>
-<th>8</th>
-<td>1.044078</td>
-</tr>
-<tr>
-<th>9</th>
-<td>0.495721</td>
-</tr>
-<tr>
-<th>10</th>
-<td>6.042852</td>
-</tr>
-<tr>
-<th>11</th>
-<td>2.151508</td>
-</tr>
-<tr>
-<th>12</th>
-<td>1.042623</td>
-</tr>
-<tr>
-<th>13</th>
-<td>17.611897</td>
-</tr>
-<tr>
-<th>14</th>
-<td>0.978583</td>
-</tr>
-<tr>
-<th>15</th>
-<td>0.782465</td>
-</tr>
-<tr>
-<th>16</th>
-<td>0.155521</td>
-</tr>
-<tr>
-<th>17</th>
-<td>2.701494</td>
-</tr>
-<tr>
-<th>18</th>
-<td>1.126293</td>
-</tr>
-<tr>
-<th>19</th>
-<td>7.057653</td>
-</tr>
-</tbody>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>norm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.876757</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.219101</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.803562</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.080123</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.397509</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.013055</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.293790</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.678440</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1.044078</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.495721</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>6.042852</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2.151508</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1.042623</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>17.611897</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.978583</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.782465</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.155521</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2.701494</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1.126293</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>7.057653</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </div>
+
 </div>
+
 </div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="summary">Summary<a class="anchor-link" href="#Summary">&#182;</a></h2>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="summary">Summary<a class="anchor-link" href="#Summary">¶</a></h2>
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>This setup is nice because it allows for both interactive data analysis as well as reproducible scripts. Simply start writing the pipeline steps, and comment out ones you want to skip or debug. In another notebook cell edit the source code of a function in the pipeline and incrementally add to its body, while rerunning the pipeline to see results as you build up your functions.</p>
 <p>For functions that take a while to run, try decorating them with <code>memoize</code> or <code>disk_cache</code>. Memoize is nice for loading csv/text files (so you don't need to re-read them from disk each re-run of the pipeline). Cacheing is nice for expensive operations or operations on complex datastructures like arrays and dataframes. Plus, utilz saves them in standard robust file types (.csv. or .h5 rather than pickles) so you're also getting incremental backups of your work. No more need to rely on saved "state" in a Juptyer notebook.</p>
+
 </div>
 </div>
 </body>
+
+
 </div>
-</article>
-</div>
-</div>
-</main>
+
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
 <footer class="md-footer">
-<div class="md-footer-nav">
-<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
-<a class="md-footer-nav__link md-footer-nav__link--prev" href="../pipe/" rel="prev">
-<div class="md-footer-nav__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</div>
-<div class="md-footer-nav__title">
-<div class="md-ellipsis">
-<span class="md-footer-nav__direction">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../.." class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Pipe Operator (experimental)
+                Home
               </div>
-</div>
-</a>
-</nav>
-</div>
-<div class="md-footer-meta md-typeset">
-<div class="md-footer-meta__inner md-grid">
-<div class="md-footer-copyright">
+            </div>
+          </a>
+        
+        
+          <a href="../io/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Saving and Loading
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
         Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs
         </a>
-</div>
-</div>
-</div>
+      </div>
+      
+    </div>
+  </div>
 </footer>
-</div>
-<script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
-<script src="../../assets/javascripts/bundle.c1ccee15.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
-<script>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+            worker: "../../assets/javascripts/worker/search.9c0e82ba.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
-</body>
+      
+    
+  </body>
 </html>

@@ -9,11 +9,12 @@
         <meta name="description" content="Utility library for faster, easier, and more reliable data analysis">
       
       
+      
+      
         <link rel="canonical" href="https://eshinjolly.com/utilz/api/verbs/">
       
-      
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
     
     
       
@@ -21,10 +22,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.19190aaf.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.cb6bc1d0.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.24b84193.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
         
       
     
@@ -32,7 +33,7 @@
     
       
         
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
       
@@ -56,6 +57,7 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
       
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -85,18 +87,20 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
-      
-        <div class="md-header-nav__ellipsis">
-          <span class="md-header-nav__topic md-ellipsis">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             Utilz
           </span>
-          <span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             
               Data analysis "verbs"
             
           </span>
         </div>
-      
+      </div>
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
@@ -107,7 +111,7 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
@@ -155,10 +159,14 @@
         <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
+
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
@@ -190,24 +198,15 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../.." class="md-nav__link">
-      Home
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../io/" class="md-nav__link">
-      Saving and Loading
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
 
     
       
@@ -215,25 +214,106 @@
       
 
   
-
-
-  <li class="md-nav__item md-nav__item--active">
+  
+  
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
+    <li class="md-nav__item md-nav__item--nested">
       
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Data analysis "verbs"
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+      
+      <label class="md-nav__link" for="nav-2">
+        Usage Examples
         <span class="md-nav__icon md-icon"></span>
       </label>
-    
-    <a href="./" class="md-nav__link md-nav__link--active">
-      Data analysis "verbs"
-    </a>
+      <nav class="md-nav" aria-label="Usage Examples" data-md-level="1">
+        <label class="md-nav__title" for="nav-2">
+          <span class="md-nav__icon md-icon"></span>
+          Usage Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fp_data_analysis/" class="md-nav__link">
+        Declarative Data Analysis
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
     
       
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      
+      <label class="md-nav__link" for="nav-3">
+        API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../io/" class="md-nav__link">
+        Saving and Loading
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Data analysis "verbs"
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Data analysis "verbs"
+      </a>
+      
+        
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -253,177 +333,90 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.apply" class="md-nav__link">
-    apply()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.assign" class="md-nav__link">
-    assign()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.cols" class="md-nav__link">
-    cols()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.groupby" class="md-nav__link">
-    groupby()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.rename" class="md-nav__link">
-    rename()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.rows" class="md-nav__link">
-    rows()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.save" class="md-nav__link">
-    save()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.summarize" class="md-nav__link">
-    summarize()
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
-    
-  </li>
-
-    
       
-      
-      
+    </li>
+  
 
-
-  <li class="md-nav__item">
-    <a href="../guards/" class="md-nav__link">
-      Guards and Decorators
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../plot/" class="md-nav__link">
-      Plotting Helpers
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../ops/" class="md-nav__link">
-      Operations
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../boilerplate/" class="md-nav__link">
-      Boilerplate
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../termplot/" class="md-nav__link">
-      Terminal Plots (experimental)
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../pipe/" class="md-nav__link">
-      Pipe Operator (experimental)
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
-    
-    <label class="md-nav__link" for="nav-10">
-      Usage Examples
-      <span class="md-nav__icon md-icon"></span>
-    </label>
-    <nav class="md-nav" aria-label="Usage Examples" data-md-level="1">
-      <label class="md-nav__title" for="nav-10">
-        <span class="md-nav__icon md-icon"></span>
-        Usage Examples
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guards/" class="md-nav__link">
+        Guards and Decorators
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plot/" class="md-nav__link">
+        Plotting Helpers
+      </a>
+    </li>
+  
+
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ops/" class="md-nav__link">
+        Operations
+      </a>
+    </li>
+  
 
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../boilerplate/" class="md-nav__link">
+        Boilerplate
+      </a>
+    </li>
+  
 
-  <li class="md-nav__item">
-    <a href="../fp_data_analysis/" class="md-nav__link">
-      Declarative Data Analysis
-    </a>
-  </li>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../termplot/" class="md-nav__link">
+        Terminal Plots (experimental)
+      </a>
+    </li>
+  
 
-        
-      </ul>
-    </nav>
-  </li>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipe/" class="md-nav__link">
+        Pipe Operator (experimental)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
 
     
   </ul>
@@ -433,7 +426,8 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -452,62 +446,6 @@
         <li class="md-nav__item">
   <a href="#utilz.verbs" class="md-nav__link">
     utilz.verbs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.apply" class="md-nav__link">
-    apply()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.assign" class="md-nav__link">
-    assign()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.cols" class="md-nav__link">
-    cols()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.groupby" class="md-nav__link">
-    groupby()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.rename" class="md-nav__link">
-    rename()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.rows" class="md-nav__link">
-    rows()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.save" class="md-nav__link">
-    save()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utilz.verbs.summarize" class="md-nav__link">
-    summarize()
   </a>
   
 </li>
@@ -531,216 +469,10 @@
                 
                 <h1 id="utilzverbs">utilz.verbs</h1>
 <div class="doc doc-object doc-module">
-<h4 class="hidden-toc" href="#utilz.verbs" id="utilz.verbs" style="visibility: hidden; position: absolute;">
+<h4 class="hidden-toc" id="utilz.verbs" style="visibility: hidden; position: absolute;">
         </h4>
 <div class="doc doc-contents first">
 <p>dplyr like <em>verbs</em> for working with pandas dataframes. Designed to be piped together using the <code>pipe</code> function from the <code>toolz</code> package. While not being as feature-complete, <code>utilz.verbse</code> provides limited alternative to other libraries like <code>plydata</code> because it just wraps mostly native pandas methods under-the-hood. Note: the current version unfortunately does borrow the <code>select</code> and <code>define</code> functions from plydata</p>
-<div class="doc doc-children">
-<div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.verbs.apply">
-
-        <code class="highlight language-python">
-apply<span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
-
-
-      </h4>
-<div class="doc doc-contents ">
-<p>Call a dataframe or groupby object's <code>.apply</code> method</p>
-<details class="quote">
-          <summary>Source code in <code>utilz/verbs.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
-    <span class="sd">"""Call a dataframe or groupby object's `.apply` method"""</span>
-    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.verbs.assign">
-
-        <code class="highlight language-python">
-assign<span class="p">(</span><span class="n">dfg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>        </code>
-
-
-      </h4>
-<div class="doc doc-contents ">
-<p>Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses <code>plydata.define/mutate</code> unless the input is a grouped DataFrame
-in which case it falls back to pandas methods because <code>plydata</code> can only handle
-grouped inputs resulting from its own (slow) <code>group_by</code> function</p>
-<details class="quote">
-          <summary>Source code in <code>utilz/verbs.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">assign</span><span class="p">(</span><span class="n">dfg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses `plydata.define/mutate` unless the input is a grouped DataFrame</span>
-<span class="sd">    in which case it falls back to pandas methods because `plydata` can only handle</span>
-<span class="sd">    grouped inputs resulting from its own (slow) `group_by` function</span>
-<span class="sd">    """</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dfg</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">groupby</span><span class="o">.</span><span class="n">generic</span><span class="o">.</span><span class="n">DataFrameGroupBy</span><span class="p">):</span>
-        <span class="n">prev</span> <span class="o">=</span> <span class="n">dfg</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="n">dfg</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">group</span><span class="p">:</span> <span class="n">group</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-            <span class="n">group_col</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">"level_1"</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-                <span class="n">res</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"index"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">k</span><span class="p">]</span>
-                <span class="n">prev</span> <span class="o">=</span> <span class="n">prev</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">group_col</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="s2">"index"</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">res</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="p">[</span><span class="n">k</span><span class="p">]</span>
-                <span class="n">prev</span> <span class="o">=</span> <span class="n">prev</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="n">group_col</span><span class="p">)</span>
-        <span class="n">prev</span> <span class="o">=</span> <span class="n">prev</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">"index"</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"index"</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">prev</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">plydata</span> <span class="kn">import</span> <span class="n">define</span>
-
-        <span class="k">return</span> <span class="n">define</span><span class="p">(</span><span class="n">dfg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.verbs.cols">
-
-        <code class="highlight language-python">
-cols<span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
-
-
-      </h4>
-<div class="doc doc-contents ">
-<p>Select columns using a <code>.query</code> (str), slicerange (start,stop,step), or indices (list). Uses <code>plydata.select</code> </p>
-<details class="quote">
-          <summary>Source code in <code>utilz/verbs.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">cols</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
-    <span class="sd">"""Select columns using a `.query` (str), slicerange (start,stop,step), or indices (list). Uses `plydata.select` """</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">plydata</span> <span class="kn">import</span> <span class="n">select</span>
-
-        <span class="k">return</span> <span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
-        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">query</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">query</span><span class="p">)]</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.verbs.groupby">
-
-        <code class="highlight language-python">
-groupby<span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
-
-
-      </h4>
-<div class="doc doc-contents ">
-<p>Call a dataframe's <code>.groupby</code> method</p>
-<details class="quote">
-          <summary>Source code in <code>utilz/verbs.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">groupby</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
-    <span class="sd">"""Call a dataframe's `.groupby` method"""</span>
-    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.verbs.rename">
-
-        <code class="highlight language-python">
-rename<span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
-
-
-      </h4>
-<div class="doc doc-contents ">
-<p>Call a dataframe's <code>.rename(columns={})</code> method</p>
-<details class="quote">
-          <summary>Source code in <code>utilz/verbs.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">rename</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
-    <span class="sd">"""Call a dataframe's `.rename(columns={})` method"""</span>
-    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.verbs.rows">
-
-        <code class="highlight language-python">
-rows<span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
-
-
-      </h4>
-<div class="doc doc-contents ">
-<p>Select rows using a <code>.query</code> (str), slicerange (start,stop,step), or indices (list) </p>
-<details class="quote">
-          <summary>Source code in <code>utilz/verbs.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">rows</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
-    <span class="sd">"""Select rows using a `.query` (str), slicerange (start,stop,step), or indices (list) """</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
-        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">query</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">query</span><span class="p">),</span> <span class="p">:]</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.verbs.save">
-
-        <code class="highlight language-python">
-save<span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>        </code>
-
-
-      </h4>
-<div class="doc doc-contents ">
-<p>Call a dataframe's <code>.to_csv(index=False)</code> method</p>
-<details class="quote">
-          <summary>Source code in <code>utilz/verbs.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
-    <span class="sd">"""Call a dataframe's `.to_csv(index=False)` method"""</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">df</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-function">
-<h4 class="doc doc-heading" id="utilz.verbs.summarize">
-
-        <code class="highlight language-python">
-summarize<span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">**</span><span class="n">stats</span><span class="p">)</span>        </code>
-
-
-      </h4>
-<div class="doc doc-contents ">
-<p>Call a dataframe or groupby object's <code>.agg</code> method</p>
-<details class="quote">
-          <summary>Source code in <code>utilz/verbs.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">**</span><span class="n">stats</span><span class="p">):</span>
-    <span class="sd">"""Call a dataframe or groupby object's `.agg` method"""</span>
-    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-</div>
 </div>
 </div>
                 
@@ -809,15 +541,15 @@ summarize<span class="p">(</span><span class="n">df</span><span class="p">,</spa
       
     </div>
     
-      <script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
-      <script src="../../assets/javascripts/bundle.c1ccee15.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+            worker: "../../assets/javascripts/worker/search.9c0e82ba.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
