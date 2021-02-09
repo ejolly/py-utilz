@@ -14,16 +14,17 @@ markdown_extensions:
   - pymdownx.highlight
 nav:
   - Home: index.md
-  - Saving and Loading: api/io.md
-  - Data analysis "verbs": api/verbs.md
-  - Guards and Decorators: api/guards.md
-  - Plotting Helpers: api/plot.md
-  - Operations: api/ops.md
-  - Boilerplate: api/boilerplate.md
-  - Terminal Plots (experimental): api/termplot.md
-  - Pipe Operator (experimental): api/pipe.md
   - Usage Examples:
       - Declarative Data Analysis: api/fp_data_analysis.ipynb
+  - API:
+      - Saving and Loading: api/io.md
+      - Data analysis "verbs": api/verbs.md
+      - Guards and Decorators: api/guards.md
+      - Plotting Helpers: api/plot.md
+      - Operations: api/ops.md
+      - Boilerplate: api/boilerplate.md
+      - Terminal Plots (experimental): api/termplot.md
+      - Pipe Operator (experimental): api/pipe.md
 plugins:
   - mkdocs-jupyter
   - search

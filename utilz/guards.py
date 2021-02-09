@@ -192,20 +192,20 @@ def disk_cache(
 
 
 # TODO: write me
-def same_shape(grpcols, shape=None):
+def same_shape(group_cols: Union[str, list], shape=None):
     """
     Check if each group of `group_col` has the same dimensions after running a function on a dataframe
 
     Args:
         func (callable): a function that operates on a dataframe
-        group_call (str): column name to group on in dataframe
+        group_cols (str/list): column names to group on in dataframe
     """
 
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             df = func(*args, **kwargs)
-            grouped = df.groupby(grpcols).size()
+            grouped = df.groupby(group_cols).size()
             if shape is None:
                 if not grouped.sum() % grouped.shape[0] == 0:
                     raise AssertionError("Groups dont have the same shape", grouped)
@@ -222,14 +222,14 @@ def same_shape(grpcols, shape=None):
 
 
 # TODO: write me
-def same_nunique(func, val_col, group_col):
+def same_nunique(func: callable, val_col: str, group_col: str):
     """
     Check if each group of `group_col` has the same number of unique values of `val_col` after running a function on a dataframe
 
     Args:
         func (callable): a function that operates on a dataframe
         val_col (str): column name to check for unique values in dataframe
-        group_call (str): column name to group on in dataframe
+        group_col (str): column name to group on in dataframe
     """
 
     @wraps(func)

@@ -9,7 +9,7 @@ import pandas as pd
 import argparse
 
 
-def mpinit(figsize=(8, 6), subplots=(1, 1)):
+def mpinit(figsize: tuple = (8, 6), subplots: tuple = (1, 1)):
     """
     Setup matplotlib subplots boilerplate
 
@@ -26,7 +26,13 @@ def mpinit(figsize=(8, 6), subplots=(1, 1)):
     return f, ax
 
 
-def randdf(size=(10, 3), columns=["A", "B", "C"], func=None, *args, **kwargs):
+def randdf(
+    size: tuple = (10, 3),
+    columns: list = ["A", "B", "C"],
+    func=None,
+    *args: any,
+    **kwargs: any
+):
     """
     Generate a dataframe with random data and alphabetic columns, Default to np.random.randn. Specify another function and size will be passed in as a kwarg.
 
@@ -34,7 +40,8 @@ def randdf(size=(10, 3), columns=["A", "B", "C"], func=None, *args, **kwargs):
         size (tuple, optional): Defaults to (10,3).
         columns (list, optional): Defaults to ["A","B","C"].
         func (callable, optional): function to generate data. Must take a kwarg "size" that accepts a tuple; Default np.random.randn
-        *args/**kwargs: arguments and keyword arguments to func
+        *args: positional arguments to func
+        **kwargs: keyword arguments to func
     """
 
     if len(columns) != size[1]:
@@ -53,21 +60,35 @@ def parseargs(*arg_tuples: list) -> dict:
     """
     Quickly setup and use an argument parser to parse command line arguments. Useful as a one-liner added to the top of an interactive script or notebook to quickly make it useable at the command line instead. Desired arguments should be passed in as tuples containing 3 values:
 
-        (argument name as a string, argument type/True or False, argument help string)
+    (`str`:   arg name, `type/bool`:   arg type (or bool flag), `str`:   arg help doc)
 
-    The outputted dictionary will contain keys as the argument names, and values as the inputted values. Argument names will auto-convert '-' to '_' and strip any '--' prefixes.
+    The outputted dictionary will contain keys as the arg names, and values as the inputted values. Argument names will auto-convert '-' to '_' and strip any '--' prefixes.
 
     To create positional command-line inputs the second tuple element should be a python type:
 
-    >>> parsed_args = arparser(('name', str, 'the username to print'))
+    Examples:
+    ```
+    # In your script.py
+    parsed_args = arparser(('name', str, 'the username to print'))
+    parsed_args['name'] # to retreive the value which will be a string
 
-    >>> parsed_args['name'] # to retreive the value which will be a string
+    # Usage
+    python yourscript.py 'Bob'
+    ```
 
-    For boolean flags the first element should begin with '--' prefix, and second element should True or False:
+    For boolean flags the first element should begin with '--' prefix, and second element should `True` or `False`:
 
-    >>> parsed_args = argparser(('--dry-run', True, 'setup the script but dont execute')
+    ```
+    # In your script.py
+    parsed_args = argparser(
+        ('name', str, 'the username to print'),
+        ('--dry-run', True, 'setup the script but dont execute')
+    parsed_args['dry_run'] # True
 
-    >>> parsed_args['dry_run'] # True
+    # Usage
+    python yourscripy.py 'Bob' --dry-run
+    ```
+
 
     Returns:
         dict: a dictionary containing keys for the argument names and values as the captured inputs
