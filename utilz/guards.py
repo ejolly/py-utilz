@@ -192,7 +192,7 @@ def disk_cache(
 
 
 # TODO: write me
-def same_shape(group_cols: Union[str, list], shape=None):
+def same_shape(func: callable, group_cols: Union[str, list], shape=None):
     """
     Check if each group of `group_col` has the same dimensions after running a function on a dataframe
 
