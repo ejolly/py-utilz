@@ -15,7 +15,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: [3.8, 3.9]
-      fail-fast: false
+      fail-fast: true
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -33,12 +33,15 @@ jobs:
           conda install -y pip numpy pandas scipy matplotlib seaborn scikit-learn
           conda install -y -c conda-forge pytest pytest-cov
           pip install -r requirements.txt
+          pip list
 
       - name: Run Tests
         run: |
           conda activate test
           conda env list
-          py.test --cov-report=xml --cov=./
+          pip list
+          pip install -r requirements.txt
+          py.test --cov-report=xml --cov=utilz
 
       - name: Upload Coverage
         uses: codecov/codecov-action@v1
