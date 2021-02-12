@@ -7,20 +7,18 @@ on:
 
 jobs:
   test:
-    name: Setup and run tests and coverage
+    name: Test
     runs-on: ${{ matrix.os }}
     defaults:
       run:
         shell: bash -l {0}
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: [3.8, 3.9]
         exclude:
-          - os: mac-os-latest
-            python-version: 3.9
-          - os: windows-latest
+          - os: [mac-os-latest, windows-latest]
             python-version: 3.9
     steps:
       - name: Download and setup Miniconda
@@ -44,7 +42,7 @@ jobs:
         run: |
           conda activate test
           conda env list
-          converage run --source=utilz -m pytest
+          coverage run --source=utilz -m pytest
 
       - name: Upload Coverage
         run: coveralls
