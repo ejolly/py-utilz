@@ -6,6 +6,7 @@ on:
       - master
 
 jobs:
+  # Job (1): Run testing in parallel against multiples OSs and Python versions
   test:
     name: Test
     runs-on: ${{ matrix.os }}
@@ -18,18 +19,23 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: [3.8, 3.9]
         exclude:
-          - os: [mac-os-latest, windows-latest]
+          - os: macos-latest
+            python-version: 3.9
+          - os: windows-latest
             python-version: 3.9
     steps:
+      # 1. Step up miniconda
       - name: Download and setup Miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
           miniconda-version: "latest"
           python-version: ${{ matrix.python-version }}
 
+      # 2. Check out latest code on github
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      # 3. Install common sci-py packages via conda as well as testing packages and requirements
       - name: Install Dependencies
         run: |
           conda activate test
@@ -38,19 +44,24 @@ jobs:
           conda install -y -c conda-forge pytest coveralls
           pip install . -r requirements.txt
 
+      # 4. Actually run the tests with coverage
       - name: Run Tests
         run: |
           conda activate test
           conda env list
           coverage run --source=utilz -m pytest
 
+      # 5. Send coverage to coveralls.io but waiting on parallelization to finish
       - name: Upload Coverage
-        run: coveralls
+        # The coveralls python package has some issues with uploads from github-actions so try both service providers, see for more:
+        # https://github.com/TheKevJames/coveralls-python/issues/252
+        run: coveralls --service=github || coveralls --service=github-actions
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_FLAG_NAME: $${{ matrix}}
           COVERALLS_PARALLEL: true
 
+  # Job (2): Send a finish notification to coveralls.io to integrate coverage across parallel tests
   coveralls:
     name: Indicate completion to coveralls.io
     needs: test
@@ -60,10 +71,11 @@ jobs:
       - name: Finished
         run: |
           pip3 install --upgrade coveralls
-          coveralls --finish
+          coveralls --service=github --finish || coveralls --service=github-actions --finish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  # Job (3): Build package and upload to conda/pypi
   deploy:
     name: Build and deploy package
     needs: coveralls
