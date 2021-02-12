@@ -10,19 +10,29 @@ jobs:
   test:
     name: Test
     runs-on: ${{ matrix.os }}
+    # Determines whether the entire workflow should pass/fail based on parallel jobs
+    continue-on-error: ${{ matrix.ok-fail }}
     defaults:
+      # This ensures each step gets properly configured bash shell for conda commands to work
       run:
         shell: bash -l {0}
     strategy:
       fail-fast: true
       matrix:
+        # OSs to test
         os: [ubuntu-latest, macos-latest, windows-latest]
+        # Python versions to test
         python-version: [3.8, 3.9]
-        exclude:
+        # By default everything should pass for the workflow to pass
+        ok-fail: [false]
+        include:
+          # Latest mac and windows fail to install deps properly so tell workflow its ok if these fail
           - os: macos-latest
             python-version: 3.9
+            ok-fail: true
           - os: windows-latest
             python-version: 3.9
+            ok-fail: true
     steps:
       # 1. Step up miniconda
       - name: Download and setup Miniconda
@@ -52,8 +62,9 @@ jobs:
           coverage run --source=utilz -m pytest
 
       # 5. Send coverage to coveralls.io but waiting on parallelization to finish
+      # Not using the official github action in the marketplace to upload because it requires a .lcov file, which pytest doesn't generate. It's just easier to use the coveralls python library which does the same thing, but works with pytest.
       - name: Upload Coverage
-        # The coveralls python package has some issues with uploads from github-actions so try both service providers, see for more:
+        # The coveralls python package has some 422 server issues with uploads from github-actions so try both service providers, for more see:
         # https://github.com/TheKevJames/coveralls-python/issues/252
         run: coveralls --service=github || coveralls --service=github-actions
         env:
