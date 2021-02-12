@@ -34,11 +34,11 @@ jobs:
           conda install -y -c conda-forge pytest pytest-xdist
           pip install -r requirements.txt
           pytest -s -n auto
-    deploy:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-        - name: Say Hi
-          shell: bash
-          run: |
-            echo "hello world. I havent been configured for deployment yet!"
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hi
+        shell: bash
+        run: |
+          echo "hello world. I havent been configured for deployment yet!"
