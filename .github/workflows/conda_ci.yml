@@ -17,14 +17,14 @@ jobs:
         python-version: [3.8, 3.9]
       fail-fast: true
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
       - name: Download and setup Miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
           miniconda-version: "latest"
           python-version: ${{ matrix.python-version }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
       - name: Install Dependencies
         run: |
@@ -33,6 +33,7 @@ jobs:
           conda install -y pip numpy pandas scipy matplotlib seaborn scikit-learn
           conda install -y -c conda-forge pytest pytest-cov
           pip install -r requirements.txt
+          pip install .
           pip list
 
       - name: Run Tests
@@ -40,7 +41,6 @@ jobs:
           conda activate test
           conda env list
           pip list
-          pip install -r requirements.txt
           py.test --cov-report=xml --cov=utilz
 
       - name: Upload Coverage
