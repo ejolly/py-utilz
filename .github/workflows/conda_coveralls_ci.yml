@@ -1,13 +1,15 @@
-name: Run Tests
+name: Utilz
 
 on:
   push:
     branches:
       - master
+      - main
 
 jobs:
   # Job (1): Run testing in parallel against multiples OSs and Python versions
   test:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     name: Test
     runs-on: ${{ matrix.os }}
     # Determines whether the entire workflow should pass/fail based on parallel jobs
@@ -17,16 +19,19 @@ jobs:
       run:
         shell: bash -l {0}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         # OSs to test
         os: [ubuntu-latest, macos-latest, windows-latest]
         # Python versions to test
-        python-version: [3.8, 3.9]
+        python-version: [3.7, 3.8]
         # By default everything should pass for the workflow to pass
         ok-fail: [false]
         include:
-          # Latest mac and windows fail to install deps properly so tell workflow its ok if these fail
+          # Rather than include 3.9 in the python versions, do it here so we can ignore failures on mac and windows with 3.9 (they have install issues)
+          - os: ubuntu-latest
+            python-version: 3.9
+            ok-fail: false
           - os: macos-latest
             python-version: 3.9
             ok-fail: true
@@ -74,10 +79,12 @@ jobs:
 
   # Job (2): Send a finish notification to coveralls.io to integrate coverage across parallel tests
   coveralls:
-    name: Indicate completion to coveralls.io
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Coveralls.io Upload
     needs: test
     runs-on: ubuntu-latest
     container: python:3-slim
+    continue-on-error: true
     steps:
       - name: Finished
         run: |
@@ -86,13 +93,59 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # Job (3): Build package and upload to conda/pypi
-  deploy:
-    name: Build and deploy package
-    needs: coveralls
+  # Job (3): Build and deploy docs
+  docs:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Build & deploy docs
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Upgrade pip
+        run: |
+          # install pip=>20.1 to use "pip cache dir"
+          python3 -m pip install --upgrade pip
+
+      - name: Setup pip-cache
+        id: pip-cache
+        run: echo "::set-output name=dir::$(pip cache dir)"
+
+      - name: Cache deps
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install deps
+        run: |
+          python3 -m pip install . -r requirements.txt
+          python3 -m pip install -r ./requirements-dev.txt
+
+      - name: Build docs
+        run: mkdocs build
+
+      - name: Deploy docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+
+  # Job (4): Build package and upload to conda/pypi
+  deploy:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Build & deploy package
+    runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Say Hi
         shell: bash
         run: |
-          echo "hello world. I havent been configured for deployment yet!"
+          echo "hello world. I havent been configured for package deployment yet!"

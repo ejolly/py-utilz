@@ -1,7 +1,7 @@
 # Utilz
 ![Build Status](https://github.com/ejolly/utilz/workflows/Utilz/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/ejolly/utilz/badge.svg?branch=master)](https://coveralls.io/github/ejolly/utilz?branch=master)
-![Python Versions](https://img.shields.io/badge/python-3.8%20%7C%203.9-blue)
+![Python Versions](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue)
 ![Platforms](https://img.shields.io/badge/platform-linux%20%7C%20osx%20%7C%20win-blue)
 
 A python package that combines several key ideas to make data analysis faster, easier, and more reliable:  

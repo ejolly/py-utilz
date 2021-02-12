@@ -18,7 +18,7 @@ def groupby(cols, df):
 
 @curry
 def rows(query, df):
-    """Select rows using a `.query` (str), slicerange (start,stop,step), or indices (list) """
+    """Select rows using a `.query` (str), slicerange (start,stop,step), or indices (list)"""
     if isinstance(query, str):
         return df.query(query).reset_index(drop=True)
     elif isinstance(query, (list, np.ndarray)):
@@ -29,7 +29,7 @@ def rows(query, df):
 
 @curry
 def cols(query, df):
-    """Select columns using a `.query` (str), slicerange (start,stop,step), or indices (list). Uses `plydata.select` """
+    """Select columns using a `.query` (str), slicerange (start,stop,step), or indices (list). Uses `plydata.select`"""
     if isinstance(query, str):
         from plydata import select
 
