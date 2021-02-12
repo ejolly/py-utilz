@@ -8,12 +8,14 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash -l {0}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: [3.8, 3.9]
       fail-fast: false
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -24,16 +26,24 @@ jobs:
           miniconda-version: "latest"
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Dependencies and Run Tests
-        shell: bash -l {0}
+      - name: Install Dependencies
         run: |
-          conda init bash
           conda activate test
           conda env list
           conda install -y pip numpy pandas scipy matplotlib seaborn scikit-learn
-          conda install -y -c conda-forge pytest pytest-xdist
+          conda install -y -c conda-forge pytest pytest-cov
           pip install -r requirements.txt
-          pytest -s -n auto
+
+      - name: Run Tests
+        run: |
+          conda activate test
+          conda env list
+          py.test --cov-report=xml --cov=./
+
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v1
+        with:
+          verbose: true
   deploy:
     needs: build
     runs-on: ubuntu-latest
