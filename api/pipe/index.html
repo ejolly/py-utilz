@@ -535,15 +535,15 @@
 <ul>
 <li>
 <p>pipe to another function including lambdas (wrapped in parens)  </p>
-<div class="codehilite"><pre><span></span><code><span class="n">df</span> <span class="o">&gt;&gt;</span><span class="n">o</span><span class="o">&gt;&gt;</span> <span class="n">print</span>
+<div class="codehilite"><pre><span></span><code>df &gt;&gt;o&gt;&gt; print
 
-<span class="n">df</span> <span class="o">&gt;&gt;</span><span class="n">o</span><span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+df &gt;&gt;o&gt;&gt; (lambda df: df*2)
 </code></pre></div>
 
 </li>
 <li>
 <p>pipe to a method and call it as a string (without the '.')    </p>
-<div class="codehilite"><pre><span></span><code><span class="err">df &gt;&gt;o&gt;&gt; &#39;head&#39;</span>
+<div class="codehilite"><pre><span></span><code>df &gt;&gt;o&gt;&gt; &#39;head&#39;
 </code></pre></div>
 
 </li>
