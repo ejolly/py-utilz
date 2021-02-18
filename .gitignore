@@ -8,3 +8,4 @@ site/
 environment.yml
 env/
 environment-lock.yml
+.ipython*

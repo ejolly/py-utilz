@@ -2,7 +2,7 @@ from math import sqrt
 from utilz.ops import prep, random_seed, pmap
 
 
-# TODO:
+# TODO pmap has some issues with cannot unpack non-iterable function object:
 def test_pmap(capsys):
     pass
 

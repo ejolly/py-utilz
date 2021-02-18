@@ -69,7 +69,6 @@ def pmap(
     loop_idx: bool = True,
     loop_random_seed: bool = False,
     backend: str = "processes",
-    progress: bool = True,
     verbose: int = 0,
     seed: Union[None, int, np.random.RandomState] = None,
 ) -> Any:
@@ -84,7 +83,6 @@ def pmap(
         loop_idx (bool, optional): whether the value of the current iteration should be passed to func as the special kwarg 'idx'. Make sure func can handle a kwarg named 'idx'. Default True
         loop_random_seed (bool, optional): whether a randomly initialized seed should be passed to func as the special kwarg 'seed'. If func depends on any randomization (e.g. np.random) this should be set to True to ensure that parallel processes/threads use independent random seeds. Make sure func can handle a kwarg named 'seed' and utilize it for randomization. See example. Default False.
         backend (str, optional): 'processes' or 'threads'. Use 'threads' when you know you function releases Python's Global Interpreter Lock (GIL); Default 'cpus'
-        progress (bool): whether to show a tqdm progress bar note, this may be a bit inaccurate when n_jobs > 1. Default True.
         verbose (int): joblib.Parallel verbosity. Default 0
         seed (int/None): random seed for reproducibility
 
@@ -96,11 +94,6 @@ def pmap(
     parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
     if loop_random_seed:
         seeds = random_seed(seed).randint(MAX_INT, size=len(iterme))
-
-    if progress:
-        iterator = tqdm(len(iterme))
-    else:
-        iterator = len(iterme)
 
     if func_args is None:
         if loop_idx:
@@ -119,7 +112,7 @@ def pmap(
                     delayed(func)(e, **{"seed": seeds[i]}) for i, e in enumerate(iterme)
                 )
             else:
-                out = parfor(delayed(func) for _ in iterator)
+                out = parfor(delayed(func)(e for e in iterme))
     else:
         if loop_idx:
             if loop_random_seed:
@@ -166,7 +159,7 @@ def pmap(
                 if isinstance(func_args, list):
                     out = parfor(delayed(func)(e, *func_args) for e in iterme)
                 elif isinstance(func_args, dict):
-                    out = parfor(delayed(func)(e, **func_args) for e in iterator)
+                    out = parfor(delayed(func)(e, **func_args) for e in iterme)
                 else:
                     raise TypeError("func_args must be a list or dict")
     return out
