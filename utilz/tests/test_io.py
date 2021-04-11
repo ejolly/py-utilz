@@ -1,4 +1,4 @@
-from utilz.io import load
+from utilz.io import load, save
 import pytest
 import numpy as np
 import pandas as pd
@@ -10,6 +10,10 @@ from pathlib import Path
 
 @pytest.fixture
 def setup_data(tmp_path: Path):
+    """
+    Creates several test data files:
+    arr.txt, arr.gz, mydicts.json, mdictlist.json, h5.h5, pickle.p, df.csv, df.h5, df.hd5f
+    """
 
     arr = np.random.randn(10)
     np.savetxt(tmp_path.joinpath("arr.txt"), arr)
@@ -107,3 +111,29 @@ def test_load(tmp_path: Path):
 
     with pytest.raises(FileNotFoundError):
         out = load("no.txt")
+
+
+@pytest.mark.usefixtures("setup_data")
+def test_save(tmp_path: Path):
+
+    names = [
+        "file.csv",
+        "file.txt",
+        "file.h5",
+        "file.hdf5",
+        "file.npy",
+        "file.p",
+        "file.pickle",
+    ]
+
+    # With dataframe
+    out = load(tmp_path.joinpath("df.csv"))
+    for name in names:
+        out_path = tmp_path.joinpath(name)
+        if name.endswith(".npy"):
+            save(out_path, out.to_numpy())
+        elif name.endswith(".txt") or name.endswith(".npy"):
+            with pytest.raises(TypeError):
+                save(tmp_path.joinpath(name), out)
+        else:
+            save(out_path, out, use_method="to_csv", index=False)

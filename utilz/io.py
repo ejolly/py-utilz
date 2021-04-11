@@ -3,7 +3,7 @@ I/O Module for working with Paths
 """
 __all__ = ["load", "save", "nbsave", "nbload", "clear_cache"]
 from pathlib import Path
-from typing import Union, Any
+from typing import Union, Any, Optional
 import pandas as pd
 import numpy as np
 import deepdish as dd
@@ -73,6 +73,7 @@ def load(
     json_str: bool = False,
     pickle_encoding: str = "rb",
     verbose: bool = False,
+    *args,
     **kwargs,
 ) -> Any:
     """
@@ -102,7 +103,7 @@ def load(
     if not isinstance(f, Path):
         raise TypeError("Input must be a string or Path object")
 
-    supported_exts = [".txt", ".json", ".p", ".pickle", ".csv", ".h5", "hdf5", ".gz"]
+    supported_exts = [".txt", ".json", ".p", ".pickle", ".csv", ".h5", ".hdf5", ".gz"]
 
     if f.suffix == ".csv":
         if verbose:
@@ -160,7 +161,13 @@ def load(
 
 # TODO: Write me
 def save(
-    f: Union[Path, str], obj: Any, save_index: bool = False, overwrite: bool = False
+    f: Union[Path, str],
+    obj: Any,
+    overwrite: bool = False,
+    use_method: Optional[str] = None,
+    save_index: bool = False,
+    *args,
+    **kwargs,
 ) -> None:
     """
     A handy dandy all-in-one saving function. Simply pass a Path object to a file (or a string) and it will be saved based upon the file *extension* you provide. Suported extensions are : .txt, .csv, .json, .p, .pickle, .h5, .hd5f, .gz
@@ -168,14 +175,64 @@ def save(
     Args:
         f (Path/str): complete filepath to save to including extension
         obj (Any): any Python object to save
-        save_index (bool; optional): whether to preserve a panda DataFrame's index to csv; Default False
         overwrite (bool; optional): whether to overwrite an existing file; Default False
+        use_method (str; optional): use `obj` own method for saving, with f passed in as the first argument. E.g. if `use_method = 'write'`, then `obj.write(f, *args, **kwargs)` will be called; Default None
+        save_index (bool; optional): whether to preserve a panda DataFrame's index to csv; Default False
     """
 
-    if Path(f).exists() and not overwrite:
+    if isinstance(f, str):
+        f = Path(f)
+    if not isinstance(f, Path):
+        raise TypeError("Input must be a string or Path object")
+
+    if f.exists() and not overwrite:
         raise IOError("File exists. Set overwrite = True to save.")
-    if isinstance(obj, pd.DataFrame):
-        if str(f).endswith(".csv"):
-            obj.to_csv(str(f), index=save_index)
-        elif str(f).endswith(".h5"):
-            obj.to_hdf(str(f), key="dataframe", mode="w")
+
+    if use_method is None:
+        supported_exts = [
+            ".txt",
+            ".json",
+            ".p",
+            ".pickle",
+            ".csv",
+            ".h5",
+            ".hdf5",
+            ".npy",
+        ]
+        if f.suffix not in supported_exts:
+            raise ValueError(f"file extension must be one of: {supported_exts}")
+
+        if f.suffix == ".csv":
+            if isinstance(obj, pd.DataFrame):
+                obj.to_csv(str(f), index=save_index)
+            else:
+                raise TypeError(".csv requested but object is not a DataFrame")
+
+        elif f.suffix == ".txt":
+            if isinstance(obj, np.ndarray):
+                np.savetxt(f, obj)
+            else:
+                raise TypeError(".txt request but object is not an array")
+
+        elif f.suffix == ".npy":
+            if isinstance(obj, np.ndarray):
+                np.save(f, obj)
+            else:
+                raise TypeError(".npy request but object is not an array")
+
+        elif f.suffix == ".p" or f.suffix == ".pickle":
+            with f.open as file_handle:
+                pickle.dump(obj, file_handle)
+
+        elif f.suffix == ".json":
+            with f.open as file_handle:
+                json.dump(obj, file_handle)
+
+        elif f.suffix == ".h5" or f.suffix == ".hdf5":
+            if isinstance(obj, pd.DataFrame):
+                obj.to_hdf(str(f), key="dataframe", mode="w")
+            else:
+                dd.io.save(str(f), obj)
+    else:
+        func = getattr(obj, use_method)
+        func(str(f), *args, **kwargs)
