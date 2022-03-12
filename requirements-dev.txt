@@ -2,3 +2,6 @@ mkdocs
 mkdocs-material
 mkdocstrings
 mkdocs-jupyter
+black
+pytest
+pytest-sugar

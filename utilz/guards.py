@@ -14,6 +14,8 @@ def myfunc(df):
 ---
 """
 __all__ = [
+    "show",
+    "copy",
     "log",
     "time",
     "maybe",
@@ -30,31 +32,71 @@ import pandas as pd
 import numpy as np
 import deepdish as dd
 from pathlib import Path
+from copy import deepcopy
 from hashlib import sha256
 from json import dumps
 from inspect import getcallargs
 from .io import load
 
 
-def log(func):
+def show(func):
     """
-    Log the type and shape/size/len of the output from a function
+    Print result of function call in addition to returning it
 
-    Args:
-        func (callable): any pure function (i.e, has no side-effects)
     """
 
     @wraps(func)
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
+        print(result)
+        return result
+
+    return wrapper
+
+
+def copy(func):
+    """
+    Make a copy of the first argument before passing it to func to avoid modifying the argument itself, e.g. a list, dataframe, array, etc. Does not affect other arguments
+
+    """
+
+    @wraps(func)
+    def wrapper(arg1, *args, **kwargs):
+        if hasattr(arg1, "copy"):
+            copied = arg1.copy()
+        else:
+            copied = deepcopy(arg1)
+        result = func(copied, *args, **kwargs)
+        return result
+
+    return wrapper
+
+
+def log(func):
+    """
+    Log the type and shape/size/len of the output from a function
+
+    """
+
+    @wraps(func)
+    def wrapper(arg1, *args, **kwargs):
+        if isinstance(arg1, pd.DataFrame):
+            print(f"before {func.__name__}, {arg1.shape}, df")
+        elif isinstance(arg1, np.ndarray):
+            print(f"before {func.__name__}, {arg1.shape}, np")
+        elif isinstance(arg1, list):
+            print(f"before {func.__name__}, {len(arg1)}, []")
+        elif isinstance(arg1, dict):
+            print(f"bebfore {func.__name__}, {len(arg1.keys())}, {{}}")
+        result = func(arg1, *args, **kwargs)
         if isinstance(result, pd.DataFrame):
-            print(f"{func.__name__}, {result.shape}, df")
+            print(f"after {func.__name__}, {result.shape}, df")
         elif isinstance(result, np.ndarray):
-            print(f"{func.__name__}, {result.shape}, np")
+            print(f"after {func.__name__}, {result.shape}, np")
         elif isinstance(result, list):
-            print(f"{func.__name__}, {len(result)}, []")
+            print(f"after {func.__name__}, {len(result)}, []")
         elif isinstance(result, dict):
-            print(f"{func.__name__}, {len(result.keys())}, {{}}")
+            print(f"after {func.__name__}, {len(result.keys())}, {{}}")
         return result
 
     return wrapper
@@ -91,9 +133,9 @@ def _hashobj(obj):
         return obj
 
 
-def maybe(filepath: Union[Path, str], force: bool = False) -> Any:
+def maybe(force: bool = False) -> Any:
     """
-    Run the decorated `func` only if `filepath` doesn't exist. Override to always run the function with `force`.
+    Run the decorated `func` only if a specific file doesn't exist. Useful for rerunning a function without accidentally overwriting a file. Looks for one of the following kwargs 'save', 'fpath', 'to_file', 'out_file', 'to_csv', 'out_csv', 'filepath' in order to figure out what file to check for.
 
     Args:
         filepath (Path/str): filename or path to check existence for
@@ -103,12 +145,19 @@ def maybe(filepath: Union[Path, str], force: bool = False) -> Any:
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            fpath = Path(filepath)
-            if not force:
-                if fpath.exists():
-                    return load(fpath)
-                else:
-                    return func(*args, **kwargs)
+            fpath = (
+                kwargs.get("save")
+                or kwargs.get("fpath")
+                or kwargs.get("filepath")
+                or kwargs.get("to_file")
+                or kwargs.get("out_file")
+                or kwargs.get("to_csv")
+                or kwargs.get("filepath")
+            )
+            fpath = Path(fpath)
+            if fpath and fpath.exists() and not force:
+                print("loading previously saved file")
+                return load(fpath)
             else:
                 return func(*args, **kwargs)
 
