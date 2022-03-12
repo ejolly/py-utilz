@@ -72,6 +72,21 @@ def test_maybe(tmp_path):
     # return None
     out = f("test.csv")
     assert isinstance(out, pd.DataFrame)
+
+    # Test force running
+    @maybe(p, force=True)
+    def f(save_to):
+        pd.DataFrame(np.random.randn(5, 3)).to_csv(
+            tmp_path.joinpath(save_to), index=False
+        )
+        return None
+
+    # Now forcible rerunning f() will create p again and return None
+    out = f("test.csv")
+    assert p.exists()
+    assert out is None
+
+    # Clean up
     p.unlink()
 
 

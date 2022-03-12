@@ -133,19 +133,20 @@ def _hashobj(obj):
         return obj
 
 
-def maybe(fpath: Union[str, Path]) -> Any:
+def maybe(fpath: Union[str, Path], force: bool = False) -> Any:
     """
-    Run the decorated `func` only if a specific file doesn't exist. Useful for rerunning a function without accidentally overwriting a file. Looks for one of the following kwargs 'save', 'fpath', 'to_file', 'out_file', 'to_csv', 'out_csv', 'filepath' in order to figure out what file to check for.
+    Run the decorated `func` only if fpath doesn't exist. If it does exist calls
+    io.load(fpath), unless force == True
 
     Args:
-        filepath (Path/str): filename or path to check existence for
-        force (bool, optional): always run the function even if filepath exists, possibly overwriting filepath (based on whatever func does internally. Defaults to False.
+        fpath (Path/str): filename or path to check existence for
+        force (bool, optional): always run the function even if filepath exists, possibly overwriting filepath (based on whatever func does internally). Defaults to False.
     """
 
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            if fpath.exists():
+            if not force and fpath.exists():
                 print("loading previously saved file")
                 return load(fpath)
             return func(*args, **kwargs)
