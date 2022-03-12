@@ -57,16 +57,20 @@ def test_maybe(tmp_path):
         p.unlink()
 
     @maybe(p)
-    def f():
+    def f(save_to):
         pd.DataFrame(np.random.randn(5, 3)).to_csv(
-            tmp_path.joinpath("test.csv"), index=False
+            tmp_path.joinpath(save_to), index=False
         )
         return None
 
-    out = f()
+    # Function runs to save file, but returns None
+    out = f("test.csv")
     assert p.exists()
     assert out is None
-    out = f()
+
+    # Second time, returns the output of load("test.csv"), bypassing the function's own
+    # return None
+    out = f("test.csv")
     assert isinstance(out, pd.DataFrame)
     p.unlink()
 
