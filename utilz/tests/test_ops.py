@@ -1,5 +1,8 @@
 from math import sqrt
-from utilz.ops import prep, random_seed, pmap
+from utilz.ops import prep, random_seed, pmap, mapcat
+from utilz.boilerplate import randdf
+import numpy as np
+import pandas as pd
 
 
 # TODO pmap has some issues with cannot unpack non-iterable function object:
@@ -88,3 +91,26 @@ def test_prep(capsys):
     )
     # Check seed is actually different
     assert [a != b for a, b in zip(my_out, my_out_two)]
+
+
+def test_mapcat(capsys):
+
+    # Flattening nested lists
+    flatten_me = [[1, 2], [3, 4]]
+    out = mapcat(None, flatten_me)
+    assert len(out) == 4
+    out = mapcat(np.mean, flatten_me, as_arr=True)
+    assert len(out) == 4
+    assert isinstance(out, np.ndarray)
+    out = mapcat(np.mean, flatten_me, flatten=False, as_arr=True)
+    assert len(out) == 2
+    assert isinstance(out, np.ndarray)
+
+    # Loading files into a single dataframe
+    def load_data(i):
+        # simulate dataloading as dfs
+        return randdf()
+
+    out = mapcat(load_data, ["file1.txt", "file2.txt", "file3.txt"], as_df=True)
+    assert isinstance(out, pd.DataFrame)
+    assert out.shape == (30, 3)

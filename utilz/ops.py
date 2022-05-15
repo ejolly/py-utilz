@@ -319,7 +319,9 @@ def splitdf(df, X=None, Y=None):
 
 
 # TODO: test me
-def mapcat(func, iterme, as_df=False, as_arr=False, axis=0, ignore_index=True):
+def mapcat(
+    func, iterme, flatten=True, as_df=False, as_arr=False, axis=0, ignore_index=True
+):
     """
     **map**s `func` to `iterme` and con**cat**enates the result into a single, list, DataFrame or array. `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.
 
@@ -332,6 +334,8 @@ def mapcat(func, iterme, as_df=False, as_arr=False, axis=0, ignore_index=True):
     Args:
         func (callable): function to apply. If None, will attempt to flatten a nested list
         iterme (iterable): an iterable for which func will be called on each element
+        flatten (bool): if passed nested lists, operate on each element individually as
+        if they were in a single list; Default True
         as_df (bool; optional): combine result into a DataFrame; Default False
         as_arr (bool; optional): combine result into an array; Default False
         axis (int; optional): what axis to concatenate over; Default 0 (first)
@@ -341,10 +345,12 @@ def mapcat(func, iterme, as_df=False, as_arr=False, axis=0, ignore_index=True):
     if as_df and as_arr:
         raise ValueError("as_df and as_arr cannot both be True")
 
-    if func is None:
+    if func is None and flatten:
         return list(chain.from_iterable(iterme))
+    elif func is None and not flatten:
+        return iterme
 
-    if isinstance(iterme[0], list):
+    if isinstance(iterme[0], list) and flatten:
         op = map(func, chain.from_iterable(iterme))
     else:
         op = map(func, iterme)
@@ -356,6 +362,8 @@ def mapcat(func, iterme, as_df=False, as_arr=False, axis=0, ignore_index=True):
     elif as_arr:
         try:
             op = np.concatenate(op, axis=axis)
+        except ValueError as e:
+            op = np.array(op)
         except np.AxisError as e:  # noqa
             warn(
                 "Created new axis because requested concatenation axis > existing axes"
