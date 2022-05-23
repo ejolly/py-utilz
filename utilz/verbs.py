@@ -8,11 +8,14 @@ __all__ = ["groupby", "rows", "cols", "rename", "save", "summarize", "assign", "
 import numpy as np
 import pandas as pd
 from toolz import curry
+from plydata import select, group_by
 
 
 @curry
-def groupby(cols, df):
+def groupby(cols, df, **kwargs):
     """Call a dataframe's `.groupby` method"""
+    if kwargs.get("use_ply", False):
+        return group_by(df, cols)
     return df.groupby(cols)
 
 
@@ -22,22 +25,34 @@ def rows(query, df):
     if isinstance(query, str):
         return df.query(query).reset_index(drop=True)
     elif isinstance(query, (list, np.ndarray)):
+        if isinstance(query[0], str):
+            return df.loc[query, :]
         return df.iloc[query, :]
     elif isinstance(query, tuple):
         return df.iloc[slice(*query), :]
+    elif isinstance(query, int):
+        if df.shape[0] - query > 1:
+            return df.iloc[query : query + 1, :]
+        else:
+            return df.iloc[query:, :]
 
 
 @curry
 def cols(query, df):
     """Select columns using a `.query` (str), slicerange (start,stop,step), or indices (list). Uses `plydata.select`"""
     if isinstance(query, str):
-        from plydata import select
-
         return select(df, query)
     elif isinstance(query, (list, np.ndarray)):
+        if isinstance(query[0], str):
+            return select(df, *query)
         return df.iloc[:, query]
     elif isinstance(query, tuple):
         return df.iloc[:, slice(*query)]
+    elif isinstance(query, int):
+        if df.shape[1] - query > 1:
+            return df.iloc[:, query : query + 1]
+        else:
+            return df.iloc[:, query:]
 
 
 @curry
