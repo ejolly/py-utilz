@@ -4,7 +4,6 @@ Functions that exist purely to save boilerplate.
 
 __all__ = ["mpinit", "randdf"]
 
-import numpy as np
 import pandas as pd
 from typing import Union
 import string

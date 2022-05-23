@@ -27,7 +27,6 @@ import datetime as dt
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from copy import deepcopy
 from .io import load
 from joblib import Memory
 

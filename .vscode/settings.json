@@ -1,13 +1,7 @@
 {
-    "python.testing.pytestArgs": [
-        "utilz"
-    ],
     "editor.formatOnSave": true,
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "python.linting.ignorePatterns": [
-        "utilz/tests/test_pipe.py"
-    ],
     "python.defaultInterpreterPath": "/Users/Esh/anaconda3/envs/utilz/bin/python",
     "python.terminal.activateEnvironment": true,
     "python.linting.flake8Enabled": true,

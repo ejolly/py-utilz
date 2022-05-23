@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Union, Any, Optional
 import pandas as pd
 import numpy as np
-import deepdish as dd
 import pickle
 import json
 from toolz.functoolz import memoize

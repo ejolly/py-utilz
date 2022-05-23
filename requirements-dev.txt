@@ -3,6 +3,7 @@ mkdocs
 mkdocs-material
 mkdocstrings
 mkdocs-jupyter
+jupyter-contrib-nbextensions
 black
 pytest
 pytest-sugar
