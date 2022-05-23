@@ -17,7 +17,7 @@ setup(
     author="Eshin Jolly",
     author_email="eshin.jolly@gmail.com",
     install_requires=requirements,
-    extras_require=optional_requirements,
+    extras_require={"all": optional_requirements},
     packages=find_packages(exclude=["utilz/tests"]),
     license="MIT",
     description="Faster, easier, more robust python data analysis",
