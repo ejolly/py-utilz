@@ -1638,7 +1638,10 @@ them will simply load the last results from disk.</p>
 
         <details class="quote">
           <summary>Source code in <code>utilz/decorators.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">142</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
 <span class="normal">143</span>
 <span class="normal">144</span>
 <span class="normal">145</span>
@@ -1658,10 +1661,7 @@ them will simply load the last results from disk.</p>
 <span class="normal">159</span>
 <span class="normal">160</span>
 <span class="normal">161</span>
-<span class="normal">162</span>
-<span class="normal">163</span>
-<span class="normal">164</span>
-<span class="normal">165</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">expensive</span><span class="p">(</span>
+<span class="normal">162</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">expensive</span><span class="p">(</span>
     <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1778,7 +1778,7 @@ them will simply load the last results from disk.</p>
 
 
 <h4 id="utilz.decorators.maybe" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">maybe</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pickle_encoding</span><span class="o">=</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">maybe</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 
 </h4>
@@ -1842,16 +1842,6 @@ will return the results of globbing the directory for all files</p>
           </td>
         </tr>
         <tr>
-          <td><code>pickle_encoding</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>pickle encoding to use; Default 'rb'</p></td>
-          <td>
-                <code>&#39;rb&#39;</code>
-          </td>
-        </tr>
-        <tr>
           <td><code>verbose</code></td>
           <td>
                 <code>bool</code>
@@ -1906,16 +1896,12 @@ will return the results of globbing the directory for all files</p>
 <span class="normal">133</span>
 <span class="normal">134</span>
 <span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">maybe</span><span class="p">(</span>
+<span class="normal">136</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">maybe</span><span class="p">(</span>
     <span class="n">fpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
     <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">as_arr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">as_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">pickle_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rb&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Run the decorated `func` only if `fpath` doesn&#39;t exist or if it isn&#39;t an empty</span>
@@ -1931,7 +1917,6 @@ will return the results of globbing the directory for all files</p>
 <span class="sd">        Default False</span>
 <span class="sd">        as_str (bool, optional): open txt/json as a single string instead of</span>
 <span class="sd">        splitting on newlines; Default False</span>
-<span class="sd">        pickle_encoding (str, optional): pickle encoding to use; Default &#39;rb&#39;</span>
 <span class="sd">        verbose (bool, optional): whether to print messages during load. Default False</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1945,7 +1930,6 @@ will return the results of globbing the directory for all files</p>
                         <span class="n">fpath</span><span class="p">,</span>
                         <span class="n">as_str</span><span class="o">=</span><span class="n">as_str</span><span class="p">,</span>
                         <span class="n">as_arr</span><span class="o">=</span><span class="n">as_arr</span><span class="p">,</span>
-                        <span class="n">pickle_encoding</span><span class="o">=</span><span class="n">pickle_encoding</span><span class="p">,</span>
                         <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
                     <span class="p">)</span>
             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
