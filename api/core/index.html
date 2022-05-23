@@ -1,0 +1,2413 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Utility library for faster, easier, and more reliable data analysis">
+      
+      
+      
+        <link rel="canonical" href="https://eshinjolly.com/utilz/api/core/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>Core - Utilz</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#core-api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Utilz" class="md-header__button md-logo" aria-label="Utilz" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Utilz
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Core
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ejolly/utilz" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ejolly/utilz
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Utilz" class="md-nav__button md-logo" aria-label="Utilz" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Utilz
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ejolly/utilz" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ejolly/utilz
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Core
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Core
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#utilzio" class="md-nav__link">
+    utilz.io
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.io">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.io" class="md-nav__link">
+    utilz.io
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.io.load" class="md-nav__link">
+    load()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilzops" class="md-nav__link">
+    utilz.ops
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.ops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops" class="md-nav__link">
+    utilz.ops
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.check_random_state" class="md-nav__link">
+    check_random_state()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.mapcat" class="md-nav__link">
+    mapcat()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.pmap" class="md-nav__link">
+    pmap()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilzdecorators" class="md-nav__link">
+    utilz.decorators
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.decorators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators" class="md-nav__link">
+    utilz.decorators
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators.expensive" class="md-nav__link">
+    expensive()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators.log" class="md-nav__link">
+    log()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators.maybe" class="md-nav__link">
+    maybe()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators.show" class="md-nav__link">
+    show()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators.timeit" class="md-nav__link">
+    timeit()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilzdftools" class="md-nav__link">
+    utilz.dftools
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.dftools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.dftools" class="md-nav__link">
+    utilz.dftools
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.dftools.norm_by_group" class="md-nav__link">
+    norm_by_group()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.dftools.same_shape" class="md-nav__link">
+    same_shape()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilzplot" class="md-nav__link">
+    utilz.plot
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.plot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.plot" class="md-nav__link">
+    utilz.plot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.plot.stripbarplot" class="md-nav__link">
+    stripbarplot()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilzboilerplate" class="md-nav__link">
+    utilz.boilerplate
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.boilerplate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.boilerplate" class="md-nav__link">
+    utilz.boilerplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.boilerplate.mpinit" class="md-nav__link">
+    mpinit()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.boilerplate.randdf" class="md-nav__link">
+    randdf()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experimental/" class="md-nav__link">
+        Experimental
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#utilzio" class="md-nav__link">
+    utilz.io
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.io">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.io" class="md-nav__link">
+    utilz.io
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.io.load" class="md-nav__link">
+    load()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilzops" class="md-nav__link">
+    utilz.ops
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.ops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops" class="md-nav__link">
+    utilz.ops
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.check_random_state" class="md-nav__link">
+    check_random_state()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.mapcat" class="md-nav__link">
+    mapcat()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.pmap" class="md-nav__link">
+    pmap()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilzdecorators" class="md-nav__link">
+    utilz.decorators
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.decorators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators" class="md-nav__link">
+    utilz.decorators
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators.expensive" class="md-nav__link">
+    expensive()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators.log" class="md-nav__link">
+    log()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators.maybe" class="md-nav__link">
+    maybe()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators.show" class="md-nav__link">
+    show()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.decorators.timeit" class="md-nav__link">
+    timeit()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilzdftools" class="md-nav__link">
+    utilz.dftools
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.dftools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.dftools" class="md-nav__link">
+    utilz.dftools
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.dftools.norm_by_group" class="md-nav__link">
+    norm_by_group()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.dftools.same_shape" class="md-nav__link">
+    same_shape()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilzplot" class="md-nav__link">
+    utilz.plot
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.plot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.plot" class="md-nav__link">
+    utilz.plot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.plot.stripbarplot" class="md-nav__link">
+    stripbarplot()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilzboilerplate" class="md-nav__link">
+    utilz.boilerplate
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.boilerplate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.boilerplate" class="md-nav__link">
+    utilz.boilerplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.boilerplate.mpinit" class="md-nav__link">
+    mpinit()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.boilerplate.randdf" class="md-nav__link">
+    randdf()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/ejolly/utilz/edit/master/docs/api/core.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<h1 id="core-api">Core API</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All <code>utilz</code> functions work as <em>top-level imports</em>. For example you can do:
+<div class="highlight"><pre><span></span><code>from utilz import mapcat 
+</code></pre></div>
+rather than 
+<div class="highlight"><pre><span></span><code>from utilz.ops import load
+</code></pre></div></p>
+</div>
+<h2 id="utilzio"><code>utilz.io</code></h2>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="utilz.io"></a>
+    <div class="doc doc-contents first">
+
+      <p>I/O Module for working with Paths</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.io.load" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pickle_encoding</span><span class="o">=</span><span class="s1">&#39;rb&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>A handy dandy all-in-one loading function. Simply pass a Path object to a file (or a
+string) and you'll back a python object based on the file-extension:</p>
+<p>.csv -&gt; pandas dataframe
+.txt -&gt; numpy array, string, or list of strings (lines in file)
+.p/.pickle -&gt; output of pickle.load
+.json -&gt; string or dict</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>f</code></td>
+        <td><code>Path/str</code></td>
+        <td><p>name or path object to load</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>as_arr</code></td>
+        <td><code>bool</code></td>
+        <td><p>treat a .txt file as a numpy array;</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>as_str</code></td>
+        <td><code>bool</code></td>
+        <td><p>open txt/json as a single string instead of</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>pickle_encoding</code></td>
+        <td><code>str</code></td>
+        <td><p>pickle encoding to use; Default 'rb'</p></td>
+        <td><code>&#39;rb&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>verbose</code></td>
+        <td><code>bool</code></td>
+        <td><p>whether to print messages during load. Default False</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td></td>
+        <td><p>keyword arguments to pd.read_csv, np.loadtxt</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Any</code></td>
+      <td><p>the loaded object</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/io.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@memoize</span>
+<span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
+    <span class="n">f</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="n">as_arr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">as_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">pickle_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rb&quot;</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A handy dandy all-in-one loading function. Simply pass a Path object to a file (or a</span>
+<span class="sd">    string) and you&#39;ll back a python object based on the file-extension:</span>
+
+<span class="sd">    .csv -&gt; pandas dataframe</span>
+<span class="sd">    .txt -&gt; numpy array, string, or list of strings (lines in file)</span>
+<span class="sd">    .p/.pickle -&gt; output of pickle.load</span>
+<span class="sd">    .json -&gt; string or dict</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        f (Path/str): name or path object to load</span>
+<span class="sd">        as_arr (bool, optional): treat a .txt file as a numpy array;</span>
+<span class="sd">        Default False</span>
+<span class="sd">        as_str (bool, optional): open txt/json as a single string instead of</span>
+<span class="sd">        splitting on newlines; Default False</span>
+<span class="sd">        pickle_encoding (str, optional): pickle encoding to use; Default &#39;rb&#39;</span>
+<span class="sd">        verbose (bool, optional): whether to print messages during load. Default False</span>
+<span class="sd">        **kwargs: keyword arguments to pd.read_csv, np.loadtxt</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the loaded object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Input must be a string or Path object&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">))</span>
+
+    <span class="n">supported_exts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;.json&quot;</span><span class="p">,</span> <span class="s2">&quot;.p&quot;</span><span class="p">,</span> <span class="s2">&quot;.pickle&quot;</span><span class="p">,</span> <span class="s2">&quot;.csv&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.csv&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;csv file - using pandas&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.txt&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">as_arr</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;txt file - using numpy&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;txt file using - open&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">as_str</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">file_handle</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">file_handle</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.p&quot;</span> <span class="ow">or</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.pickle&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pickle file - using pickle&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.json&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;json file - using pickle&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">as_str</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file_handle</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File must end in one of: </span><span class="si">{</span><span class="n">supported_exts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="utilzops"><code>utilz.ops</code></h2>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="utilz.ops"></a>
+    <div class="doc doc-contents first">
+
+      <p>Functional tools</p>
+<hr />
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.ops.check_random_state" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to <code>sklearn.utils.check_random_state</code>. Using the source here simply avoids an unecessary dependency.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>seed</code></td>
+        <td><code>None, int, np.RandomState</code></td>
+        <td><p>if seed is None, return the RandomState singleton used by np.random. If seed is an int, return a new RandomState instance seeded with seed. If seed is already a RandomState instance, return it. Otherwise raise ValueError.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/ops.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        seed (None, int, np.RandomState): if seed is None, return the RandomState singleton used by np.random. If seed is an int, return a new RandomState instance seeded with seed. If seed is already a RandomState instance, return it. Otherwise raise ValueError.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">import</span> <span class="nn">numbers</span>
+
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">seed</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">mtrand</span><span class="o">.</span><span class="n">_rand</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="p">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">seed</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%r</span><span class="s2"> cannot be used to seed a numpy.random.RandomState&quot;</span> <span class="s2">&quot; instance&quot;</span> <span class="o">%</span> <span class="n">seed</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.ops.mapcat" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>map</strong>s <code>func</code> to <code>iterme</code> and con<strong>cat</strong>enates the result into a single, list, DataFrame or array. <code>iterme</code> can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</p>
+<p>A a few interesting use cases include:</p>
+<ul>
+<li>Passing None for the value of func acts as a shortcut to flatten nested lists.</li>
+<li>Using in place of <code>map</code> acts like a call to <code>list(map(...))</code></li>
+<li>Passing in <code>pd.read_csv</code> to list of files to get back a single dataframe</li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>func</code></td>
+        <td><code>callable</code></td>
+        <td><p>function to apply. If None, will attempt to flatten a nested list</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>iterme</code></td>
+        <td><code>iterable</code></td>
+        <td><p>an iterable for which func will be called on each element</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>concat</code></td>
+        <td><code>bool</code></td>
+        <td><p>if func returns an interable, will try to flatten iterables into</p></td>
+        <td><code>True</code></td>
+      </tr>
+      <tr>
+        <td><code>axis</code></td>
+        <td><code>int; optional</code></td>
+        <td><p>what axis to concatenate over; Default 0 (first)</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>ignore_index</code></td>
+        <td><code>bool; optional</code></td>
+        <td><p>ignore the index when combining DataFrames; Default True</p></td>
+        <td><code>True</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/ops.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    **map**s `func` to `iterme` and con**cat**enates the result into a single, list, DataFrame or array. `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</span>
+
+<span class="sd">    A a few interesting use cases include:</span>
+
+<span class="sd">    - Passing None for the value of func acts as a shortcut to flatten nested lists.</span>
+<span class="sd">    - Using in place of `map` acts like a call to `list(map(...))`</span>
+<span class="sd">    - Passing in `pd.read_csv` to list of files to get back a single dataframe</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): function to apply. If None, will attempt to flatten a nested list</span>
+<span class="sd">        iterme (iterable): an iterable for which func will be called on each element</span>
+<span class="sd">        concat (bool): if func returns an interable, will try to flatten iterables into</span>
+<span class="sd">        a single list, array, or dataframe based on axis; Default True</span>
+<span class="sd">        axis (int; optional): what axis to concatenate over; Default 0 (first)</span>
+<span class="sd">        ignore_index (bool; optional): ignore the index when combining DataFrames; Default True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># No-op if no function</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="n">iterme</span>
+
+    <span class="k">if</span> <span class="n">concat</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_concat</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">op</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.ops.pmap" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">pmap</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">enum</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Map a <code>func</code> to <code>iterme</code> using parallelization via joblib. Note the only difference between <code>pmap</code> and <code>prep</code> is that that <code>pmap</code> explicitly operates on an iterable, such that the input to <code>func</code> changes each time (each element of <code>iterme</code>); where as <code>prep</code> just repeatedely executes <code>func</code> for <code>n_iter</code> operations with optional args/kwargs that are the same for each run of <code>func</code>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>func</code></td>
+        <td><code>callable</code></td>
+        <td><p>function to run</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>iterme</code></td>
+        <td><code>iterable</code></td>
+        <td><p>an iterable for which each element will be passed to func</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>n_jobs</code></td>
+        <td><code>int</code></td>
+        <td><p>number of cpus/threads; Default -1 (all cpus/threads)</p></td>
+        <td><code>2</code></td>
+      </tr>
+      <tr>
+        <td><code>enum</code></td>
+        <td><code>bool</code></td>
+        <td><p>whether the value of the current iteration should be passed to func as the special kwarg 'idx'. Make sure func can handle a kwarg named 'idx'. Default False</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>random_state</code></td>
+        <td><code>bool/int</code></td>
+        <td><p>whether a randomly initialized seed should be</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>backend</code></td>
+        <td><code>str</code></td>
+        <td><p>see <code>joblib.Parallel</code> for options; Default None which</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>verbose</code></td>
+        <td><code>int</code></td>
+        <td><p>joblib.Parallel verbosity. Default 0</p></td>
+        <td><code>0</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/ops.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pmap</span><span class="p">(</span>
+    <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">enum</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">concat</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">ignore_index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Map a `func` to `iterme` using parallelization via joblib. Note the only difference between `pmap` and `prep` is that that `pmap` explicitly operates on an iterable, such that the input to `func` changes each time (each element of `iterme`); where as `prep` just repeatedely executes `func` for `n_iter` operations with optional args/kwargs that are the same for each run of `func`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): function to run</span>
+<span class="sd">        iterme (iterable): an iterable for which each element will be passed to func</span>
+<span class="sd">        n_jobs (int, optional): number of cpus/threads; Default -1 (all cpus/threads)</span>
+<span class="sd">        enum (bool, optional): whether the value of the current iteration should be passed to func as the special kwarg &#39;idx&#39;. Make sure func can handle a kwarg named &#39;idx&#39;. Default False</span>
+<span class="sd">        random_state (bool/int, optional): whether a randomly initialized seed should be</span>
+<span class="sd">        passed to func as the special kwarg &#39;random_state&#39;. The function should pass</span>
+<span class="sd">        thiseed to the `utilz.check_random_state` helper to generate a random number</span>
+<span class="sd">        generator for all computations rather than relying on np.random</span>
+<span class="sd">        backend (str, optional): see `joblib.Parallel` for options; Default None which</span>
+<span class="sd">        uses &#39;loky&#39;</span>
+<span class="sd">        verbose (int): joblib.Parallel verbosity. Default 0</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Initialize joblib parallelizer</span>
+    <span class="n">parfor</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">prefer</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="n">func_args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">random_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;random_state&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Function must have a keyword argument called &#39;random_state&#39; if random_state is not False&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">random_state</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">random_state</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="n">random_state</span>
+
+        <span class="c1"># Generate a list of random ints, that themselves are seeded by random_state and</span>
+        <span class="c1"># will be passed to func</span>
+        <span class="n">seeds</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">MAX_INT</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">iterme</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">seeds</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">enum</span> <span class="ow">and</span> <span class="s2">&quot;idx&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Function must accept a keyword argument named &#39;idx&#39; that accepts an integer if enum is True&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enum</span><span class="p">:</span>
+        <span class="n">call_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">elem</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">iterme</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">enum</span><span class="p">:</span>
+        <span class="n">call_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">elem</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterme</span><span class="p">)]</span>
+    <span class="k">elif</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enum</span><span class="p">:</span>
+        <span class="n">call_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">elem</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span><span class="p">,</span> <span class="n">seed</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">iterme</span><span class="p">,</span> <span class="n">seeds</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="k">elif</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">enum</span><span class="p">:</span>
+        <span class="n">call_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">elem</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">iterme</span><span class="p">,</span> <span class="n">seeds</span><span class="p">))</span>
+        <span class="p">]</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">call_list</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">concat</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_concat</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="utilzdecorators"><code>utilz.decorators</code></h2>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="utilz.decorators"></a>
+    <div class="doc doc-contents first">
+
+      <p>Custom guards for defensive data analysis compatible with <a href="https://bulwark.readthedocs.io/en/latest/index.html">bulwark</a>.</p>
+<p>Intended usage is as Python decorators:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz.guards</span> <span class="kn">import</span> <span class="n">log_df</span>
+
+<span class="nd">@log_df</span>
+<span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">do</span> <span class="n">some</span> <span class="n">stuff</span><span class="o">...</span>
+</code></pre></div>
+<hr />
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.decorators.expensive" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">expensive</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>A decorator that wraps joblib.Memory for caching the results of a function to disk.
+This is useful for expensive functions that take a while to compute, as rerunning
+them will simply load the last results from disk.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>force</code></td>
+        <td><code>bool</code></td>
+        <td><p>clear the cache before rerunning; Default False</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/decorators.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">expensive</span><span class="p">(</span>
+    <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A decorator that wraps joblib.Memory for caching the results of a function to disk.</span>
+<span class="sd">    This is useful for expensive functions that take a while to compute, as rerunning</span>
+<span class="sd">    them will simply load the last results from disk.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        force (bool, optional): clear the cache before rerunning; Default False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">memory</span> <span class="o">=</span> <span class="n">Memory</span><span class="p">(</span><span class="s2">&quot;./cachedir&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
+                <span class="n">memory</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="n">func_cached</span> <span class="o">=</span> <span class="n">memory</span><span class="o">.</span><span class="n">cache</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">func_cached</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.decorators.log" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">log</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Log the type and shape/size/len of the output from a function</p>
+
+        <details class="quote">
+          <summary>Source code in <code>utilz/decorators.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Log the type and shape/size/len of the output from a function</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;before </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">arg1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, df&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;before </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">arg1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, np&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;before </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">arg1</span><span class="p">)</span><span class="si">}</span><span class="s2">, []&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bebfore </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">arg1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">, </span><span class="se">{{}}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;after </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, df&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;after </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, np&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;after </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="si">}</span><span class="s2">, []&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;after </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">, </span><span class="se">{{}}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.decorators.maybe" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">maybe</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pickle_encoding</span><span class="o">=</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Run the decorated <code>func</code> only if fpath doesn't exist or if it isn't an empty
+directory. If fpath exists will load the file from disk or if fpath is a directory,
+will return the results of globbing the directory for all files</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>fpath</code></td>
+        <td><code>Path/str</code></td>
+        <td><p>filename or dirname to check existence for</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>force</code></td>
+        <td><code>bool</code></td>
+        <td><p>always run the function even if filepath exists,</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>as_arr</code></td>
+        <td><code>bool</code></td>
+        <td><p>treat a .txt file as a numpy array;</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>as_str</code></td>
+        <td><code>bool</code></td>
+        <td><p>open txt/json as a single string instead of</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>pickle_encoding</code></td>
+        <td><code>str</code></td>
+        <td><p>pickle encoding to use; Default 'rb'</p></td>
+        <td><code>&#39;rb&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>verbose</code></td>
+        <td><code>bool</code></td>
+        <td><p>whether to print messages during load. Default False</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/decorators.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">maybe</span><span class="p">(</span>
+    <span class="n">fpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">as_arr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">as_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">pickle_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rb&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run the decorated `func` only if fpath doesn&#39;t exist or if it isn&#39;t an empty</span>
+<span class="sd">    directory. If fpath exists will load the file from disk or if fpath is a directory,</span>
+<span class="sd">    will return the results of globbing the directory for all files</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fpath (Path/str): filename or dirname to check existence for</span>
+<span class="sd">        force (bool, optional): always run the function even if filepath exists,</span>
+<span class="sd">        possibly overwriting filepath (based on whatever func does internally). Defaults</span>
+<span class="sd">        to False.</span>
+<span class="sd">        as_arr (bool, optional): treat a .txt file as a numpy array;</span>
+<span class="sd">        Default False</span>
+<span class="sd">        as_str (bool, optional): open txt/json as a single string instead of</span>
+<span class="sd">        splitting on newlines; Default False</span>
+<span class="sd">        pickle_encoding (str, optional): pickle encoding to use; Default &#39;rb&#39;</span>
+<span class="sd">        verbose (bool, optional): whether to print messages during load. Default False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="n">fpath</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">fpath</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="n">fpath</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">fpath</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exists: loading previously saved output&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">load</span><span class="p">(</span>
+                        <span class="n">fpath</span><span class="p">,</span>
+                        <span class="n">as_str</span><span class="o">=</span><span class="n">as_str</span><span class="p">,</span>
+                        <span class="n">as_arr</span><span class="o">=</span><span class="n">as_arr</span><span class="p">,</span>
+                        <span class="n">pickle_encoding</span><span class="o">=</span><span class="n">pickle_encoding</span><span class="p">,</span>
+                        <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                    <span class="p">)</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.decorators.show" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">show</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Print result of function call in addition to returning it</p>
+
+        <details class="quote">
+          <summary>Source code in <code>utilz/decorators.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print result of function call in addition to returning it</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.decorators.timeit" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">timeit</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Log the run time of a function</p>
+
+        <details class="quote">
+          <summary>Source code in <code>utilz/decorators.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">timeit</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Log the run time of a function</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">tic</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">time_taken</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">tic</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, took </span><span class="si">{</span><span class="n">time_taken</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="utilzdftools"><code>utilz.dftools</code></h2>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="utilz.dftools"></a>
+    <div class="doc doc-contents first">
+
+      <p>Common data operations and transformations often on pandas dataframes</p>
+<hr />
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.dftools.norm_by_group" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">norm_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcol</span><span class="p">,</span> <span class="n">valcol</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">addcol</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Normalize values in a column separately per group</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>df</code></td>
+        <td><code>pd.DataFrame</code></td>
+        <td><p>input dataframe</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>grpcols</code></td>
+        <td><code>str</code></td>
+        <td><p>grouping col</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>valcol</code></td>
+        <td><code>str</code></td>
+        <td><p>value col</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>center</code></td>
+        <td><code>bool</code></td>
+        <td><p>mean center. Defaults to True.</p></td>
+        <td><code>True</code></td>
+      </tr>
+      <tr>
+        <td><code>scale</code></td>
+        <td><code>bool</code></td>
+        <td><p>divide by standard deviation. Defaults to True.</p></td>
+        <td><code>True</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/dftools.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="k">def</span> <span class="nf">norm_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcol</span><span class="p">,</span> <span class="n">valcol</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">addcol</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalize values in a column separately per group</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (pd.DataFrame): input dataframe</span>
+<span class="sd">        grpcols (str): grouping col</span>
+<span class="sd">        valcol (str): value col</span>
+<span class="sd">        center (bool, optional): mean center. Defaults to True.</span>
+<span class="sd">        scale (bool, optional): divide by standard deviation. Defaults to True.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_norm</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">center</span><span class="p">:</span>
+            <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span> <span class="o">-</span> <span class="n">dat</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">scale</span><span class="p">:</span>
+            <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span> <span class="o">/</span> <span class="n">dat</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dat</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grpcol</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Grouping by multiple columns is not supported&quot;</span><span class="p">)</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">grpcol</span><span class="p">)[</span><span class="n">valcol</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">_norm</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">addcol</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">center</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">scale</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="s2">&quot;centered&quot;</span>
+        <span class="k">elif</span> <span class="n">scale</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">center</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="s2">&quot;scaled&quot;</span>
+        <span class="k">elif</span> <span class="n">center</span> <span class="ow">and</span> <span class="n">scale</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="s2">&quot;normed&quot;</span>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valcol</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">_by_</span><span class="si">{</span><span class="n">grpcol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">out</span><span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">out</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.dftools.same_shape" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">same_shape</span><span class="p">(</span><span class="n">group_cols</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Check if each group of <code>group_col</code> has the same dimensions after running a function on a dataframe</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>group_cols</code></td>
+        <td><code>str/list</code></td>
+        <td><p>column names to group on in dataframe</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/dftools.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">same_shape</span><span class="p">(</span><span class="n">group_cols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if each group of `group_col` has the same dimensions after running a function on a dataframe</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group_cols (str/list): column names to group on in dataframe</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_cols</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">grouped</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">%</span> <span class="n">grouped</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Groups dont have the same shape&quot;</span><span class="p">,</span> <span class="n">grouped</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">grouped</span> <span class="o">==</span> <span class="n">shape</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;All groups dont match shape </span><span class="si">{</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">grouped</span>
+                    <span class="p">)</span>
+            <span class="k">return</span> <span class="n">df</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="utilzplot"><code>utilz.plot</code></h2>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="utilz.plot"></a>
+    <div class="doc doc-contents first">
+
+      <p>Plotting convenience functions</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.plot.stripbarplot" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">stripbarplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pointcolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xticks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">yticks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Combines a call to <code>sns.barplot</code> + <code>sns.stripplot</code>. Optionally set some axis level attributes during plot creation. Leaving these attributes None will return the default labels that seaborn sets.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>data</code></td>
+        <td><code>DataFrame</code></td>
+        <td><p>input data</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>pointcolor</code></td>
+        <td><code>str</code></td>
+        <td><p>color of stripplot points. Defaults to "black".</p></td>
+        <td><code>&#39;black&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>xlabel</code></td>
+        <td><code>[type]</code></td>
+        <td><p>x-axis label. Defaults to seaborn's default.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>ylabel</code></td>
+        <td><code>[type]</code></td>
+        <td><p>Defaults to seaborn's default.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>xticklabels</code></td>
+        <td><code>[type]</code></td>
+        <td><p>Defaults to seaborn's default.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>yticklabels</code></td>
+        <td><code>[type]</code></td>
+        <td><p>Defaults to seaborn's default.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>xticks</code></td>
+        <td><code>[type]</code></td>
+        <td><p>Defaults to seaborn's default.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>yticks</code></td>
+        <td><code>[type]</code></td>
+        <td><p>Defaults to seaborn's default.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>xlim</code></td>
+        <td><code>[type]</code></td>
+        <td><p>Defaults to seaborn's default.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>ylim</code></td>
+        <td><code>[type]</code></td>
+        <td><p>Defaults to seaborn's default.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Axis</code></td>
+      <td><p>plot axis handle</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/plot.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">stripbarplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">pointcolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">xticklabels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">yticklabels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">xticks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">yticks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">xlim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">ylim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Combines a call to `sns.barplot` + `sns.stripplot`. Optionally set some axis level attributes during plot creation. Leaving these attributes None will return the default labels that seaborn sets.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (DataFrame): input data</span>
+<span class="sd">        pointcolor (str, optional): color of stripplot points. Defaults to &quot;black&quot;.</span>
+<span class="sd">        xlabel ([type], optional): x-axis label. Defaults to seaborn&#39;s default.</span>
+<span class="sd">        ylabel ([type], optional): Defaults to seaborn&#39;s default.</span>
+<span class="sd">        xticklabels ([type], optional):  Defaults to seaborn&#39;s default.</span>
+<span class="sd">        yticklabels ([type], optional):  Defaults to seaborn&#39;s default.</span>
+<span class="sd">        xticks ([type], optional):  Defaults to seaborn&#39;s default.</span>
+<span class="sd">        yticks ([type], optional):  Defaults to seaborn&#39;s default.</span>
+<span class="sd">        xlim ([type], optional):  Defaults to seaborn&#39;s default.</span>
+<span class="sd">        ylim ([type], optional):  Defaults to seaborn&#39;s default.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Axis: plot axis handle</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">pointcolor</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">xlabel</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ylabel</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">xticklabels</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">xticklabels</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">yticklabels</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">yticklabels</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">xticks</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">xticks</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">yticks</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">yticks</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">xlim</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="n">xlim</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ylim</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="utilzboilerplate"><code>utilz.boilerplate</code></h2>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="utilz.boilerplate"></a>
+    <div class="doc doc-contents first">
+
+      <p>Functions that exist purely to save boilerplate.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.boilerplate.mpinit" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">mpinit</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplots</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Setup matplotlib subplots boilerplate</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>figsize</code></td>
+        <td><code>tuple</code></td>
+        <td><p>Figure size. Defaults to (8, 6).</p></td>
+        <td><code>(8, 6)</code></td>
+      </tr>
+      <tr>
+        <td><code>subplots</code></td>
+        <td><code>tuple</code></td>
+        <td><p>subplot grid size. Defaults to (1, 1).</p></td>
+        <td><code>(1, 1)</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>tuple ((Figure, Axes))</code></td>
+      <td><p>matplotlib figure handle and axes</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/boilerplate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mpinit</span><span class="p">(</span><span class="n">figsize</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplots</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Setup matplotlib subplots boilerplate</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        figsize (tuple, optional): Figure size. Defaults to (8, 6).</span>
+<span class="sd">        subplots (tuple, optional): subplot grid size. Defaults to (1, 1).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple ((Figure, Axes)): matplotlib figure handle and axes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;plt&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">():</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="o">*</span><span class="n">subplots</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">,</span> <span class="n">ax</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.boilerplate.randdf" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">randdf</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Generate a dataframe with random data and alphabetic columns, Default to np.random.randn. Specify another function and size will be passed in as a kwarg.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>size</code></td>
+        <td><code>tuple</code></td>
+        <td><p>Defaults to (10,3).</p></td>
+        <td><code>(10, 3)</code></td>
+      </tr>
+      <tr>
+        <td><code>columns</code></td>
+        <td><code>list</code></td>
+        <td><p>Defaults numbered capital letters like an excel spreadsheet</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>func</code></td>
+        <td><code>callable</code></td>
+        <td><p>function to generate data. Must take a kwarg "size"</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>random_state</code></td>
+        <td><code>None, int, np.RandomState</code></td>
+        <td><p>if None, return the RandomState</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>*args</code></td>
+        <td><code>&lt;built-in function any&gt;</code></td>
+        <td><p>positional arguments to func</p></td>
+        <td><code>()</code></td>
+      </tr>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td><code>&lt;built-in function any&gt;</code></td>
+        <td><p>keyword arguments to func</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>utilz/boilerplate.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">randdf</span><span class="p">(</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">any</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">any</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a dataframe with random data and alphabetic columns, Default to np.random.randn. Specify another function and size will be passed in as a kwarg.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        size (tuple, optional): Defaults to (10,3).</span>
+<span class="sd">        columns (list, optional): Defaults numbered capital letters like an excel spreadsheet</span>
+<span class="sd">        func (callable, optional): function to generate data. Must take a kwarg &quot;size&quot;</span>
+<span class="sd">        that accepts a tuple; Default np.random.randn</span>
+<span class="sd">        random_state (None, int, np.RandomState): if None, return the RandomState</span>
+<span class="sd">        singleton used by np.random. If int, return a new RandomState instance seeded</span>
+<span class="sd">        with seed. If seed is already a RandomState instance, return it. Otherwise raise</span>
+<span class="sd">        ValueError.</span>
+<span class="sd">        *args: positional arguments to func</span>
+<span class="sd">        **kwargs: keyword arguments to func</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span> <span class="o">!=</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Length of column names must match number of columns&quot;</span><span class="p">)</span>
+
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="o">*</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">)</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">26</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">next</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span><span class="si">}{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../intro/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Overview
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../experimental/" class="md-footer__link md-footer__link--next" aria-label="Next: Experimental" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Experimental
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+    
+  </body>
+</html>
