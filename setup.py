@@ -8,7 +8,7 @@ with open("requirements.txt") as f:
 with open("utilz/version.py") as f:
     version = f.read()
 
-with open("optional-requirements.txt") as f:
+with open("requirements-optional.txt") as f:
     optional_requirements = f.read().splitlines()
 
 setup(
