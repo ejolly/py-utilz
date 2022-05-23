@@ -310,13 +310,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#utilz.io" class="md-nav__link">
-    utilz.io
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#utilz.io.load" class="md-nav__link">
     load()
   </a>
@@ -335,13 +328,6 @@
   
     <nav class="md-nav" aria-label="utilz.ops">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#utilz.ops" class="md-nav__link">
-    utilz.ops
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#utilz.ops.check_random_state" class="md-nav__link">
@@ -376,13 +362,6 @@
   
     <nav class="md-nav" aria-label="utilz.decorators">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#utilz.decorators" class="md-nav__link">
-    utilz.decorators
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#utilz.decorators.expensive" class="md-nav__link">
@@ -433,13 +412,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#utilz.dftools" class="md-nav__link">
-    utilz.dftools
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#utilz.dftools.assert_balanced_groups" class="md-nav__link">
     assert_balanced_groups()
   </a>
@@ -474,13 +446,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#utilz.plot" class="md-nav__link">
-    utilz.plot
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#utilz.plot.stripbarplot" class="md-nav__link">
     stripbarplot()
   </a>
@@ -499,13 +464,6 @@
   
     <nav class="md-nav" aria-label="utilz.boilerplate">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#utilz.boilerplate" class="md-nav__link">
-    utilz.boilerplate
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#utilz.boilerplate.mpinit" class="md-nav__link">
@@ -590,13 +548,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#utilz.io" class="md-nav__link">
-    utilz.io
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#utilz.io.load" class="md-nav__link">
     load()
   </a>
@@ -615,13 +566,6 @@
   
     <nav class="md-nav" aria-label="utilz.ops">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#utilz.ops" class="md-nav__link">
-    utilz.ops
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#utilz.ops.check_random_state" class="md-nav__link">
@@ -656,13 +600,6 @@
   
     <nav class="md-nav" aria-label="utilz.decorators">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#utilz.decorators" class="md-nav__link">
-    utilz.decorators
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#utilz.decorators.expensive" class="md-nav__link">
@@ -713,13 +650,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#utilz.dftools" class="md-nav__link">
-    utilz.dftools
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#utilz.dftools.assert_balanced_groups" class="md-nav__link">
     assert_balanced_groups()
   </a>
@@ -754,13 +684,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#utilz.plot" class="md-nav__link">
-    utilz.plot
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#utilz.plot.stripbarplot" class="md-nav__link">
     stripbarplot()
   </a>
@@ -779,13 +702,6 @@
   
     <nav class="md-nav" aria-label="utilz.boilerplate">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#utilz.boilerplate" class="md-nav__link">
-    utilz.boilerplate
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#utilz.boilerplate.mpinit" class="md-nav__link">
@@ -831,7 +747,7 @@
 <div class="highlight"><pre><span></span><code>from utilz import mapcat 
 </code></pre></div>
 rather than 
-<div class="highlight"><pre><span></span><code>from utilz.ops import load
+<div class="highlight"><pre><span></span><code>from utilz.ops import mapcat
 </code></pre></div></p>
 </div>
 <h2 id="utilzio"><code>utilz.io</code></h2>
@@ -839,14 +755,15 @@ rather than
 
   <div class="doc doc-object doc-module">
 
-<a id="utilz.io"></a>
+
     <div class="doc doc-contents first">
 
-      <p>I/O Module for working with Paths</p>
+      <p>I/O Module</p>
 
 
 
   <div class="doc doc-children">
+
 
 
 
@@ -860,104 +777,197 @@ rather than
 
 
 <h4 id="utilz.io.load" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pickle_encoding</span><span class="o">=</span><span class="s1">&#39;rb&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h4>
+
 
     <div class="doc doc-contents ">
 
       <p>A handy dandy all-in-one loading function. Simply pass a Path object to a file (or a
 string) and you'll back a python object based on the file-extension:</p>
-<p>.csv -&gt; pandas dataframe
-.txt -&gt; numpy array, string, or list of strings (lines in file)
-.p/.pickle -&gt; output of pickle.load
-.json -&gt; string or dict</p>
+<ul>
+<li><code>.csv</code>: <code>pd.Dataframe</code></li>
+<li><code>.txt</code>: <code>np.ndarray</code>, <code>list[str]</code> (lines a file), or <code>str</code> (all file contents)</li>
+<li><code>.p/.pickle</code>: output of <code>pickle.load</code></li>
+<li><code>.json</code>: <code>str</code> or <code>dict</code></li>
+</ul>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>f</code></td>
-        <td><code>Path/str</code></td>
-        <td><p>name or path object to load</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>f</code></td>
+          <td>
+                <code>Path/str</code>
+          </td>
+          <td><p>name or path object to load</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>as_arr</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>treat a .txt file as a numpy array;</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>as_str</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>open txt/json as a single string instead of</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>verbose</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>whether to print messages during load. Default False</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>**kwargs</code></td>
+          <td>
+          </td>
+          <td><p>keyword arguments to <code>pd.read_csv</code> or <code>np.loadtxt</code></p></td>
+          <td>
+                <code>{}</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>as_arr</code></td>
-        <td><code>bool</code></td>
-        <td><p>treat a .txt file as a numpy array;</p></td>
-        <td><code>False</code></td>
+        <th>Type</th>
+        <th>Description</th>
       </tr>
-      <tr>
-        <td><code>as_str</code></td>
-        <td><code>bool</code></td>
-        <td><p>open txt/json as a single string instead of</p></td>
-        <td><code>False</code></td>
-      </tr>
-      <tr>
-        <td><code>pickle_encoding</code></td>
-        <td><code>str</code></td>
-        <td><p>pickle encoding to use; Default 'rb'</p></td>
-        <td><code>&#39;rb&#39;</code></td>
-      </tr>
-      <tr>
-        <td><code>verbose</code></td>
-        <td><code>bool</code></td>
-        <td><p>whether to print messages during load. Default False</p></td>
-        <td><code>False</code></td>
-      </tr>
-      <tr>
-        <td><code>**kwargs</code></td>
-        <td></td>
-        <td><p>keyword arguments to pd.read_csv, np.loadtxt</p></td>
-        <td><code>{}</code></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Any</code></td>
-      <td><p>the loaded object</p></td>
-    </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Any">Any</span></code>
+          </td>
+          <td><p>the loaded object</p></td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/io.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@memoize</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@memoize</span>
 <span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
     <span class="n">f</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">as_arr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">as_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">pickle_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rb&quot;</span><span class="p">,</span>
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A handy dandy all-in-one loading function. Simply pass a Path object to a file (or a</span>
 <span class="sd">    string) and you&#39;ll back a python object based on the file-extension:</span>
 
-<span class="sd">    .csv -&gt; pandas dataframe</span>
-<span class="sd">    .txt -&gt; numpy array, string, or list of strings (lines in file)</span>
-<span class="sd">    .p/.pickle -&gt; output of pickle.load</span>
-<span class="sd">    .json -&gt; string or dict</span>
+<span class="sd">    - `.csv`: `pd.Dataframe`</span>
+<span class="sd">    - `.txt`: `np.ndarray`, `list[str]` (lines a file), or `str` (all file contents)</span>
+<span class="sd">    - `.p/.pickle`: output of `pickle.load`</span>
+<span class="sd">    - `.json`: `str` or `dict`</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        f (Path/str): name or path object to load</span>
@@ -965,9 +975,8 @@ string) and you'll back a python object based on the file-extension:</p>
 <span class="sd">        Default False</span>
 <span class="sd">        as_str (bool, optional): open txt/json as a single string instead of</span>
 <span class="sd">        splitting on newlines; Default False</span>
-<span class="sd">        pickle_encoding (str, optional): pickle encoding to use; Default &#39;rb&#39;</span>
 <span class="sd">        verbose (bool, optional): whether to print messages during load. Default False</span>
-<span class="sd">        **kwargs: keyword arguments to pd.read_csv, np.loadtxt</span>
+<span class="sd">        **kwargs: keyword arguments to `pd.read_csv` or `np.loadtxt`</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        the loaded object</span>
@@ -981,6 +990,7 @@ string) and you'll back a python object based on the file-extension:</p>
     <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">))</span>
 
+    <span class="c1"># TODO: add support for np.save .npz files</span>
     <span class="n">supported_exts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;.json&quot;</span><span class="p">,</span> <span class="s2">&quot;.p&quot;</span><span class="p">,</span> <span class="s2">&quot;.pickle&quot;</span><span class="p">,</span> <span class="s2">&quot;.csv&quot;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.csv&quot;</span><span class="p">:</span>
@@ -1018,12 +1028,11 @@ string) and you'll back a python object based on the file-extension:</p>
                 <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
 
     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File must end in one of: </span><span class="si">{</span><span class="n">supported_exts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
   </div>
-
 
 
 
@@ -1040,7 +1049,7 @@ string) and you'll back a python object based on the file-extension:</p>
 
   <div class="doc doc-object doc-module">
 
-<a id="utilz.ops"></a>
+
     <div class="doc doc-contents first">
 
       <p>Functional tools</p>
@@ -1049,6 +1058,9 @@ string) and you'll back a python object based on the file-extension:</p>
 
 
   <div class="doc doc-children">
+
+
+
 
 
 
@@ -1067,32 +1079,55 @@ string) and you'll back a python object based on the file-extension:</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to <code>sklearn.utils.check_random_state</code>. Using the source here simply avoids an unecessary dependency.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>seed</code></td>
-        <td><code>None, int, np.RandomState</code></td>
-        <td><p>if seed is None, return the RandomState singleton used by np.random. If seed is an int, return a new RandomState instance seeded with seed. If seed is already a RandomState instance, return it. Otherwise raise ValueError.</p></td>
-        <td><code>None</code></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>seed</code></td>
+          <td>
+                <code>None, int, <span title="numpy">np</span>.<span title="numpy.RandomState">RandomState</span></code>
+          </td>
+          <td><p>if seed is None, return the RandomState singleton used by np.random. If seed is an int, return a new RandomState instance seeded with seed. If seed is already a RandomState instance, return it. Otherwise raise ValueError.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/ops.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.</span>
 
 <span class="sd">    Args:</span>
@@ -1110,7 +1145,7 @@ string) and you'll back a python object based on the file-extension:</p>
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
         <span class="s2">&quot;</span><span class="si">%r</span><span class="s2"> cannot be used to seed a numpy.random.RandomState&quot;</span> <span class="s2">&quot; instance&quot;</span> <span class="o">%</span> <span class="n">seed</span>
     <span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
@@ -1128,6 +1163,7 @@ string) and you'll back a python object based on the file-extension:</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p><strong>map</strong>s <code>func</code> to <code>iterme</code> and con<strong>cat</strong>enates the result into a single, list, DataFrame or array. <code>iterme</code> can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</p>
@@ -1138,52 +1174,100 @@ string) and you'll back a python object based on the file-extension:</p>
 <li>Passing in <code>pd.read_csv</code> to list of files to get back a single dataframe</li>
 </ul>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>func</code></td>
-        <td><code>callable</code></td>
-        <td><p>function to apply. If None, will attempt to flatten a nested list</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>iterme</code></td>
-        <td><code>iterable</code></td>
-        <td><p>an iterable for which func will be called on each element</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>concat</code></td>
-        <td><code>bool</code></td>
-        <td><p>if func returns an interable, will try to flatten iterables into</p></td>
-        <td><code>True</code></td>
-      </tr>
-      <tr>
-        <td><code>axis</code></td>
-        <td><code>int; optional</code></td>
-        <td><p>what axis to concatenate over; Default 0 (first)</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>ignore_index</code></td>
-        <td><code>bool; optional</code></td>
-        <td><p>ignore the index when combining DataFrames; Default True</p></td>
-        <td><code>True</code></td>
-      </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>func</code></td>
+          <td>
+                <code>callable</code>
+          </td>
+          <td><p>function to apply. If None, will attempt to flatten a nested list</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>iterme</code></td>
+          <td>
+                <code>iterable</code>
+          </td>
+          <td><p>an iterable for which func will be called on each element</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>concat</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>if func returns an interable, will try to flatten iterables into</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>axis</code></td>
+          <td>
+                <code>int; optional</code>
+          </td>
+          <td><p>what axis to concatenate over; Default 0 (first)</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>ignore_index</code></td>
+          <td>
+                <code>bool; optional</code>
+          </td>
+          <td><p>ignore the index when combining DataFrames; Default True</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/ops.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    **map**s `func` to `iterme` and con**cat**enates the result into a single, list, DataFrame or array. `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</span>
 
@@ -1211,7 +1295,7 @@ string) and you'll back a python object based on the file-extension:</p>
     <span class="k">if</span> <span class="n">concat</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_concat</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">op</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
@@ -1229,68 +1313,170 @@ string) and you'll back a python object based on the file-extension:</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Map a <code>func</code> to <code>iterme</code> using parallelization via joblib. Note the only difference between <code>pmap</code> and <code>prep</code> is that that <code>pmap</code> explicitly operates on an iterable, such that the input to <code>func</code> changes each time (each element of <code>iterme</code>); where as <code>prep</code> just repeatedely executes <code>func</code> for <code>n_iter</code> operations with optional args/kwargs that are the same for each run of <code>func</code>.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>func</code></td>
-        <td><code>callable</code></td>
-        <td><p>function to run</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>iterme</code></td>
-        <td><code>iterable</code></td>
-        <td><p>an iterable for which each element will be passed to func</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>n_jobs</code></td>
-        <td><code>int</code></td>
-        <td><p>number of cpus/threads; Default -1 (all cpus/threads)</p></td>
-        <td><code>2</code></td>
-      </tr>
-      <tr>
-        <td><code>enum</code></td>
-        <td><code>bool</code></td>
-        <td><p>whether the value of the current iteration should be passed to func as the special kwarg 'idx'. Make sure func can handle a kwarg named 'idx'. Default False</p></td>
-        <td><code>False</code></td>
-      </tr>
-      <tr>
-        <td><code>random_state</code></td>
-        <td><code>bool/int</code></td>
-        <td><p>whether a randomly initialized seed should be</p></td>
-        <td><code>False</code></td>
-      </tr>
-      <tr>
-        <td><code>backend</code></td>
-        <td><code>str</code></td>
-        <td><p>see <code>joblib.Parallel</code> for options; Default None which</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>verbose</code></td>
-        <td><code>int</code></td>
-        <td><p>joblib.Parallel verbosity. Default 0</p></td>
-        <td><code>0</code></td>
-      </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>func</code></td>
+          <td>
+                <code>callable</code>
+          </td>
+          <td><p>function to run</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>iterme</code></td>
+          <td>
+                <code>iterable</code>
+          </td>
+          <td><p>an iterable for which each element will be passed to func</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_jobs</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>number of cpus/threads; Default -1 (all cpus/threads)</p></td>
+          <td>
+                <code>2</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>enum</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>whether the value of the current iteration should be passed to func as the special kwarg 'idx'. Make sure func can handle a kwarg named 'idx'. Default False</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>random_state</code></td>
+          <td>
+                <code>bool/int</code>
+          </td>
+          <td><p>whether a randomly initialized seed should be</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>backend</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>see <code>joblib.Parallel</code> for options; Default None which</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>verbose</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>joblib.Parallel verbosity. Default 0</p></td>
+          <td>
+                <code>0</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/ops.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pmap</span><span class="p">(</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pmap</span><span class="p">(</span>
     <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
     <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
     <span class="n">enum</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1363,12 +1549,11 @@ string) and you'll back a python object based on the file-extension:</p>
     <span class="k">if</span> <span class="n">concat</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_concat</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
   </div>
-
 
 
 
@@ -1385,7 +1570,7 @@ string) and you'll back a python object based on the file-extension:</p>
 
   <div class="doc doc-object doc-module">
 
-<a id="utilz.decorators"></a>
+
     <div class="doc doc-contents first">
 
       <p>Custom guards for defensive data analysis compatible with <a href="https://bulwark.readthedocs.io/en/latest/index.html">bulwark</a>.</p>
@@ -1409,6 +1594,7 @@ string) and you'll back a python object based on the file-extension:</p>
 
 
 
+
   <div class="doc doc-object doc-function">
 
 
@@ -1419,38 +1605,67 @@ string) and you'll back a python object based on the file-extension:</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
-      <p>A decorator that wraps joblib.Memory for caching the results of a function to disk.
+      <p>A decorator that wraps <code>joblib.Memory</code> for caching the results of a function to disk.
 This is useful for expensive functions that take a while to compute, as rerunning
 them will simply load the last results from disk.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>force</code></td>
-        <td><code>bool</code></td>
-        <td><p>clear the cache before rerunning; Default False</p></td>
-        <td><code>False</code></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>force</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>clear the cache before rerunning; Default False</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/decorators.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">expensive</span><span class="p">(</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">expensive</span><span class="p">(</span>
     <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A decorator that wraps joblib.Memory for caching the results of a function to disk.</span>
+<span class="sd">    A decorator that wraps `joblib.Memory` for caching the results of a function to disk.</span>
 <span class="sd">    This is useful for expensive functions that take a while to compute, as rerunning</span>
 <span class="sd">    them will simply load the last results from disk.</span>
 
@@ -1470,7 +1685,7 @@ them will simply load the last results from disk.</p>
         <span class="k">return</span> <span class="n">wrapper</span>
 
     <span class="k">return</span> <span class="n">decorator</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
@@ -1488,13 +1703,41 @@ them will simply load the last results from disk.</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Log the type and shape/size/len of the output from a function</p>
 
         <details class="quote">
           <summary>Source code in <code>utilz/decorators.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Log the type and shape/size/len of the output from a function</span>
 
@@ -1522,7 +1765,7 @@ them will simply load the last results from disk.</p>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">return</span> <span class="n">wrapper</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
@@ -1540,64 +1783,133 @@ them will simply load the last results from disk.</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
-      <p>Run the decorated <code>func</code> only if fpath doesn't exist or if it isn't an empty
-directory. If fpath exists will load the file from disk or if fpath is a directory,
+      <p>Run the decorated <code>func</code> only if <code>fpath</code> doesn't exist or if it isn't an empty
+directory. If <code>fpath</code> exists will load the file from disk or if <code>fpath</code> is a directory,
 will return the results of globbing the directory for all files</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>fpath</code></td>
-        <td><code>Path/str</code></td>
-        <td><p>filename or dirname to check existence for</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>force</code></td>
-        <td><code>bool</code></td>
-        <td><p>always run the function even if filepath exists,</p></td>
-        <td><code>False</code></td>
-      </tr>
-      <tr>
-        <td><code>as_arr</code></td>
-        <td><code>bool</code></td>
-        <td><p>treat a .txt file as a numpy array;</p></td>
-        <td><code>False</code></td>
-      </tr>
-      <tr>
-        <td><code>as_str</code></td>
-        <td><code>bool</code></td>
-        <td><p>open txt/json as a single string instead of</p></td>
-        <td><code>False</code></td>
-      </tr>
-      <tr>
-        <td><code>pickle_encoding</code></td>
-        <td><code>str</code></td>
-        <td><p>pickle encoding to use; Default 'rb'</p></td>
-        <td><code>&#39;rb&#39;</code></td>
-      </tr>
-      <tr>
-        <td><code>verbose</code></td>
-        <td><code>bool</code></td>
-        <td><p>whether to print messages during load. Default False</p></td>
-        <td><code>False</code></td>
-      </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>fpath</code></td>
+          <td>
+                <code>Path/str</code>
+          </td>
+          <td><p>filename or dirname to check existence for</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>force</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>always run the function even if filepath exists,</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>as_arr</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>treat a .txt file as a numpy array;</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>as_str</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>open txt/json as a single string instead of</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pickle_encoding</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>pickle encoding to use; Default 'rb'</p></td>
+          <td>
+                <code>&#39;rb&#39;</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>verbose</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>whether to print messages during load. Default False</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/decorators.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">maybe</span><span class="p">(</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">maybe</span><span class="p">(</span>
     <span class="n">fpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
     <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">as_arr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1606,8 +1918,8 @@ will return the results of globbing the directory for all files</p>
     <span class="n">pickle_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rb&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Run the decorated `func` only if fpath doesn&#39;t exist or if it isn&#39;t an empty</span>
-<span class="sd">    directory. If fpath exists will load the file from disk or if fpath is a directory,</span>
+<span class="sd">    Run the decorated `func` only if `fpath` doesn&#39;t exist or if it isn&#39;t an empty</span>
+<span class="sd">    directory. If `fpath` exists will load the file from disk or if `fpath` is a directory,</span>
 <span class="sd">    will return the results of globbing the directory for all files</span>
 
 <span class="sd">    Args:</span>
@@ -1641,7 +1953,7 @@ will return the results of globbing the directory for all files</p>
         <span class="k">return</span> <span class="n">wrapper</span>
 
     <span class="k">return</span> <span class="n">decorator</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
@@ -1659,13 +1971,26 @@ will return the results of globbing the directory for all files</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Print result of function call in addition to returning it</p>
 
         <details class="quote">
           <summary>Source code in <code>utilz/decorators.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Print result of function call in addition to returning it</span>
 
@@ -1678,7 +2003,7 @@ will return the results of globbing the directory for all files</p>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">return</span> <span class="n">wrapper</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
@@ -1696,13 +2021,28 @@ will return the results of globbing the directory for all files</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Log the run time of a function</p>
 
         <details class="quote">
           <summary>Source code in <code>utilz/decorators.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">timeit</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">timeit</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Log the run time of a function</span>
 
@@ -1717,12 +2057,11 @@ will return the results of globbing the directory for all files</p>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">return</span> <span class="n">wrapper</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
   </div>
-
 
 
 
@@ -1739,15 +2078,19 @@ will return the results of globbing the directory for all files</p>
 
   <div class="doc doc-object doc-module">
 
-<a id="utilz.dftools"></a>
+
     <div class="doc doc-contents first">
 
-      <p>Common data operations and transformations often on pandas dataframes</p>
+      <p>Common data operations and transformations often on pandas dataframes. This creates
+<strong>new dataframe methods</strong> that can be called like this:  </p>
+<p><code>df.norm_by_group(grpcol='Class', valcol='Score')</code></p>
 <hr />
 
 
 
   <div class="doc doc-children">
+
+
 
 
 
@@ -1766,44 +2109,74 @@ will return the results of globbing the directory for all files</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Check if each group of <code>grpcols</code> has the same dimensions</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>df</code></td>
-        <td><code>pd.DataFrame</code></td>
-        <td><p>input dataframe</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>group_cols</code></td>
-        <td><code>str/list</code></td>
-        <td><p>column names to group on in dataframe</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>shape</code></td>
-        <td><code>tuple/None</code></td>
-        <td><p>optional group sizes to ensure</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code>pd.<span title="pd.DataFrame">DataFrame</span></code>
+          </td>
+          <td><p>input dataframe</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>group_cols</code></td>
+          <td>
+                <code>str/list</code>
+          </td>
+          <td><p>column names to group on in dataframe</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>shape</code></td>
+          <td>
+                <code>tuple/None</code>
+          </td>
+          <td><p>optional group sizes to ensure</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/dftools.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
 <span class="k">def</span> <span class="nf">assert_balanced_groups</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if each group of `grpcols` has the same dimensions</span>
@@ -1820,7 +2193,7 @@ will return the results of globbing the directory for all files</p>
         <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Group sizes don&#39;t match!</span><span class="se">\n</span><span class="si">{</span><span class="n">grouped</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
@@ -1838,50 +2211,85 @@ will return the results of globbing the directory for all files</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Check if each group has the same number of unique values in <code>valcol</code></p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>df</code></td>
-        <td><code>pd.DataFrame</code></td>
-        <td><p>input dataframe</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>valcol</code></td>
-        <td><code>str</code></td>
-        <td><p>column to check unique values in</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>grpcols</code></td>
-        <td><code>str/list</code></td>
-        <td><p>column names to group on in dataframe, Default None</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>shape</code></td>
-        <td><code>tuple/None</code></td>
-        <td><p>optional sizes to ensure</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code>pd.<span title="pd.DataFrame">DataFrame</span></code>
+          </td>
+          <td><p>input dataframe</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>valcol</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>column to check unique values in</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>grpcols</code></td>
+          <td>
+                <code>str/list</code>
+          </td>
+          <td><p>column names to group on in dataframe, Default None</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>shape</code></td>
+          <td>
+                <code>tuple/None</code>
+          </td>
+          <td><p>optional sizes to ensure</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/dftools.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
 <span class="k">def</span> <span class="nf">assert_same_nunique</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">valcol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if each group has the same number of unique values in `valcol`</span>
@@ -1899,7 +2307,7 @@ will return the results of globbing the directory for all files</p>
         <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Groups don&#39;t have same nunique values!</span><span class="se">\n</span><span class="si">{</span><span class="n">grouped</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
@@ -1917,56 +2325,112 @@ will return the results of globbing the directory for all files</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Normalize values in a column separately per group</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>df</code></td>
-        <td><code>pd.DataFrame</code></td>
-        <td><p>input dataframe</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>grpcols</code></td>
-        <td><code>str</code></td>
-        <td><p>grouping col</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>valcol</code></td>
-        <td><code>str</code></td>
-        <td><p>value col</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>center</code></td>
-        <td><code>bool</code></td>
-        <td><p>mean center. Defaults to True.</p></td>
-        <td><code>True</code></td>
-      </tr>
-      <tr>
-        <td><code>scale</code></td>
-        <td><code>bool</code></td>
-        <td><p>divide by standard deviation. Defaults to True.</p></td>
-        <td><code>True</code></td>
-      </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code>pd.<span title="pd.DataFrame">DataFrame</span></code>
+          </td>
+          <td><p>input dataframe</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>grpcols</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>grouping col</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>valcol</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>value col</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>center</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>mean center. Defaults to True.</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>scale</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>divide by standard deviation. Defaults to True.</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/dftools.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
 <span class="k">def</span> <span class="nf">norm_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcol</span><span class="p">,</span> <span class="n">valcol</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">addcol</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Normalize values in a column separately per group</span>
@@ -2001,12 +2465,11 @@ will return the results of globbing the directory for all files</p>
         <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valcol</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">_by_</span><span class="si">{</span><span class="n">grpcol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">out</span><span class="p">})</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">out</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
   </div>
-
 
 
 
@@ -2023,7 +2486,7 @@ will return the results of globbing the directory for all files</p>
 
   <div class="doc doc-object doc-module">
 
-<a id="utilz.plot"></a>
+
     <div class="doc doc-contents first">
 
       <p>Plotting convenience functions</p>
@@ -2031,6 +2494,7 @@ will return the results of globbing the directory for all files</p>
 
 
   <div class="doc doc-children">
+
 
 
 
@@ -2049,101 +2513,196 @@ will return the results of globbing the directory for all files</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Combines a call to <code>sns.barplot</code> + <code>sns.stripplot</code>. Optionally set some axis level attributes during plot creation. Leaving these attributes None will return the default labels that seaborn sets.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>data</code></td>
-        <td><code>DataFrame</code></td>
-        <td><p>input data</p></td>
-        <td><em>required</em></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>data</code></td>
+          <td>
+                <code>DataFrame</code>
+          </td>
+          <td><p>input data</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pointcolor</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>color of stripplot points. Defaults to "black".</p></td>
+          <td>
+                <code>&#39;black&#39;</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>xlabel</code></td>
+          <td>
+                <code>[type]</code>
+          </td>
+          <td><p>x-axis label. Defaults to seaborn's default.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>ylabel</code></td>
+          <td>
+                <code>[type]</code>
+          </td>
+          <td><p>Defaults to seaborn's default.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>xticklabels</code></td>
+          <td>
+                <code>[type]</code>
+          </td>
+          <td><p>Defaults to seaborn's default.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>yticklabels</code></td>
+          <td>
+                <code>[type]</code>
+          </td>
+          <td><p>Defaults to seaborn's default.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>xticks</code></td>
+          <td>
+                <code>[type]</code>
+          </td>
+          <td><p>Defaults to seaborn's default.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>yticks</code></td>
+          <td>
+                <code>[type]</code>
+          </td>
+          <td><p>Defaults to seaborn's default.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>xlim</code></td>
+          <td>
+                <code>[type]</code>
+          </td>
+          <td><p>Defaults to seaborn's default.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>ylim</code></td>
+          <td>
+                <code>[type]</code>
+          </td>
+          <td><p>Defaults to seaborn's default.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>pointcolor</code></td>
-        <td><code>str</code></td>
-        <td><p>color of stripplot points. Defaults to "black".</p></td>
-        <td><code>&#39;black&#39;</code></td>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
       </tr>
-      <tr>
-        <td><code>xlabel</code></td>
-        <td><code>[type]</code></td>
-        <td><p>x-axis label. Defaults to seaborn's default.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>ylabel</code></td>
-        <td><code>[type]</code></td>
-        <td><p>Defaults to seaborn's default.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>xticklabels</code></td>
-        <td><code>[type]</code></td>
-        <td><p>Defaults to seaborn's default.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>yticklabels</code></td>
-        <td><code>[type]</code></td>
-        <td><p>Defaults to seaborn's default.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>xticks</code></td>
-        <td><code>[type]</code></td>
-        <td><p>Defaults to seaborn's default.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>yticks</code></td>
-        <td><code>[type]</code></td>
-        <td><p>Defaults to seaborn's default.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>xlim</code></td>
-        <td><code>[type]</code></td>
-        <td><p>Defaults to seaborn's default.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>ylim</code></td>
-        <td><code>[type]</code></td>
-        <td><p>Defaults to seaborn's default.</p></td>
-        <td><code>None</code></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Axis</code></td>
-      <td><p>plot axis handle</p></td>
-    </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>Axis</code></td>          <td>
+          </td>
+          <td><p>plot axis handle</p></td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/plot.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">stripbarplot</span><span class="p">(</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">stripbarplot</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">pointcolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
     <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -2195,12 +2754,11 @@ will return the results of globbing the directory for all files</p>
     <span class="k">if</span> <span class="n">ylim</span><span class="p">:</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ax</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
   </div>
-
 
 
 
@@ -2217,7 +2775,7 @@ will return the results of globbing the directory for all files</p>
 
   <div class="doc doc-object doc-module">
 
-<a id="utilz.boilerplate"></a>
+
     <div class="doc doc-contents first">
 
       <p>Functions that exist purely to save boilerplate.</p>
@@ -2225,6 +2783,7 @@ will return the results of globbing the directory for all files</p>
 
 
   <div class="doc doc-children">
+
 
 
 
@@ -2243,53 +2802,80 @@ will return the results of globbing the directory for all files</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Setup matplotlib subplots boilerplate</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>figsize</code></td>
-        <td><code>tuple</code></td>
-        <td><p>Figure size. Defaults to (8, 6).</p></td>
-        <td><code>(8, 6)</code></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>figsize</code></td>
+          <td>
+                <code>tuple</code>
+          </td>
+          <td><p>Figure size. Defaults to (8, 6).</p></td>
+          <td>
+                <code>(8, 6)</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>subplots</code></td>
+          <td>
+                <code>tuple</code>
+          </td>
+          <td><p>subplot grid size. Defaults to (1, 1).</p></td>
+          <td>
+                <code>(1, 1)</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>subplots</code></td>
-        <td><code>tuple</code></td>
-        <td><p>subplot grid size. Defaults to (1, 1).</p></td>
-        <td><code>(1, 1)</code></td>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
       </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>tuple ((Figure, Axes))</code></td>
-      <td><p>matplotlib figure handle and axes</p></td>
-    </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>tuple</code></td>          <td>
+                <code>Figure, Axes</code>
+          </td>
+          <td><p>matplotlib figure handle and axes</p></td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/boilerplate.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mpinit</span><span class="p">(</span><span class="n">figsize</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplots</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">mpinit</span><span class="p">(</span><span class="n">figsize</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplots</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Setup matplotlib subplots boilerplate</span>
 
@@ -2304,7 +2890,7 @@ will return the results of globbing the directory for all files</p>
         <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
     <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="o">*</span><span class="n">subplots</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">f</span><span class="p">,</span> <span class="n">ax</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
@@ -2322,62 +2908,130 @@ will return the results of globbing the directory for all files</p>
 
 </h4>
 
+
     <div class="doc doc-contents ">
 
       <p>Generate a dataframe with random data and alphabetic columns, Default to np.random.randn. Specify another function and size will be passed in as a kwarg.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
       <tr>
-        <td><code>size</code></td>
-        <td><code>tuple</code></td>
-        <td><p>Defaults to (10,3).</p></td>
-        <td><code>(10, 3)</code></td>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
       </tr>
-      <tr>
-        <td><code>columns</code></td>
-        <td><code>list</code></td>
-        <td><p>Defaults numbered capital letters like an excel spreadsheet</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>func</code></td>
-        <td><code>callable</code></td>
-        <td><p>function to generate data. Must take a kwarg "size"</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>random_state</code></td>
-        <td><code>None, int, np.RandomState</code></td>
-        <td><p>if None, return the RandomState</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>*args</code></td>
-        <td><code>&lt;built-in function any&gt;</code></td>
-        <td><p>positional arguments to func</p></td>
-        <td><code>()</code></td>
-      </tr>
-      <tr>
-        <td><code>**kwargs</code></td>
-        <td><code>&lt;built-in function any&gt;</code></td>
-        <td><p>keyword arguments to func</p></td>
-        <td><code>{}</code></td>
-      </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>size</code></td>
+          <td>
+                <code>tuple</code>
+          </td>
+          <td><p>Defaults to (10,3).</p></td>
+          <td>
+                <code>(10, 3)</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>columns</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>Defaults numbered capital letters like an excel spreadsheet</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>func</code></td>
+          <td>
+                <code>callable</code>
+          </td>
+          <td><p>function to generate data. Must take a kwarg "size"</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>random_state</code></td>
+          <td>
+                <code>None, int, np.<span title="np.RandomState">RandomState</span></code>
+          </td>
+          <td><p>if None, return the RandomState</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>*args</code></td>
+          <td>
+                <code>any</code>
+          </td>
+          <td><p>positional arguments to func</p></td>
+          <td>
+                <code>()</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>**kwargs</code></td>
+          <td>
+                <code>any</code>
+          </td>
+          <td><p>keyword arguments to func</p></td>
+          <td>
+                <code>{}</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
         <details class="quote">
           <summary>Source code in <code>utilz/boilerplate.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">randdf</span><span class="p">(</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">randdf</span><span class="p">(</span>
     <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
     <span class="n">columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -2420,12 +3074,11 @@ will return the results of globbing the directory for all files</p>
             <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">next</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span><span class="si">}{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
         </details>
     </div>
 
   </div>
-
 
 
 
