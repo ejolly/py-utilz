@@ -99,7 +99,6 @@ def maybe(
     as_arr: bool = False,
     as_str: bool = False,
     verbose: bool = False,
-    pickle_encoding: str = "rb",
 ) -> Any:
     """
     Run the decorated `func` only if `fpath` doesn't exist or if it isn't an empty
@@ -115,7 +114,6 @@ def maybe(
         Default False
         as_str (bool, optional): open txt/json as a single string instead of
         splitting on newlines; Default False
-        pickle_encoding (str, optional): pickle encoding to use; Default 'rb'
         verbose (bool, optional): whether to print messages during load. Default False
     """
 
@@ -129,7 +127,6 @@ def maybe(
                         fpath,
                         as_str=as_str,
                         as_arr=as_arr,
-                        pickle_encoding=pickle_encoding,
                         verbose=verbose,
                     )
             return func(*args, **kwargs)
