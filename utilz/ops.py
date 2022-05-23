@@ -5,13 +5,15 @@ Functional tools
 """
 __all__ = ["check_random_state", "pmap", "mapcat"]
 
-from joblib import Parallel, delayed
+from joblib import delayed
+from ._utils import ProgressParallel
 import numpy as np
 import pandas as pd
 from typing import Union, Any
 from collections.abc import Callable, Iterable
 from itertools import chain
 from inspect import signature
+from tqdm.auto import tqdm
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -69,7 +71,9 @@ def pmap(
     if n_jobs == 1:
         return mapcat(func, iterme, concat, axis, ignore_index)
     # Initialize joblib parallelizer
-    parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
+    parfor = ProgressParallel(
+        prefer=backend, n_jobs=n_jobs, verbose=verbose, total=len(iterme)
+    )
 
     func_args = list(signature(func).parameters.keys())
     if random_state is not False:
@@ -131,7 +135,7 @@ def mapcat(func, iterme, concat=True, axis=None, ignore_index=True):
     """
 
     if func is not None:
-        op = list(map(func, iterme))
+        op = list(map(func, tqdm(iterme)))
     else:
         # No-op if no function
         op = iterme
