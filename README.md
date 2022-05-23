@@ -36,4 +36,5 @@ def myfunc(args):
 1. `pip install -r requirements-dev.txt`
 2. `pip install -r requirements-optional.txt`
 
-Run all tests: `pytest` 
+Run all tests: `pytest`  
+Live render docs: `mkdocs serve`  

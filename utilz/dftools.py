@@ -3,7 +3,7 @@ Common data operations and transformations often on pandas dataframes
 
 ---
 """
-__all__ = ["norm_by_group", "assert_balanced_groups"]
+__all__ = ["norm_by_group", "assert_balanced_groups", "assert_same_nunique"]
 
 import numpy as np
 from functools import wraps
@@ -74,7 +74,7 @@ def norm_by_group(df, grpcol, valcol, center=True, scale=True, addcol=True):
 @_register_dataframe_method
 def assert_balanced_groups(df, grpcols: Union[str, list], size=None):
     """
-    Check if each group of `group_col` has the same dimensions
+    Check if each group of `grpcols` has the same dimensions
 
     Args:
         df (pd.DataFrame): input dataframe
@@ -90,19 +90,21 @@ def assert_balanced_groups(df, grpcols: Union[str, list], size=None):
         return True
 
 
-# TODO: write me
-# def same_nunique(func: callable, val_col: str, group_col: str):
-#     """
-#     Check if each group of `group_col` has the same number of unique values of `val_col` after running a function on a dataframe
+@_register_dataframe_method
+def assert_same_nunique(df, grpcols: Union[str, list], valcol: str, size=None):
+    """
+    Check if each group has the same number of unique values in `valcol`
 
-#     Args:
-#         func (callable): a function that operates on a dataframe
-#         val_col (str): column name to check for unique values in dataframe
-#         group_col (str): column name to group on in dataframe
-#     """
+    Args:
+        df (pd.DataFrame): input dataframe
+        valcol (str): column to check unique values in
+        grpcols (str/list): column names to group on in dataframe, Default None
+        shape (tuple/None, optional): optional sizes to ensure
+    """
 
-#     @wraps(func)
-#     def wrapper(*args, **kwargs):
-#         pass
-
-#     return wrapper
+    grouped = df.groupby(grpcols)[valcol].nunique()
+    size = grouped[0] if size is None else size
+    if not np.all(grouped == size):
+        raise AssertionError(f"Groups don't have same nunique values!\n{grouped}")
+    else:
+        return True

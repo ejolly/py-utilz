@@ -1,4 +1,4 @@
-from utilz.dftools import norm_by_group, assert_balanced_groups
+from utilz.dftools import norm_by_group, assert_balanced_groups, assert_same_nunique
 import pandas as pd
 import pytest
 
@@ -37,3 +37,12 @@ def test_assert_balanced_groups():
 
     with pytest.raises(AssertionError):
         df.iloc[:-1, :].assert_balanced_groups("species")
+
+
+def test_assert_same_nunique():
+
+    with pytest.raises(AssertionError):
+        assert df.assert_same_nunique("species", "sepal_length")
+
+    df["val"] = list(range(10)) * 15
+    assert df.assert_same_nunique("species", "val")
