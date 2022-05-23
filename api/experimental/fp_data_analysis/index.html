@@ -333,6 +333,40 @@
     Basic slicing/subsetting
   </a>
   
+    <nav class="md-nav" aria-label="Basic slicing/subsetting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#strings" class="md-nav__link">
+    strings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ints" class="md-nav__link">
+    ints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listsarrays" class="md-nav__link">
+    lists/arrays
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuples" class="md-nav__link">
+    tuples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1507,11 +1541,11 @@ Licensed under the Apache License, Version 2.0.
             </clipboard-copy>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">randdf</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">rename</span><span class="p">,</span> <span class="n">save</span>
+<span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">randdf</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">rename</span>
 <span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">pipe</span>
 </pre></div>
 <div id="cell-1" class="clipboard-copy-txt">import pandas as pd
-from utilz import randdf, assign, rename, save
+from utilz import randdf, assign, rename
 from toolz import pipe</div>
     
         </div>
@@ -1528,7 +1562,8 @@ from toolz import pipe</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="verb-based-dataframe-manipulation">Verb-based dataframe manipulation<a class="anchor-link" href="#verb-based-dataframe-manipulation">&#182;</a></h2>
+<h2 id="verb-based-dataframe-manipulation">Verb-based dataframe manipulation<a class="anchor-link" href="#verb-based-dataframe-manipulation">&#182;</a></h2><p>One of the strengths of libraries like <code>dplyr</code> is that it provides a sort of <em>grammar</em> for manipulating data. This allows for concise analysis pipelines. <code>utilz</code> offers some similar functionality through a few choice <em>verbs</em>. Tons of additional functionality is available in the great <a href="https://plydata.readthedocs.io/en/stable/">plydata</a> library:</p>
+
 </div>
 </div>
 </div>
@@ -1556,20 +1591,18 @@ from toolz import pipe</div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Setup some random data</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
     <span class="n">randdf</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
-    <span class="n">assign</span><span class="p">(</span><span class="n">D</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;abcde&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">),</span>
-    <span class="n">rename</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="s2">&quot;rt&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="s2">&quot;group&quot;</span><span class="p">}),</span>
+    <span class="n">assign</span><span class="p">(</span><span class="n">D1</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;abcde&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="n">rename</span><span class="p">({</span><span class="s2">&quot;A1&quot;</span><span class="p">:</span> <span class="s2">&quot;rt&quot;</span><span class="p">,</span> <span class="s2">&quot;B1&quot;</span><span class="p">:</span> <span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="s2">&quot;C1&quot;</span><span class="p">:</span> <span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="s2">&quot;D1&quot;</span><span class="p">:</span> <span class="s2">&quot;group&quot;</span><span class="p">}),</span>
     <span class="n">assign</span><span class="p">(</span><span class="n">rt_doubled</span><span class="o">=</span><span class="s2">&quot;rt*2&quot;</span><span class="p">),</span>
-    <span class="n">save</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 <div id="cell-2" class="clipboard-copy-txt"># Setup some random data
 df = pipe(
     randdf((20, 3)),
-    assign(D=list("abcde") * 4),
-    rename({"A": "rt", "B": "score", "C": "speed", "D": "group"}),
+    assign(D1=list("abcde") * 4),
+    rename({"A1": "rt", "B1": "score", "C1": "speed", "D1": "group"}),
     assign(rt_doubled="rt*2"),
-    save("test"),
 )
 df.head()</div>
     
@@ -1622,43 +1655,43 @@ df.head()</div>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.033274</td>
-      <td>0.497035</td>
-      <td>0.963030</td>
+      <td>0.835214</td>
+      <td>0.469788</td>
+      <td>0.818336</td>
       <td>a</td>
-      <td>0.066549</td>
+      <td>1.670428</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.320243</td>
-      <td>0.449792</td>
-      <td>0.646103</td>
+      <td>0.933498</td>
+      <td>0.803162</td>
+      <td>0.836482</td>
       <td>b</td>
-      <td>0.640485</td>
+      <td>1.866995</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.640274</td>
-      <td>0.432569</td>
-      <td>0.871540</td>
+      <td>0.870527</td>
+      <td>0.988006</td>
+      <td>0.045092</td>
       <td>c</td>
-      <td>1.280547</td>
+      <td>1.741054</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.115659</td>
-      <td>0.852093</td>
-      <td>0.311823</td>
+      <td>0.331299</td>
+      <td>0.188222</td>
+      <td>0.201379</td>
       <td>d</td>
-      <td>0.231318</td>
+      <td>0.662598</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.200713</td>
-      <td>0.460636</td>
-      <td>0.047897</td>
+      <td>0.060063</td>
+      <td>0.527094</td>
+      <td>0.873889</td>
       <td>e</td>
-      <td>0.401426</td>
+      <td>0.120126</td>
     </tr>
   </tbody>
 </table>
@@ -1679,18 +1712,18 @@ df.head()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="basic-slicingsubsetting">Basic slicing/subsetting<a class="anchor-link" href="#basic-slicingsubsetting">&#182;</a></h3><p><code>rows</code> and <code>cols</code> behave similarly and can index a Dataframe using queries, slices, or indices.</p>
+<h3 id="basic-slicingsubsetting">Basic slicing/subsetting<a class="anchor-link" href="#basic-slicingsubsetting">&#182;</a></h3><p><code>rows</code> and <code>cols</code> behave similarly and can index a Dataframe using <em>strings</em>, <em>lists/arrays</em>, <em>tuples</em> or <em>ints</em>:</p>
 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1706,19 +1739,8 @@ df.head()</div>
             </clipboard-copy>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span>
-
-<span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">rows</span><span class="p">(</span><span class="s2">&quot;group == &#39;c&#39; or group == &#39;b&#39;&quot;</span><span class="p">),</span> 
-    <span class="n">cols</span><span class="p">(</span><span class="s2">&quot;rt&quot;</span><span class="p">,</span> <span class="s2">&quot;speed&quot;</span><span class="p">)</span>
-    <span class="p">)</span>
 </pre></div>
-<div id="cell-3" class="clipboard-copy-txt">from utilz import rows, cols
-
-pipe(df, 
-    rows("group == 'c' or group == 'b'"), 
-    cols("rt", "speed")
-    )
-</div>
+<div id="cell-3" class="clipboard-copy-txt">from utilz import rows, cols</div>
     
         </div>
     </div>
@@ -1726,95 +1748,29 @@ pipe(df,
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>speed</th>
-      <th>rt</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.646103</td>
-      <td>0.320243</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.871540</td>
-      <td>0.640274</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.327057</td>
-      <td>0.945022</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.106485</td>
-      <td>0.992307</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.642573</td>
-      <td>0.212407</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0.035261</td>
-      <td>0.437660</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0.087360</td>
-      <td>0.928069</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>0.541594</td>
-      <td>0.226964</td>
-    </tr>
-  </tbody>
-</table>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="strings">strings<a class="anchor-link" href="#strings">&#182;</a></h4>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><code>rows</code> interpret strings as <code>df.query</code> expressions, while <code>cols</code> looks for a column name:</p>
 
 </div>
-
 </div>
-
-</div>
-
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -1838,14 +1794,15 @@ pipe(df,
             </clipboard-copy>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">rows</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">14</span><span class="p">]),</span> 
-    <span class="n">cols</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">rows</span><span class="p">(</span><span class="s2">&quot;group == &#39;c&#39; or group == &#39;b&#39;&quot;</span><span class="p">),</span> 
+    <span class="n">cols</span><span class="p">(</span><span class="s2">&quot;rt&quot;</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
 <div id="cell-4" class="clipboard-copy-txt">pipe(df, 
-    rows([1,9,14]), 
-    cols((3,5))
-    )</div>
+    rows("group == 'c' or group == 'b'"), 
+    cols("rt")
+    )
+</div>
     
         </div>
     </div>
@@ -1886,25 +1843,41 @@ pipe(df,
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>group</th>
-      <th>rt_doubled</th>
+      <th>rt</th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <th>0</th>
+      <td>0.568678</td>
+    </tr>
+    <tr>
       <th>1</th>
-      <td>b</td>
-      <td>0.640485</td>
+      <td>0.277055</td>
     </tr>
     <tr>
-      <th>9</th>
-      <td>e</td>
-      <td>1.584978</td>
+      <th>2</th>
+      <td>0.084023</td>
     </tr>
     <tr>
-      <th>14</th>
-      <td>e</td>
-      <td>0.629167</td>
+      <th>3</th>
+      <td>0.987609</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.533413</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.336701</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.438272</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.480924</td>
     </tr>
   </tbody>
 </table>
@@ -1917,6 +1890,18 @@ pipe(df,
 
 </div>
 
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Cols can also "negatively index" columns which selects everything <em>except</em> the column:</p>
+
+</div>
+</div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -1940,12 +1925,15 @@ pipe(df,
             </clipboard-copy>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">rows</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">rows</span><span class="p">(</span><span class="s2">&quot;group == &#39;c&#39; or group == &#39;b&#39;&quot;</span><span class="p">),</span> 
+    <span class="n">cols</span><span class="p">(</span><span class="s2">&quot;-rt&quot;</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
 <div id="cell-5" class="clipboard-copy-txt">pipe(df, 
-    rows((1,11,2))
-    )</div>
+    rows("group == 'c' or group == 'b'"), 
+    cols("-rt")
+    )
+</div>
     
         </div>
     </div>
@@ -1986,7 +1974,6 @@ pipe(df,
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>rt</th>
       <th>score</th>
       <th>speed</th>
       <th>group</th>
@@ -1995,44 +1982,60 @@ pipe(df,
   </thead>
   <tbody>
     <tr>
-      <th>1</th>
-      <td>0.320243</td>
-      <td>0.449792</td>
-      <td>0.646103</td>
+      <th>0</th>
+      <td>0.436753</td>
+      <td>0.836273</td>
       <td>b</td>
-      <td>0.640485</td>
+      <td>1.137357</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.983424</td>
+      <td>0.809752</td>
+      <td>c</td>
+      <td>0.554110</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.404657</td>
+      <td>0.746343</td>
+      <td>b</td>
+      <td>0.168047</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.115659</td>
-      <td>0.852093</td>
-      <td>0.311823</td>
-      <td>d</td>
-      <td>0.231318</td>
+      <td>0.355559</td>
+      <td>0.434809</td>
+      <td>c</td>
+      <td>1.975218</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.819739</td>
+      <td>0.279964</td>
+      <td>b</td>
+      <td>1.066826</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.094301</td>
-      <td>0.374459</td>
-      <td>0.386620</td>
-      <td>a</td>
-      <td>0.188603</td>
+      <td>0.723915</td>
+      <td>0.948239</td>
+      <td>c</td>
+      <td>0.673403</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.427613</td>
+      <td>0.979953</td>
+      <td>b</td>
+      <td>0.876543</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.992307</td>
-      <td>0.605558</td>
-      <td>0.106485</td>
+      <td>0.025963</td>
+      <td>0.677200</td>
       <td>c</td>
-      <td>1.984614</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>0.792489</td>
-      <td>0.249192</td>
-      <td>0.152526</td>
-      <td>e</td>
-      <td>1.584978</td>
+      <td>0.961849</td>
     </tr>
   </tbody>
 </table>
@@ -2053,19 +2056,7 @@ pipe(df,
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="summarizing-data">Summarizing data<a class="anchor-link" href="#summarizing-data">&#182;</a></h3><p>To perform an operation that results in a <em>scalar</em> output per column, use <code>summarize</code>. It always return a <em>smaller</em> dataframe or series than the original</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Non-grouped inputs produce <em>Series</em> results:</p>
+<h4 id="ints">ints<a class="anchor-link" href="#ints">&#182;</a></h4><p>Both <code>rows</code> and <code>cols</code> interpret integers as <em>numerical indices</em> (i.e. <code>.iloc</code>):</p>
 
 </div>
 </div>
@@ -2076,7 +2067,7 @@ pipe(df,
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2091,19 +2082,229 @@ pipe(df,
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">summarize</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Second row, third column</span>
+<span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span>
+    <span class="n">rows</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">cols</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+     <span class="p">)</span>
+</pre></div>
+<div id="cell-6" class="clipboard-copy-txt"># Second row, third column
+pipe(df,
+    rows(1),
+    cols(2)
+     )</div>
+    
+        </div>
+    </div>
 
-<span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">rows</span><span class="p">(</span><span class="s2">&quot;group == &#39;c&#39; or group == &#39;b&#39;&quot;</span><span class="p">),</span> 
-    <span class="n">summarize</span><span class="p">(</span><span class="n">rt</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span><span class="n">speed</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>speed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.836273</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="listsarrays">lists/arrays<a class="anchor-link" href="#listsarrays">&#182;</a></h4><p>Both <code>rows</code> and <code>colws</code> interprets lists and arrays as <em>numerical indices</em> (i.e. <code>.iloc</code>) if they contain numbers, but as <em>row/col labels</em> (i.e. <code>.loc</code>) if they contain strings.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-7">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+    <span class="n">rows</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]),</span> 
+    <span class="n">cols</span><span class="p">([</span><span class="s2">&quot;rt&quot;</span><span class="p">,</span> <span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span><span class="p">])</span>
     <span class="p">)</span>
 </pre></div>
-<div id="cell-6" class="clipboard-copy-txt">from utilz import summarize
+<div id="cell-7" class="clipboard-copy-txt">pipe(df, 
+    rows([0, 2, 4]), 
+    cols(["rt", "speed", "score"])
+    )
+</div>
+    
+        </div>
+    </div>
 
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>speed</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.600285</td>
+      <td>0.198946</td>
+      <td>0.696828</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.277055</td>
+      <td>0.809752</td>
+      <td>0.983424</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.062525</td>
+      <td>0.500357</td>
+      <td>0.764594</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-8">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Same but using indexes for columns</span>
+<span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+    <span class="n">rows</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]),</span> 
+    <span class="n">cols</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="p">)</span>
+</pre></div>
+<div id="cell-8" class="clipboard-copy-txt"># Same but using indexes for columns
 pipe(df, 
-    rows("group == 'c' or group == 'b'"), 
-    summarize(rt='mean',speed='mean')
-    )</div>
+    rows([0, 2, 4]), 
+    cols([0, 2, 1])
+    )
+</div>
     
         </div>
     </div>
@@ -2125,11 +2326,52 @@ pipe(df,
 
 
 
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>rt       0.587868
-speed    0.407247
-dtype: float64</pre>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>speed</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.600285</td>
+      <td>0.198946</td>
+      <td>0.696828</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.277055</td>
+      <td>0.809752</td>
+      <td>0.983424</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.062525</td>
+      <td>0.500357</td>
+      <td>0.764594</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 
 </div>
@@ -2146,7 +2388,7 @@ dtype: float64</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Grouped inputs product <em>DataFrame</em> results:</p>
+<h4 id="tuples">tuples<a class="anchor-link" href="#tuples">&#182;</a></h4><p>Both <code>rows</code> and <code>cols</code> interpret tuples as <code>(start, stop, step)</code> slices, with <code>step</code> being optional:</p>
 
 </div>
 </div>
@@ -2162,7 +2404,7 @@ dtype: float64</pre>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-7">
+            <clipboard-copy for="cell-9">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2172,19 +2414,14 @@ dtype: float64</pre>
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">groupby</span>
-
-<span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">),</span> 
-    <span class="n">summarize</span><span class="p">(</span><span class="n">score</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">rt</span> <span class="o">=</span> <span class="s1">&#39;std&#39;</span><span class="p">)</span>
-    <span class="p">)</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+     <span class="n">rows</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> 
+     <span class="n">cols</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
 </pre></div>
-<div id="cell-7" class="clipboard-copy-txt">from utilz import groupby
-
-pipe(df, 
-    groupby('group'), 
-    summarize(score = 'mean', rt = 'std')
-    )</div>
+<div id="cell-9" class="clipboard-copy-txt">pipe(df, 
+     rows((1, 11, 2)), 
+     cols((0, 5, 2)))
+</div>
     
         </div>
     </div>
@@ -2225,40 +2462,41 @@ pipe(df,
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>score</th>
       <th>rt</th>
-    </tr>
-    <tr>
-      <th>group</th>
-      <th></th>
-      <th></th>
+      <th>speed</th>
+      <th>rt_doubled</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>a</th>
-      <td>0.272993</td>
-      <td>0.437812</td>
+      <th>1</th>
+      <td>0.568678</td>
+      <td>0.836273</td>
+      <td>1.137357</td>
     </tr>
     <tr>
-      <th>b</th>
-      <td>0.387616</td>
-      <td>0.389510</td>
+      <th>3</th>
+      <td>0.193848</td>
+      <td>0.026424</td>
+      <td>0.387695</td>
     </tr>
     <tr>
-      <th>c</th>
-      <td>0.464710</td>
-      <td>0.325779</td>
+      <th>5</th>
+      <td>0.509818</td>
+      <td>0.099443</td>
+      <td>1.019636</td>
     </tr>
     <tr>
-      <th>d</th>
-      <td>0.343631</td>
-      <td>0.274298</td>
+      <th>7</th>
+      <td>0.987609</td>
+      <td>0.434809</td>
+      <td>1.975218</td>
     </tr>
     <tr>
-      <th>e</th>
-      <td>0.551664</td>
-      <td>0.278721</td>
+      <th>9</th>
+      <td>0.022993</td>
+      <td>0.565018</td>
+      <td>0.045986</td>
     </tr>
   </tbody>
 </table>
@@ -2272,30 +2510,6 @@ pipe(df,
 </div>
 
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="transforming-data">Transforming data<a class="anchor-link" href="#transforming-data">&#182;</a></h3><p>To perfom an operation that results in a <em>non-scalar</em> output per column, or to ensure that an operation with <em>scalar</em> output retains the original shape of the input, use <code>assign</code>. It always returns back a DataFrame the <em>same</em> size as the original via broadcasting.</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>With non-grouped inputs, the mean score is broadcasted across the <em>entire</em> DataFrame</p>
-
-</div>
-</div>
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
@@ -2307,7 +2521,7 @@ pipe(df,
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-8">
+            <clipboard-copy for="cell-10">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2317,10 +2531,13 @@ pipe(df,
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">assign</span><span class="p">(</span><span class="n">score_centered</span><span class="o">=</span><span class="s2">&quot;score.mean()&quot;</span><span class="p">))</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span>
+     <span class="n">rows</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="p">)</span>
 </pre></div>
-<div id="cell-8" class="clipboard-copy-txt">pipe(df, assign(score_centered="score.mean()"))
-</div>
+<div id="cell-10" class="clipboard-copy-txt">pipe(df,
+     rows((0, 5))
+)</div>
     
         </div>
     </div>
@@ -2366,189 +2583,568 @@ pipe(df,
       <th>speed</th>
       <th>group</th>
       <th>rt_doubled</th>
-      <th>score_centered</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.033274</td>
-      <td>0.497035</td>
-      <td>0.963030</td>
+      <td>0.600285</td>
+      <td>0.696828</td>
+      <td>0.198946</td>
       <td>a</td>
-      <td>0.066549</td>
-      <td>0.404123</td>
+      <td>1.200570</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.320243</td>
-      <td>0.449792</td>
-      <td>0.646103</td>
+      <td>0.568678</td>
+      <td>0.436753</td>
+      <td>0.836273</td>
       <td>b</td>
-      <td>0.640485</td>
-      <td>0.404123</td>
+      <td>1.137357</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.640274</td>
-      <td>0.432569</td>
-      <td>0.871540</td>
+      <td>0.277055</td>
+      <td>0.983424</td>
+      <td>0.809752</td>
       <td>c</td>
-      <td>1.280547</td>
-      <td>0.404123</td>
+      <td>0.554110</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.115659</td>
-      <td>0.852093</td>
-      <td>0.311823</td>
+      <td>0.193848</td>
+      <td>0.632703</td>
+      <td>0.026424</td>
       <td>d</td>
-      <td>0.231318</td>
-      <td>0.404123</td>
+      <td>0.387695</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.200713</td>
-      <td>0.460636</td>
-      <td>0.047897</td>
+      <td>0.062525</td>
+      <td>0.764594</td>
+      <td>0.500357</td>
       <td>e</td>
-      <td>0.401426</td>
-      <td>0.404123</td>
+      <td>0.125049</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="summarizing-data">Summarizing data<a class="anchor-link" href="#summarizing-data">&#182;</a></h3><p>To perform an operation that results in a <em>scalar</em> output per column, use <code>summarize</code>. It always return a <em>smaller</em> dataframe or series than the original</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Non-grouped inputs produce <em>Series</em> results:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-11">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">summarize</span>
+
+<span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+    <span class="n">rows</span><span class="p">(</span><span class="s2">&quot;group == &#39;c&#39; or group == &#39;b&#39;&quot;</span><span class="p">),</span> 
+    <span class="n">summarize</span><span class="p">(</span><span class="n">rt</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span><span class="n">speed</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+<div id="cell-11" class="clipboard-copy-txt">from utilz import summarize
+
+pipe(df, 
+    rows("group == 'c' or group == 'b'"), 
+    summarize(rt='mean',speed='mean')
+    )</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>rt       0.695871
+speed    0.542008
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Grouped inputs product <em>DataFrame</em> results:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-12">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">groupby</span>
+
+<span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+    <span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">),</span> 
+    <span class="n">summarize</span><span class="p">(</span><span class="n">score</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">rt</span> <span class="o">=</span> <span class="s1">&#39;std&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+<div id="cell-12" class="clipboard-copy-txt">from utilz import groupby
+
+pipe(df, 
+    groupby('group'), 
+    summarize(score = 'mean', rt = 'std')
+    )</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>score</th>
+      <th>rt</th>
+    </tr>
+    <tr>
+      <th>group</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>0.504750</td>
+      <td>0.195151</td>
+    </tr>
+    <tr>
+      <th>b</th>
+      <td>0.629777</td>
+      <td>0.145344</td>
+    </tr>
+    <tr>
+      <th>c</th>
+      <td>0.374209</td>
+      <td>0.372188</td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td>0.474965</td>
+      <td>0.354329</td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td>0.498287</td>
+      <td>0.415910</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="transforming-data">Transforming data<a class="anchor-link" href="#transforming-data">&#182;</a></h3><p>To perfom an operation that results in a <em>non-scalar</em> output per column, or to ensure that an operation with <em>scalar</em> output retains the original shape of the input, use <code>assign</code>. It always returns back a DataFrame the <em>same</em> size as the original via broadcasting.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>With non-grouped inputs, the mean score is broadcasted across the <em>entire</em> DataFrame</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-13">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+     <span class="n">assign</span><span class="p">(</span><span class="n">mean_overall_score</span><span class="o">=</span><span class="s2">&quot;score.mean()&quot;</span><span class="p">)</span>
+     <span class="p">)</span>
+</pre></div>
+<div id="cell-13" class="clipboard-copy-txt">pipe(df, 
+     assign(mean_overall_score="score.mean()")
+     )
+</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>score</th>
+      <th>speed</th>
+      <th>group</th>
+      <th>rt_doubled</th>
+      <th>mean_overall_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.902407</td>
+      <td>0.177135</td>
+      <td>0.792267</td>
+      <td>a</td>
+      <td>1.804814</td>
+      <td>0.556813</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.805787</td>
+      <td>0.337138</td>
+      <td>0.312966</td>
+      <td>b</td>
+      <td>1.611573</td>
+      <td>0.556813</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.517491</td>
+      <td>0.033439</td>
+      <td>0.934013</td>
+      <td>c</td>
+      <td>1.034982</td>
+      <td>0.556813</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.261900</td>
+      <td>0.833535</td>
+      <td>0.723541</td>
+      <td>d</td>
+      <td>0.523799</td>
+      <td>0.556813</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.637885</td>
+      <td>0.611255</td>
+      <td>0.257965</td>
+      <td>e</td>
+      <td>1.275769</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.094301</td>
-      <td>0.374459</td>
-      <td>0.386620</td>
+      <td>0.700008</td>
+      <td>0.348929</td>
+      <td>0.930422</td>
       <td>a</td>
-      <td>0.188603</td>
-      <td>0.404123</td>
+      <td>1.400015</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.945022</td>
-      <td>0.622679</td>
-      <td>0.327057</td>
+      <td>0.858416</td>
+      <td>0.044372</td>
+      <td>0.346503</td>
       <td>b</td>
-      <td>1.890043</td>
-      <td>0.404123</td>
+      <td>1.716832</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.992307</td>
-      <td>0.605558</td>
-      <td>0.106485</td>
+      <td>0.701888</td>
+      <td>0.891862</td>
+      <td>0.240973</td>
       <td>c</td>
-      <td>1.984614</td>
-      <td>0.404123</td>
+      <td>1.403776</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.457019</td>
-      <td>0.192776</td>
-      <td>0.995795</td>
+      <td>0.854061</td>
+      <td>0.921804</td>
+      <td>0.227022</td>
       <td>d</td>
-      <td>0.914038</td>
-      <td>0.404123</td>
+      <td>1.708123</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.792489</td>
-      <td>0.249192</td>
-      <td>0.152526</td>
+      <td>0.456034</td>
+      <td>0.297202</td>
+      <td>0.190947</td>
       <td>e</td>
-      <td>1.584978</td>
-      <td>0.404123</td>
+      <td>0.912067</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.190983</td>
-      <td>0.167855</td>
-      <td>0.827340</td>
+      <td>0.275528</td>
+      <td>0.577524</td>
+      <td>0.836623</td>
       <td>a</td>
-      <td>0.381967</td>
-      <td>0.404123</td>
+      <td>0.551056</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.212407</td>
-      <td>0.375698</td>
-      <td>0.642573</td>
+      <td>0.859452</td>
+      <td>0.567103</td>
+      <td>0.645869</td>
       <td>b</td>
-      <td>0.424815</td>
-      <td>0.404123</td>
+      <td>1.718904</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>0.437660</td>
-      <td>0.819114</td>
-      <td>0.035261</td>
+      <td>0.061484</td>
+      <td>0.342981</td>
+      <td>0.809023</td>
       <td>c</td>
-      <td>0.875319</td>
-      <td>0.404123</td>
+      <td>0.122967</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>0.535583</td>
-      <td>0.314200</td>
-      <td>0.410386</td>
+      <td>0.479180</td>
+      <td>0.731893</td>
+      <td>0.100545</td>
       <td>d</td>
-      <td>1.071167</td>
-      <td>0.404123</td>
+      <td>0.958360</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>0.314583</td>
-      <td>0.588293</td>
-      <td>0.865930</td>
+      <td>0.990481</td>
+      <td>0.733539</td>
+      <td>0.592449</td>
       <td>e</td>
-      <td>0.629167</td>
-      <td>0.404123</td>
+      <td>1.980962</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>0.972126</td>
-      <td>0.052625</td>
-      <td>0.193718</td>
+      <td>0.014666</td>
+      <td>0.819909</td>
+      <td>0.125275</td>
       <td>a</td>
-      <td>1.944253</td>
-      <td>0.404123</td>
+      <td>0.029331</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>0.928069</td>
-      <td>0.102295</td>
-      <td>0.087360</td>
+      <td>0.967029</td>
+      <td>0.988454</td>
+      <td>0.052680</td>
       <td>b</td>
-      <td>1.856139</td>
-      <td>0.404123</td>
+      <td>1.934059</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>0.226964</td>
-      <td>0.001599</td>
-      <td>0.541594</td>
+      <td>0.867213</td>
+      <td>0.946988</td>
+      <td>0.523435</td>
       <td>c</td>
-      <td>0.453929</td>
-      <td>0.404123</td>
+      <td>1.734426</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>0.779363</td>
-      <td>0.015456</td>
-      <td>0.770510</td>
+      <td>0.211514</td>
+      <td>0.165623</td>
+      <td>0.402063</td>
       <td>d</td>
-      <td>1.558725</td>
-      <td>0.404123</td>
+      <td>0.423029</td>
+      <td>0.556813</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>0.654624</td>
-      <td>0.908534</td>
-      <td>0.044687</td>
+      <td>0.012827</td>
+      <td>0.765571</td>
+      <td>0.547612</td>
       <td>e</td>
-      <td>1.309247</td>
-      <td>0.404123</td>
+      <td>0.025654</td>
+      <td>0.556813</td>
     </tr>
   </tbody>
 </table>
@@ -2580,12 +3176,12 @@ pipe(df,
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-9">
+            <clipboard-copy for="cell-14">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2597,12 +3193,12 @@ pipe(df,
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
     <span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">),</span> 
-    <span class="n">assign</span><span class="p">(</span><span class="n">speed_per_group</span><span class="o">=</span><span class="s1">&#39;speed.mean()&#39;</span><span class="p">)</span>
+    <span class="n">assign</span><span class="p">(</span><span class="n">mean_grp_score</span> <span class="o">=</span> <span class="s1">&#39;score.mean()&#39;</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
-<div id="cell-9" class="clipboard-copy-txt">pipe(df, 
+<div id="cell-14" class="clipboard-copy-txt">pipe(df, 
     groupby('group'), 
-    assign(speed_per_group='speed.mean()')
+    assign(mean_grp_score = 'score.mean()')
     )</div>
     
         </div>
@@ -2621,7 +3217,7 @@ pipe(df,
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
 
 
 
@@ -2649,189 +3245,189 @@ pipe(df,
       <th>speed</th>
       <th>group</th>
       <th>rt_doubled</th>
-      <th>speed_per_group</th>
+      <th>mean_grp_score</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.033274</td>
-      <td>0.497035</td>
-      <td>0.963030</td>
+      <td>0.902407</td>
+      <td>0.177135</td>
+      <td>0.792267</td>
       <td>a</td>
-      <td>0.066549</td>
-      <td>0.592677</td>
+      <td>1.804814</td>
+      <td>0.480874</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.320243</td>
-      <td>0.449792</td>
-      <td>0.646103</td>
+      <td>0.805787</td>
+      <td>0.337138</td>
+      <td>0.312966</td>
       <td>b</td>
-      <td>0.640485</td>
-      <td>0.425773</td>
+      <td>1.611573</td>
+      <td>0.484267</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.640274</td>
-      <td>0.432569</td>
-      <td>0.871540</td>
+      <td>0.517491</td>
+      <td>0.033439</td>
+      <td>0.934013</td>
       <td>c</td>
-      <td>1.280547</td>
-      <td>0.388720</td>
+      <td>1.034982</td>
+      <td>0.553818</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.115659</td>
-      <td>0.852093</td>
-      <td>0.311823</td>
+      <td>0.261900</td>
+      <td>0.833535</td>
+      <td>0.723541</td>
       <td>d</td>
-      <td>0.231318</td>
-      <td>0.622129</td>
+      <td>0.523799</td>
+      <td>0.663214</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.200713</td>
-      <td>0.460636</td>
-      <td>0.047897</td>
+      <td>0.637885</td>
+      <td>0.611255</td>
+      <td>0.257965</td>
       <td>e</td>
-      <td>0.401426</td>
-      <td>0.277760</td>
+      <td>1.275769</td>
+      <td>0.601892</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.094301</td>
-      <td>0.374459</td>
-      <td>0.386620</td>
+      <td>0.700008</td>
+      <td>0.348929</td>
+      <td>0.930422</td>
       <td>a</td>
-      <td>0.188603</td>
-      <td>0.592677</td>
+      <td>1.400015</td>
+      <td>0.480874</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.945022</td>
-      <td>0.622679</td>
-      <td>0.327057</td>
+      <td>0.858416</td>
+      <td>0.044372</td>
+      <td>0.346503</td>
       <td>b</td>
-      <td>1.890043</td>
-      <td>0.425773</td>
+      <td>1.716832</td>
+      <td>0.484267</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.992307</td>
-      <td>0.605558</td>
-      <td>0.106485</td>
+      <td>0.701888</td>
+      <td>0.891862</td>
+      <td>0.240973</td>
       <td>c</td>
-      <td>1.984614</td>
-      <td>0.388720</td>
+      <td>1.403776</td>
+      <td>0.553818</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.457019</td>
-      <td>0.192776</td>
-      <td>0.995795</td>
+      <td>0.854061</td>
+      <td>0.921804</td>
+      <td>0.227022</td>
       <td>d</td>
-      <td>0.914038</td>
-      <td>0.622129</td>
+      <td>1.708123</td>
+      <td>0.663214</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.792489</td>
-      <td>0.249192</td>
-      <td>0.152526</td>
+      <td>0.456034</td>
+      <td>0.297202</td>
+      <td>0.190947</td>
       <td>e</td>
-      <td>1.584978</td>
-      <td>0.277760</td>
+      <td>0.912067</td>
+      <td>0.601892</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.190983</td>
-      <td>0.167855</td>
-      <td>0.827340</td>
+      <td>0.275528</td>
+      <td>0.577524</td>
+      <td>0.836623</td>
       <td>a</td>
-      <td>0.381967</td>
-      <td>0.592677</td>
+      <td>0.551056</td>
+      <td>0.480874</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.212407</td>
-      <td>0.375698</td>
-      <td>0.642573</td>
+      <td>0.859452</td>
+      <td>0.567103</td>
+      <td>0.645869</td>
       <td>b</td>
-      <td>0.424815</td>
-      <td>0.425773</td>
+      <td>1.718904</td>
+      <td>0.484267</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>0.437660</td>
-      <td>0.819114</td>
-      <td>0.035261</td>
+      <td>0.061484</td>
+      <td>0.342981</td>
+      <td>0.809023</td>
       <td>c</td>
-      <td>0.875319</td>
-      <td>0.388720</td>
+      <td>0.122967</td>
+      <td>0.553818</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>0.535583</td>
-      <td>0.314200</td>
-      <td>0.410386</td>
+      <td>0.479180</td>
+      <td>0.731893</td>
+      <td>0.100545</td>
       <td>d</td>
-      <td>1.071167</td>
-      <td>0.622129</td>
+      <td>0.958360</td>
+      <td>0.663214</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>0.314583</td>
-      <td>0.588293</td>
-      <td>0.865930</td>
+      <td>0.990481</td>
+      <td>0.733539</td>
+      <td>0.592449</td>
       <td>e</td>
-      <td>0.629167</td>
-      <td>0.277760</td>
+      <td>1.980962</td>
+      <td>0.601892</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>0.972126</td>
-      <td>0.052625</td>
-      <td>0.193718</td>
+      <td>0.014666</td>
+      <td>0.819909</td>
+      <td>0.125275</td>
       <td>a</td>
-      <td>1.944253</td>
-      <td>0.592677</td>
+      <td>0.029331</td>
+      <td>0.480874</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>0.928069</td>
-      <td>0.102295</td>
-      <td>0.087360</td>
+      <td>0.967029</td>
+      <td>0.988454</td>
+      <td>0.052680</td>
       <td>b</td>
-      <td>1.856139</td>
-      <td>0.425773</td>
+      <td>1.934059</td>
+      <td>0.484267</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>0.226964</td>
-      <td>0.001599</td>
-      <td>0.541594</td>
+      <td>0.867213</td>
+      <td>0.946988</td>
+      <td>0.523435</td>
       <td>c</td>
-      <td>0.453929</td>
-      <td>0.388720</td>
+      <td>1.734426</td>
+      <td>0.553818</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>0.779363</td>
-      <td>0.015456</td>
-      <td>0.770510</td>
+      <td>0.211514</td>
+      <td>0.165623</td>
+      <td>0.402063</td>
       <td>d</td>
-      <td>1.558725</td>
-      <td>0.622129</td>
+      <td>0.423029</td>
+      <td>0.663214</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>0.654624</td>
-      <td>0.908534</td>
-      <td>0.044687</td>
+      <td>0.012827</td>
+      <td>0.765571</td>
+      <td>0.547612</td>
       <td>e</td>
-      <td>1.309247</td>
-      <td>0.277760</td>
+      <td>0.025654</td>
+      <td>0.601892</td>
     </tr>
   </tbody>
 </table>
@@ -2863,12 +3459,12 @@ pipe(df,
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-10">
+            <clipboard-copy for="cell-15">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2882,16 +3478,18 @@ pipe(df,
     <span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">),</span> 
     <span class="n">assign</span><span class="p">(</span>
         <span class="n">score_centered</span><span class="o">=</span><span class="s1">&#39;score - score.mean()&#39;</span><span class="p">,</span> 
-        <span class="n">score_norm</span> <span class="o">=</span> <span class="s1">&#39;score/score.std()&#39;</span>
+        <span class="n">score_norm</span> <span class="o">=</span> <span class="s1">&#39;score/score.std()&#39;</span><span class="p">,</span>
+        <span class="n">score_zscore</span> <span class="o">=</span><span class="s1">&#39;(score - score.mean()) / score.std()&#39;</span>
         <span class="p">)</span>
         
     <span class="p">)</span>
 </pre></div>
-<div id="cell-10" class="clipboard-copy-txt">pipe(df, 
+<div id="cell-15" class="clipboard-copy-txt">pipe(df, 
     groupby('group'), 
     assign(
         score_centered='score - score.mean()', 
-        score_norm = 'score/score.std()'
+        score_norm = 'score/score.std()',
+        score_zscore ='(score - score.mean()) / score.std()'
         )
         
     )</div>
@@ -2912,7 +3510,7 @@ pipe(df,
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
 
 
 
@@ -2942,208 +3540,1192 @@ pipe(df,
       <th>rt_doubled</th>
       <th>score_centered</th>
       <th>score_norm</th>
+      <th>score_zscore</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.033274</td>
-      <td>0.497035</td>
-      <td>0.963030</td>
+      <td>0.902407</td>
+      <td>0.177135</td>
+      <td>0.792267</td>
       <td>a</td>
-      <td>0.066549</td>
-      <td>0.224041</td>
-      <td>2.484073</td>
+      <td>1.804814</td>
+      <td>-0.303739</td>
+      <td>0.634311</td>
+      <td>-1.087670</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.320243</td>
-      <td>0.449792</td>
-      <td>0.646103</td>
+      <td>0.805787</td>
+      <td>0.337138</td>
+      <td>0.312966</td>
       <td>b</td>
-      <td>0.640485</td>
-      <td>0.062176</td>
-      <td>2.077163</td>
+      <td>1.611573</td>
+      <td>-0.147128</td>
+      <td>0.846184</td>
+      <td>-0.369277</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.640274</td>
-      <td>0.432569</td>
-      <td>0.871540</td>
+      <td>0.517491</td>
+      <td>0.033439</td>
+      <td>0.934013</td>
       <td>c</td>
-      <td>1.280547</td>
-      <td>-0.032141</td>
-      <td>1.247083</td>
+      <td>1.034982</td>
+      <td>-0.520378</td>
+      <td>0.075783</td>
+      <td>-1.179330</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.115659</td>
-      <td>0.852093</td>
-      <td>0.311823</td>
+      <td>0.261900</td>
+      <td>0.833535</td>
+      <td>0.723541</td>
       <td>d</td>
-      <td>0.231318</td>
-      <td>0.508462</td>
-      <td>2.363717</td>
+      <td>0.523799</td>
+      <td>0.170321</td>
+      <td>2.446669</td>
+      <td>0.499943</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.200713</td>
-      <td>0.460636</td>
-      <td>0.047897</td>
+      <td>0.637885</td>
+      <td>0.611255</td>
+      <td>0.257965</td>
       <td>e</td>
-      <td>0.401426</td>
-      <td>-0.091028</td>
-      <td>1.669169</td>
+      <td>1.275769</td>
+      <td>0.009363</td>
+      <td>2.859903</td>
+      <td>0.043809</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.094301</td>
-      <td>0.374459</td>
-      <td>0.386620</td>
+      <td>0.700008</td>
+      <td>0.348929</td>
+      <td>0.930422</td>
       <td>a</td>
-      <td>0.188603</td>
-      <td>0.101466</td>
-      <td>1.871467</td>
+      <td>1.400015</td>
+      <td>-0.131945</td>
+      <td>1.249493</td>
+      <td>-0.472488</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.945022</td>
-      <td>0.622679</td>
-      <td>0.327057</td>
+      <td>0.858416</td>
+      <td>0.044372</td>
+      <td>0.346503</td>
       <td>b</td>
-      <td>1.890043</td>
-      <td>0.235063</td>
-      <td>2.875564</td>
+      <td>1.716832</td>
+      <td>-0.439895</td>
+      <td>0.111369</td>
+      <td>-1.104092</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.992307</td>
-      <td>0.605558</td>
-      <td>0.106485</td>
+      <td>0.701888</td>
+      <td>0.891862</td>
+      <td>0.240973</td>
       <td>c</td>
-      <td>1.984614</td>
-      <td>0.140848</td>
-      <td>1.745804</td>
+      <td>1.403776</td>
+      <td>0.338044</td>
+      <td>2.021220</td>
+      <td>0.766107</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.457019</td>
-      <td>0.192776</td>
-      <td>0.995795</td>
+      <td>0.854061</td>
+      <td>0.921804</td>
+      <td>0.227022</td>
       <td>d</td>
-      <td>0.914038</td>
-      <td>-0.150855</td>
-      <td>0.534764</td>
+      <td>1.708123</td>
+      <td>0.258590</td>
+      <td>2.705764</td>
+      <td>0.759038</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.792489</td>
-      <td>0.249192</td>
-      <td>0.152526</td>
+      <td>0.456034</td>
+      <td>0.297202</td>
+      <td>0.190947</td>
       <td>e</td>
-      <td>1.584978</td>
-      <td>-0.302472</td>
-      <td>0.902976</td>
+      <td>0.912067</td>
+      <td>-0.304689</td>
+      <td>1.390532</td>
+      <td>-1.425563</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.190983</td>
-      <td>0.167855</td>
-      <td>0.827340</td>
+      <td>0.275528</td>
+      <td>0.577524</td>
+      <td>0.836623</td>
       <td>a</td>
-      <td>0.381967</td>
-      <td>-0.105139</td>
-      <td>0.838901</td>
+      <td>0.551056</td>
+      <td>0.096649</td>
+      <td>2.068075</td>
+      <td>0.346095</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.212407</td>
-      <td>0.375698</td>
-      <td>0.642573</td>
+      <td>0.859452</td>
+      <td>0.567103</td>
+      <td>0.645869</td>
       <td>b</td>
-      <td>0.424815</td>
-      <td>-0.011918</td>
-      <td>1.734994</td>
+      <td>1.718904</td>
+      <td>0.082836</td>
+      <td>1.423371</td>
+      <td>0.207910</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>0.437660</td>
-      <td>0.819114</td>
-      <td>0.035261</td>
+      <td>0.061484</td>
+      <td>0.342981</td>
+      <td>0.809023</td>
       <td>c</td>
-      <td>0.875319</td>
-      <td>0.354404</td>
-      <td>2.361481</td>
+      <td>0.122967</td>
+      <td>-0.210836</td>
+      <td>0.777297</td>
+      <td>-0.477817</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>0.535583</td>
-      <td>0.314200</td>
-      <td>0.410386</td>
+      <td>0.479180</td>
+      <td>0.731893</td>
+      <td>0.100545</td>
       <td>d</td>
-      <td>1.071167</td>
-      <td>-0.029431</td>
-      <td>0.871594</td>
+      <td>0.958360</td>
+      <td>0.068679</td>
+      <td>2.148319</td>
+      <td>0.201594</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>0.314583</td>
-      <td>0.588293</td>
-      <td>0.865930</td>
+      <td>0.990481</td>
+      <td>0.733539</td>
+      <td>0.592449</td>
       <td>e</td>
-      <td>0.629167</td>
-      <td>0.036629</td>
-      <td>2.131750</td>
+      <td>1.980962</td>
+      <td>0.131647</td>
+      <td>3.432036</td>
+      <td>0.615941</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>0.972126</td>
-      <td>0.052625</td>
-      <td>0.193718</td>
+      <td>0.014666</td>
+      <td>0.819909</td>
+      <td>0.125275</td>
       <td>a</td>
-      <td>1.944253</td>
-      <td>-0.220369</td>
-      <td>0.263007</td>
+      <td>0.029331</td>
+      <td>0.339035</td>
+      <td>2.936043</td>
+      <td>1.214063</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>0.928069</td>
-      <td>0.102295</td>
-      <td>0.087360</td>
+      <td>0.967029</td>
+      <td>0.988454</td>
+      <td>0.052680</td>
       <td>b</td>
-      <td>1.856139</td>
-      <td>-0.285321</td>
-      <td>0.472403</td>
+      <td>1.934059</td>
+      <td>0.504187</td>
+      <td>2.480920</td>
+      <td>1.265459</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>0.226964</td>
-      <td>0.001599</td>
-      <td>0.541594</td>
+      <td>0.867213</td>
+      <td>0.946988</td>
+      <td>0.523435</td>
       <td>c</td>
-      <td>0.453929</td>
-      <td>-0.463111</td>
-      <td>0.004610</td>
+      <td>1.734426</td>
+      <td>0.393171</td>
+      <td>2.146153</td>
+      <td>0.891040</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>0.779363</td>
-      <td>0.015456</td>
-      <td>0.770510</td>
+      <td>0.211514</td>
+      <td>0.165623</td>
+      <td>0.402063</td>
       <td>d</td>
-      <td>1.558725</td>
-      <td>-0.328175</td>
-      <td>0.042874</td>
+      <td>0.423029</td>
+      <td>-0.497591</td>
+      <td>0.486151</td>
+      <td>-1.460575</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>0.654624</td>
-      <td>0.908534</td>
-      <td>0.044687</td>
+      <td>0.012827</td>
+      <td>0.765571</td>
+      <td>0.547612</td>
       <td>e</td>
-      <td>1.309247</td>
-      <td>0.356871</td>
-      <td>3.292182</td>
+      <td>0.025654</td>
+      <td>0.163679</td>
+      <td>3.581906</td>
+      <td>0.765812</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Assignments can be arbitrary complex as long as they can be expressed as a string. They can even make reference to other columns:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-16">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span>
+    <span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">),</span>
+     <span class="n">assign</span><span class="p">(</span>
+         <span class="n">price</span><span class="o">=</span><span class="s2">&quot;(rt &gt; .5) * speed&quot;</span>
+     <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+<div id="cell-16" class="clipboard-copy-txt">pipe(df,
+    groupby('group'),
+     assign(
+         price="(rt > .5) * speed"
+     )
+)</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>score</th>
+      <th>speed</th>
+      <th>group</th>
+      <th>rt_doubled</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.902407</td>
+      <td>0.177135</td>
+      <td>0.792267</td>
+      <td>a</td>
+      <td>1.804814</td>
+      <td>0.792267</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.805787</td>
+      <td>0.337138</td>
+      <td>0.312966</td>
+      <td>b</td>
+      <td>1.611573</td>
+      <td>0.312966</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.517491</td>
+      <td>0.033439</td>
+      <td>0.934013</td>
+      <td>c</td>
+      <td>1.034982</td>
+      <td>0.934013</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.261900</td>
+      <td>0.833535</td>
+      <td>0.723541</td>
+      <td>d</td>
+      <td>0.523799</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.637885</td>
+      <td>0.611255</td>
+      <td>0.257965</td>
+      <td>e</td>
+      <td>1.275769</td>
+      <td>0.257965</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.700008</td>
+      <td>0.348929</td>
+      <td>0.930422</td>
+      <td>a</td>
+      <td>1.400015</td>
+      <td>0.930422</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.858416</td>
+      <td>0.044372</td>
+      <td>0.346503</td>
+      <td>b</td>
+      <td>1.716832</td>
+      <td>0.346503</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.701888</td>
+      <td>0.891862</td>
+      <td>0.240973</td>
+      <td>c</td>
+      <td>1.403776</td>
+      <td>0.240973</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.854061</td>
+      <td>0.921804</td>
+      <td>0.227022</td>
+      <td>d</td>
+      <td>1.708123</td>
+      <td>0.227022</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.456034</td>
+      <td>0.297202</td>
+      <td>0.190947</td>
+      <td>e</td>
+      <td>0.912067</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.275528</td>
+      <td>0.577524</td>
+      <td>0.836623</td>
+      <td>a</td>
+      <td>0.551056</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.859452</td>
+      <td>0.567103</td>
+      <td>0.645869</td>
+      <td>b</td>
+      <td>1.718904</td>
+      <td>0.645869</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.061484</td>
+      <td>0.342981</td>
+      <td>0.809023</td>
+      <td>c</td>
+      <td>0.122967</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.479180</td>
+      <td>0.731893</td>
+      <td>0.100545</td>
+      <td>d</td>
+      <td>0.958360</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.990481</td>
+      <td>0.733539</td>
+      <td>0.592449</td>
+      <td>e</td>
+      <td>1.980962</td>
+      <td>0.592449</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.014666</td>
+      <td>0.819909</td>
+      <td>0.125275</td>
+      <td>a</td>
+      <td>0.029331</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.967029</td>
+      <td>0.988454</td>
+      <td>0.052680</td>
+      <td>b</td>
+      <td>1.934059</td>
+      <td>0.052680</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.867213</td>
+      <td>0.946988</td>
+      <td>0.523435</td>
+      <td>c</td>
+      <td>1.734426</td>
+      <td>0.523435</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.211514</td>
+      <td>0.165623</td>
+      <td>0.402063</td>
+      <td>d</td>
+      <td>0.423029</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.012827</td>
+      <td>0.765571</td>
+      <td>0.547612</td>
+      <td>e</td>
+      <td>0.025654</td>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>You can also combine them with some handy helpers from <code>plydata</code>, but you'll have to pass the <code>use_ply=True</code> if you're using <code>groupby</code>:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-17">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">plydata</span> <span class="kn">import</span> <span class="n">case_when</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span>
+    <span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">use_ply</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">assign</span><span class="p">(</span>
+        <span class="n">mean_grp_speed</span><span class="o">=</span><span class="s2">&quot;speed.mean()&quot;</span><span class="p">,</span>
+        <span class="n">speed_tier</span><span class="o">=</span><span class="n">case_when</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;speed &lt; speed.mean()&#39;</span><span class="p">:</span> <span class="s1">&#39;&quot;one&quot;&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;speed == speed.mean()&#39;</span><span class="p">:</span> <span class="s1">&#39;&quot;two&quot;&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;speed &gt; speed.mean()&#39;</span><span class="p">:</span> <span class="s1">&#39;&quot;three&quot;&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+<div id="cell-17" class="clipboard-copy-txt">from plydata import case_when
+
+df = pipe(
+    df,
+    groupby("group", use_ply=True),
+    assign(
+        mean_grp_speed="speed.mean()",
+        speed_tier=case_when(
+            {
+                'speed < speed.mean()': '"one"',
+                'speed == speed.mean()': '"two"',
+                'speed > speed.mean()': '"three"',
+            }
+        )
+    ),
+)
+df</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[19]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+
+        <table border="1" class="dataframe">
+            <tbody>
+                <tr>
+                    <th>groups</th>
+                    <td>group</td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>score</th>
+      <th>speed</th>
+      <th>group</th>
+      <th>rt_doubled</th>
+      <th>mean_grp_speed</th>
+      <th>speed_tier</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.835214</td>
+      <td>0.469788</td>
+      <td>0.818336</td>
+      <td>a</td>
+      <td>1.670428</td>
+      <td>0.689456</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.933498</td>
+      <td>0.803162</td>
+      <td>0.836482</td>
+      <td>b</td>
+      <td>1.866995</td>
+      <td>0.741970</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.870527</td>
+      <td>0.988006</td>
+      <td>0.045092</td>
+      <td>c</td>
+      <td>1.741054</td>
+      <td>0.342046</td>
+      <td>one</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.331299</td>
+      <td>0.188222</td>
+      <td>0.201379</td>
+      <td>d</td>
+      <td>0.662598</td>
+      <td>0.507731</td>
+      <td>one</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.060063</td>
+      <td>0.527094</td>
+      <td>0.873889</td>
+      <td>e</td>
+      <td>0.120126</td>
+      <td>0.613322</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.663402</td>
+      <td>0.772564</td>
+      <td>0.730931</td>
+      <td>a</td>
+      <td>1.326803</td>
+      <td>0.689456</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.881181</td>
+      <td>0.562835</td>
+      <td>0.373125</td>
+      <td>b</td>
+      <td>1.762361</td>
+      <td>0.741970</td>
+      <td>one</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.772267</td>
+      <td>0.104532</td>
+      <td>0.375590</td>
+      <td>c</td>
+      <td>1.544535</td>
+      <td>0.342046</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.145882</td>
+      <td>0.500106</td>
+      <td>0.343859</td>
+      <td>d</td>
+      <td>0.291764</td>
+      <td>0.507731</td>
+      <td>one</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.834803</td>
+      <td>0.905774</td>
+      <td>0.474066</td>
+      <td>e</td>
+      <td>1.669605</td>
+      <td>0.613322</td>
+      <td>one</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.697991</td>
+      <td>0.060713</td>
+      <td>0.765796</td>
+      <td>a</td>
+      <td>1.395981</td>
+      <td>0.689456</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.602443</td>
+      <td>0.370808</td>
+      <td>0.787415</td>
+      <td>b</td>
+      <td>1.204887</td>
+      <td>0.741970</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.663916</td>
+      <td>0.298299</td>
+      <td>0.302135</td>
+      <td>c</td>
+      <td>1.327832</td>
+      <td>0.342046</td>
+      <td>one</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.762938</td>
+      <td>0.904471</td>
+      <td>0.933878</td>
+      <td>d</td>
+      <td>1.525876</td>
+      <td>0.507731</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.203782</td>
+      <td>0.463020</td>
+      <td>0.827351</td>
+      <td>e</td>
+      <td>0.407565</td>
+      <td>0.613322</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.371209</td>
+      <td>0.715934</td>
+      <td>0.442762</td>
+      <td>a</td>
+      <td>0.742419</td>
+      <td>0.689456</td>
+      <td>one</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.799226</td>
+      <td>0.782305</td>
+      <td>0.970858</td>
+      <td>b</td>
+      <td>1.598452</td>
+      <td>0.741970</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.043911</td>
+      <td>0.105998</td>
+      <td>0.645368</td>
+      <td>c</td>
+      <td>0.087822</td>
+      <td>0.342046</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.898024</td>
+      <td>0.307063</td>
+      <td>0.551807</td>
+      <td>d</td>
+      <td>1.796048</td>
+      <td>0.507731</td>
+      <td>three</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.855099</td>
+      <td>0.097262</td>
+      <td>0.277984</td>
+      <td>e</td>
+      <td>1.710198</td>
+      <td>0.613322</td>
+      <td>one</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-18">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+     <span class="n">assign</span><span class="p">(</span>
+         <span class="n">relabel</span><span class="o">=</span><span class="n">case_when</span><span class="p">(</span>
+             <span class="p">{</span>
+                 <span class="s2">&quot;speed_tier == &#39;one&#39;&quot;</span><span class="p">:</span> <span class="s2">&quot;&#39;winner&#39;&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;speed_tier == &#39;two&#39;&quot;</span><span class="p">:</span> <span class="s2">&quot;&#39;loser&#39;&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;speed_tier == &#39;three&#39;&quot;</span><span class="p">:</span> <span class="s2">&quot;&#39;loser&#39;&quot;</span><span class="p">,</span>
+                 <span class="p">}</span>
+             <span class="p">)</span>
+         <span class="p">)</span>
+     <span class="p">)</span>
+</pre></div>
+<div id="cell-18" class="clipboard-copy-txt">pipe(df, 
+     assign(
+         relabel=case_when(
+             {
+                 "speed_tier == 'one'": "'winner'",
+                 "speed_tier == 'two'": "'loser'",
+                 "speed_tier == 'three'": "'loser'",
+                 }
+             )
+         )
+     )
+</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+
+        <table border="1" class="dataframe">
+            <tbody>
+                <tr>
+                    <th>groups</th>
+                    <td>group</td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>score</th>
+      <th>speed</th>
+      <th>group</th>
+      <th>rt_doubled</th>
+      <th>mean_grp_speed</th>
+      <th>speed_tier</th>
+      <th>relabel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.835214</td>
+      <td>0.469788</td>
+      <td>0.818336</td>
+      <td>a</td>
+      <td>1.670428</td>
+      <td>0.689456</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.933498</td>
+      <td>0.803162</td>
+      <td>0.836482</td>
+      <td>b</td>
+      <td>1.866995</td>
+      <td>0.741970</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.870527</td>
+      <td>0.988006</td>
+      <td>0.045092</td>
+      <td>c</td>
+      <td>1.741054</td>
+      <td>0.342046</td>
+      <td>one</td>
+      <td>winner</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.331299</td>
+      <td>0.188222</td>
+      <td>0.201379</td>
+      <td>d</td>
+      <td>0.662598</td>
+      <td>0.507731</td>
+      <td>one</td>
+      <td>winner</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.060063</td>
+      <td>0.527094</td>
+      <td>0.873889</td>
+      <td>e</td>
+      <td>0.120126</td>
+      <td>0.613322</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.663402</td>
+      <td>0.772564</td>
+      <td>0.730931</td>
+      <td>a</td>
+      <td>1.326803</td>
+      <td>0.689456</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.881181</td>
+      <td>0.562835</td>
+      <td>0.373125</td>
+      <td>b</td>
+      <td>1.762361</td>
+      <td>0.741970</td>
+      <td>one</td>
+      <td>winner</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.772267</td>
+      <td>0.104532</td>
+      <td>0.375590</td>
+      <td>c</td>
+      <td>1.544535</td>
+      <td>0.342046</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.145882</td>
+      <td>0.500106</td>
+      <td>0.343859</td>
+      <td>d</td>
+      <td>0.291764</td>
+      <td>0.507731</td>
+      <td>one</td>
+      <td>winner</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.834803</td>
+      <td>0.905774</td>
+      <td>0.474066</td>
+      <td>e</td>
+      <td>1.669605</td>
+      <td>0.613322</td>
+      <td>one</td>
+      <td>winner</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.697991</td>
+      <td>0.060713</td>
+      <td>0.765796</td>
+      <td>a</td>
+      <td>1.395981</td>
+      <td>0.689456</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.602443</td>
+      <td>0.370808</td>
+      <td>0.787415</td>
+      <td>b</td>
+      <td>1.204887</td>
+      <td>0.741970</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.663916</td>
+      <td>0.298299</td>
+      <td>0.302135</td>
+      <td>c</td>
+      <td>1.327832</td>
+      <td>0.342046</td>
+      <td>one</td>
+      <td>winner</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.762938</td>
+      <td>0.904471</td>
+      <td>0.933878</td>
+      <td>d</td>
+      <td>1.525876</td>
+      <td>0.507731</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.203782</td>
+      <td>0.463020</td>
+      <td>0.827351</td>
+      <td>e</td>
+      <td>0.407565</td>
+      <td>0.613322</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.371209</td>
+      <td>0.715934</td>
+      <td>0.442762</td>
+      <td>a</td>
+      <td>0.742419</td>
+      <td>0.689456</td>
+      <td>one</td>
+      <td>winner</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.799226</td>
+      <td>0.782305</td>
+      <td>0.970858</td>
+      <td>b</td>
+      <td>1.598452</td>
+      <td>0.741970</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.043911</td>
+      <td>0.105998</td>
+      <td>0.645368</td>
+      <td>c</td>
+      <td>0.087822</td>
+      <td>0.342046</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.898024</td>
+      <td>0.307063</td>
+      <td>0.551807</td>
+      <td>d</td>
+      <td>1.796048</td>
+      <td>0.507731</td>
+      <td>three</td>
+      <td>loser</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.855099</td>
+      <td>0.097262</td>
+      <td>0.277984</td>
+      <td>e</td>
+      <td>1.710198</td>
+      <td>0.613322</td>
+      <td>one</td>
+      <td>winner</td>
     </tr>
   </tbody>
 </table>
@@ -3203,7 +4785,7 @@ pipe(df,
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-11">
+            <clipboard-copy for="cell-19">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -3223,7 +4805,7 @@ pipe(df,
     <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </pre></div>
-<div id="cell-11" class="clipboard-copy-txt">from toolz import memoize
+<div id="cell-19" class="clipboard-copy-txt">from toolz import memoize
 from time import sleep
 
 @memoize
@@ -3263,7 +4845,7 @@ def load(path):
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-12">
+            <clipboard-copy for="cell-20">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -3290,7 +4872,7 @@ def load(path):
 <span class="k">def</span> <span class="nf">calc_mean</span><span class="p">(</span><span class="n">norm_value</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
-<div id="cell-12" class="clipboard-copy-txt">from toolz import curry
+<div id="cell-20" class="clipboard-copy-txt">from toolz import curry
 
 @curry
 def calc_mean(df, normalize=False):
@@ -3338,7 +4920,7 @@ def calc_mean(norm_value, df):
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-13">
+            <clipboard-copy for="cell-21">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -3361,7 +4943,7 @@ def calc_mean(norm_value, df):
     <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;norm&quot;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="n">denom</span><span class="p">]})</span>
 </pre></div>
-<div id="cell-13" class="clipboard-copy-txt">from utilz import disk_cache
+<div id="cell-21" class="clipboard-copy-txt">from utilz import disk_cache
 
 # We're also using the curry decorator so norm works in the pipeline below
 # It's not needed to use the disk_cache decorator
@@ -3415,7 +4997,7 @@ def norm(df, num='', denom=''):
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-14">
+            <clipboard-copy for="cell-22">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -3430,7 +5012,7 @@ def norm(df, num='', denom=''):
 <span class="c1"># Clear any existing cache</span>
 <span class="n">clear_cache</span><span class="p">()</span>
 </pre></div>
-<div id="cell-14" class="clipboard-copy-txt">from utilz import clear_cache
+<div id="cell-22" class="clipboard-copy-txt">from utilz import clear_cache
 
 # Clear any existing cache
 clear_cache()</div>
@@ -3465,7 +5047,7 @@ clear_cache()</div>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-15">
+            <clipboard-copy for="cell-23">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -3487,7 +5069,7 @@ clear_cache()</div>
 <span class="p">)</span>
 <span class="n">summary</span>
 </pre></div>
-<div id="cell-15" class="clipboard-copy-txt">summary = pipe(
+<div id="cell-23" class="clipboard-copy-txt">summary = pipe(
     "test.csv",
     load,
     groupby("group"),
@@ -3671,7 +5253,7 @@ Exceeded compute time. Result cached to .utilz_cache/norm___denom__score--df__9c
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-16">
+            <clipboard-copy for="cell-24">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -3693,7 +5275,7 @@ Exceeded compute time. Result cached to .utilz_cache/norm___denom__score--df__9c
 <span class="p">)</span>
 <span class="n">summary</span>
 </pre></div>
-<div id="cell-16" class="clipboard-copy-txt">summary = pipe(
+<div id="cell-24" class="clipboard-copy-txt">summary = pipe(
     "test.csv",
     load,
     groupby("group"),
