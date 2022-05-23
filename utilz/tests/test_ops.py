@@ -1,4 +1,4 @@
-from utilz.ops import check_random_state, mapcat, pmap
+from utilz.ops import check_random_state, mapcat
 from utilz.boilerplate import randdf
 import numpy as np
 import pandas as pd
@@ -70,7 +70,7 @@ def test_mapcat():
     assert out.shape == (10, 9)
 
 
-def test_pmap():
+def test_parallel_mapcat():
     def f(x):
         sleep(0.5)
         return x**2
@@ -82,28 +82,28 @@ def test_pmap():
 
     # Running sequentially takes 5s
     start = time()
-    out = pmap(f, range(10), n_jobs=1)
+    out = mapcat(f, range(10), n_jobs=1)
     duration = time() - start
     assert len(out) == 10
 
     # Running 2 jobs takes less time
     start = time()
-    out = pmap(f, range(10), n_jobs=2)
+    out = mapcat(f, range(10), n_jobs=2)
     par_duration = time() - start
     assert par_duration < duration
     assert len(out) == 10
 
     # By default if a function to be parallelized handles it's own randomization
     # interally, there should be no issue with repeated values when run in parallel
-    out = pmap(f_random, [1, 1, 1, 1, 1], n_jobs=2)
+    out = mapcat(f_random, [1, 1, 1, 1, 1], n_jobs=2)
     assert len(out) == len(set(out))
 
     # But for reproducibility we can set random_state to a number which will be passed
     # to the func's random_state argument
-    out = pmap(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
-    out2 = pmap(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
+    out = mapcat(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
+    out2 = mapcat(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
     assert np.allclose(out, out2)
 
     # But not if it doesn't accept that kwarg
     with pytest.raises(ValueError):
-        out = pmap(f, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
+        out = mapcat(f, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)

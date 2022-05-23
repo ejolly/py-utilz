@@ -3,7 +3,7 @@ Internal package utilities
 """
 
 from joblib import Parallel
-from tqdm.auto import tqdm
+from tqdm import tqdm
 
 
 class ProgressParallel(Parallel):
