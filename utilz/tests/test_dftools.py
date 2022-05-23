@@ -1,5 +1,6 @@
-from utilz.dftools import same_shape, norm_by_group
+from utilz.dftools import norm_by_group, assert_balanced_groups
 import pandas as pd
+import pytest
 
 
 df = pd.read_csv(
@@ -28,11 +29,11 @@ def test_norm_by_group():
     assert len(out) == df.shape[0]
 
 
-def test_same_shape():
-    @same_shape("species")
-    def groupem(df):
-        return df.groupby("species").sepal_length.mean()
+def test_assert_balanced_groups():
 
-    grouped = groupem(df)
-    print(grouped.shape)
-    print(grouped)
+    assert df.assert_balanced_groups("species")
+
+    assert df.assert_balanced_groups("species", 50)
+
+    with pytest.raises(AssertionError):
+        df.iloc[:-1, :].assert_balanced_groups("species")

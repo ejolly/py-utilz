@@ -5,7 +5,6 @@ Functional tools
 """
 __all__ = ["check_random_state", "pmap", "mapcat"]
 
-# from cytoolz import curry
 from joblib import Parallel, delayed
 import numpy as np
 import pandas as pd

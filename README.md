@@ -30,4 +30,10 @@ def myfunc(args):
     return out
 ```
 
-Checkout the [overview](intro.ipynb) page for more!
+
+## Development
+
+1. `pip install -r requirements-dev.txt`
+2. `pip install -r requirements-optional.txt`
+
+Run all tests: `pytest` 

@@ -3,5 +3,5 @@ from .ops import pmap, check_random_state, mapcat
 from .io import load
 from .boilerplate import mpinit, randdf
 from .verbs import groupby, rows, cols, rename, summarize, assign, apply
-from .dftools import norm_by_group, same_shape
+from .dftools import norm_by_group, assert_balanced_groups
 from .version import __version__

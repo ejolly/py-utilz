@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from utilz.decorators import timeit, maybe, log, expensive
+from utilz.decorators import timeit, maybe, log, expensive, show
 from time import sleep, time
 from pathlib import Path
 from shutil import rmtree
@@ -12,9 +12,14 @@ df = pd.read_csv(
 )
 
 
-# TODO
 def test_show(capsys):
-    pass
+    @show
+    def f(x):
+        return x
+
+    _ = f(10)
+    captured = capsys.readouterr()
+    assert "10" in captured.out
 
 
 def test_log(capsys):

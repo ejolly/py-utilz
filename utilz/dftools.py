@@ -3,8 +3,9 @@ Common data operations and transformations often on pandas dataframes
 
 ---
 """
-__all__ = ["norm_by_group"]
+__all__ = ["norm_by_group", "assert_balanced_groups"]
 
+import numpy as np
 from functools import wraps
 from typing import Union
 from pandas.api.extensions import register_dataframe_accessor
@@ -70,33 +71,23 @@ def norm_by_group(df, grpcol, valcol, center=True, scale=True, addcol=True):
         return out
 
 
-# TODO: Test me
-def same_shape(group_cols: Union[str, list], shape=None):
+@_register_dataframe_method
+def assert_balanced_groups(df, grpcols: Union[str, list], size=None):
     """
-    Check if each group of `group_col` has the same dimensions after running a function on a dataframe
+    Check if each group of `group_col` has the same dimensions
 
     Args:
+        df (pd.DataFrame): input dataframe
         group_cols (str/list): column names to group on in dataframe
+        shape (tuple/None, optional): optional group sizes to ensure
     """
 
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            df = func(*args, **kwargs)
-            grouped = df.groupby(group_cols).size()
-            if shape is None:
-                if not grouped.sum() % grouped.shape[0] == 0:
-                    raise AssertionError("Groups dont have the same shape", grouped)
-            else:
-                if not all(grouped == shape):
-                    raise AssertionError(
-                        f"All groups dont match shape {shape}", grouped
-                    )
-            return df
-
-        return wrapper
-
-    return decorator
+    grouped = df.groupby(grpcols).size()
+    size = grouped[0] if size is None else size
+    if not np.all(grouped == size):
+        raise AssertionError(f"Group sizes don't match!\n{grouped}")
+    else:
+        return True
 
 
 # TODO: write me
