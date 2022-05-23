@@ -343,13 +343,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#utilz.ops.pmap" class="md-nav__link">
-    pmap()
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -577,13 +570,6 @@
           <li class="md-nav__item">
   <a href="#utilz.ops.mapcat" class="md-nav__link">
     mapcat()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#utilz.ops.pmap" class="md-nav__link">
-    pmap()
   </a>
   
 </li>
@@ -1069,6 +1055,7 @@ string) and you'll back a python object based on the file-extension:</p>
 
 
 
+
   <div class="doc doc-object doc-function">
 
 
@@ -1110,9 +1097,7 @@ string) and you'll back a python object based on the file-extension:</p>
 
         <details class="quote">
           <summary>Source code in <code>utilz/ops.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">21</span>
 <span class="normal">22</span>
 <span class="normal">23</span>
 <span class="normal">24</span>
@@ -1127,7 +1112,9 @@ string) and you'll back a python object based on the file-extension:</p>
 <span class="normal">33</span>
 <span class="normal">34</span>
 <span class="normal">35</span>
-<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.</span>
 
 <span class="sd">    Args:</span>
@@ -1158,7 +1145,7 @@ string) and you'll back a python object based on the file-extension:</p>
 
 
 <h4 id="utilz.ops.mapcat" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enum</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
 
 
 </h4>
@@ -1166,13 +1153,14 @@ string) and you'll back a python object based on the file-extension:</p>
 
     <div class="doc doc-contents ">
 
-      <p><strong>map</strong>s <code>func</code> to <code>iterme</code> and con<strong>cat</strong>enates the result into a single, list, DataFrame or array. <code>iterme</code> can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</p>
-<p>A a few interesting use cases include:</p>
-<ul>
-<li>Passing None for the value of func acts as a shortcut to flatten nested lists.</li>
-<li>Using in place of <code>map</code> acts like a call to <code>list(map(...))</code></li>
-<li>Passing in <code>pd.read_csv</code> to list of files to get back a single dataframe</li>
-</ul>
+      <p>Super-power your <code>for</code> loops with a progress-bar and optional <em>reproducible</em>
+parallelization!</p>
+<p><strong>map</strong>s <code>func</code> to <code>iterme</code> and con<strong>cat</strong>enates the result into a single, list,
+DataFrame or array. Includes a progress-bar powered by <code>tqdm</code>.</p>
+<p>Supports parallelization with <code>jobllib.Parallel</code> multi-processing by setting <code>n_jobs &gt; 1</code>. Progress-bar <em>accurately</em> tracks parallel jobs!</p>
+<p><code>iterme</code> can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single
+list.</p>
+<p>See the examples below for interesting use cases beyond standard looping!</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1190,7 +1178,7 @@ string) and you'll back a python object based on the file-extension:</p>
           <td>
                 <code>callable</code>
           </td>
-          <td><p>function to apply. If None, will attempt to flatten a nested list</p></td>
+          <td><p>function to map</p></td>
           <td>
               <em>required</em>
           </td>
@@ -1200,7 +1188,7 @@ string) and you'll back a python object based on the file-extension:</p>
           <td>
                 <code>iterable</code>
           </td>
-          <td><p>an iterable for which func will be called on each element</p></td>
+          <td><p>an iterable for which each element will be passed to func</p></td>
           <td>
               <em>required</em>
           </td>
@@ -1210,9 +1198,49 @@ string) and you'll back a python object based on the file-extension:</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>if func returns an interable, will try to flatten iterables into</p></td>
+          <td><p>if <code>func</code> returns an interable, will try to flatten iterables</p></td>
           <td>
                 <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>enum</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>whether the value of the current iteration should be passed to <code>func</code> as the special kwarg <code>idx</code>. Make sure <code>func</code> can handle a kwarg named <code>idx</code>. Default False</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>random_state</code></td>
+          <td>
+                <code>bool/int</code>
+          </td>
+          <td><p>whether a randomly initialized seed should be</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_jobs</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>number of cpus/threads; Default 1 (no parallel)</p></td>
+          <td>
+                <code>1</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>backend</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Only applies if <code>n_jobs &gt; 1</code>. See <code>joblib.Parallel</code> for</p></td>
+          <td>
+                <code>None</code>
           </td>
         </tr>
         <tr>
@@ -1235,166 +1263,12 @@ string) and you'll back a python object based on the file-extension:</p>
                 <code>True</code>
           </td>
         </tr>
-    </tbody>
-  </table>
-
-        <details class="quote">
-          <summary>Source code in <code>utilz/ops.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span>
-<span class="normal">141</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    **map**s `func` to `iterme` and con**cat**enates the result into a single, list, DataFrame or array. `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single list.</span>
-
-<span class="sd">    A a few interesting use cases include:</span>
-
-<span class="sd">    - Passing None for the value of func acts as a shortcut to flatten nested lists.</span>
-<span class="sd">    - Using in place of `map` acts like a call to `list(map(...))`</span>
-<span class="sd">    - Passing in `pd.read_csv` to list of files to get back a single dataframe</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        func (callable): function to apply. If None, will attempt to flatten a nested list</span>
-<span class="sd">        iterme (iterable): an iterable for which func will be called on each element</span>
-<span class="sd">        concat (bool): if func returns an interable, will try to flatten iterables into</span>
-<span class="sd">        a single list, array, or dataframe based on axis; Default True</span>
-<span class="sd">        axis (int; optional): what axis to concatenate over; Default 0 (first)</span>
-<span class="sd">        ignore_index (bool; optional): ignore the index when combining DataFrames; Default True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">op</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># No-op if no function</span>
-        <span class="n">op</span> <span class="o">=</span> <span class="n">iterme</span>
-
-    <span class="k">if</span> <span class="n">concat</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">_concat</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">op</span>
-</code></pre></div></td></tr></table></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
-<h4 id="utilz.ops.pmap" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">pmap</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">enum</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
-
-
-</h4>
-
-
-    <div class="doc doc-contents ">
-
-      <p>Map a <code>func</code> to <code>iterme</code> using parallelization via joblib. Note the only difference between <code>pmap</code> and <code>prep</code> is that that <code>pmap</code> explicitly operates on an iterable, such that the input to <code>func</code> changes each time (each element of <code>iterme</code>); where as <code>prep</code> just repeatedely executes <code>func</code> for <code>n_iter</code> operations with optional args/kwargs that are the same for each run of <code>func</code>.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>func</code></td>
-          <td>
-                <code>callable</code>
-          </td>
-          <td><p>function to run</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>iterme</code></td>
-          <td>
-                <code>iterable</code>
-          </td>
-          <td><p>an iterable for which each element will be passed to func</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>n_jobs</code></td>
-          <td>
-                <code>int</code>
-          </td>
-          <td><p>number of cpus/threads; Default -1 (all cpus/threads)</p></td>
-          <td>
-                <code>2</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>enum</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>whether the value of the current iteration should be passed to func as the special kwarg 'idx'. Make sure func can handle a kwarg named 'idx'. Default False</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>random_state</code></td>
-          <td>
-                <code>bool/int</code>
-          </td>
-          <td><p>whether a randomly initialized seed should be</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>backend</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>see <code>joblib.Parallel</code> for options; Default None which</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
         <tr>
           <td><code>verbose</code></td>
           <td>
                 <code>int</code>
           </td>
-          <td><p>joblib.Parallel verbosity. Default 0</p></td>
+          <td><p><code>joblib.Parallel</code> verbosity. Default 0</p></td>
           <td>
                 <code>0</code>
           </td>
@@ -1402,45 +1276,33 @@ string) and you'll back a python object based on the file-extension:</p>
     </tbody>
   </table>
 
+<p><strong>Examples:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Just like map</span>
+<span class="gp">&gt;&gt;&gt; </span> <span class="n">out</span> <span class="o">=</span> <span class="n">mapcat</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</code></pre></div>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Concatenating nested lists</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">mapcat</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load multiple files into a single dataframe</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">mapcat</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;file1.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;file2.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;file3.txt&quot;</span><span class="p">])</span>
+</code></pre></div>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Parallelization with randomness</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f_random</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">random_state</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="c1"># Use the random state&#39;s number generator rather than np.random</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">random_state</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Now set a random_state in mapcat to reproduce the parallel runs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># It doesn&#39;t pass the value, but rather generates a reproducible list</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># of seeds that are passed to each function execution</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">mapcat</span><span class="p">(</span><span class="n">f_random</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
         <details class="quote">
           <summary>Source code in <code>utilz/ops.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 39</span>
-<span class="normal"> 40</span>
-<span class="normal"> 41</span>
-<span class="normal"> 42</span>
-<span class="normal"> 43</span>
-<span class="normal"> 44</span>
-<span class="normal"> 45</span>
-<span class="normal"> 46</span>
-<span class="normal"> 47</span>
-<span class="normal"> 48</span>
-<span class="normal"> 49</span>
-<span class="normal"> 50</span>
-<span class="normal"> 51</span>
-<span class="normal"> 52</span>
-<span class="normal"> 53</span>
-<span class="normal"> 54</span>
-<span class="normal"> 55</span>
-<span class="normal"> 56</span>
-<span class="normal"> 57</span>
-<span class="normal"> 58</span>
-<span class="normal"> 59</span>
-<span class="normal"> 60</span>
-<span class="normal"> 61</span>
-<span class="normal"> 62</span>
-<span class="normal"> 63</span>
-<span class="normal"> 64</span>
-<span class="normal"> 65</span>
-<span class="normal"> 66</span>
-<span class="normal"> 67</span>
-<span class="normal"> 68</span>
-<span class="normal"> 69</span>
-<span class="normal"> 70</span>
-<span class="normal"> 71</span>
-<span class="normal"> 72</span>
-<span class="normal"> 73</span>
-<span class="normal"> 74</span>
-<span class="normal"> 75</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 75</span>
 <span class="normal"> 76</span>
 <span class="normal"> 77</span>
 <span class="normal"> 78</span>
@@ -1476,79 +1338,219 @@ string) and you'll back a python object based on the file-extension:</p>
 <span class="normal">108</span>
 <span class="normal">109</span>
 <span class="normal">110</span>
-<span class="normal">111</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pmap</span><span class="p">(</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span>
     <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
     <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
-    <span class="n">enum</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">concat</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">enum</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">axis</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">ignore_index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">random_state</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="n">backend</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Map a `func` to `iterme` using parallelization via joblib. Note the only difference between `pmap` and `prep` is that that `pmap` explicitly operates on an iterable, such that the input to `func` changes each time (each element of `iterme`); where as `prep` just repeatedely executes `func` for `n_iter` operations with optional args/kwargs that are the same for each run of `func`.</span>
+<span class="sd">    Super-power your `for` loops with a progress-bar and optional *reproducible*</span>
+<span class="sd">    parallelization!</span>
+
+<span class="sd">    **map**s `func` to `iterme` and con**cat**enates the result into a single, list,</span>
+<span class="sd">    DataFrame or array. Includes a progress-bar powered by `tqdm`.</span>
+
+<span class="sd">    Supports parallelization with `jobllib.Parallel` multi-processing by setting `n_jobs &gt; 1`. Progress-bar *accurately* tracks parallel jobs!</span>
+
+<span class="sd">    `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single</span>
+<span class="sd">    list.</span>
+
+<span class="sd">    See the examples below for interesting use cases beyond standard looping!</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        func (callable): function to run</span>
+<span class="sd">        func (callable): function to map</span>
 <span class="sd">        iterme (iterable): an iterable for which each element will be passed to func</span>
-<span class="sd">        n_jobs (int, optional): number of cpus/threads; Default -1 (all cpus/threads)</span>
-<span class="sd">        enum (bool, optional): whether the value of the current iteration should be passed to func as the special kwarg &#39;idx&#39;. Make sure func can handle a kwarg named &#39;idx&#39;. Default False</span>
+<span class="sd">        concat (bool): if `func` returns an interable, will try to flatten iterables</span>
+<span class="sd">        into a single list, array, or dataframe based on `axis`; Default True</span>
+<span class="sd">        enum (bool, optional): whether the value of the current iteration should be passed to `func` as the special kwarg `idx`. Make sure `func` can handle a kwarg named `idx`. Default False</span>
 <span class="sd">        random_state (bool/int, optional): whether a randomly initialized seed should be</span>
-<span class="sd">        passed to func as the special kwarg &#39;random_state&#39;. The function should pass</span>
-<span class="sd">        thiseed to the `utilz.check_random_state` helper to generate a random number</span>
-<span class="sd">        generator for all computations rather than relying on np.random</span>
-<span class="sd">        backend (str, optional): see `joblib.Parallel` for options; Default None which</span>
-<span class="sd">        uses &#39;loky&#39;</span>
-<span class="sd">        verbose (int): joblib.Parallel verbosity. Default 0</span>
+<span class="sd">        passed to `func` as the special kwarg `random_state`. The function should pass</span>
+<span class="sd">        this seed to the `utilz.check_random_state` helper to generate a random number</span>
+<span class="sd">        generator for all computations rather than relying on `np.random`</span>
+<span class="sd">        n_jobs (int, optional): number of cpus/threads; Default 1 (no parallel)</span>
+<span class="sd">        backend (str, optional): Only applies if `n_jobs &gt; 1`. See `joblib.Parallel` for</span>
+<span class="sd">        options; Default None which uses `loky`</span>
+<span class="sd">        axis (int; optional): what axis to concatenate over; Default 0 (first)</span>
+<span class="sd">        ignore_index (bool; optional): ignore the index when combining DataFrames; Default True</span>
+<span class="sd">        verbose (int): `joblib.Parallel` verbosity. Default 0</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; # Just like map</span>
+<span class="sd">        &gt;&gt;&gt;  out = mapcat(lambda x: x * 2, [1, 2, 3, 4])</span>
+
+<span class="sd">        &gt;&gt;&gt; # Concatenating nested lists</span>
+<span class="sd">        &gt;&gt;&gt; data = [[1, 2], [3, 4]]</span>
+<span class="sd">        &gt;&gt;&gt; out = mapcat(None, data)</span>
+
+<span class="sd">        &gt;&gt;&gt; # Load multiple files into a single dataframe</span>
+<span class="sd">        &gt;&gt;&gt; out = mapcat(pd.read_csv, [&quot;file1.txt&quot;, &quot;file2.txt&quot;, &quot;file3.txt&quot;])</span>
+
+<span class="sd">        &gt;&gt;&gt; # Parallelization with randomness</span>
+<span class="sd">        &gt;&gt;&gt; def f_random(x, random_state=None):</span>
+<span class="sd">        &gt;&gt;&gt;     random_state = check_random_state(random_state)</span>
+<span class="sd">        &gt;&gt;&gt;     sleep(0.5)</span>
+<span class="sd">        &gt;&gt;&gt;     # Use the random state&#39;s number generator rather than np.random</span>
+<span class="sd">        &gt;&gt;&gt;     return x + random_state.rand()</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Now set a random_state in mapcat to reproduce the parallel runs</span>
+<span class="sd">        &gt;&gt;&gt; # It doesn&#39;t pass the value, but rather generates a reproducible list</span>
+<span class="sd">        &gt;&gt;&gt; # of seeds that are passed to each function execution</span>
+<span class="sd">        &gt;&gt;&gt; out = mapcat(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">n_jobs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">)</span>
-    <span class="c1"># Initialize joblib parallelizer</span>
-    <span class="n">parfor</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">prefer</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># No-op if no function</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="n">iterme</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">func_args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
-    <span class="n">func_args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="k">if</span> <span class="n">random_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">&quot;random_state&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">enum</span> <span class="ow">and</span> <span class="s2">&quot;idx&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Function must have a keyword argument called &#39;random_state&#39; if random_state is not False&quot;</span>
+                <span class="s2">&quot;Function must accept a keyword argument named &#39;idx&#39; that accepts an integer if enum is True&quot;</span>
             <span class="p">)</span>
 
-        <span class="n">random_state</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">random_state</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="n">random_state</span>
+        <span class="k">if</span> <span class="n">random_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;random_state&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Function must have a keyword argument called &#39;random_state&#39; if random_state is not False&quot;</span>
+                <span class="p">)</span>
 
-        <span class="c1"># Generate a list of random ints, that themselves are seeded by random_state and</span>
-        <span class="c1"># will be passed to func</span>
-        <span class="n">seeds</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">MAX_INT</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">iterme</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">seeds</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">random_state</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">random_state</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="n">random_state</span>
 
-    <span class="k">if</span> <span class="n">enum</span> <span class="ow">and</span> <span class="s2">&quot;idx&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;Function must accept a keyword argument named &#39;idx&#39; that accepts an integer if enum is True&quot;</span>
-        <span class="p">)</span>
+            <span class="c1"># Generate a list of random ints, that themselves are seeded by random_state</span>
+            <span class="c1"># and passed to func</span>
+            <span class="n">seeds</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">MAX_INT</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">iterme</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">seeds</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">if</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enum</span><span class="p">:</span>
-        <span class="n">call_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">elem</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">iterme</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">enum</span><span class="p">:</span>
-        <span class="n">call_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">elem</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterme</span><span class="p">)]</span>
-    <span class="k">elif</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enum</span><span class="p">:</span>
-        <span class="n">call_list</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">elem</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span><span class="p">,</span> <span class="n">seed</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">iterme</span><span class="p">,</span> <span class="n">seeds</span><span class="p">)</span>
-        <span class="p">]</span>
-    <span class="k">elif</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">enum</span><span class="p">:</span>
-        <span class="n">call_list</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">elem</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">iterme</span><span class="p">,</span> <span class="n">seeds</span><span class="p">))</span>
-        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">n_jobs</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">n_jobs</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Parallel loop</span>
+            <span class="n">op</span> <span class="o">=</span> <span class="n">_pmap</span><span class="p">(</span>
+                <span class="n">func</span><span class="p">,</span>
+                <span class="n">iterme</span><span class="p">,</span>
+                <span class="n">enum</span><span class="p">,</span>
+                <span class="n">seeds</span><span class="p">,</span>
+                <span class="n">n_jobs</span><span class="p">,</span>
+                <span class="n">backend</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Normal loop because its faster than joblib.Parallel with n_jobs == 1 (no</span>
+            <span class="c1"># overhead cost)</span>
+            <span class="k">if</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enum</span><span class="p">:</span>
+                <span class="n">op</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">iterme</span><span class="p">)]</span>
+            <span class="k">elif</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">enum</span><span class="p">:</span>
+                <span class="n">op</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">iterme</span><span class="p">))]</span>
+            <span class="k">elif</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">enum</span><span class="p">:</span>
+                <span class="n">op</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">func</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">elem</span><span class="p">,</span> <span class="n">seed</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">iterme</span><span class="p">),</span> <span class="n">seeds</span><span class="p">)</span>
+                <span class="p">]</span>
+            <span class="k">elif</span> <span class="n">seeds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">enum</span><span class="p">:</span>
+                <span class="n">op</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">func</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">iterme</span><span class="p">),</span> <span class="n">seeds</span><span class="p">))</span>
+                <span class="p">]</span>
 
-    <span class="n">out</span> <span class="o">=</span> <span class="n">parfor</span><span class="p">(</span><span class="n">call_list</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">concat</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">_concat</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span>
+        <span class="k">return</span> <span class="n">_concat</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">op</span>
 </code></pre></div></td></tr></table></div>
         </details>
     </div>
