@@ -1,3 +1,0 @@
-# utilz.boilerplate
-
-::: utilz.boilerplate

@@ -1,5 +1,5 @@
 """
-dplyr like *verbs* for working with pandas dataframes. Designed to be piped together using the `pipe` function from the `toolz` package. While not being as feature-complete, `utilz.verbse` provides limited alternative to other libraries like `plydata` because it just wraps mostly native pandas methods under-the-hood. Note: the current version unfortunately does borrow the `select` and `define` functions from plydata
+dplyr like *verbs* for working with pandas dataframes. Designed to be piped together using the `pipe` function from the `toolz` package. 
 
 """
 

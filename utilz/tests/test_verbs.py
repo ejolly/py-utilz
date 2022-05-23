@@ -1,8 +1,10 @@
 from utilz.verbs import rows
 from utilz.boilerplate import randdf
 from toolz import pipe
+import pytest
 
 
+@pytest.mark.skip()
 def test_rows():
 
     df = randdf()

@@ -1,3 +1,0 @@
-# utilz.termplot
-
-::: utilz.termplot

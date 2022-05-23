@@ -1,3 +1,0 @@
-# utilz.verbs
-
-::: utilz.verbs

@@ -9,3 +9,4 @@ environment.yml
 env/
 environment-lock.yml
 .ipython*
+docs/dev
