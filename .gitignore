@@ -10,3 +10,4 @@ env/
 environment-lock.yml
 .ipython*
 docs/dev
+.coverage

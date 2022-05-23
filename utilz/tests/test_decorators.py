@@ -6,11 +6,6 @@ from pathlib import Path
 from shutil import rmtree
 from joblib import Memory
 
-# Load iris dataset from Seaborn's data repo
-df = pd.read_csv(
-    "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-)
-
 
 def test_show(capsys):
     @show
@@ -22,7 +17,7 @@ def test_show(capsys):
     assert "10" in captured.out
 
 
-def test_log(capsys):
+def test_log(df, capsys):
     @log
     def group_mean(df, grp_col, val_col):
         return df.groupby(grp_col)[val_col].mean().reset_index()
@@ -48,7 +43,7 @@ def test_log(capsys):
     assert "empty, 1, []" in captured.out
 
 
-def test_timeit(capsys):
+def test_timeit(df, capsys):
     @timeit
     def myfunc(df):
         sleep(3)
@@ -137,7 +132,7 @@ def test_maybe(tmp_path, capsys):
     assert isinstance(out_files[0], Path)
 
 
-def test_expensive(capsys):
+def test_expensive(df, capsys):
 
     memory = Memory("./cachedir")
     memory.clear()

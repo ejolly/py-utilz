@@ -1,17 +1,11 @@
-from utilz.dftools import norm_by_group, assert_balanced_groups, assert_same_nunique
+# We just import to ensure custom registered methods are in the namespace; not necessary
+# in usage
+import utilz.dftools
 import pandas as pd
 import pytest
 
 
-df = pd.read_csv(
-    "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-)
-
-
-def test_norm_by_group():
-    df = pd.read_csv(
-        "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-    )
+def test_norm_by_group(df):
     out = df.norm_by_group("species", "sepal_length")
     assert isinstance(out, pd.DataFrame)
     # Make sure column was added
@@ -29,7 +23,7 @@ def test_norm_by_group():
     assert len(out) == df.shape[0]
 
 
-def test_assert_balanced_groups():
+def test_assert_balanced_groups(df):
 
     assert df.assert_balanced_groups("species")
 
@@ -39,7 +33,7 @@ def test_assert_balanced_groups():
         df.iloc[:-1, :].assert_balanced_groups("species")
 
 
-def test_assert_same_nunique():
+def test_assert_same_nunique(df):
 
     with pytest.raises(AssertionError):
         assert df.assert_same_nunique("species", "sepal_length")

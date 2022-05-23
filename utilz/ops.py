@@ -66,6 +66,8 @@ def pmap(
 
     """
 
+    if n_jobs == 1:
+        return mapcat(func, iterme, concat, axis, ignore_index)
     # Initialize joblib parallelizer
     parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
 

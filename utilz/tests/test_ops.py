@@ -72,27 +72,26 @@ def test_mapcat():
 
 def test_pmap():
     def f(x):
-        sleep(2)
+        sleep(0.5)
         return x**2
 
     def f_random(x, random_state=None):
         random_state = check_random_state(random_state)
-        sleep(2)
+        sleep(0.5)
         return x + random_state.rand()
 
-    # Running sequentially takes 10s
+    # Running sequentially takes 5s
     start = time()
-    out = pmap(f, range(5), n_jobs=1)
+    out = pmap(f, range(10), n_jobs=1)
     duration = time() - start
-    assert 9 < duration < 12
-    assert len(out) == 5
+    assert len(out) == 10
 
     # Running 2 jobs takes less time
     start = time()
-    out = pmap(f, range(5), n_jobs=2)
+    out = pmap(f, range(10), n_jobs=2)
     par_duration = time() - start
     assert par_duration < duration
-    assert len(out) == 5
+    assert len(out) == 10
 
     # By default if a function to be parallelized handles it's own randomization
     # interally, there should be no issue with repeated values when run in parallel
