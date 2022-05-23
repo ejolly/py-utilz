@@ -1,5 +1,8 @@
 """
-Common data operations and transformations often on pandas dataframes
+Common data operations and transformations often on pandas dataframes. This creates
+**new dataframe methods** that can be called like this:  
+
+`df.norm_by_group(grpcol='Class', valcol='Score')`
 
 ---
 """
@@ -11,13 +14,10 @@ from typing import Union
 from pandas.api.extensions import register_dataframe_accessor
 
 
+# Register a function as a method attached to the Pandas DataFrame. Note: credit for
+# this code goes entirely to `pandas_flavor`. Using the source here simply avoids an
+# unecessary dependencies.
 def _register_dataframe_method(method):
-    """
-    Register a function as a method attached to the Pandas DataFrame. Note: credit for
-    this code goes entirely to `pandas_flavor`. Using the source here simply avoids an
-    unecessary dependencies.
-    """
-
     def inner(*args, **kwargs):
         class AccessorMethod(object):
             def __init__(self, pandas_obj):

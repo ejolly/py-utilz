@@ -8,7 +8,7 @@
     ```
     rather than 
     ```
-    from utilz.ops import load
+    from utilz.ops import mapcat
     ```
 
 ## `utilz.io` 

@@ -23,16 +23,12 @@ plugins:
       ignore: ["dev/*"]
   - search
   - mkdocstrings:
-      default_handler: python
       handlers:
         python:
-          selection:
-            filters:
-              - "!^_"
-              - "!^MAX"
           rendering:
+            show_root_toc_entry: false
             show_source: true
-            show_if_no_docstring: true
+            show_if_no_docstring: false
             heading_level: 4
       watch:
         - utilz

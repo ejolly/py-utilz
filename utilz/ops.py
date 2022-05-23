@@ -141,8 +141,8 @@ def mapcat(func, iterme, concat=True, axis=None, ignore_index=True):
     return op
 
 
+# Helper concat function used by mapcat and pmap
 def _concat(op, iterme, axis, ignore_index):
-    """Helper concat function. Return input on any failure"""
 
     try:
         if isinstance(op[0], pd.DataFrame):

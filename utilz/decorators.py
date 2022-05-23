@@ -102,8 +102,8 @@ def maybe(
     pickle_encoding: str = "rb",
 ) -> Any:
     """
-    Run the decorated `func` only if fpath doesn't exist or if it isn't an empty
-    directory. If fpath exists will load the file from disk or if fpath is a directory,
+    Run the decorated `func` only if `fpath` doesn't exist or if it isn't an empty
+    directory. If `fpath` exists will load the file from disk or if `fpath` is a directory,
     will return the results of globbing the directory for all files
 
     Args:
@@ -143,7 +143,7 @@ def expensive(
     force: bool = False,
 ) -> Any:
     """
-    A decorator that wraps joblib.Memory for caching the results of a function to disk.
+    A decorator that wraps `joblib.Memory` for caching the results of a function to disk.
     This is useful for expensive functions that take a while to compute, as rerunning
     them will simply load the last results from disk.
 
