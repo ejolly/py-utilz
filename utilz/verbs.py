@@ -3,7 +3,18 @@ dplyr like *verbs* for working with pandas dataframes. Designed to be piped toge
 
 """
 
-__all__ = ["groupby", "rows", "cols", "rename", "save", "summarize", "assign", "apply"]
+__all__ = [
+    "groupby",
+    "rows",
+    "cols",
+    "rename",
+    "save",
+    "summarize",
+    "assign",
+    "apply",
+    "head",
+    "tail",
+]
 
 import numpy as np
 import pandas as pd
@@ -105,3 +116,13 @@ def assign(dfg, *args, **kwargs):
 def apply(func, df):
     """Call a dataframe or groupby object's `.apply` method"""
     return df.apply(func)
+
+
+@curry
+def head(df, n=5):
+    return df.head(n=n)
+
+
+@curry
+def tail(df, n=5):
+    return df.tail(n=n)
