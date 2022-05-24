@@ -314,143 +314,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#verb-based-dataframe-manipulation" class="md-nav__link">
-    Verb-based dataframe manipulation
-  </a>
-  
-    <nav class="md-nav" aria-label="Verb-based dataframe manipulation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#basic-slicingsubsetting" class="md-nav__link">
-    Basic slicing/subsetting
-  </a>
-  
-    <nav class="md-nav" aria-label="Basic slicing/subsetting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#strings" class="md-nav__link">
-    strings
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ints" class="md-nav__link">
-    ints
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#listsarrays" class="md-nav__link">
-    lists/arrays
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tuples" class="md-nav__link">
-    tuples
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#summarizing-data" class="md-nav__link">
-    Summarizing data
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#transforming-data" class="md-nav__link">
-    Transforming data
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#efficient-analyses-using-memoization-currying-and-caching" class="md-nav__link">
-    Efficient analyses using memoization, currying, and caching
-  </a>
-  
-    <nav class="md-nav" aria-label="Efficient analyses using memoization, currying, and caching">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#memoization" class="md-nav__link">
-    Memoization
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#currying" class="md-nav__link">
-    Currying
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#caching-outputs-to-disk" class="md-nav__link">
-    Caching outputs to disk
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#putting-it-together" class="md-nav__link">
-    Putting it together
-  </a>
-  
-    <nav class="md-nav" aria-label="Putting it together">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pipeline-based-data-analysis-with-caching-and-memoization" class="md-nav__link">
-    Pipeline based data analysis with caching and memoization
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
-    Summary
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1562,7 +1425,7 @@ from toolz import pipe</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="verb-based-dataframe-manipulation">Verb-based dataframe manipulation<a class="anchor-link" href="#verb-based-dataframe-manipulation">&#182;</a></h2><p>One of the strengths of libraries like <code>dplyr</code> is that it provides a sort of <em>grammar</em> for manipulating data. This allows for concise analysis pipelines. <code>utilz</code> offers some similar functionality through a few choice <em>verbs</em>. Tons of additional functionality is available in the great <a href="https://plydata.readthedocs.io/en/stable/">plydata</a> library:</p>
+<h1 id="verb-based-dataframe-manipulation">Verb-based dataframe manipulation<a class="anchor-link" href="#verb-based-dataframe-manipulation">&#182;</a></h1><p>One of the strengths of libraries like <code>dplyr</code> is that it provides a sort of <em>grammar</em> for manipulating data. This allows for concise analysis pipelines. <code>utilz</code> offers some similar functionality through a few choice <em>verbs</em>. Tons of additional functionality is available in the great <a href="https://plydata.readthedocs.io/en/stable/">plydata</a> library:</p>
 
 </div>
 </div>
@@ -1573,7 +1436,7 @@ from toolz import pipe</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1622,7 +1485,7 @@ df.head()</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
 
 
 
@@ -1655,43 +1518,43 @@ df.head()</div>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.835214</td>
-      <td>0.469788</td>
-      <td>0.818336</td>
+      <td>0.053000</td>
+      <td>0.943329</td>
+      <td>0.687069</td>
       <td>a</td>
-      <td>1.670428</td>
+      <td>0.106001</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.933498</td>
-      <td>0.803162</td>
-      <td>0.836482</td>
+      <td>0.655014</td>
+      <td>0.351922</td>
+      <td>0.460340</td>
       <td>b</td>
-      <td>1.866995</td>
+      <td>1.310027</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.870527</td>
-      <td>0.988006</td>
-      <td>0.045092</td>
+      <td>0.458604</td>
+      <td>0.775281</td>
+      <td>0.956761</td>
       <td>c</td>
-      <td>1.741054</td>
+      <td>0.917208</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.331299</td>
-      <td>0.188222</td>
-      <td>0.201379</td>
+      <td>0.108500</td>
+      <td>0.892330</td>
+      <td>0.051870</td>
       <td>d</td>
-      <td>0.662598</td>
+      <td>0.217001</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.060063</td>
-      <td>0.527094</td>
-      <td>0.873889</td>
+      <td>0.916564</td>
+      <td>0.937654</td>
+      <td>0.825559</td>
       <td>e</td>
-      <td>0.120126</td>
+      <td>1.833127</td>
     </tr>
   </tbody>
 </table>
@@ -1712,7 +1575,7 @@ df.head()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="basic-slicingsubsetting">Basic slicing/subsetting<a class="anchor-link" href="#basic-slicingsubsetting">&#182;</a></h3><p><code>rows</code> and <code>cols</code> behave similarly and can index a Dataframe using <em>strings</em>, <em>lists/arrays</em>, <em>tuples</em> or <em>ints</em>:</p>
+<h2 id="basic-slicingsubsetting">Basic slicing/subsetting<a class="anchor-link" href="#basic-slicingsubsetting">&#182;</a></h2><p><code>rows</code> and <code>cols</code> behave similarly and can index a Dataframe using <em>strings</em>, <em>lists/arrays</em>, <em>tuples</em> or <em>ints</em>:</p>
 
 </div>
 </div>
@@ -1723,7 +1586,7 @@ df.head()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1756,7 +1619,7 @@ df.head()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="strings">strings<a class="anchor-link" href="#strings">&#182;</a></h4>
+<h3 id="strings">strings<a class="anchor-link" href="#strings">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -1778,7 +1641,7 @@ df.head()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1820,7 +1683,7 @@ df.head()</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[21]:</div>
 
 
 
@@ -1849,35 +1712,35 @@ df.head()</div>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.568678</td>
+      <td>0.655014</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.277055</td>
+      <td>0.458604</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.084023</td>
+      <td>0.913827</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.987609</td>
+      <td>0.411440</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.533413</td>
+      <td>0.798876</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.336701</td>
+      <td>0.902748</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.438272</td>
+      <td>0.180981</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.480924</td>
+      <td>0.090812</td>
     </tr>
   </tbody>
 </table>
@@ -1909,7 +1772,7 @@ df.head()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1951,7 +1814,7 @@ df.head()</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[22]:</div>
 
 
 
@@ -1983,59 +1846,59 @@ df.head()</div>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.436753</td>
-      <td>0.836273</td>
+      <td>0.351922</td>
+      <td>0.460340</td>
       <td>b</td>
-      <td>1.137357</td>
+      <td>1.310027</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.983424</td>
-      <td>0.809752</td>
+      <td>0.775281</td>
+      <td>0.956761</td>
       <td>c</td>
-      <td>0.554110</td>
+      <td>0.917208</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.404657</td>
-      <td>0.746343</td>
+      <td>0.022340</td>
+      <td>0.887066</td>
       <td>b</td>
-      <td>0.168047</td>
+      <td>1.827654</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.355559</td>
-      <td>0.434809</td>
+      <td>0.190052</td>
+      <td>0.928055</td>
       <td>c</td>
-      <td>1.975218</td>
+      <td>0.822879</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.819739</td>
-      <td>0.279964</td>
+      <td>0.022913</td>
+      <td>0.459544</td>
       <td>b</td>
-      <td>1.066826</td>
+      <td>1.597753</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.723915</td>
-      <td>0.948239</td>
+      <td>0.025795</td>
+      <td>0.486684</td>
       <td>c</td>
-      <td>0.673403</td>
+      <td>1.805496</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.427613</td>
-      <td>0.979953</td>
+      <td>0.287260</td>
+      <td>0.784425</td>
       <td>b</td>
-      <td>0.876543</td>
+      <td>0.361963</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.025963</td>
-      <td>0.677200</td>
+      <td>0.099929</td>
+      <td>0.708791</td>
       <td>c</td>
-      <td>0.961849</td>
+      <td>0.181623</td>
     </tr>
   </tbody>
 </table>
@@ -2056,7 +1919,7 @@ df.head()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="ints">ints<a class="anchor-link" href="#ints">&#182;</a></h4><p>Both <code>rows</code> and <code>cols</code> interpret integers as <em>numerical indices</em> (i.e. <code>.iloc</code>):</p>
+<h3 id="ints">ints<a class="anchor-link" href="#ints">&#182;</a></h3><p>Both <code>rows</code> and <code>cols</code> interpret integers as <em>numerical indices</em> (i.e. <code>.iloc</code>):</p>
 
 </div>
 </div>
@@ -2067,7 +1930,7 @@ df.head()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[23]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2110,7 +1973,7 @@ pipe(df,
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[23]:</div>
 
 
 
@@ -2139,7 +2002,7 @@ pipe(df,
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.836273</td>
+      <td>0.46034</td>
     </tr>
   </tbody>
 </table>
@@ -2160,7 +2023,7 @@ pipe(df,
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="listsarrays">lists/arrays<a class="anchor-link" href="#listsarrays">&#182;</a></h4><p>Both <code>rows</code> and <code>colws</code> interprets lists and arrays as <em>numerical indices</em> (i.e. <code>.iloc</code>) if they contain numbers, but as <em>row/col labels</em> (i.e. <code>.loc</code>) if they contain strings.</p>
+<h3 id="listsarrays">lists/arrays<a class="anchor-link" href="#listsarrays">&#182;</a></h3><p>Both <code>rows</code> and <code>colws</code> interprets lists and arrays as <em>numerical indices</em> (i.e. <code>.iloc</code>) if they contain numbers, but as <em>row/col labels</em> (i.e. <code>.loc</code>) if they contain strings.</p>
 
 </div>
 </div>
@@ -2388,7 +2251,7 @@ pipe(df,
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="tuples">tuples<a class="anchor-link" href="#tuples">&#182;</a></h4><p>Both <code>rows</code> and <code>cols</code> interpret tuples as <code>(start, stop, step)</code> slices, with <code>step</code> being optional:</p>
+<h3 id="tuples">tuples<a class="anchor-link" href="#tuples">&#182;</a></h3><p>Both <code>rows</code> and <code>cols</code> interpret tuples as <code>(start, stop, step)</code> slices, with <code>step</code> being optional:</p>
 
 </div>
 </div>
@@ -2645,7 +2508,7 @@ pipe(df,
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="summarizing-data">Summarizing data<a class="anchor-link" href="#summarizing-data">&#182;</a></h3><p>To perform an operation that results in a <em>scalar</em> output per column, use <code>summarize</code>. It always return a <em>smaller</em> dataframe or series than the original</p>
+<h2 id="summarizing-data">Summarizing data<a class="anchor-link" href="#summarizing-data">&#182;</a></h2><p>To perform an operation that results in a <em>scalar</em> output per column, use <code>summarize</code>. It always return a <em>smaller</em> dataframe or series than the original</p>
 
 </div>
 </div>
@@ -2668,7 +2531,7 @@ pipe(df,
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2713,14 +2576,14 @@ pipe(df,
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
 
 
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>rt       0.695871
-speed    0.542008
+<pre>rt       0.435085
+speed    0.474883
 dtype: float64</pre>
 </div>
 
@@ -2749,7 +2612,7 @@ dtype: float64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2794,7 +2657,7 @@ pipe(df,
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
 
 
 
@@ -2829,28 +2692,28 @@ pipe(df,
   <tbody>
     <tr>
       <th>a</th>
-      <td>0.504750</td>
-      <td>0.195151</td>
+      <td>0.660371</td>
+      <td>0.382023</td>
     </tr>
     <tr>
       <th>b</th>
-      <td>0.629777</td>
-      <td>0.145344</td>
+      <td>0.541034</td>
+      <td>0.276673</td>
     </tr>
     <tr>
       <th>c</th>
-      <td>0.374209</td>
-      <td>0.372188</td>
+      <td>0.436452</td>
+      <td>0.280261</td>
     </tr>
     <tr>
       <th>d</th>
-      <td>0.474965</td>
-      <td>0.354329</td>
+      <td>0.443445</td>
+      <td>0.442302</td>
     </tr>
     <tr>
       <th>e</th>
-      <td>0.498287</td>
-      <td>0.415910</td>
+      <td>0.395343</td>
+      <td>0.267489</td>
     </tr>
   </tbody>
 </table>
@@ -2871,7 +2734,7 @@ pipe(df,
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="transforming-data">Transforming data<a class="anchor-link" href="#transforming-data">&#182;</a></h3><p>To perfom an operation that results in a <em>non-scalar</em> output per column, or to ensure that an operation with <em>scalar</em> output retains the original shape of the input, use <code>assign</code>. It always returns back a DataFrame the <em>same</em> size as the original via broadcasting.</p>
+<h2 id="transforming-data">Transforming data<a class="anchor-link" href="#transforming-data">&#182;</a></h2><p>To perfom an operation that results in a <em>non-scalar</em> output per column, or to ensure that an operation with <em>scalar</em> output retains the original shape of the input, use <code>assign</code>. It always returns back a DataFrame the <em>same</em> size as the original via broadcasting.</p>
 
 </div>
 </div>
@@ -2894,7 +2757,7 @@ pipe(df,
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2917,289 +2780,6 @@ pipe(df,
      assign(mean_overall_score="score.mean()")
      )
 </div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>rt</th>
-      <th>score</th>
-      <th>speed</th>
-      <th>group</th>
-      <th>rt_doubled</th>
-      <th>mean_overall_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.902407</td>
-      <td>0.177135</td>
-      <td>0.792267</td>
-      <td>a</td>
-      <td>1.804814</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.805787</td>
-      <td>0.337138</td>
-      <td>0.312966</td>
-      <td>b</td>
-      <td>1.611573</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.517491</td>
-      <td>0.033439</td>
-      <td>0.934013</td>
-      <td>c</td>
-      <td>1.034982</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.261900</td>
-      <td>0.833535</td>
-      <td>0.723541</td>
-      <td>d</td>
-      <td>0.523799</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.637885</td>
-      <td>0.611255</td>
-      <td>0.257965</td>
-      <td>e</td>
-      <td>1.275769</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0.700008</td>
-      <td>0.348929</td>
-      <td>0.930422</td>
-      <td>a</td>
-      <td>1.400015</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0.858416</td>
-      <td>0.044372</td>
-      <td>0.346503</td>
-      <td>b</td>
-      <td>1.716832</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>0.701888</td>
-      <td>0.891862</td>
-      <td>0.240973</td>
-      <td>c</td>
-      <td>1.403776</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>0.854061</td>
-      <td>0.921804</td>
-      <td>0.227022</td>
-      <td>d</td>
-      <td>1.708123</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>0.456034</td>
-      <td>0.297202</td>
-      <td>0.190947</td>
-      <td>e</td>
-      <td>0.912067</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>0.275528</td>
-      <td>0.577524</td>
-      <td>0.836623</td>
-      <td>a</td>
-      <td>0.551056</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>0.859452</td>
-      <td>0.567103</td>
-      <td>0.645869</td>
-      <td>b</td>
-      <td>1.718904</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>0.061484</td>
-      <td>0.342981</td>
-      <td>0.809023</td>
-      <td>c</td>
-      <td>0.122967</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>0.479180</td>
-      <td>0.731893</td>
-      <td>0.100545</td>
-      <td>d</td>
-      <td>0.958360</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>0.990481</td>
-      <td>0.733539</td>
-      <td>0.592449</td>
-      <td>e</td>
-      <td>1.980962</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>0.014666</td>
-      <td>0.819909</td>
-      <td>0.125275</td>
-      <td>a</td>
-      <td>0.029331</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>0.967029</td>
-      <td>0.988454</td>
-      <td>0.052680</td>
-      <td>b</td>
-      <td>1.934059</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>0.867213</td>
-      <td>0.946988</td>
-      <td>0.523435</td>
-      <td>c</td>
-      <td>1.734426</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>0.211514</td>
-      <td>0.165623</td>
-      <td>0.402063</td>
-      <td>d</td>
-      <td>0.423029</td>
-      <td>0.556813</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>0.012827</td>
-      <td>0.765571</td>
-      <td>0.547612</td>
-      <td>e</td>
-      <td>0.025654</td>
-      <td>0.556813</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>With grouped inputs, the mean score is broadcasted <em>within</em> each group:</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-14">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
-    <span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">),</span> 
-    <span class="n">assign</span><span class="p">(</span><span class="n">mean_grp_score</span> <span class="o">=</span> <span class="s1">&#39;score.mean()&#39;</span><span class="p">)</span>
-    <span class="p">)</span>
-</pre></div>
-<div id="cell-14" class="clipboard-copy-txt">pipe(df, 
-    groupby('group'), 
-    assign(mean_grp_score = 'score.mean()')
-    )</div>
     
         </div>
     </div>
@@ -3245,189 +2825,472 @@ pipe(df,
       <th>speed</th>
       <th>group</th>
       <th>rt_doubled</th>
+      <th>mean_overall_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.369143</td>
+      <td>0.957854</td>
+      <td>0.401780</td>
+      <td>a</td>
+      <td>0.738285</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.375460</td>
+      <td>0.946958</td>
+      <td>0.144849</td>
+      <td>b</td>
+      <td>0.750919</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.471786</td>
+      <td>0.178436</td>
+      <td>0.928845</td>
+      <td>c</td>
+      <td>0.943571</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.572397</td>
+      <td>0.458051</td>
+      <td>0.811822</td>
+      <td>d</td>
+      <td>1.144795</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.146566</td>
+      <td>0.113969</td>
+      <td>0.691174</td>
+      <td>e</td>
+      <td>0.293131</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.685974</td>
+      <td>0.541836</td>
+      <td>0.641309</td>
+      <td>a</td>
+      <td>1.371949</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.787281</td>
+      <td>0.313961</td>
+      <td>0.344903</td>
+      <td>b</td>
+      <td>1.574563</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.133493</td>
+      <td>0.396424</td>
+      <td>0.654379</td>
+      <td>c</td>
+      <td>0.266987</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.020939</td>
+      <td>0.306361</td>
+      <td>0.392558</td>
+      <td>d</td>
+      <td>0.041877</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.501037</td>
+      <td>0.812635</td>
+      <td>0.603648</td>
+      <td>e</td>
+      <td>1.002075</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.884708</td>
+      <td>0.394330</td>
+      <td>0.761686</td>
+      <td>a</td>
+      <td>1.769416</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.254019</td>
+      <td>0.576493</td>
+      <td>0.094998</td>
+      <td>b</td>
+      <td>0.508038</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.634474</td>
+      <td>0.823560</td>
+      <td>0.913038</td>
+      <td>c</td>
+      <td>1.268948</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.011011</td>
+      <td>0.153273</td>
+      <td>0.932635</td>
+      <td>d</td>
+      <td>0.022021</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.800533</td>
+      <td>0.273083</td>
+      <td>0.373999</td>
+      <td>e</td>
+      <td>1.601066</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.011422</td>
+      <td>0.747465</td>
+      <td>0.708599</td>
+      <td>a</td>
+      <td>0.022844</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.785102</td>
+      <td>0.326722</td>
+      <td>0.208163</td>
+      <td>b</td>
+      <td>1.570203</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.039069</td>
+      <td>0.347389</td>
+      <td>0.509891</td>
+      <td>c</td>
+      <td>0.078137</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.913666</td>
+      <td>0.856093</td>
+      <td>0.644563</td>
+      <td>d</td>
+      <td>1.827332</td>
+      <td>0.495329</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.503072</td>
+      <td>0.381687</td>
+      <td>0.459562</td>
+      <td>e</td>
+      <td>1.006144</td>
+      <td>0.495329</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>With grouped inputs, the mean score is broadcasted <em>within</em> each group:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-14">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+    <span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">),</span> 
+    <span class="n">assign</span><span class="p">(</span><span class="n">mean_grp_score</span> <span class="o">=</span> <span class="s1">&#39;score.mean()&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+<div id="cell-14" class="clipboard-copy-txt">pipe(df, 
+    groupby('group'), 
+    assign(mean_grp_score = 'score.mean()')
+    )</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rt</th>
+      <th>score</th>
+      <th>speed</th>
+      <th>group</th>
+      <th>rt_doubled</th>
       <th>mean_grp_score</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.902407</td>
-      <td>0.177135</td>
-      <td>0.792267</td>
+      <td>0.369143</td>
+      <td>0.957854</td>
+      <td>0.401780</td>
       <td>a</td>
-      <td>1.804814</td>
-      <td>0.480874</td>
+      <td>0.738285</td>
+      <td>0.660371</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.805787</td>
-      <td>0.337138</td>
-      <td>0.312966</td>
+      <td>0.375460</td>
+      <td>0.946958</td>
+      <td>0.144849</td>
       <td>b</td>
-      <td>1.611573</td>
-      <td>0.484267</td>
+      <td>0.750919</td>
+      <td>0.541034</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.517491</td>
-      <td>0.033439</td>
-      <td>0.934013</td>
+      <td>0.471786</td>
+      <td>0.178436</td>
+      <td>0.928845</td>
       <td>c</td>
-      <td>1.034982</td>
-      <td>0.553818</td>
+      <td>0.943571</td>
+      <td>0.436452</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.261900</td>
-      <td>0.833535</td>
-      <td>0.723541</td>
+      <td>0.572397</td>
+      <td>0.458051</td>
+      <td>0.811822</td>
       <td>d</td>
-      <td>0.523799</td>
-      <td>0.663214</td>
+      <td>1.144795</td>
+      <td>0.443445</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.637885</td>
-      <td>0.611255</td>
-      <td>0.257965</td>
+      <td>0.146566</td>
+      <td>0.113969</td>
+      <td>0.691174</td>
       <td>e</td>
-      <td>1.275769</td>
-      <td>0.601892</td>
+      <td>0.293131</td>
+      <td>0.395343</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.700008</td>
-      <td>0.348929</td>
-      <td>0.930422</td>
+      <td>0.685974</td>
+      <td>0.541836</td>
+      <td>0.641309</td>
       <td>a</td>
-      <td>1.400015</td>
-      <td>0.480874</td>
+      <td>1.371949</td>
+      <td>0.660371</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.858416</td>
-      <td>0.044372</td>
-      <td>0.346503</td>
+      <td>0.787281</td>
+      <td>0.313961</td>
+      <td>0.344903</td>
       <td>b</td>
-      <td>1.716832</td>
-      <td>0.484267</td>
+      <td>1.574563</td>
+      <td>0.541034</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.701888</td>
-      <td>0.891862</td>
-      <td>0.240973</td>
+      <td>0.133493</td>
+      <td>0.396424</td>
+      <td>0.654379</td>
       <td>c</td>
-      <td>1.403776</td>
-      <td>0.553818</td>
+      <td>0.266987</td>
+      <td>0.436452</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.854061</td>
-      <td>0.921804</td>
-      <td>0.227022</td>
+      <td>0.020939</td>
+      <td>0.306361</td>
+      <td>0.392558</td>
       <td>d</td>
-      <td>1.708123</td>
-      <td>0.663214</td>
+      <td>0.041877</td>
+      <td>0.443445</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.456034</td>
-      <td>0.297202</td>
-      <td>0.190947</td>
+      <td>0.501037</td>
+      <td>0.812635</td>
+      <td>0.603648</td>
       <td>e</td>
-      <td>0.912067</td>
-      <td>0.601892</td>
+      <td>1.002075</td>
+      <td>0.395343</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.275528</td>
-      <td>0.577524</td>
-      <td>0.836623</td>
+      <td>0.884708</td>
+      <td>0.394330</td>
+      <td>0.761686</td>
       <td>a</td>
-      <td>0.551056</td>
-      <td>0.480874</td>
+      <td>1.769416</td>
+      <td>0.660371</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.859452</td>
-      <td>0.567103</td>
-      <td>0.645869</td>
+      <td>0.254019</td>
+      <td>0.576493</td>
+      <td>0.094998</td>
       <td>b</td>
-      <td>1.718904</td>
-      <td>0.484267</td>
+      <td>0.508038</td>
+      <td>0.541034</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>0.061484</td>
-      <td>0.342981</td>
-      <td>0.809023</td>
+      <td>0.634474</td>
+      <td>0.823560</td>
+      <td>0.913038</td>
       <td>c</td>
-      <td>0.122967</td>
-      <td>0.553818</td>
+      <td>1.268948</td>
+      <td>0.436452</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>0.479180</td>
-      <td>0.731893</td>
-      <td>0.100545</td>
+      <td>0.011011</td>
+      <td>0.153273</td>
+      <td>0.932635</td>
       <td>d</td>
-      <td>0.958360</td>
-      <td>0.663214</td>
+      <td>0.022021</td>
+      <td>0.443445</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>0.990481</td>
-      <td>0.733539</td>
-      <td>0.592449</td>
+      <td>0.800533</td>
+      <td>0.273083</td>
+      <td>0.373999</td>
       <td>e</td>
-      <td>1.980962</td>
-      <td>0.601892</td>
+      <td>1.601066</td>
+      <td>0.395343</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>0.014666</td>
-      <td>0.819909</td>
-      <td>0.125275</td>
+      <td>0.011422</td>
+      <td>0.747465</td>
+      <td>0.708599</td>
       <td>a</td>
-      <td>0.029331</td>
-      <td>0.480874</td>
+      <td>0.022844</td>
+      <td>0.660371</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>0.967029</td>
-      <td>0.988454</td>
-      <td>0.052680</td>
+      <td>0.785102</td>
+      <td>0.326722</td>
+      <td>0.208163</td>
       <td>b</td>
-      <td>1.934059</td>
-      <td>0.484267</td>
+      <td>1.570203</td>
+      <td>0.541034</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>0.867213</td>
-      <td>0.946988</td>
-      <td>0.523435</td>
+      <td>0.039069</td>
+      <td>0.347389</td>
+      <td>0.509891</td>
       <td>c</td>
-      <td>1.734426</td>
-      <td>0.553818</td>
+      <td>0.078137</td>
+      <td>0.436452</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>0.211514</td>
-      <td>0.165623</td>
-      <td>0.402063</td>
+      <td>0.913666</td>
+      <td>0.856093</td>
+      <td>0.644563</td>
       <td>d</td>
-      <td>0.423029</td>
-      <td>0.663214</td>
+      <td>1.827332</td>
+      <td>0.443445</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>0.012827</td>
-      <td>0.765571</td>
-      <td>0.547612</td>
+      <td>0.503072</td>
+      <td>0.381687</td>
+      <td>0.459562</td>
       <td>e</td>
-      <td>0.025654</td>
-      <td>0.601892</td>
+      <td>1.006144</td>
+      <td>0.395343</td>
     </tr>
   </tbody>
 </table>
@@ -3459,7 +3322,7 @@ pipe(df,
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -3510,7 +3373,7 @@ pipe(df,
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
 
 
 
@@ -3546,223 +3409,223 @@ pipe(df,
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.902407</td>
-      <td>0.177135</td>
-      <td>0.792267</td>
+      <td>0.369143</td>
+      <td>0.957854</td>
+      <td>0.401780</td>
       <td>a</td>
-      <td>1.804814</td>
-      <td>-0.303739</td>
-      <td>0.634311</td>
-      <td>-1.087670</td>
+      <td>0.738285</td>
+      <td>0.297483</td>
+      <td>3.900577</td>
+      <td>1.211410</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.805787</td>
-      <td>0.337138</td>
-      <td>0.312966</td>
+      <td>0.375460</td>
+      <td>0.946958</td>
+      <td>0.144849</td>
       <td>b</td>
-      <td>1.611573</td>
-      <td>-0.147128</td>
-      <td>0.846184</td>
-      <td>-0.369277</td>
+      <td>0.750919</td>
+      <td>0.405924</td>
+      <td>3.195080</td>
+      <td>1.369608</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.517491</td>
-      <td>0.033439</td>
-      <td>0.934013</td>
+      <td>0.471786</td>
+      <td>0.178436</td>
+      <td>0.928845</td>
       <td>c</td>
-      <td>1.034982</td>
-      <td>-0.520378</td>
-      <td>0.075783</td>
-      <td>-1.179330</td>
+      <td>0.943571</td>
+      <td>-0.258016</td>
+      <td>0.650171</td>
+      <td>-0.940141</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.261900</td>
-      <td>0.833535</td>
-      <td>0.723541</td>
+      <td>0.572397</td>
+      <td>0.458051</td>
+      <td>0.811822</td>
       <td>d</td>
-      <td>0.523799</td>
-      <td>0.170321</td>
-      <td>2.446669</td>
-      <td>0.499943</td>
+      <td>1.144795</td>
+      <td>0.014607</td>
+      <td>1.517082</td>
+      <td>0.048378</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.637885</td>
-      <td>0.611255</td>
-      <td>0.257965</td>
+      <td>0.146566</td>
+      <td>0.113969</td>
+      <td>0.691174</td>
       <td>e</td>
-      <td>1.275769</td>
-      <td>0.009363</td>
-      <td>2.859903</td>
-      <td>0.043809</td>
+      <td>0.293131</td>
+      <td>-0.281374</td>
+      <td>0.381001</td>
+      <td>-0.940639</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.700008</td>
-      <td>0.348929</td>
-      <td>0.930422</td>
+      <td>0.685974</td>
+      <td>0.541836</td>
+      <td>0.641309</td>
       <td>a</td>
-      <td>1.400015</td>
-      <td>-0.131945</td>
-      <td>1.249493</td>
-      <td>-0.472488</td>
+      <td>1.371949</td>
+      <td>-0.118536</td>
+      <td>2.206465</td>
+      <td>-0.482701</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.858416</td>
-      <td>0.044372</td>
-      <td>0.346503</td>
+      <td>0.787281</td>
+      <td>0.313961</td>
+      <td>0.344903</td>
       <td>b</td>
-      <td>1.716832</td>
-      <td>-0.439895</td>
-      <td>0.111369</td>
-      <td>-1.104092</td>
+      <td>1.574563</td>
+      <td>-0.227072</td>
+      <td>1.059320</td>
+      <td>-0.766152</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.701888</td>
-      <td>0.891862</td>
-      <td>0.240973</td>
+      <td>0.133493</td>
+      <td>0.396424</td>
+      <td>0.654379</td>
       <td>c</td>
-      <td>1.403776</td>
-      <td>0.338044</td>
-      <td>2.021220</td>
-      <td>0.766107</td>
+      <td>0.266987</td>
+      <td>-0.040028</td>
+      <td>1.444460</td>
+      <td>-0.145852</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.854061</td>
-      <td>0.921804</td>
-      <td>0.227022</td>
+      <td>0.020939</td>
+      <td>0.306361</td>
+      <td>0.392558</td>
       <td>d</td>
-      <td>1.708123</td>
-      <td>0.258590</td>
-      <td>2.705764</td>
-      <td>0.759038</td>
+      <td>0.041877</td>
+      <td>-0.137083</td>
+      <td>1.014679</td>
+      <td>-0.454024</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.456034</td>
-      <td>0.297202</td>
-      <td>0.190947</td>
+      <td>0.501037</td>
+      <td>0.812635</td>
+      <td>0.603648</td>
       <td>e</td>
-      <td>0.912067</td>
-      <td>-0.304689</td>
-      <td>1.390532</td>
-      <td>-1.425563</td>
+      <td>1.002075</td>
+      <td>0.417292</td>
+      <td>2.716654</td>
+      <td>1.395013</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.275528</td>
-      <td>0.577524</td>
-      <td>0.836623</td>
+      <td>0.884708</td>
+      <td>0.394330</td>
+      <td>0.761686</td>
       <td>a</td>
-      <td>0.551056</td>
-      <td>0.096649</td>
-      <td>2.068075</td>
-      <td>0.346095</td>
+      <td>1.769416</td>
+      <td>-0.266041</td>
+      <td>1.605793</td>
+      <td>-1.083373</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.859452</td>
-      <td>0.567103</td>
-      <td>0.645869</td>
+      <td>0.254019</td>
+      <td>0.576493</td>
+      <td>0.094998</td>
       <td>b</td>
-      <td>1.718904</td>
-      <td>0.082836</td>
-      <td>1.423371</td>
-      <td>0.207910</td>
+      <td>0.508038</td>
+      <td>0.035460</td>
+      <td>1.945116</td>
+      <td>0.119643</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>0.061484</td>
-      <td>0.342981</td>
-      <td>0.809023</td>
+      <td>0.634474</td>
+      <td>0.823560</td>
+      <td>0.913038</td>
       <td>c</td>
-      <td>0.122967</td>
-      <td>-0.210836</td>
-      <td>0.777297</td>
-      <td>-0.477817</td>
+      <td>1.268948</td>
+      <td>0.387108</td>
+      <td>3.000826</td>
+      <td>1.410514</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>0.479180</td>
-      <td>0.731893</td>
-      <td>0.100545</td>
+      <td>0.011011</td>
+      <td>0.153273</td>
+      <td>0.932635</td>
       <td>d</td>
-      <td>0.958360</td>
-      <td>0.068679</td>
-      <td>2.148319</td>
-      <td>0.201594</td>
+      <td>0.022021</td>
+      <td>-0.290172</td>
+      <td>0.507644</td>
+      <td>-0.961060</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>0.990481</td>
-      <td>0.733539</td>
-      <td>0.592449</td>
+      <td>0.800533</td>
+      <td>0.273083</td>
+      <td>0.373999</td>
       <td>e</td>
-      <td>1.980962</td>
-      <td>0.131647</td>
-      <td>3.432036</td>
-      <td>0.615941</td>
+      <td>1.601066</td>
+      <td>-0.122260</td>
+      <td>0.912922</td>
+      <td>-0.408719</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>0.014666</td>
-      <td>0.819909</td>
-      <td>0.125275</td>
+      <td>0.011422</td>
+      <td>0.747465</td>
+      <td>0.708599</td>
       <td>a</td>
-      <td>0.029331</td>
-      <td>0.339035</td>
-      <td>2.936043</td>
-      <td>1.214063</td>
+      <td>0.022844</td>
+      <td>0.087094</td>
+      <td>3.043831</td>
+      <td>0.354665</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>0.967029</td>
-      <td>0.988454</td>
-      <td>0.052680</td>
+      <td>0.785102</td>
+      <td>0.326722</td>
+      <td>0.208163</td>
       <td>b</td>
-      <td>1.934059</td>
-      <td>0.504187</td>
-      <td>2.480920</td>
-      <td>1.265459</td>
+      <td>1.570203</td>
+      <td>-0.214312</td>
+      <td>1.102374</td>
+      <td>-0.723098</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>0.867213</td>
-      <td>0.946988</td>
-      <td>0.523435</td>
+      <td>0.039069</td>
+      <td>0.347389</td>
+      <td>0.509891</td>
       <td>c</td>
-      <td>1.734426</td>
-      <td>0.393171</td>
-      <td>2.146153</td>
-      <td>0.891040</td>
+      <td>0.078137</td>
+      <td>-0.089063</td>
+      <td>1.265791</td>
+      <td>-0.324521</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>0.211514</td>
-      <td>0.165623</td>
-      <td>0.402063</td>
+      <td>0.913666</td>
+      <td>0.856093</td>
+      <td>0.644563</td>
       <td>d</td>
-      <td>0.423029</td>
-      <td>-0.497591</td>
-      <td>0.486151</td>
-      <td>-1.460575</td>
+      <td>1.827332</td>
+      <td>0.412649</td>
+      <td>2.835410</td>
+      <td>1.366706</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>0.012827</td>
-      <td>0.765571</td>
-      <td>0.547612</td>
+      <td>0.503072</td>
+      <td>0.381687</td>
+      <td>0.459562</td>
       <td>e</td>
-      <td>0.025654</td>
-      <td>0.163679</td>
-      <td>3.581906</td>
-      <td>0.765812</td>
+      <td>1.006144</td>
+      <td>-0.013657</td>
+      <td>1.275985</td>
+      <td>-0.045655</td>
     </tr>
   </tbody>
 </table>
@@ -3794,7 +3657,7 @@ pipe(df,
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -3839,7 +3702,7 @@ pipe(df,
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
 
 
 
@@ -3873,183 +3736,183 @@ pipe(df,
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.902407</td>
-      <td>0.177135</td>
-      <td>0.792267</td>
+      <td>0.369143</td>
+      <td>0.957854</td>
+      <td>0.401780</td>
       <td>a</td>
-      <td>1.804814</td>
-      <td>0.792267</td>
+      <td>0.738285</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.805787</td>
-      <td>0.337138</td>
-      <td>0.312966</td>
+      <td>0.375460</td>
+      <td>0.946958</td>
+      <td>0.144849</td>
       <td>b</td>
-      <td>1.611573</td>
-      <td>0.312966</td>
+      <td>0.750919</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.517491</td>
-      <td>0.033439</td>
-      <td>0.934013</td>
+      <td>0.471786</td>
+      <td>0.178436</td>
+      <td>0.928845</td>
       <td>c</td>
-      <td>1.034982</td>
-      <td>0.934013</td>
+      <td>0.943571</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.261900</td>
-      <td>0.833535</td>
-      <td>0.723541</td>
+      <td>0.572397</td>
+      <td>0.458051</td>
+      <td>0.811822</td>
       <td>d</td>
-      <td>0.523799</td>
-      <td>0.000000</td>
+      <td>1.144795</td>
+      <td>0.811822</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.637885</td>
-      <td>0.611255</td>
-      <td>0.257965</td>
+      <td>0.146566</td>
+      <td>0.113969</td>
+      <td>0.691174</td>
       <td>e</td>
-      <td>1.275769</td>
-      <td>0.257965</td>
+      <td>0.293131</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.700008</td>
-      <td>0.348929</td>
-      <td>0.930422</td>
+      <td>0.685974</td>
+      <td>0.541836</td>
+      <td>0.641309</td>
       <td>a</td>
-      <td>1.400015</td>
-      <td>0.930422</td>
+      <td>1.371949</td>
+      <td>0.641309</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.858416</td>
-      <td>0.044372</td>
-      <td>0.346503</td>
+      <td>0.787281</td>
+      <td>0.313961</td>
+      <td>0.344903</td>
       <td>b</td>
-      <td>1.716832</td>
-      <td>0.346503</td>
+      <td>1.574563</td>
+      <td>0.344903</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.701888</td>
-      <td>0.891862</td>
-      <td>0.240973</td>
+      <td>0.133493</td>
+      <td>0.396424</td>
+      <td>0.654379</td>
       <td>c</td>
-      <td>1.403776</td>
-      <td>0.240973</td>
+      <td>0.266987</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.854061</td>
-      <td>0.921804</td>
-      <td>0.227022</td>
+      <td>0.020939</td>
+      <td>0.306361</td>
+      <td>0.392558</td>
       <td>d</td>
-      <td>1.708123</td>
-      <td>0.227022</td>
+      <td>0.041877</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.456034</td>
-      <td>0.297202</td>
-      <td>0.190947</td>
+      <td>0.501037</td>
+      <td>0.812635</td>
+      <td>0.603648</td>
       <td>e</td>
-      <td>0.912067</td>
-      <td>0.000000</td>
+      <td>1.002075</td>
+      <td>0.603648</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.275528</td>
-      <td>0.577524</td>
-      <td>0.836623</td>
+      <td>0.884708</td>
+      <td>0.394330</td>
+      <td>0.761686</td>
       <td>a</td>
-      <td>0.551056</td>
-      <td>0.000000</td>
+      <td>1.769416</td>
+      <td>0.761686</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.859452</td>
-      <td>0.567103</td>
-      <td>0.645869</td>
+      <td>0.254019</td>
+      <td>0.576493</td>
+      <td>0.094998</td>
       <td>b</td>
-      <td>1.718904</td>
-      <td>0.645869</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>0.061484</td>
-      <td>0.342981</td>
-      <td>0.809023</td>
-      <td>c</td>
-      <td>0.122967</td>
+      <td>0.508038</td>
       <td>0.000000</td>
     </tr>
     <tr>
+      <th>12</th>
+      <td>0.634474</td>
+      <td>0.823560</td>
+      <td>0.913038</td>
+      <td>c</td>
+      <td>1.268948</td>
+      <td>0.913038</td>
+    </tr>
+    <tr>
       <th>13</th>
-      <td>0.479180</td>
-      <td>0.731893</td>
-      <td>0.100545</td>
+      <td>0.011011</td>
+      <td>0.153273</td>
+      <td>0.932635</td>
       <td>d</td>
-      <td>0.958360</td>
+      <td>0.022021</td>
       <td>0.000000</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>0.990481</td>
-      <td>0.733539</td>
-      <td>0.592449</td>
+      <td>0.800533</td>
+      <td>0.273083</td>
+      <td>0.373999</td>
       <td>e</td>
-      <td>1.980962</td>
-      <td>0.592449</td>
+      <td>1.601066</td>
+      <td>0.373999</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>0.014666</td>
-      <td>0.819909</td>
-      <td>0.125275</td>
+      <td>0.011422</td>
+      <td>0.747465</td>
+      <td>0.708599</td>
       <td>a</td>
-      <td>0.029331</td>
+      <td>0.022844</td>
       <td>0.000000</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>0.967029</td>
-      <td>0.988454</td>
-      <td>0.052680</td>
+      <td>0.785102</td>
+      <td>0.326722</td>
+      <td>0.208163</td>
       <td>b</td>
-      <td>1.934059</td>
-      <td>0.052680</td>
+      <td>1.570203</td>
+      <td>0.208163</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>0.867213</td>
-      <td>0.946988</td>
-      <td>0.523435</td>
+      <td>0.039069</td>
+      <td>0.347389</td>
+      <td>0.509891</td>
       <td>c</td>
-      <td>1.734426</td>
-      <td>0.523435</td>
+      <td>0.078137</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>0.211514</td>
-      <td>0.165623</td>
-      <td>0.402063</td>
+      <td>0.913666</td>
+      <td>0.856093</td>
+      <td>0.644563</td>
       <td>d</td>
-      <td>0.423029</td>
-      <td>0.000000</td>
+      <td>1.827332</td>
+      <td>0.644563</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>0.012827</td>
-      <td>0.765571</td>
-      <td>0.547612</td>
+      <td>0.503072</td>
+      <td>0.381687</td>
+      <td>0.459562</td>
       <td>e</td>
-      <td>0.025654</td>
-      <td>0.000000</td>
+      <td>1.006144</td>
+      <td>0.459562</td>
     </tr>
   </tbody>
 </table>
@@ -4081,7 +3944,7 @@ pipe(df,
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -4148,7 +4011,7 @@ df</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[19]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
 
 
 
@@ -4192,202 +4055,202 @@ df</div>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.835214</td>
-      <td>0.469788</td>
-      <td>0.818336</td>
+      <td>0.369143</td>
+      <td>0.957854</td>
+      <td>0.401780</td>
       <td>a</td>
-      <td>1.670428</td>
-      <td>0.689456</td>
-      <td>three</td>
+      <td>0.738285</td>
+      <td>0.628344</td>
+      <td>one</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.933498</td>
-      <td>0.803162</td>
-      <td>0.836482</td>
+      <td>0.375460</td>
+      <td>0.946958</td>
+      <td>0.144849</td>
       <td>b</td>
-      <td>1.866995</td>
-      <td>0.741970</td>
-      <td>three</td>
+      <td>0.750919</td>
+      <td>0.198228</td>
+      <td>one</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.870527</td>
-      <td>0.988006</td>
-      <td>0.045092</td>
+      <td>0.471786</td>
+      <td>0.178436</td>
+      <td>0.928845</td>
       <td>c</td>
-      <td>1.741054</td>
-      <td>0.342046</td>
-      <td>one</td>
+      <td>0.943571</td>
+      <td>0.751539</td>
+      <td>three</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.331299</td>
-      <td>0.188222</td>
-      <td>0.201379</td>
+      <td>0.572397</td>
+      <td>0.458051</td>
+      <td>0.811822</td>
       <td>d</td>
-      <td>0.662598</td>
-      <td>0.507731</td>
-      <td>one</td>
+      <td>1.144795</td>
+      <td>0.695395</td>
+      <td>three</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.060063</td>
-      <td>0.527094</td>
-      <td>0.873889</td>
+      <td>0.146566</td>
+      <td>0.113969</td>
+      <td>0.691174</td>
       <td>e</td>
-      <td>0.120126</td>
-      <td>0.613322</td>
+      <td>0.293131</td>
+      <td>0.532096</td>
       <td>three</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.663402</td>
-      <td>0.772564</td>
-      <td>0.730931</td>
+      <td>0.685974</td>
+      <td>0.541836</td>
+      <td>0.641309</td>
       <td>a</td>
-      <td>1.326803</td>
-      <td>0.689456</td>
+      <td>1.371949</td>
+      <td>0.628344</td>
       <td>three</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.881181</td>
-      <td>0.562835</td>
-      <td>0.373125</td>
+      <td>0.787281</td>
+      <td>0.313961</td>
+      <td>0.344903</td>
       <td>b</td>
-      <td>1.762361</td>
-      <td>0.741970</td>
-      <td>one</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>0.772267</td>
-      <td>0.104532</td>
-      <td>0.375590</td>
-      <td>c</td>
-      <td>1.544535</td>
-      <td>0.342046</td>
+      <td>1.574563</td>
+      <td>0.198228</td>
       <td>three</td>
     </tr>
     <tr>
+      <th>7</th>
+      <td>0.133493</td>
+      <td>0.396424</td>
+      <td>0.654379</td>
+      <td>c</td>
+      <td>0.266987</td>
+      <td>0.751539</td>
+      <td>one</td>
+    </tr>
+    <tr>
       <th>8</th>
-      <td>0.145882</td>
-      <td>0.500106</td>
-      <td>0.343859</td>
+      <td>0.020939</td>
+      <td>0.306361</td>
+      <td>0.392558</td>
       <td>d</td>
-      <td>0.291764</td>
-      <td>0.507731</td>
+      <td>0.041877</td>
+      <td>0.695395</td>
       <td>one</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.834803</td>
-      <td>0.905774</td>
-      <td>0.474066</td>
+      <td>0.501037</td>
+      <td>0.812635</td>
+      <td>0.603648</td>
       <td>e</td>
-      <td>1.669605</td>
-      <td>0.613322</td>
-      <td>one</td>
+      <td>1.002075</td>
+      <td>0.532096</td>
+      <td>three</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.697991</td>
-      <td>0.060713</td>
-      <td>0.765796</td>
+      <td>0.884708</td>
+      <td>0.394330</td>
+      <td>0.761686</td>
       <td>a</td>
-      <td>1.395981</td>
-      <td>0.689456</td>
+      <td>1.769416</td>
+      <td>0.628344</td>
       <td>three</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.602443</td>
-      <td>0.370808</td>
-      <td>0.787415</td>
+      <td>0.254019</td>
+      <td>0.576493</td>
+      <td>0.094998</td>
       <td>b</td>
-      <td>1.204887</td>
-      <td>0.741970</td>
-      <td>three</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>0.663916</td>
-      <td>0.298299</td>
-      <td>0.302135</td>
-      <td>c</td>
-      <td>1.327832</td>
-      <td>0.342046</td>
+      <td>0.508038</td>
+      <td>0.198228</td>
       <td>one</td>
     </tr>
     <tr>
+      <th>12</th>
+      <td>0.634474</td>
+      <td>0.823560</td>
+      <td>0.913038</td>
+      <td>c</td>
+      <td>1.268948</td>
+      <td>0.751539</td>
+      <td>three</td>
+    </tr>
+    <tr>
       <th>13</th>
-      <td>0.762938</td>
-      <td>0.904471</td>
-      <td>0.933878</td>
+      <td>0.011011</td>
+      <td>0.153273</td>
+      <td>0.932635</td>
       <td>d</td>
-      <td>1.525876</td>
-      <td>0.507731</td>
+      <td>0.022021</td>
+      <td>0.695395</td>
       <td>three</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>0.203782</td>
-      <td>0.463020</td>
-      <td>0.827351</td>
+      <td>0.800533</td>
+      <td>0.273083</td>
+      <td>0.373999</td>
       <td>e</td>
-      <td>0.407565</td>
-      <td>0.613322</td>
-      <td>three</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>0.371209</td>
-      <td>0.715934</td>
-      <td>0.442762</td>
-      <td>a</td>
-      <td>0.742419</td>
-      <td>0.689456</td>
+      <td>1.601066</td>
+      <td>0.532096</td>
       <td>one</td>
     </tr>
     <tr>
+      <th>15</th>
+      <td>0.011422</td>
+      <td>0.747465</td>
+      <td>0.708599</td>
+      <td>a</td>
+      <td>0.022844</td>
+      <td>0.628344</td>
+      <td>three</td>
+    </tr>
+    <tr>
       <th>16</th>
-      <td>0.799226</td>
-      <td>0.782305</td>
-      <td>0.970858</td>
+      <td>0.785102</td>
+      <td>0.326722</td>
+      <td>0.208163</td>
       <td>b</td>
-      <td>1.598452</td>
-      <td>0.741970</td>
+      <td>1.570203</td>
+      <td>0.198228</td>
       <td>three</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>0.043911</td>
-      <td>0.105998</td>
-      <td>0.645368</td>
+      <td>0.039069</td>
+      <td>0.347389</td>
+      <td>0.509891</td>
       <td>c</td>
-      <td>0.087822</td>
-      <td>0.342046</td>
-      <td>three</td>
+      <td>0.078137</td>
+      <td>0.751539</td>
+      <td>one</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>0.898024</td>
-      <td>0.307063</td>
-      <td>0.551807</td>
+      <td>0.913666</td>
+      <td>0.856093</td>
+      <td>0.644563</td>
       <td>d</td>
-      <td>1.796048</td>
-      <td>0.507731</td>
-      <td>three</td>
+      <td>1.827332</td>
+      <td>0.695395</td>
+      <td>one</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>0.855099</td>
-      <td>0.097262</td>
-      <td>0.277984</td>
+      <td>0.503072</td>
+      <td>0.381687</td>
+      <td>0.459562</td>
       <td>e</td>
-      <td>1.710198</td>
-      <td>0.613322</td>
+      <td>1.006144</td>
+      <td>0.532096</td>
       <td>one</td>
     </tr>
   </tbody>
@@ -4746,7 +4609,7 @@ df</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="efficient-analyses-using-memoization-currying-and-caching">Efficient analyses using memoization, currying, and caching<a class="anchor-link" href="#efficient-analyses-using-memoization-currying-and-caching">&#182;</a></h2>
+<h1 id="efficient-analyses-using-memoization-currying-and-caching">Efficient analyses using memoization, currying, and caching<a class="anchor-link" href="#efficient-analyses-using-memoization-currying-and-caching">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -4769,7 +4632,7 @@ df</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="memoization">Memoization<a class="anchor-link" href="#memoization">&#182;</a></h3><p><strong>Memoize</strong> a function to save its last input in memory (RAM) and recall it when called with the same arguments rather than re-executing a potentially long running function. Memoized outputs <em>do not</em> persist across kernel restarts, and aren't great for functions that have very large or non-pickleable inputs and outputs. A nice use case is simply loading a file. Given the filepath, you're loading the same file each time, so lets just memoize the result, especially if it takes a long time to reread the file:</p>
+<h2 id="memoization">Memoization<a class="anchor-link" href="#memoization">&#182;</a></h2><p><strong>Memoize</strong> a function to save its last input in memory (RAM) and recall it when called with the same arguments rather than re-executing a potentially long running function. Memoized outputs <em>do not</em> persist across kernel restarts, and aren't great for functions that have very large or non-pickleable inputs and outputs. A nice use case is simply loading a file. Given the filepath, you're loading the same file each time, so lets just memoize the result, especially if it takes a long time to reread the file:</p>
 
 </div>
 </div>
@@ -4829,18 +4692,30 @@ def load(path):
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="currying">Currying<a class="anchor-link" href="#currying">&#182;</a></h3><p><strong>Curry</strong>, also called <em>partial function application</em>, is helpful when writing custom functions you want to add to a <code>pipe</code>. When curried, a function operates normally when it receives all its required arguments, but turns into a <em>partial</em> function when it gets fewer than all its required arguments. This partial function behaves just like the original except with a subset of its arguments "fixed". Because <code>pipe</code> implicitly passes the output of the last function to the next function in the pipeline, it's not possible to manipulate secondary arguments to a function in the pipeline without currying:</p>
+<h2 id="currying">Currying<a class="anchor-link" href="#currying">&#182;</a></h2><p><strong>Curry</strong>, also called <em>partial function application</em>, is helpful when writing custom functions you want to add to a <code>pipe</code>. When curried, a function operates normally when it receives all its required arguments, but turns into a <em>partial</em> function when it gets fewer than all its required arguments. This partial function behaves just like the original except with a subset of its arguments "fixed". Because <code>pipe</code> implicitly passes the output of the last function to the next function in the pipeline, it's not possible to manipulate secondary arguments to a function in the pipeline without currying.</p>
 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>When writing curried functions for use with <code>pipe</code>, make sure the expected output from the previous function execution in a pipeline is the <em>last</em> <code>arg</code> the function receives. Any required <code>args</code> should appear <em>before</em> this value and any <code>kwargs</code> should appear after:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -4857,43 +4732,138 @@ def load(path):
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">toolz</span> <span class="kn">import</span> <span class="n">curry</span>
 
-<span class="nd">@curry</span>
-<span class="k">def</span> <span class="nf">calc_mean</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="k">pass</span>
+<span class="c1"># Curried function args and kwargs should have the form:</span>
+<span class="c1"># required args, dataframe as the last required arg, optional kwargs</span>
 
-<span class="c1"># Now this works, otherwise it would complain about the wrong number of arguments</span>
-<span class="c1"># to calc_mean</span>
+<span class="c1"># No optional args so required args *before* df which is passed by pipe</span>
+<span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">calc_mean_score</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="n">nrows</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
 <span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span>
-    <span class="n">calc_mean</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="p">)</span>
-
-<span class="c1"># Note: with no kwargs you sometimes have to write the args backwards</span>
-<span class="nd">@curry</span>
-<span class="k">def</span> <span class="nf">calc_mean</span><span class="p">(</span><span class="n">norm_value</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
-    <span class="k">pass</span>
+     <span class="n">calc_mean_score</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="p">)</span>
 </pre></div>
 <div id="cell-20" class="clipboard-copy-txt">from toolz import curry
 
-@curry
-def calc_mean(df, normalize=False):
-    pass
+# Curried function args and kwargs should have the form:
+# required args, dataframe as the last required arg, optional kwargs
 
-# Now this works, otherwise it would complain about the wrong number of arguments
-# to calc_mean
+# No optional args so required args *before* df which is passed by pipe
+@curry
+def calc_mean_score(nrows, df):
+    return df.loc[:nrows, 'score'].mean()
+
 pipe(df,
-    calc_mean(normalize=True)
-)
-
-# Note: with no kwargs you sometimes have to write the args backwards
-@curry
-def calc_mean(norm_value, df):
-    pass
-</div>
+     calc_mean_score(5)
+    )</div>
     
         </div>
     </div>
 
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>0.41179621192888827</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-21">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Optional kwarg which comes *after* df which is passed by pipe</span>
+<span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">calc_mean_score</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="n">nrows</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">/=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="n">nrows</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+<span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+     <span class="n">calc_mean_score</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+     <span class="p">)</span>
+</pre></div>
+<div id="cell-21" class="clipboard-copy-txt"># Optional kwarg which comes *after* df which is passed by pipe
+@curry
+def calc_mean_score(nrows, df, normalize=False):
+    out = df.loc[:nrows, 'score'].mean()
+    if normalize:
+        out /= df.loc[:nrows, 'score'].std()
+    return out
+
+pipe(df, 
+     calc_mean_score(5, normalize=True)
+     )</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>1.8490069051307567</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -4904,7 +4874,7 @@ def calc_mean(norm_value, df):
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="caching-outputs-to-disk">Caching outputs to disk<a class="anchor-link" href="#caching-outputs-to-disk">&#182;</a></h3><p><strong>Cache</strong> so the result of a function is stored to disk in a file made unique by hash of the args and kwargs to the function. Use <code>utilz.disk_cache</code> to decorate a function so it caches, which works similar to <code>toolz.memoize</code> but stores the result to a file (rather than in memory) and loads the file when called with the same inputs. Essentially you're trading computation time for i/o time. This is usually preferable to <code>memoize</code> for larger memory hungry inputs and outputs, and necessary if input or outputs cannot be pickled (e.g. dataframes, arrays, deep objects, etc). Setting the threshold to something like 1 essentially always caches the result.</p>
+<h2 id="caching-outputs-to-disk">Caching outputs to disk<a class="anchor-link" href="#caching-outputs-to-disk">&#182;</a></h2><p><strong>Cache</strong> so the result of a function is stored to disk in a file made unique by hash of the args and kwargs to the function. Use <code>utilz.disk_cache</code> to decorate a function so it caches, which works similar to <code>toolz.memoize</code> but stores the result to a file (rather than in memory) and loads the file when called with the same inputs. Essentially you're trading computation time for i/o time. This is usually preferable to <code>memoize</code> for larger memory hungry inputs and outputs, and necessary if input or outputs cannot be pickled (e.g. dataframes, arrays, deep objects, etc). Setting the threshold to something like 1 essentially always caches the result.</p>
 
 </div>
 </div>
@@ -4920,7 +4890,7 @@ def calc_mean(norm_value, df):
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-21">
+            <clipboard-copy for="cell-22">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -4943,7 +4913,7 @@ def calc_mean(norm_value, df):
     <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;norm&quot;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="n">denom</span><span class="p">]})</span>
 </pre></div>
-<div id="cell-21" class="clipboard-copy-txt">from utilz import disk_cache
+<div id="cell-22" class="clipboard-copy-txt">from utilz import disk_cache
 
 # We're also using the curry decorator so norm works in the pipeline below
 # It's not needed to use the disk_cache decorator
@@ -4970,7 +4940,7 @@ def norm(df, num='', denom=''):
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="putting-it-together">Putting it together<a class="anchor-link" href="#putting-it-together">&#182;</a></h2><h3 id="pipeline-based-data-analysis-with-caching-and-memoization">Pipeline based data analysis with caching and memoization<a class="anchor-link" href="#pipeline-based-data-analysis-with-caching-and-memoization">&#182;</a></h3>
+<h1 id="putting-it-together-pipeline-based-data-analysis-with-caching-and-memoization">Putting it together: Pipeline based data analysis with caching and memoization<a class="anchor-link" href="#putting-it-together-pipeline-based-data-analysis-with-caching-and-memoization">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -4997,7 +4967,7 @@ def norm(df, num='', denom=''):
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-22">
+            <clipboard-copy for="cell-23">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -5012,7 +4982,7 @@ def norm(df, num='', denom=''):
 <span class="c1"># Clear any existing cache</span>
 <span class="n">clear_cache</span><span class="p">()</span>
 </pre></div>
-<div id="cell-22" class="clipboard-copy-txt">from utilz import clear_cache
+<div id="cell-23" class="clipboard-copy-txt">from utilz import clear_cache
 
 # Clear any existing cache
 clear_cache()</div>
@@ -5047,7 +5017,7 @@ clear_cache()</div>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-23">
+            <clipboard-copy for="cell-24">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -5069,7 +5039,7 @@ clear_cache()</div>
 <span class="p">)</span>
 <span class="n">summary</span>
 </pre></div>
-<div id="cell-23" class="clipboard-copy-txt">summary = pipe(
+<div id="cell-24" class="clipboard-copy-txt">summary = pipe(
     "test.csv",
     load,
     groupby("group"),
@@ -5253,7 +5223,7 @@ Exceeded compute time. Result cached to .utilz_cache/norm___denom__score--df__9c
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-24">
+            <clipboard-copy for="cell-25">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -5275,7 +5245,7 @@ Exceeded compute time. Result cached to .utilz_cache/norm___denom__score--df__9c
 <span class="p">)</span>
 <span class="n">summary</span>
 </pre></div>
-<div id="cell-24" class="clipboard-copy-txt">summary = pipe(
+<div id="cell-25" class="clipboard-copy-txt">summary = pipe(
     "test.csv",
     load,
     groupby("group"),
@@ -5441,7 +5411,7 @@ summary</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="summary">Summary<a class="anchor-link" href="#summary">&#182;</a></h2>
+<h1 id="summary">Summary<a class="anchor-link" href="#summary">&#182;</a></h1>
 </div>
 </div>
 </div>
