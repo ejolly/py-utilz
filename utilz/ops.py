@@ -5,7 +5,7 @@ Functional tools
 """
 __all__ = ["check_random_state", "mapcat"]
 
-from joblib import delayed
+from joblib import delayed, Parallel
 from ._utils import ProgressParallel
 import numpy as np
 import pandas as pd
@@ -14,6 +14,7 @@ from collections.abc import Callable, Iterable
 from itertools import chain
 from inspect import signature
 from tqdm import tqdm
+from typeguard import typechecked
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -46,13 +47,17 @@ def _pmap(
     seeds: Union[None, list] = None,
     n_jobs: int = 2,
     backend: Union[None, str] = None,
+    progressbar: bool = True,
     verbose: int = 0,
 ) -> Any:
 
     # Initialize joblib parallelizer
-    parfor = ProgressParallel(
-        prefer=backend, n_jobs=n_jobs, verbose=verbose, total=len(iterme)
-    )
+    if progressbar:
+        parfor = ProgressParallel(
+            prefer=backend, n_jobs=n_jobs, verbose=verbose, total=len(iterme)
+        )
+    else:
+        parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
 
     if seeds is None and not enum:
         call_list = [delayed(func)(elem) for elem in iterme]
@@ -72,8 +77,9 @@ def _pmap(
     return out
 
 
+@typechecked
 def mapcat(
-    func: Callable,
+    func: Union[Callable, None],
     iterme: Iterable,
     concat: bool = True,
     enum: bool = False,
@@ -82,6 +88,7 @@ def mapcat(
     backend: Union[None, str] = None,
     axis: Union[None, int] = None,
     ignore_index: bool = True,
+    pbar: bool = True,
     verbose: int = 0,
 ):
     """
@@ -112,7 +119,10 @@ def mapcat(
         backend (str, optional): Only applies if `n_jobs > 1`. See `joblib.Parallel` for
         options; Default None which uses `loky`
         axis (int; optional): what axis to concatenate over; Default 0 (first)
-        ignore_index (bool; optional): ignore the index when combining DataFrames; Default True
+        ignore_index (bool; optional): ignore the index when combining DataFrames;
+        Default True
+        pbar (bool, optional): whether to use tqdm to show a progressbar; Default
+        True
         verbose (int): `joblib.Parallel` verbosity. Default 0
 
     Examples:
@@ -174,24 +184,26 @@ def mapcat(
                 seeds,
                 n_jobs,
                 backend,
+                pbar,
                 verbose,
             )
         else:
             # Normal loop because its faster than joblib.Parallel with n_jobs == 1 (no
             # overhead cost)
+            iterator = tqdm(iterme) if pbar else iterme
+
             if seeds is None and not enum:
-                op = [func(elem) for elem in tqdm(iterme)]
+                op = [func(elem) for elem in iterator]
             elif seeds is None and enum:
-                op = [func(elem, idx=i) for i, elem in enumerate(tqdm(iterme))]
+                op = [func(elem, idx=i) for i, elem in enumerate(iterator)]
             elif seeds is not None and not enum:
                 op = [
-                    func(elem, random_state=seed)
-                    for elem, seed in zip(tqdm(iterme), seeds)
+                    func(elem, random_state=seed) for elem, seed in zip(iterator, seeds)
                 ]
             elif seeds is not None and enum:
                 op = [
                     func(elem, random_state=seed, idx=i)
-                    for i, (elem, seed) in enumerate(zip(tqdm(iterme), seeds))
+                    for i, (elem, seed) in enumerate(zip(iterator, seeds))
                 ]
 
     if concat:
