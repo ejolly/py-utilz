@@ -1,8 +1,10 @@
-from utilz.verbs import rows, cols, head, tail, rename, assign, summarize
+from utilz.verbs import rows, cols, head, tail, rename, assign, summarize, save
 from utilz.boilerplate import randdf
+from utilz.io import load
 from toolz import pipe
 import pytest
 import numpy as np
+from pathlib import Path
 
 
 def test_rows():
@@ -64,9 +66,13 @@ def test_assign():
     pass
 
 
-@pytest.mark.skip()
 def test_save():
-    pass
+    df = pipe(randdf((20, 3)), save("test"))
+    f = Path("test.csv")
+    assert f.exists()
+    ddf = load("test.csv")
+    assert np.allclose(df.to_numpy(), ddf.to_numpy())
+    f.unlink()
 
 
 def test_pipeline():
@@ -77,10 +83,15 @@ def test_pipeline():
         assign(D1=list("abcde") * 4),
         rename({"A1": "rt", "B1": "score", "C1": "speed", "D1": "group"}),
         assign(rt_doubled="rt*2"),
+        save("test"),
     )
+    f = Path("test.csv")
+    assert f.exists()
     assert df.shape == (20, 5)
     assert all(
         map(lambda c: c in df.columns, ["rt", "score", "speed", "group", "rt_doubled"])
     )
     assert np.allclose(df.rt * 2, df.rt_doubled)
     assert df.group.to_list() == list("abcde") * 4
+    # Clean up
+    f.unlink()
