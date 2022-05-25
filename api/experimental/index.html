@@ -657,7 +657,7 @@ grouped inputs resulting from its own (slow) <code>group_by</code> function</p>
 
 
 <h4 id="utilz.verbs.cols" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">cols</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">cols</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h4>
@@ -685,7 +685,7 @@ grouped inputs resulting from its own (slow) <code>group_by</code> function</p>
 <span class="normal">64</span>
 <span class="normal">65</span>
 <span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
-<span class="k">def</span> <span class="nf">cols</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">cols</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Select columns using a `.query` (str), slicerange (start,stop,step), or indices (list). Uses `plydata.select`&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
