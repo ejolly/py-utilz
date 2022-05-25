@@ -352,6 +352,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#utilz.verbs.head" class="md-nav__link">
+    head()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.verbs.rename" class="md-nav__link">
     rename()
   </a>
@@ -375,6 +382,13 @@
           <li class="md-nav__item">
   <a href="#utilz.verbs.summarize" class="md-nav__link">
     summarize()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.verbs.tail" class="md-nav__link">
+    tail()
   </a>
   
 </li>
@@ -462,6 +476,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#utilz.verbs.head" class="md-nav__link">
+    head()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.verbs.rename" class="md-nav__link">
     rename()
   </a>
@@ -485,6 +506,13 @@
           <li class="md-nav__item">
   <a href="#utilz.verbs.summarize" class="md-nav__link">
     summarize()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.verbs.tail" class="md-nav__link">
+    tail()
   </a>
   
 </li>
@@ -744,6 +772,37 @@ grouped inputs resulting from its own (slow) <code>group_by</code> function</p>
 
 
 
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.verbs.head" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">head</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Call dataframe's <code>.head()</code> method</p>
+
+        <details class="quote">
+          <summary>Source code in <code>utilz/verbs.py</code></summary>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">head</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Call dataframe&#39;s `.head()` method&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+        </details>
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-function">
 
@@ -897,6 +956,37 @@ grouped inputs resulting from its own (slow) <code>group_by</code> function</p>
 
   </div>
 
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.verbs.tail" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tail</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Call dataframe's <code>.tail()</code> method</p>
+
+        <details class="quote">
+          <summary>Source code in <code>utilz/verbs.py</code></summary>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">tail</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Call dataframe&#39;s `.tail()` method&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
