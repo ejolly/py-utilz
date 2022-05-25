@@ -49,7 +49,7 @@ def rows(query, df):
 
 
 @curry
-def cols(query, df):
+def cols(query, df, **kwargs):
     """Select columns using a `.query` (str), slicerange (start,stop,step), or indices (list). Uses `plydata.select`"""
     if isinstance(query, str):
         return select(df, query)
@@ -120,9 +120,11 @@ def apply(func, df):
 
 @curry
 def head(df, n=5):
+    """Call dataframe's `.head()` method"""
     return df.head(n=n)
 
 
 @curry
 def tail(df, n=5):
+    """Call dataframe's `.tail()` method"""
     return df.tail(n=n)
