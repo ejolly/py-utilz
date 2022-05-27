@@ -310,6 +310,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#utilz.io.crawl" class="md-nav__link">
+    crawl()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.io.load" class="md-nav__link">
     load()
   </a>
@@ -332,6 +339,13 @@
           <li class="md-nav__item">
   <a href="#utilz.ops.check_random_state" class="md-nav__link">
     check_random_state()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.filtercat" class="md-nav__link">
+    filtercat()
   </a>
   
 </li>
@@ -541,6 +555,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#utilz.io.crawl" class="md-nav__link">
+    crawl()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.io.load" class="md-nav__link">
     load()
   </a>
@@ -563,6 +584,13 @@
           <li class="md-nav__item">
   <a href="#utilz.ops.check_random_state" class="md-nav__link">
     check_random_state()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.filtercat" class="md-nav__link">
+    filtercat()
   </a>
   
 </li>
@@ -762,8 +790,195 @@ rather than
 
 
 
+<h4 id="utilz.io.crawl" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">crawl</span><span class="p">(</span><span class="n">where</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">ignore_git</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">respect_gitignore</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Crawls a folder and returns a list of Path objects containing folders and files
+while respecting gitignore files if present an any additional ignore file names or patterns</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>where</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[str, <span title="pathlib.Path">Path</span>]</code>
+          </td>
+          <td><p>location to glob in. Defaults to ".".</p></td>
+          <td>
+                <code>&#39;.&#39;</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>ignore_git</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>ignore <code>.git</code> folder. Defaults to True.</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>respect_gitignore</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>read and ignore all files and patterns in</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>ignore</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[None, list, str]</code>
+          </td>
+          <td><p>additional files or patterns to ignore. Defaults to None.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>List</code></td>          <td>
+                <code><span title="typing.List">List</span></code>
+          </td>
+          <td><p><em>description</em></p></td>
+        </tr>
+    </tbody>
+  </table>
+
+        <details class="quote">
+          <summary>Source code in <code>utilz/io.py</code></summary>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">crawl</span><span class="p">(</span>
+    <span class="n">where</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+    <span class="n">ignore_git</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">respect_gitignore</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">ignore</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Crawls a folder and returns a list of Path objects containing folders and files</span>
+<span class="sd">    while respecting gitignore files if present an any additional ignore file names or patterns</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        where (Union[str, Path], optional): location to glob in. Defaults to &quot;.&quot;.</span>
+<span class="sd">        ignore_git (bool, optional): ignore `.git` folder. Defaults to True.</span>
+<span class="sd">        respect_gitignore (bool, optional): read and ignore all files and patterns in</span>
+<span class="sd">        `.gitignore` file. Defaults to True.</span>
+<span class="sd">        ignore (Union[None, list, str], optional): additional files or patterns to ignore. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List: _description_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">ignore</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ignore</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ignore</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">ignore</span> <span class="o">=</span> <span class="p">[</span><span class="n">ignore</span><span class="p">]</span>
+    <span class="n">ignore_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.git&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">ignore_git</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">respect_gitignore</span><span class="p">:</span>
+        <span class="n">ignore_list</span> <span class="o">+=</span> <span class="n">mapcat</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">load</span><span class="p">(</span><span class="s2">&quot;.gitignore&quot;</span><span class="p">))</span>
+
+    <span class="n">ignore_list</span> <span class="o">+=</span> <span class="n">ignore</span>
+    <span class="c1"># Split glob patterns and regular file/folder name matches</span>
+    <span class="n">globs</span><span class="p">,</span> <span class="n">nonglobs</span> <span class="o">=</span> <span class="n">filtercat</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">ignore_list</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="s2">&quot;split&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Generator for all files</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">where</span><span class="p">)</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Filter out folders and file names from gitignore</span>
+    <span class="c1"># Filter out glob patters from gitignore</span>
+    <span class="k">return</span> <span class="n">pipe</span><span class="p">(</span>
+        <span class="n">files</span><span class="p">,</span>
+        <span class="n">filtercat</span><span class="p">(</span><span class="n">nonglobs</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">filtercat</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="n">fnmatchcase</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">globs</span><span class="p">),</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">sort</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h4 id="utilz.io.load" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">assert_notempty</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h4>
@@ -775,9 +990,10 @@ rather than
 string) and you'll back a python object based on the file-extension:</p>
 <ul>
 <li><code>.csv</code>: <code>pd.Dataframe</code></li>
-<li><code>.txt</code>: <code>np.ndarray</code>, <code>list[str]</code> (lines a file), or <code>str</code> (all file contents)</li>
 <li><code>.p/.pickle</code>: output of <code>pickle.load</code></li>
 <li><code>.json</code>: <code>str</code> or <code>dict</code></li>
+<li><code>.txt</code>: <code>np.ndarray</code>, <code>list[str]</code> (lines a file), or <code>str</code> (all file contents)</li>
+<li>other file-extensions are attempted to be loaded like <code>.txt</code> files</li>
 </ul>
 
   <p><strong>Parameters:</strong></p>
@@ -822,6 +1038,16 @@ string) and you'll back a python object based on the file-extension:</p>
           </td>
         </tr>
         <tr>
+          <td><code>assert_notempty(bool,</code></td>
+          <td>
+                <code>optional</code>
+          </td>
+          <td><p>make sure the output is not Falsey (e.g. empty</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
           <td><code>verbose</code></td>
           <td>
                 <code>bool</code>
@@ -838,6 +1064,16 @@ string) and you'll back a python object based on the file-extension:</p>
           <td><p>keyword arguments to <code>pd.read_csv</code> or <code>np.loadtxt</code></p></td>
           <td>
                 <code>{}</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>assert_notempty</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>raise an error if the returned output is</p></td>
+          <td>
+                <code>True</code>
           </td>
         </tr>
     </tbody>
@@ -863,87 +1099,99 @@ string) and you'll back a python object based on the file-extension:</p>
 
         <details class="quote">
           <summary>Source code in <code>utilz/io.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@memoize</span>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@memoize</span>
 <span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
     <span class="n">f</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">as_arr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">as_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">assert_notempty</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -951,9 +1199,10 @@ string) and you'll back a python object based on the file-extension:</p>
 <span class="sd">    string) and you&#39;ll back a python object based on the file-extension:</span>
 
 <span class="sd">    - `.csv`: `pd.Dataframe`</span>
-<span class="sd">    - `.txt`: `np.ndarray`, `list[str]` (lines a file), or `str` (all file contents)</span>
 <span class="sd">    - `.p/.pickle`: output of `pickle.load`</span>
 <span class="sd">    - `.json`: `str` or `dict`</span>
+<span class="sd">    - `.txt`: `np.ndarray`, `list[str]` (lines a file), or `str` (all file contents)</span>
+<span class="sd">    - other file-extensions are attempted to be loaded like `.txt` files</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        f (Path/str): name or path object to load</span>
@@ -961,8 +1210,12 @@ string) and you'll back a python object based on the file-extension:</p>
 <span class="sd">        Default False</span>
 <span class="sd">        as_str (bool, optional): open txt/json as a single string instead of</span>
 <span class="sd">        splitting on newlines; Default False</span>
+<span class="sd">        assert_notempty(bool, optional): make sure the output is not Falsey (e.g. empty</span>
+<span class="sd">        array, dataframe, string, list); Default True</span>
 <span class="sd">        verbose (bool, optional): whether to print messages during load. Default False</span>
 <span class="sd">        **kwargs: keyword arguments to `pd.read_csv` or `np.loadtxt`</span>
+<span class="sd">        assert_notempty (bool, optional): raise an error if the returned output is</span>
+<span class="sd">        empty; Default True</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        the loaded object</span>
@@ -974,46 +1227,51 @@ string) and you'll back a python object based on the file-extension:</p>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Input must be a string or Path object&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">))</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">))</span>
 
     <span class="c1"># TODO: add support for np.save .npz files</span>
-    <span class="n">supported_exts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;.json&quot;</span><span class="p">,</span> <span class="s2">&quot;.p&quot;</span><span class="p">,</span> <span class="s2">&quot;.pickle&quot;</span><span class="p">,</span> <span class="s2">&quot;.csv&quot;</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.csv&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.csv&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;csv file - using pandas&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.txt&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.p&quot;</span> <span class="ow">or</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.pickle&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pickle file - using pickle&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.json&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;json file - using pickle&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">as_str</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file_handle</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">!=</span> <span class="s2">&quot;.txt&quot;</span><span class="p">:</span>
+            <span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2"> not supported treating as .txt file...&quot;</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">as_arr</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;txt file - using numpy&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;txt file using - open&quot;</span><span class="p">)</span>
             <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">as_str</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">file_handle</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                    <span class="n">out</span> <span class="o">=</span> <span class="n">file_handle</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">file_handle</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+                    <span class="n">out</span> <span class="o">=</span> <span class="n">file_handle</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.p&quot;</span> <span class="ow">or</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.pickle&quot;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pickle file - using pickle&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">assert_notempty</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Loaded data is empty!&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.json&quot;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;json file - using pickle&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">as_str</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file_handle</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_handle</span><span class="p">)</span>
-
-    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File must end in one of: </span><span class="si">{</span><span class="n">supported_exts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
 </code></pre></div></td></tr></table></div>
         </details>
     </div>
@@ -1144,8 +1402,240 @@ string) and you'll back a python object based on the file-extension:</p>
 
 
 
+<h4 id="utilz.ops.filtercat" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">filtercat</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">assert_notempty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Filter an iterable and concatenate the output to a list instead of a generator like
+the standard <code>filter</code> in python. Filtering can be done by passing a function, a
+single <code>str/int/float</code>, or an iterable of <code>str/int/float</code>. Filtering by an iterable
+checks if <code>any</code> of the values in the iterable exist in each item of <code>iterme</code>.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>func</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[<span title="collections.abc.Callable">Callable</span>, <span title="collections.abc.Iterable">Iterable</span>, str, int, float]</code>
+          </td>
+          <td><p>if a function is passed it</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>iterme</code></td>
+          <td>
+                <code><span title="collections.abc.Iterable">Iterable</span></code>
+          </td>
+          <td><p>iterable to filter</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>invert</code></td>
+          <td>
+                <code>bool/str optional</code>
+          </td>
+          <td><p>if <code>True</code>, drops items where <code>how</code> resolves to</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>assert_notempty</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>raise an error if the returned output is</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>list</code></td>          <td>
+          </td>
+          <td><p>filtered version of `iterme</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+        <details class="quote">
+          <summary>Source code in <code>utilz/ops.py</code></summary>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">filtercat</span><span class="p">(</span>
+    <span class="n">how</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+    <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">invert</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">assert_notempty</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filter an iterable and concatenate the output to a list instead of a generator like</span>
+<span class="sd">    the standard `filter` in python. Filtering can be done by passing a function, a</span>
+<span class="sd">    single `str/int/float`, or an iterable of `str/int/float`. Filtering by an iterable</span>
+<span class="sd">    checks if `any` of the values in the iterable exist in each item of `iterme`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (Union[Callable, Iterable, str, int, float]): if a function is passed it</span>
+<span class="sd">        must return `True` or `False`, otherwise will compare each element in `iterme`</span>
+<span class="sd">        to the element passed for `func`. String comparisons check if `func` is `in` and</span>
+<span class="sd">        element of `iterme` while float/integer comparisons check for value equality. If</span>
+<span class="sd">        an iterable is passed filtering is performed for `any` of the elements in the ierable</span>
+<span class="sd">        iterme (Iterable): iterable to filter</span>
+<span class="sd">        invert (bool/str optional): if `True`, drops items where `how` resolves to</span>
+<span class="sd">        `True` rather than keeping them. If passed the string `&#39;split&#39;` will return both</span>
+<span class="sd">        matching and inverted results</span>
+<span class="sd">        assert_notempty (bool, optional): raise an error if the returned output is</span>
+<span class="sd">        empty; Default True</span>
+
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: filtered version of `iterme</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">Callable</span><span class="p">):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="n">how</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="n">how</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="n">how</span> <span class="o">==</span> <span class="n">elem</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">),</span> <span class="n">how</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="o">==</span> <span class="n">elem</span><span class="p">,</span> <span class="n">how</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;If an iterable is passed it must contain strings, ints or floats&quot;</span>
+            <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s2">&quot;Must pass a function, iterable, string, int, or float to filter by&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">invert</span> <span class="o">==</span> <span class="s2">&quot;split&quot;</span><span class="p">:</span>
+        <span class="n">inverts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">filterfalse</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">))</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">assert_notempty</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">inverts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Loaded data is empty!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">matches</span><span class="p">,</span> <span class="n">inverts</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">invert</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="n">filtfunc</span> <span class="o">=</span> <span class="n">filterfalse</span> <span class="k">if</span> <span class="n">invert</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="nb">filter</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">filtfunc</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">assert_notempty</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Loaded data is empty!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;invert must be True, False, or &#39;split&#39;&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h4 id="utilz.ops.mapcat" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enum</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enum</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
 
 
 </h4>
@@ -1268,9 +1758,9 @@ list.</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>whether to use tqdm to show a progressbar; Default</p></td>
+          <td><p>whether to use tqdm to sfunc a progressbar; Default</p></td>
           <td>
-                <code>True</code>
+                <code>False</code>
           </td>
         </tr>
         <tr>
@@ -1443,7 +1933,17 @@ list.</p>
 <span class="normal">208</span>
 <span class="normal">209</span>
 <span class="normal">210</span>
-<span class="normal">211</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@typechecked</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span>
     <span class="n">func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
     <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
@@ -1454,7 +1954,7 @@ list.</p>
     <span class="n">backend</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">axis</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">ignore_index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">pbar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">pbar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1487,8 +1987,8 @@ list.</p>
 <span class="sd">        axis (int; optional): what axis to concatenate over; Default 0 (first)</span>
 <span class="sd">        ignore_index (bool; optional): ignore the index when combining DataFrames;</span>
 <span class="sd">        Default True</span>
-<span class="sd">        pbar (bool, optional): whether to use tqdm to show a progressbar; Default</span>
-<span class="sd">        True</span>
+<span class="sd">        pbar (bool, optional): whether to use tqdm to sfunc a progressbar; Default</span>
+<span class="sd">        False</span>
 <span class="sd">        verbose (int): `joblib.Parallel` verbosity. Default 0</span>
 
 <span class="sd">    Examples:</span>
@@ -1520,7 +2020,17 @@ list.</p>
         <span class="c1"># No-op if no function</span>
         <span class="n">op</span> <span class="o">=</span> <span class="n">iterme</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">func_args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">func</span> <span class="ow">is</span> <span class="nb">str</span>
+            <span class="ow">or</span> <span class="n">func</span> <span class="ow">is</span> <span class="nb">dict</span>
+            <span class="ow">or</span> <span class="n">func</span> <span class="ow">is</span> <span class="nb">int</span>
+            <span class="ow">or</span> <span class="n">func</span> <span class="ow">is</span> <span class="nb">float</span>
+            <span class="ow">or</span> <span class="n">func</span> <span class="ow">is</span> <span class="nb">tuple</span>
+            <span class="ow">or</span> <span class="n">func</span> <span class="ow">is</span> <span class="nb">dict</span>
+        <span class="p">):</span>
+            <span class="n">func_args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">func_args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
         <span class="k">if</span> <span class="n">enum</span> <span class="ow">and</span> <span class="s2">&quot;idx&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -1580,6 +2090,7 @@ list.</p>
     </div>
 
   </div>
+
 
 
 
