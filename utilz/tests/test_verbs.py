@@ -52,6 +52,11 @@ def test_rename():
 
 
 @pytest.mark.skip()
+def test_summarize():
+    pass
+
+
+@pytest.mark.skip()
 def test_apply():
     pass
 
