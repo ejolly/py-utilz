@@ -1,9 +1,10 @@
-from utilz.ops import check_random_state, mapcat
+from utilz.ops import check_random_state, mapcat, filtercat
 from utilz.boilerplate import randdf
 import numpy as np
 import pandas as pd
 from time import sleep, time
 import pytest
+from toolz import pipe
 
 
 def test_random_state():
@@ -19,6 +20,10 @@ def test_mapcat():
 
     # Just like map
     out = mapcat(lambda x: x * 2, [1, 2, 3, 4])
+    assert out == list(map(lambda x: x * 2, [1, 2, 3, 4]))
+
+    # Currying
+    out = pipe([1, 2, 3, 4], mapcat(lambda x: x * 2))
     assert out == list(map(lambda x: x * 2, [1, 2, 3, 4]))
 
     # Concatenating nested lists
@@ -107,3 +112,31 @@ def test_parallel_mapcat():
     # But not if it doesn't accept that kwarg
     with pytest.raises(ValueError):
         out = mapcat(f, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
+
+
+def test_filtercat():
+
+    # Length 9
+    arr = ["aa", "ab", "ac", "ba", "bb", "bc", "ca", "cb", "cc"]
+    # Keep anything containing "a"
+    assert len(filtercat("a", arr)) == 5
+    # Drop anything containing "a"
+    assert len(filtercat("a", arr, invert=True)) == 4
+
+    matches, filtered = filtercat("a", arr, invert="split")
+    assert len(matches) == 5
+    assert len(filtered) == 4
+
+    # Remove multiple
+    assert len(filtercat(["aa", "bb", "cc"], arr, invert=True)) == 6
+
+    # Just like filter() if comparison is all False return empty list
+    with pytest.raises(AssertionError):
+        filtercat(1, arr)
+    assert len(filtercat(1, arr, assert_notempty=False)) == 0
+
+    # Currying
+    assert len(pipe(arr, filtercat("a"))) == 5
+
+    # Normal filtering
+    assert all(filtercat(lambda x: isinstance(x, str), arr))

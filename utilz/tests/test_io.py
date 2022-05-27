@@ -1,4 +1,4 @@
-from utilz.io import load
+from utilz.io import load, crawl
 import pytest
 import numpy as np
 import pandas as pd
@@ -79,12 +79,36 @@ def test_load(tmp_path: Path):
     assert len(out) == 2
     assert "name" in out[0].keys()
 
+    # Everything else as text
+    with pytest.warns(UserWarning, match="not supported"):
+        out = load(".gitignore", verbose=True)
+
     # incorrect type
     with pytest.raises(TypeError):
         out = load(10)
 
-    with pytest.raises(TypeError):
-        out = load("doesnotexist")
-
+    # missing file
     with pytest.raises(FileNotFoundError):
         out = load("no.txt")
+
+    # empty file
+    empty = Path("empty")
+    empty.touch()
+    with pytest.raises(AssertionError):
+        out = load("empty")
+
+    # No error
+    out = load("empty", assert_notempty=False)
+    empty.unlink()
+
+
+def test_crawl():
+
+    # TODO: test ignore arg more thoroughly
+    project_root = Path(__file__).parent.parent.parent
+    out = crawl(project_root)
+    assert len(out)
+    assert all(map(lambda f: ".git" not in str(f), out))
+    outf = crawl(project_root, ignore=".vscode")
+    assert all(map(lambda f: ".vscode" not in str(f), outf))
+    assert len(outf) < len(out)

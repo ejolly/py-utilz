@@ -11,3 +11,4 @@ environment-lock.yml
 .ipython*
 docs/dev
 .coverage
+**/__pycache__

@@ -3,7 +3,7 @@ Functional tools
 
 ---
 """
-__all__ = ["check_random_state", "mapcat"]
+__all__ = ["check_random_state", "mapcat", "filtercat"]
 
 from joblib import delayed, Parallel
 from ._utils import ProgressParallel
@@ -11,10 +11,10 @@ import numpy as np
 import pandas as pd
 from typing import Union, Any
 from collections.abc import Callable, Iterable
-from itertools import chain
+from itertools import chain, filterfalse
 from inspect import signature
 from tqdm import tqdm
-from typeguard import typechecked
+from toolz import curry
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -77,7 +77,7 @@ def _pmap(
     return out
 
 
-@typechecked
+@curry
 def mapcat(
     func: Union[Callable, None],
     iterme: Iterable,
@@ -88,7 +88,7 @@ def mapcat(
     backend: Union[None, str] = None,
     axis: Union[None, int] = None,
     ignore_index: bool = True,
-    pbar: bool = True,
+    pbar: bool = False,
     verbose: int = 0,
 ):
     """
@@ -121,8 +121,8 @@ def mapcat(
         axis (int; optional): what axis to concatenate over; Default 0 (first)
         ignore_index (bool; optional): ignore the index when combining DataFrames;
         Default True
-        pbar (bool, optional): whether to use tqdm to show a progressbar; Default
-        True
+        pbar (bool, optional): whether to use tqdm to sfunc a progressbar; Default
+        False
         verbose (int): `joblib.Parallel` verbosity. Default 0
 
     Examples:
@@ -154,7 +154,17 @@ def mapcat(
         # No-op if no function
         op = iterme
     else:
-        func_args = list(signature(func).parameters.keys())
+        if (
+            func is str
+            or func is dict
+            or func is int
+            or func is float
+            or func is tuple
+            or func is dict
+        ):
+            func_args = []
+        else:
+            func_args = list(signature(func).parameters.keys())
 
         if enum and "idx" not in func_args:
             raise ValueError(
@@ -229,11 +239,84 @@ def _concat(op, iterme, axis, ignore_index):
                 return np.stack(op, axis=axis - 1)
             except ValueError as _:
                 return np.array(op)
-        try:
+        if isinstance(op[0], list):
             return list(chain.from_iterable(op))
-        except TypeError as _:
-            return op
+        return op
 
     except Exception as e:
         print(e)
         return op
+
+
+@curry
+def filtercat(
+    how: Union[Callable, Iterable, str, int, float],
+    iterme: Iterable,
+    invert: Union[str, bool] = False,
+    assert_notempty: bool = True,
+):
+    """
+    Filter an iterable and concatenate the output to a list instead of a generator like
+    the standard `filter` in python. Filtering can be done by passing a function, a
+    single `str/int/float`, or an iterable of `str/int/float`. Filtering by an iterable
+    checks if `any` of the values in the iterable exist in each item of `iterme`.
+
+    Args:
+        func (Union[Callable, Iterable, str, int, float]): if a function is passed it
+        must return `True` or `False`, otherwise will compare each element in `iterme`
+        to the element passed for `func`. String comparisons check if `func` is `in` and
+        element of `iterme` while float/integer comparisons check for value equality. If
+        an iterable is passed filtering is performed for `any` of the elements in the ierable
+        iterme (Iterable): iterable to filter
+        invert (bool/str optional): if `True`, drops items where `how` resolves to
+        `True` rather than keeping them. If passed the string `'split'` will return both
+        matching and inverted results
+        assert_notempty (bool, optional): raise an error if the returned output is
+        empty; Default True
+
+
+    Returns:
+        list: filtered version of `iterme
+    """
+
+    if isinstance(how, Callable):
+        func = how
+    elif isinstance(how, str):
+        func = lambda elem: how in str(elem)
+    elif isinstance(how, (float, int)):
+        func = lambda elem: how == elem
+    elif isinstance(how, Iterable):
+        if isinstance(how[0], str):
+            func = lambda elem: any(map(lambda h: h in str(elem), how))
+        elif isinstance(how[1], (float, int)):
+            func = lambda elem: any(map(lambda h: h == elem, how))
+        else:
+            raise TypeError(
+                "If an iterable is passed it must contain strings, ints or floats"
+            )
+    else:
+        raise TypeError(
+            "Must pass a function, iterable, string, int, or float to filter by"
+        )
+
+    if invert == "split":
+        inverts = list(filterfalse(func, iterme))
+        matches = list(filter(func, iterme))
+
+        if assert_notempty and (len(inverts) == 0 or len(matches) == 0):
+            raise AssertionError("Loaded data is empty!")
+        return matches, inverts
+
+    elif isinstance(invert, bool):
+        filtfunc = filterfalse if invert is True else filter
+        out = list(filtfunc(func, iterme))
+        if assert_notempty and len(out) == 0:
+            raise AssertionError("Loaded data is empty!")
+        return out
+    else:
+        raise TypeError("invert must be True, False, or 'split'")
+
+
+@curry
+def sort(iterme: Iterable, **kwargs):
+    return sorted(iterme, **kwargs)
