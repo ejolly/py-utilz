@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
-from utilz.boilerplate import randdf, mpinit
-import matplotlib.pyplot as plt
+from utilz.boilerplate import randdf
 
 
 def test_randdf():
@@ -23,10 +22,3 @@ def test_randdf():
     assert isinstance(df, pd.DataFrame)
     assert df.shape == (20, 5)
     assert all((a == b for a, b in zip(df.columns, five_col)))
-
-
-def test_mpinit():
-    f, axs = mpinit(subplots=(2, 2))
-    assert f is not None
-    assert axs.shape == (2, 2)
-    plt.close(f)

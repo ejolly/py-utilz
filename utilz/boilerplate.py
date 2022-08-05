@@ -2,30 +2,13 @@
 Functions that exist purely to save boilerplate.
 """
 
-__all__ = ["mpinit", "randdf"]
+__all__ = ["randdf"]
 
 import pandas as pd
 from typing import Union
 import string
 from itertools import cycle
 from .ops import check_random_state
-
-
-def mpinit(figsize: tuple = (8, 6), subplots: tuple = (1, 1)):
-    """
-    Setup matplotlib subplots boilerplate
-
-    Args:
-        figsize (tuple, optional): Figure size. Defaults to (8, 6).
-        subplots (tuple, optional): subplot grid size. Defaults to (1, 1).
-
-    Returns:
-        tuple ((Figure, Axes)): matplotlib figure handle and axes
-    """
-    if "plt" not in dir():
-        import matplotlib.pyplot as plt
-    f, ax = plt.subplots(*subplots, figsize=figsize)
-    return f, ax
 
 
 def randdf(
