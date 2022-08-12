@@ -13,7 +13,7 @@ with open("requirements-optional.txt") as f:
     optional_requirements = f.read().splitlines()
 
 setup(
-    name="utilz",
+    name="py-utilz",
     version=version["__version__"],
     author="Eshin Jolly",
     author_email="eshin.jolly@gmail.com",

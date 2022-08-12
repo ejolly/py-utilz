@@ -6,6 +6,8 @@
 
 Convenient helper functions, decorators, and data analysis tools to make life easier with minimal dependencies:
 
+`pip install py-utilz`
+
 ```python
 from utilz import mapcat
 
