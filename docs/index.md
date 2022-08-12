@@ -7,13 +7,13 @@
 Convenient helper functions, decorators, and data analysis tools to make life easier with minimal dependencies:
 
 ```python
-from utilz import mapcat, pmap 
+from utilz import mapcat
 
 # Combine function results into a list, array, or dataframe
 mapcat(myfunc, myiterable) 
 
 # Syntactic sugar for joblib.Parallel
-pmap(myfunc, myiterable, n_jobs=4)
+mapcat(myfunc, myiterable, n_jobs=4)
 ```
 
 ```python
