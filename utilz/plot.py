@@ -7,6 +7,7 @@ __all__ = ["mpinit", "stripbarplot", "savefig"]
 import seaborn as sns
 from pathlib import Path
 from matplotlib.figure import Figure
+import numpy as np
 
 
 def mpinit(figsize: tuple = (8, 6), subplots: tuple = (1, 1)):
@@ -58,7 +59,9 @@ def stripbarplot(
     Returns:
         Axis: plot axis handle
     """
-    ax = sns.barplot(*args, **kwargs, data=data)
+    ax = kwargs.pop("ax", None)
+    estimator = kwargs.pop("estimator", np.mean)
+    ax = sns.barplot(*args, **kwargs, data=data, ax=ax, estimator=estimator)
     ax = sns.stripplot(*args, **kwargs, color=pointcolor, data=data, ax=ax)
 
     if xlabel:
