@@ -94,7 +94,7 @@ def timeit(func):
 
 
 def maybe(
-    fpath: Union[str, Path],
+    fpath: str = None,
     force: bool = False,
     as_arr: bool = False,
     as_str: bool = False,
@@ -120,6 +120,8 @@ def maybe(
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
+            if fpath is None:
+                raise ValueError("function must take an fpath arugment of type Path")
             if not force and fpath.exists():
                 if fpath.is_file() or (fpath.is_dir() and any(fpath.iterdir())):
                     print("Exists: loading previously saved output")
