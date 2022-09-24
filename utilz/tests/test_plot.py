@@ -1,6 +1,8 @@
 from utilz.plot import mpinit, stripbarplot, savefig
+from utilz.boilerplate import randdf
 import matplotlib.pyplot as plt
 from pathlib import Path
+import numpy as np
 
 
 def test_mpinit():
@@ -11,7 +13,15 @@ def test_mpinit():
 
 
 def test_stripbarplot():
-    pass
+    df = randdf((12, 3))
+    df["group"] = ["a"] * 4 + ["b"] * 4 + ["c"] * 4
+    ax = stripbarplot(x="group", y="A1", data=df)
+    assert ax is not None
+    plt.close("all")
+    f, axs = mpinit()
+    out = stripbarplot(x="group", y="A1", data=df, ax=axs, estimator=np.median)
+    assert out == axs
+    plt.close(f)
 
 
 def test_savefig(tmp_path: Path):
