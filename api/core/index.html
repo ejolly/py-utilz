@@ -442,6 +442,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#utilz.dftools.select" class="md-nav__link">
+    select()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -690,6 +697,13 @@
           <li class="md-nav__item">
   <a href="#utilz.dftools.norm_by_group" class="md-nav__link">
     norm_by_group()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.dftools.select" class="md-nav__link">
+    select()
   </a>
   
 </li>
@@ -2640,7 +2654,7 @@ will return the results of globbing the directory for all files</p>
         <tr>
           <td><code>group_cols</code></td>
           <td>
-                <code>str/list</code>
+                <code>str/List</code>
           </td>
           <td><p>column names to group on in dataframe</p></td>
           <td>
@@ -2662,9 +2676,7 @@ will return the results of globbing the directory for all files</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dftools.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">76</span>
 <span class="normal">77</span>
 <span class="normal">78</span>
 <span class="normal">79</span>
@@ -2678,14 +2690,16 @@ will return the results of globbing the directory for all files</p>
 <span class="normal">87</span>
 <span class="normal">88</span>
 <span class="normal">89</span>
-<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
-<span class="k">def</span> <span class="nf">assert_balanced_groups</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="k">def</span> <span class="nf">assert_balanced_groups</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if each group of `grpcols` has the same dimensions</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        df (pd.DataFrame): input dataframe</span>
-<span class="sd">        group_cols (str/list): column names to group on in dataframe</span>
+<span class="sd">        group_cols (str/List): column names to group on in dataframe</span>
 <span class="sd">        shape (tuple/None, optional): optional group sizes to ensure</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -2771,9 +2785,7 @@ will return the results of globbing the directory for all files</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dftools.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 95</span>
 <span class="normal"> 96</span>
 <span class="normal"> 97</span>
 <span class="normal"> 98</span>
@@ -2788,8 +2800,10 @@ will return the results of globbing the directory for all files</p>
 <span class="normal">107</span>
 <span class="normal">108</span>
 <span class="normal">109</span>
-<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
-<span class="k">def</span> <span class="nf">assert_same_nunique</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">valcol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="k">def</span> <span class="nf">assert_same_nunique</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span> <span class="n">valcol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if each group has the same number of unique values in `valcol`</span>
 
@@ -2892,9 +2906,7 @@ will return the results of globbing the directory for all files</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dftools.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span>
@@ -2926,7 +2938,9 @@ will return the results of globbing the directory for all files</p>
 <span class="normal">68</span>
 <span class="normal">69</span>
 <span class="normal">70</span>
-<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
 <span class="k">def</span> <span class="nf">norm_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcol</span><span class="p">,</span> <span class="n">valcol</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">addcol</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Normalize values in a column separately per group</span>
@@ -2946,7 +2960,7 @@ will return the results of globbing the directory for all files</p>
             <span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span> <span class="o">/</span> <span class="n">dat</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">dat</span>
 
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grpcol</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grpcol</span><span class="p">,</span> <span class="n">List</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Grouping by multiple columns is not supported&quot;</span><span class="p">)</span>
 
     <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">grpcol</span><span class="p">)[</span><span class="n">valcol</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">_norm</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
@@ -2961,6 +2975,41 @@ will return the results of globbing the directory for all files</p>
         <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valcol</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">_by_</span><span class="si">{</span><span class="n">grpcol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">out</span><span class="p">})</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">out</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.dftools.select" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Make it easier to grab columns in a chain of operations, e.g.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/dftools.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make it easier to grab columns in a chain of operations, e.g.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[[</span><span class="o">*</span><span class="n">args</span><span class="p">]]</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -3104,7 +3153,7 @@ will return the results of globbing the directory for all files</p>
 
 
 <h4 id="utilz.plot.savefig" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">savefig</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">raster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">raster_extension</span><span class="o">=</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">savefig</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">raster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_subdirs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">raster_extension</span><span class="o">=</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h4>
 
@@ -3171,6 +3220,16 @@ also optionally prevent file-overwriting</p>
                 <code>bool</code>
           </td>
           <td><p>whether to save vector file. Defaults to True.</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>use_subdirs</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>whether to split saving of raster and vector files</p></td>
           <td>
                 <code>True</code>
           </td>
@@ -3251,12 +3310,22 @@ also optionally prevent file-overwriting</p>
 <span class="normal">124</span>
 <span class="normal">125</span>
 <span class="normal">126</span>
-<span class="normal">127</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">savefig</span><span class="p">(</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">savefig</span><span class="p">(</span>
     <span class="n">f</span><span class="p">:</span> <span class="n">Figure</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">raster</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">vector</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">use_subdirs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">raster_extension</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;jpg&quot;</span><span class="p">,</span>
     <span class="n">bbox_inches</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;tight&quot;</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -3273,6 +3342,8 @@ also optionally prevent file-overwriting</p>
 <span class="sd">        name (str): filename without extension</span>
 <span class="sd">        raster (bool, optional): whether to save raster file. Defaults to True.</span>
 <span class="sd">        vector (bool, optional): whether to save vector file. Defaults to True.</span>
+<span class="sd">        use_subdirs (bool, optional): whether to split saving of raster and vector files</span>
+<span class="sd">        into subdirectories called &#39;raster&#39; and &#39;vector&#39;. Defaults to True.</span>
 <span class="sd">        raster_extension (str, optional): raster file type. Defaults to &quot;jpg&quot;.</span>
 <span class="sd">        bbox_inches (str, optional): see bbox_inches in plt.savefig. Defaults to &quot;tight&quot;.</span>
 <span class="sd">        overwrite (bool, optional): whether to overwrite any existing files. Defaults to True.</span>
@@ -3283,10 +3354,16 @@ also optionally prevent file-overwriting</p>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;path must be a `pathlib.Path` object&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
-    <span class="n">raster_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">raster_extension</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">vector_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
+    <span class="k">if</span> <span class="n">use_subdirs</span><span class="p">:</span>
+        <span class="n">raster_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">/</span> <span class="s2">&quot;raster&quot;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">raster_extension</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">vector_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">/</span> <span class="s2">&quot;vector&quot;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">raster_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">raster_extension</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">vector_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">raster_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="n">raster_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">vector_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">vector_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">vector</span><span class="p">:</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">vector_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">vector_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()):</span>
             <span class="n">f</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">vector_path</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="n">bbox_inches</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
