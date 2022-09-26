@@ -12,7 +12,6 @@ import numpy as np
 from functools import wraps
 from typing import Union, List
 from pandas.api.extensions import register_dataframe_accessor
-from pandas.core.base import PandasObject
 from pandas.core.groupby.groupby import GroupBy
 
 
@@ -37,14 +36,14 @@ def _register_dataframe_method(method):
 
 
 @_register_dataframe_method
-def norm_by_group(df, grpcol, valcol, center=True, scale=True, addcol=True):
+def norm_by_group(df, grpcol, valcols, center=True, scale=True, addcol=True):
     """
-    Normalize values in a column separately per group
+    Normalize values in one or more columns separately per group
 
     Args:
         df (pd.DataFrame): input dataframe
         grpcols (str): grouping col
-        valcol (str): value col
+        valcols (Union[str, List]): value cols
         center (bool, optional): mean center. Defaults to True.
         scale (bool, optional): divide by standard deviation. Defaults to True.
     """
@@ -59,7 +58,10 @@ def norm_by_group(df, grpcol, valcol, center=True, scale=True, addcol=True):
     if isinstance(grpcol, List):
         raise NotImplementedError("Grouping by multiple columns is not supported")
 
-    out = df.groupby(grpcol)[valcol].transform(_norm, center, scale)
+    if not isinstance(valcols, List):
+        valcols = [valcols]
+
+    out = df.groupby(grpcol)[valcols].transform(_norm, center, scale)
 
     if addcol:
         if center and not scale:
@@ -68,9 +70,12 @@ def norm_by_group(df, grpcol, valcol, center=True, scale=True, addcol=True):
             idx = "scaled"
         elif center and scale:
             idx = "normed"
-        return df.assign(**{f"{valcol}_{idx}_by_{grpcol}": out})
-    else:
-        return out
+
+        assign_dict = {}
+        for valcol, col in zip(valcols, out):
+            assign_dict[f"{valcol}_{idx}_by_{grpcol}"] = col
+        out = df.assign(**assign_dict)
+    return out.squeeze()
 
 
 @_register_dataframe_method
@@ -113,13 +118,19 @@ def assert_same_nunique(df, grpcols: Union[str, List], valcol: str, size=None):
 
 
 @_register_dataframe_method
-def select(df, *args):
+def select(df, *args, **kwargs):
     """
-    Make it easier to grab columns in a chain of operations, e.g. `df.query("age >
-    21").select("height", "weight").agg(("mean", "sd"))`
+    Make it easier to grab columns and optionally rename columns in a a chain of
+    operations, e.g. `df.query("age >21").select("height", "weight").agg(("mean",
+    "sd"))` or df.select(sepal_width='width', stem_height='height')
 
     """
-    return df[[*args]]
+    if kwargs:
+        cols = list(kwargs.keys())
+        out = df[[*cols]]
+        return out.rename(columns=kwargs)
+    out = df[[*args]]
+    return out
 
 
 def _select(dfg, *args):

@@ -12,6 +12,14 @@ def test_norm_by_group(df):
     assert out.shape[1] > df.shape[1]
     assert "sepal_length_normed_by_species" in out.columns
 
+    # Check multiple columns
+    out = df.norm_by_group("species", ["sepal_length", "petal_width"])
+    assert isinstance(out, pd.DataFrame)
+    # Make sure column was added
+    assert out.shape[1] > df.shape[1]
+    assert "sepal_length_normed_by_species" in out.columns
+    assert "petal_width_normed_by_species" in out.columns
+
     out = df.norm_by_group("species", "sepal_length", scale=False)
     assert "sepal_length_centered_by_species" in out.columns
 
@@ -48,6 +56,10 @@ def test_select(df):
 
     out = df.select("sepal_width", "petal_width")
     assert out.shape == (df.shape[0], 2)
+
+    out = df.select(sepal_width="sepal", petal_width="petal")
+    assert out.shape == (df.shape[0], 2)
+    assert list(out.columns) == ["sepal", "petal"]
 
     out = (
         df.groupby("species").select("sepal_width", "petal_width").agg(("mean", "std"))
