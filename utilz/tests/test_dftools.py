@@ -40,3 +40,19 @@ def test_assert_same_nunique(df):
 
     df["val"] = list(range(10)) * 15
     assert df.assert_same_nunique("species", "val")
+
+
+def test_select(df):
+    out = df.select("species")
+    assert out.shape == (df.shape[0], 1)
+
+    out = df.select("sepal_width", "petal_width")
+    assert out.shape == (df.shape[0], 2)
+
+    out = (
+        df.groupby("species").select("sepal_width", "petal_width").agg(("mean", "std"))
+    )
+    aggd = df.groupby("species").agg(
+        {"sepal_width": ["mean", "std"], "petal_width": ["mean", "std"]}
+    )
+    assert out.equals(aggd)

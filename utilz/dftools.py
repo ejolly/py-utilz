@@ -10,8 +10,10 @@ __all__ = ["norm_by_group", "assert_balanced_groups", "assert_same_nunique"]
 
 import numpy as np
 from functools import wraps
-from typing import Union
+from typing import Union, List
 from pandas.api.extensions import register_dataframe_accessor
+from pandas.core.base import PandasObject
+from pandas.core.groupby.groupby import GroupBy
 
 
 # Register a function as a method attached to the Pandas DataFrame. Note: credit for
@@ -54,7 +56,7 @@ def norm_by_group(df, grpcol, valcol, center=True, scale=True, addcol=True):
             dat = dat / dat.std()
         return dat
 
-    if isinstance(grpcol, list):
+    if isinstance(grpcol, List):
         raise NotImplementedError("Grouping by multiple columns is not supported")
 
     out = df.groupby(grpcol)[valcol].transform(_norm, center, scale)
@@ -72,13 +74,13 @@ def norm_by_group(df, grpcol, valcol, center=True, scale=True, addcol=True):
 
 
 @_register_dataframe_method
-def assert_balanced_groups(df, grpcols: Union[str, list], size=None):
+def assert_balanced_groups(df, grpcols: Union[str, List], size=None):
     """
     Check if each group of `grpcols` has the same dimensions
 
     Args:
         df (pd.DataFrame): input dataframe
-        group_cols (str/list): column names to group on in dataframe
+        group_cols (str/List): column names to group on in dataframe
         shape (tuple/None, optional): optional group sizes to ensure
     """
 
@@ -91,7 +93,7 @@ def assert_balanced_groups(df, grpcols: Union[str, list], size=None):
 
 
 @_register_dataframe_method
-def assert_same_nunique(df, grpcols: Union[str, list], valcol: str, size=None):
+def assert_same_nunique(df, grpcols: Union[str, List], valcol: str, size=None):
     """
     Check if each group has the same number of unique values in `valcol`
 
@@ -108,3 +110,22 @@ def assert_same_nunique(df, grpcols: Union[str, list], valcol: str, size=None):
         raise AssertionError(f"Groups don't have same nunique values!\n{grouped}")
     else:
         return True
+
+
+@_register_dataframe_method
+def select(df, *args):
+    """
+    Make it easier to grab columns in a chain of operations, e.g. `df.query("age >
+    21").select("height", "weight").agg(("mean", "sd"))`
+
+    """
+    return df[[*args]]
+
+
+def _select(dfg, *args):
+    """Same function for monkeypatching groupby objects"""
+    return dfg[[*args]]
+
+
+# Monkeypatch groupby object with a .select method
+GroupBy.select = _select
