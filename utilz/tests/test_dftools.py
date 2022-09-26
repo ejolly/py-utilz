@@ -51,11 +51,15 @@ def test_assert_same_nunique(df):
 
 
 def test_select(df):
+    num_cols = df.shape[1]
     out = df.select("species")
     assert out.shape == (df.shape[0], 1)
 
     out = df.select("sepal_width", "petal_width")
     assert out.shape == (df.shape[0], 2)
+
+    out = df.select("-sepal_width")
+    assert out.shape[1] == num_cols - 1
 
     out = df.select(sepal_width="sepal", petal_width="petal")
     assert out.shape == (df.shape[0], 2)
@@ -68,3 +72,7 @@ def test_select(df):
         {"sepal_width": ["mean", "std"], "petal_width": ["mean", "std"]}
     )
     assert out.equals(aggd)
+
+    # Can't mix and match args and kwargs
+    with pytest.raises(ValueError):
+        df.select("-species", sepal_width="width")

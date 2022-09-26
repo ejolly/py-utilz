@@ -2,7 +2,7 @@
     "editor.formatOnSave": true,
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "python.defaultInterpreterPath": "${workspaceFolder}/env/bin/python",
+    "python.defaultInterpreterPath": "/Users/Esh/anaconda3/envs/utilz/bin/python",
     "python.terminal.activateEnvironment": true,
     "python.linting.flake8Enabled": true,
     "python.linting.pycodestyleEnabled": false,

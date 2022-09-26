@@ -13,6 +13,7 @@ from functools import wraps
 from typing import Union, List
 from pandas.api.extensions import register_dataframe_accessor
 from pandas.core.groupby.groupby import GroupBy
+from utilz import filtercat, mapcat
 
 
 # Register a function as a method attached to the Pandas DataFrame. Note: credit for
@@ -120,17 +121,38 @@ def assert_same_nunique(df, grpcols: Union[str, List], valcol: str, size=None):
 @_register_dataframe_method
 def select(df, *args, **kwargs):
     """
-    Make it easier to grab columns and optionally rename columns in a a chain of
-    operations, e.g. `df.query("age >21").select("height", "weight").agg(("mean",
-    "sd"))` or df.select(sepal_width='width', stem_height='height')
+    Select one ore more columns by name. Drop one or more columns by prepending '-' to
+    the name. Rename columns using keyword arguments.
+
+    Examples:
+
+        >>> # Grab 2 columns
+        >>> df.select('sepal_width', 'petal_width')
+
+
+        >>> # Get all columns except one
+        >>> df.select('-sepal_width')
+
+        >>> # Grab a column and rename it
+        >>> df.select(sepal_width='width')
 
     """
     if kwargs:
+        if args:
+            raise ValueError(
+                "mixing arguments and keyword arguments is not supported. If you want to filter columns and rename them, you should instead chain multiple calls to .select. For example: df.select('-sepal_length').select(petal_width='width', species='flower')"
+            )
         cols = list(kwargs.keys())
-        out = df[[*cols]]
-        return out.rename(columns=kwargs)
-    out = df[[*args]]
-    return out
+        return df.filter(items=cols, axis="columns").rename(columns=kwargs)
+    col_list = [*args]
+    # Split columns to keep and drop based on '-' prefix
+    drop, keep = filtercat("-", col_list, invert="split", assert_notempty=False)
+    # Remove the prefix
+    if len(drop):
+        drop = mapcat(lambda col: col[1:], drop)
+    if len(keep):
+        return df.drop(columns=drop).filter(items=keep, axis="columns")
+    return df.drop(columns=drop)
 
 
 def _select(dfg, *args):

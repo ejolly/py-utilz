@@ -17,7 +17,6 @@ nav:
   - Quick Overview: intro.ipynb
   - API:
       - Core: api/core.md
-      - Experimental: api/experimental/index.md
 plugins:
   - mkdocs-jupyter:
       ignore: ["dev/*"]
