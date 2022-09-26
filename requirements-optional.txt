@@ -1,3 +1,2 @@
-plydata >= 0.4.3
 toolz
 tqdm
