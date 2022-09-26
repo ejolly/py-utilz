@@ -2676,12 +2676,7 @@ will return the results of globbing the directory for all files</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dftools.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">81</span>
 <span class="normal">82</span>
 <span class="normal">83</span>
 <span class="normal">84</span>
@@ -2692,7 +2687,12 @@ will return the results of globbing the directory for all files</p>
 <span class="normal">89</span>
 <span class="normal">90</span>
 <span class="normal">91</span>
-<span class="normal">92</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span>
+<span class="normal">97</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
 <span class="k">def</span> <span class="nf">assert_balanced_groups</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if each group of `grpcols` has the same dimensions</span>
@@ -2785,12 +2785,7 @@ will return the results of globbing the directory for all files</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dftools.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
 <span class="normal">103</span>
@@ -2802,7 +2797,12 @@ will return the results of globbing the directory for all files</p>
 <span class="normal">109</span>
 <span class="normal">110</span>
 <span class="normal">111</span>
-<span class="normal">112</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
 <span class="k">def</span> <span class="nf">assert_same_nunique</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span> <span class="n">valcol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if each group has the same number of unique values in `valcol`</span>
@@ -2831,14 +2831,14 @@ will return the results of globbing the directory for all files</p>
 
 
 <h4 id="utilz.dftools.norm_by_group" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">norm_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcol</span><span class="p">,</span> <span class="n">valcol</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">addcol</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">norm_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcol</span><span class="p">,</span> <span class="n">valcols</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">addcol</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
 
 </h4>
 
 
   <div class="doc doc-contents ">
   
-      <p>Normalize values in a column separately per group</p>
+      <p>Normalize values in one or more columns separately per group</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2872,11 +2872,11 @@ will return the results of globbing the directory for all files</p>
           </td>
         </tr>
         <tr>
-          <td><code>valcol</code></td>
+          <td><code>valcols</code></td>
           <td>
-                <code>str</code>
+                <code><span title="typing.Union">Union</span>[str, <span title="typing.List">List</span>]</code>
           </td>
-          <td><p>value col</p></td>
+          <td><p>value cols</p></td>
           <td>
               <em>required</em>
           </td>
@@ -2906,7 +2906,8 @@ will return the results of globbing the directory for all files</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dftools.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
+<span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span>
@@ -2940,15 +2941,20 @@ will return the results of globbing the directory for all files</p>
 <span class="normal">70</span>
 <span class="normal">71</span>
 <span class="normal">72</span>
-<span class="normal">73</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
-<span class="k">def</span> <span class="nf">norm_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcol</span><span class="p">,</span> <span class="n">valcol</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">addcol</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="k">def</span> <span class="nf">norm_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grpcol</span><span class="p">,</span> <span class="n">valcols</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">addcol</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Normalize values in a column separately per group</span>
+<span class="sd">    Normalize values in one or more columns separately per group</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        df (pd.DataFrame): input dataframe</span>
 <span class="sd">        grpcols (str): grouping col</span>
-<span class="sd">        valcol (str): value col</span>
+<span class="sd">        valcols (Union[str, List]): value cols</span>
 <span class="sd">        center (bool, optional): mean center. Defaults to True.</span>
 <span class="sd">        scale (bool, optional): divide by standard deviation. Defaults to True.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2963,7 +2969,10 @@ will return the results of globbing the directory for all files</p>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grpcol</span><span class="p">,</span> <span class="n">List</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Grouping by multiple columns is not supported&quot;</span><span class="p">)</span>
 
-    <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">grpcol</span><span class="p">)[</span><span class="n">valcol</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">_norm</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">valcols</span><span class="p">,</span> <span class="n">List</span><span class="p">):</span>
+        <span class="n">valcols</span> <span class="o">=</span> <span class="p">[</span><span class="n">valcols</span><span class="p">]</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">grpcol</span><span class="p">)[</span><span class="n">valcols</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">_norm</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">addcol</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">center</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">scale</span><span class="p">:</span>
@@ -2972,9 +2981,12 @@ will return the results of globbing the directory for all files</p>
             <span class="n">idx</span> <span class="o">=</span> <span class="s2">&quot;scaled&quot;</span>
         <span class="k">elif</span> <span class="n">center</span> <span class="ow">and</span> <span class="n">scale</span><span class="p">:</span>
             <span class="n">idx</span> <span class="o">=</span> <span class="s2">&quot;normed&quot;</span>
-        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valcol</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">_by_</span><span class="si">{</span><span class="n">grpcol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">out</span><span class="p">})</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">out</span>
+
+        <span class="n">assign_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">valcol</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">valcols</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+            <span class="n">assign_dict</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valcol</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">_by_</span><span class="si">{</span><span class="n">grpcol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">col</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="n">assign_dict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -2986,33 +2998,46 @@ will return the results of globbing the directory for all files</p>
 
 
 <h4 id="utilz.dftools.select" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h4>
 
 
   <div class="doc doc-contents ">
   
-      <p>Make it easier to grab columns in a chain of operations, e.g. <code>df.query("age &gt;
-21").select("height", "weight").agg(("mean", "sd"))</code></p>
+      <p>Make it easier to grab columns and optionally rename columns in a a chain of
+operations, e.g. <code>df.query("age &gt;21").select("height", "weight").agg(("mean",
+"sd"))</code> or df.select(sepal_width='width', stem_height='height')</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dftools.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">120</span>
 <span class="normal">121</span>
-<span class="normal">122</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
-<span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Make it easier to grab columns in a chain of operations, e.g. `df.query(&quot;age &gt;</span>
-<span class="sd">    21&quot;).select(&quot;height&quot;, &quot;weight&quot;).agg((&quot;mean&quot;, &quot;sd&quot;))`</span>
+<span class="sd">    Make it easier to grab columns and optionally rename columns in a a chain of</span>
+<span class="sd">    operations, e.g. `df.query(&quot;age &gt;21&quot;).select(&quot;height&quot;, &quot;weight&quot;).agg((&quot;mean&quot;,</span>
+<span class="sd">    &quot;sd&quot;))` or df.select(sepal_width=&#39;width&#39;, stem_height=&#39;height&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">df</span><span class="p">[[</span><span class="o">*</span><span class="n">args</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="o">*</span><span class="n">cols</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="o">*</span><span class="n">args</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">out</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
