@@ -2993,7 +2993,8 @@ will return the results of globbing the directory for all files</p>
 
   <div class="doc doc-contents ">
   
-      <p>Make it easier to grab columns in a chain of operations, e.g.</p>
+      <p>Make it easier to grab columns in a chain of operations, e.g. <code>df.query("age &gt;
+21").select("height", "weight").agg(("mean", "sd"))</code></p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dftools.py</code></summary>
@@ -3003,10 +3004,12 @@ will return the results of globbing the directory for all files</p>
 <span class="normal">118</span>
 <span class="normal">119</span>
 <span class="normal">120</span>
-<span class="normal">121</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="normal">121</span>
+<span class="normal">122</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
 <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Make it easier to grab columns in a chain of operations, e.g.</span>
+<span class="sd">    Make it easier to grab columns in a chain of operations, e.g. `df.query(&quot;age &gt;</span>
+<span class="sd">    21&quot;).select(&quot;height&quot;, &quot;weight&quot;).agg((&quot;mean&quot;, &quot;sd&quot;))`</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">df</span><span class="p">[[</span><span class="o">*</span><span class="n">args</span><span class="p">]]</span>
