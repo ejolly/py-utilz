@@ -89,6 +89,7 @@ def savefig(
     path: Path = None,
     raster: bool = True,
     vector: bool = True,
+    use_subdirs: bool = True,
     raster_extension: str = "jpg",
     bbox_inches: str = "tight",
     overwrite: bool = True,
@@ -105,6 +106,8 @@ def savefig(
         name (str): filename without extension
         raster (bool, optional): whether to save raster file. Defaults to True.
         vector (bool, optional): whether to save vector file. Defaults to True.
+        use_subdirs (bool, optional): whether to split saving of raster and vector files
+        into subdirectories called 'raster' and 'vector'. Defaults to True.
         raster_extension (str, optional): raster file type. Defaults to "jpg".
         bbox_inches (str, optional): see bbox_inches in plt.savefig. Defaults to "tight".
         overwrite (bool, optional): whether to overwrite any existing files. Defaults to True.
@@ -115,10 +118,16 @@ def savefig(
             raise TypeError("path must be a `pathlib.Path` object")
     else:
         path = Path.cwd()
-    raster_path = path / f"{name}.{raster_extension}"
-    vector_path = path / f"{name}.pdf"
+    if use_subdirs:
+        raster_path = path / "raster" / f"{name}.{raster_extension}"
+        vector_path = path / "vector" / f"{name}.pdf"
+    else:
+        raster_path = path / f"{name}.{raster_extension}"
+        vector_path = path / f"{name}.pdf"
     if not raster_path.parent.exists():
         raster_path.parent.mkdir()
+    if not vector_path.parent.exists():
+        vector_path.parent.mkdir()
     if vector:
         if (vector_path.exists() and overwrite) or (not vector_path.exists()):
             f.savefig(vector_path, bbox_inches=bbox_inches, **kwargs)
