@@ -38,6 +38,7 @@ jobs:
       # 4. Actually run the tests with coverage
       - name: Run Tests
         run: |
+          poetry run python --version
           poetry run coverage run --source=utilz -m pytest
 
       # 5. Send coverage to coveralls.io but waiting on parallelization to finish
