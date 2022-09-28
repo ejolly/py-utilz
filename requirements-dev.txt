@@ -1,9 +1,0 @@
--r requirements.txt
-mkdocs
-mkdocs-material
-mkdocstrings-python
-mkdocs-jupyter
-jupyter-contrib-nbextensions
-black
-pytest
-pytest-sugar
