@@ -21,6 +21,7 @@ def load(
     as_arr: bool = False,
     as_str: bool = False,
     verbose: bool = False,
+    glob: str = "*",
     assert_notempty: bool = True,
     **kwargs,
 ) -> Any:
@@ -44,6 +45,7 @@ def load(
         array, dataframe, string, list); Default True
         verbose (bool, optional): whether to print messages during load. Default False
         **kwargs: keyword arguments to `pd.read_csv` or `np.loadtxt`
+        glob (string, optional): globbing pattern if f is a directory. Defaults to all files
         assert_notempty (bool, optional): raise an error if the returned output is
         empty; Default True
 
@@ -57,7 +59,7 @@ def load(
         raise TypeError("Input must be a string or Path object")
 
     if f.is_dir():
-        out = list(f.glob("*"))
+        out = list(f.glob(glob))
 
     # TODO: add support for np.save .npz files
 
