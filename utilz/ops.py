@@ -304,14 +304,14 @@ def filtercat(
         matches = list(filter(func, iterme))
 
         if assert_notempty and (len(inverts) == 0 or len(matches) == 0):
-            raise AssertionError("Loaded data is empty!")
+            raise AssertionError("Filtered data is empty!")
         return matches, inverts
 
     elif isinstance(invert, bool):
         filtfunc = filterfalse if invert is True else filter
         out = list(filtfunc(func, iterme))
         if assert_notempty and len(out) == 0:
-            raise AssertionError("Loaded data is empty!")
+            raise AssertionError("Filtered data is empty!")
         return out
     else:
         raise TypeError("invert must be True, False, or 'split'")
