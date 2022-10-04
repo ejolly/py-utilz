@@ -76,3 +76,12 @@ def test_select(df):
     # Can't mix and match args and kwargs
     with pytest.raises(ValueError):
         df.select("-species", sepal_width="width")
+
+    # Ensure that single selects with groupby objects return series and not dataframe
+    # groupby objects just like normal [] indexing
+    dfg = df.groupby("species").select("sepal_width")
+    assert isinstance(dfg, pd.core.groupby.generic.SeriesGroupBy)
+
+    # This gives us dataframe groupby
+    dfg = df.groupby("species").select("sepal_width", "petal_width")
+    assert isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy)

@@ -157,6 +157,10 @@ def select(df, *args, **kwargs):
 
 def _select(dfg, *args):
     """Same function for monkeypatching groupby objects"""
+
+    # Force return of Series groupby by if single column requested
+    if len(args) == 1:
+        return dfg[args[0]]
     return dfg[[*args]]
 
 
