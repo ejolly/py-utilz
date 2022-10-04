@@ -104,3 +104,25 @@ def test_select(df):
     # Dataframe has no unique method; only Series do
     with pytest.raises(AttributeError):
         dfg.unique()
+
+
+def test_reshape(df):
+
+    # We need a unique identifier
+    df = df.reset_index().rename(columns={"index": "pid"})
+
+    # Wide -> Long
+    # just uses pd.melt
+    long = df.to_long(["pid", "species"], value_name="length")
+    assert long.shape == (600, 4)
+    assert "length" in long.columns
+
+    # Long -> Wide
+    # wraps and slightly modifies pd.pivot
+    wide = long.to_wide(index=["pid", "species"], columns="variable").reset_index()
+    # Currently not working cause returns columns that are multi-indexed
+    # Can't just pass single val for index cause complains about duplicates
+    # Some attempts at flattening cols:
+    # wide.columns = wide.columns.get_level_values(0)
+    # wide.columns = wide.columns.get_level_values(1)
+    # wide.columns = wide.columns.get_level_values(1) + wide.columns.get_level_values(0)

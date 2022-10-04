@@ -257,7 +257,9 @@ def filtercat(
 ):
     """
     Filter an iterable and concatenate the output to a list instead of a generator like
-    the standard `filter` in python. Filtering can be done by passing a function, a
+    the standard `filter` in python. By default always returns the *matching* elements
+    from iterme. This can be inverted using invert=True or split using invert='split'
+    which will return matches, nomatches. Filtering can be done by passing a function, a
     single `str/int/float`, or an iterable of `str/int/float`. Filtering by an iterable
     checks if `any` of the values in the iterable exist in each item of `iterme`.
 

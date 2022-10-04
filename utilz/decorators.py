@@ -122,7 +122,7 @@ def maybe(
         def wrapper(*args, **kwargs):
             if not force and fpath.exists():
                 if fpath.is_file() or (fpath.is_dir() and any(fpath.iterdir())):
-                    print("Exists: loading previously saved output")
+                    print(f"Exists: loading previously saved file: {fpath}")
                     return load(
                         fpath,
                         as_str=as_str,
