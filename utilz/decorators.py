@@ -31,6 +31,20 @@ from .io import load
 from joblib import Memory
 
 
+def _is_notebook() -> bool:
+    """Helper function for show"""
+    try:
+        shell = get_ipython().__class__.__name__
+        if shell == "ZMQInteractiveShell":
+            return True  # Jupyter notebook or qtconsole
+        elif shell == "TerminalInteractiveShell":
+            return False  # Terminal running IPython
+        else:
+            return False  # Other type (?)
+    except NameError:
+        return False
+
+
 def show(func):
     """
     Print result of function call in addition to returning it
@@ -40,7 +54,18 @@ def show(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
-        print(result)
+        if isinstance(result, pd.DataFrame):
+            to_show = result.head()
+        else:
+            to_show = result
+        if _is_notebook():
+            from IPython.display import display
+
+            print_func = display
+        else:
+            print_func = print
+
+        print_func(to_show)
         return result
 
     return wrapper
