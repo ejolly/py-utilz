@@ -85,3 +85,22 @@ def test_select(df):
     # This gives us dataframe groupby
     dfg = df.groupby("species").select("sepal_width", "petal_width")
     assert isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy)
+    # Dataframe has no unique method; only Series do
+    with pytest.raises(AttributeError):
+        dfg.unique()
+
+    # Support negative col naming with groupby objects
+    aggd = df.groupby("species").select("-sepal_width").mean()
+    assert aggd.shape == (3, 3)
+    assert all(aggd.index.tolist() == df.species.unique())
+
+    dfg = df.groupby("species").select("-sepal_length", "-sepal_width", "-petal_length")
+    assert isinstance(dfg, pd.core.groupby.generic.SeriesGroupBy)
+    dfg.unique()
+
+    dfg = df.groupby("species").select("-sepal_length", "-sepal_width")
+    assert isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy)
+
+    # Dataframe has no unique method; only Series do
+    with pytest.raises(AttributeError):
+        dfg.unique()

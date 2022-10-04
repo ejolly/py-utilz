@@ -137,6 +137,7 @@ def select(df, *args, **kwargs):
         >>> df.select(sepal_width='width')
 
     """
+    # "Select as" functionality; get col and rename
     if kwargs:
         if args:
             raise ValueError(
@@ -144,6 +145,8 @@ def select(df, *args, **kwargs):
             )
         cols = list(kwargs.keys())
         return df.filter(items=cols, axis="columns").rename(columns=kwargs)
+
+    # Get col via name or exclude -name
     col_list = [*args]
     # Split columns to keep and drop based on '-' prefix
     drop, keep = filtercat("-", col_list, invert="split", assert_notempty=False)
@@ -160,8 +163,34 @@ def _select(dfg, *args):
 
     # Force return of Series groupby by if single column requested
     if len(args) == 1:
-        return dfg[args[0]]
-    return dfg[[*args]]
+        col = args[0]
+        if not col.startswith("-"):
+            return dfg[args[0]]
+        cols = filtercat(col[1:], dfg.obj.columns, invert=True)
+        # Incase we only have 2 cols and filter out 1 ensure series return type
+        cols = cols[0] if len(cols) == 1 else cols
+        return dfg[cols]
+
+    # Support selecting via col or -col
+    col_list = [*args]
+
+    # Split columns to keep and drop based on '-' prefix
+    drop, keep = filtercat("-", col_list, invert="split", assert_notempty=False)
+
+    # Remove the prefix
+    if len(drop):
+        drop = mapcat(lambda col: col[1:], drop)
+
+    # Add the grouping cols to the drop list
+    drop += dfg.grouper.names
+    cols = filtercat(drop, dfg.obj.columns, invert=True, assert_notempty=False)
+
+    if len(keep):
+        cols = filtercat(keep, cols)
+
+    # Incase we filter down to 1 col ensure series return type
+    cols = cols[0] if len(cols) == 1 else cols
+    return dfg[cols]
 
 
 # Monkeypatch groupby object with a .select method
