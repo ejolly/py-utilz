@@ -30,6 +30,7 @@ def mpinit(figsize: tuple = (8, 6), subplots: tuple = (1, 1)):
 def stripbarplot(
     data,
     pointcolor="black",
+    remove_duplicate_legend=True,
     xlabel=None,
     ylabel=None,
     xticklabels=None,
@@ -61,8 +62,31 @@ def stripbarplot(
     """
     ax = kwargs.pop("ax", None)
     estimator = kwargs.pop("estimator", np.mean)
+    ncol = kwargs.pop("ncol", None)
+    loc = kwargs.pop("loc", None)
+    legend = kwargs.pop("legend", None)
+    alpha = kwargs.pop("alpha", 1)
+
     ax = sns.barplot(*args, **kwargs, data=data, ax=ax, estimator=estimator)
-    ax = sns.stripplot(*args, **kwargs, color=pointcolor, data=data, ax=ax)
+    ax = sns.stripplot(*args, **kwargs, color=pointcolor, data=data, ax=ax, alpha=alpha)
+
+    if legend is False:
+        _ = ax.get_legend().remove()
+
+    elif remove_duplicate_legend:
+        handles, labels = ax.get_legend_handles_labels()
+        half = int(len(handles) / 2)
+        if ncol is None:
+            if loc is None:
+                legend = ax.legend(handles[half:], labels[half:])
+            else:
+                legend = ax.legend(handles[half:], labels[half:], loc=loc)
+
+        elif ncol is not None:
+            if loc is None:
+                legend = ax.legend(handles[half:], labels[half:], ncol=ncol)
+            else:
+                legend = ax.legend(handles[half:], labels[half:], ncol=ncol, loc=loc)
 
     if xlabel:
         ax.set_xlabel(xlabel)
