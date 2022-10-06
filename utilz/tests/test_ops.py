@@ -60,6 +60,15 @@ def test_mapcat():
     assert len(out) == 2
     assert isinstance(out[0], np.ndarray)
 
+    # Passing kwargs to function works
+    out = mapcat(np.std, data, func_kwargs={"ddof": 2})
+    assert isinstance(out, np.ndarray)
+    assert len(out) == 2
+
+    # But they need to be passed as a dict
+    with pytest.raises(TypeError):
+        out = mapcat(np.std, data, func_kwargs=2)
+
     # Loading files into a single dataframe
     def load_data(i):
         # simulate dataloading as dfs
@@ -110,7 +119,7 @@ def test_parallel_mapcat():
     assert np.allclose(out, out2)
 
     # But not if it doesn't accept that kwarg
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         out = mapcat(f, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
 
 
