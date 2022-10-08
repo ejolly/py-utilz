@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "utilz"
+name = "py-utilz"
 version = "0.3.1"
 description = "Faster, easier, more robust python data analysis"
 authors = ["ejolly <eshin.jolly@gmail.com>"]
