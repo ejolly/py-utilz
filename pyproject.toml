@@ -5,6 +5,7 @@ description = "Faster, easier, more robust python data analysis"
 authors = ["ejolly <eshin.jolly@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [{ include = "utilz" }]
 
 [tool.poetry.dependencies]
 python = "^3.8"
