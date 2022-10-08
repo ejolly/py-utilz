@@ -89,7 +89,7 @@ def test_maybe(tmp_path, capsys):
     out_loaded = f("test.csv")
     captured = capsys.readouterr()
     assert "I'm running" not in captured.out
-    assert "Exists: loading previously saved output" in captured.out
+    assert "Exists: loading previously saved file" in captured.out
     assert isinstance(out_loaded, pd.DataFrame)
     assert p.exists()
     assert np.allclose(out.to_numpy(), out_loaded.to_numpy())
@@ -136,7 +136,7 @@ def test_maybe(tmp_path, capsys):
     out_files = f(p)
     captured = capsys.readouterr()
     assert "I'm running" not in captured.out
-    assert "Exists: loading previously saved output" in captured.out
+    assert "Exists: loading previously saved file" in captured.out
     assert isinstance(out_files, list)
     assert isinstance(out_files[0], Path)
 
