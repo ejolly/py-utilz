@@ -6,14 +6,7 @@ Common data operations and transformations often on pandas dataframes. This crea
 
 ---
 """
-__all__ = [
-    "norm_by_group",
-    "assert_balanced_groups",
-    "assert_same_nunique",
-    "select",
-    "to_long",
-    "to_wide",
-]
+__all__ = ["norm_by_group", "assert_balanced_groups", "assert_same_nunique"]
 
 import numpy as np
 from functools import wraps
@@ -123,23 +116,6 @@ def assert_same_nunique(df, grpcols: Union[str, List], valcol: str, size=None):
         raise AssertionError(f"Groups don't have same nunique values!\n{grouped}")
     else:
         return True
-
-
-@_register_dataframe_method
-def to_long(df, *args, **kwargs):
-    return df.melt(*args, **kwargs)
-
-
-@_register_dataframe_method
-def to_wide(df, *args, **kwargs):
-    out = df.pivot(*args, **kwargs)
-    index = kwargs.get("index", None)
-    if isinstance(index, list) and len(index) > 1:
-        out = out.reset_index()
-    elif index is None:
-        cols_to_explode = kwargs.get("columns", None)
-        # TODO: filter against all columns so we can correctly set index
-    return out
 
 
 @_register_dataframe_method
