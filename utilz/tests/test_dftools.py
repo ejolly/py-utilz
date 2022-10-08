@@ -46,8 +46,8 @@ def test_assert_same_nunique(df):
     with pytest.raises(AssertionError):
         assert df.assert_same_nunique("species", "sepal_length")
 
-    df["val"] = list(range(10)) * 15
-    assert df.assert_same_nunique("species", "val")
+    _df = df.assign(val=list(range(10)) * 15)
+    assert _df.assert_same_nunique("species", "val")
 
 
 def test_select(df):

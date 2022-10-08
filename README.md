@@ -36,7 +36,7 @@ def myfunc(args):
 ## Development
 
 1. Install [poetry](https://python-poetry.org/): `curl -sSL https://install.python-poetry.org | python`
-2. Setup virtual environment `poetry install --all-extras`
+2. Setup virtual environment `poetry install`
 3. Run all tests: `poetry run pytest`
 4. Live render docs: `poetry run mkdocs serve`
 
