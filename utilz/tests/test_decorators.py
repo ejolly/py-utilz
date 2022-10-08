@@ -7,7 +7,7 @@ from shutil import rmtree
 from joblib import Memory
 
 
-def test_show(capsys):
+def test_show(capsys, df):
     @show
     def f(x):
         return x
@@ -15,6 +15,15 @@ def test_show(capsys):
     _ = f(10)
     captured = capsys.readouterr()
     assert "10" in captured.out
+
+    @show
+    def ff(df):
+        return df
+
+    _ = ff(df)
+    captured = capsys.readouterr()
+    dfs = df.head().to_string() + "\n"
+    assert captured.out == dfs
 
 
 def test_log(df, capsys):
@@ -80,7 +89,7 @@ def test_maybe(tmp_path, capsys):
     out_loaded = f("test.csv")
     captured = capsys.readouterr()
     assert "I'm running" not in captured.out
-    assert "Exists: loading previously saved output" in captured.out
+    assert "Exists: loading previously saved file" in captured.out
     assert isinstance(out_loaded, pd.DataFrame)
     assert p.exists()
     assert np.allclose(out.to_numpy(), out_loaded.to_numpy())
@@ -127,7 +136,7 @@ def test_maybe(tmp_path, capsys):
     out_files = f(p)
     captured = capsys.readouterr()
     assert "I'm running" not in captured.out
-    assert "Exists: loading previously saved output" in captured.out
+    assert "Exists: loading previously saved file" in captured.out
     assert isinstance(out_files, list)
     assert isinstance(out_files[0], Path)
 

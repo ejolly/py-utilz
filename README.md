@@ -35,8 +35,14 @@ def myfunc(args):
 
 ## Development
 
-1. `pip install -r requirements-dev.txt`
-2. `pip install -r requirements-optional.txt`
+1. Install [poetry](https://python-poetry.org/): `curl -sSL https://install.python-poetry.org | python`
+2. Setup virtual environment `poetry install`
+3. Run all tests: `poetry run pytest`
+4. Live render docs: `poetry run mkdocs serve`
 
-Run all tests: `pytest`  
-Live render docs: `mkdocs serve`  
+### Additional poetry/virtual environment commands
+- Activate environment in current shell: `source activate .venv/bin/activate`
+- Activate environment in sub-process shell: `poetry shell`
+- Add/remove additional packages: `poetry add/remove package_name`
+- Build local package: `poetry build`
+- Deploy to pypi: `poetry publish` (requires auth)

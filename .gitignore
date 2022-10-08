@@ -13,3 +13,5 @@ docs/dev
 .coverage
 **/__pycache__
 cachedir
+.venv
+dist

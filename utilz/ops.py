@@ -49,32 +49,82 @@ def _pmap(
     backend: Union[None, str] = None,
     progressbar: bool = True,
     verbose: int = 0,
+    func_kwargs: Union[None, dict] = None,
 ) -> Any:
 
-    # Initialize joblib parallelizer
-    if progressbar:
-        parfor = ProgressParallel(
-            prefer=backend, n_jobs=n_jobs, verbose=verbose, total=len(iterme)
-        )
+    # Setup progress bars and parallelization
+    if n_jobs < 1 or n_jobs > 1:
+        # Initialize joblib parallelizer
+        if progressbar:
+            parfor = ProgressParallel(
+                prefer=backend, n_jobs=n_jobs, verbose=verbose, total=len(iterme)
+            )
+        else:
+            parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
+
+        wrapped = delayed(func)
+    # n_jobs == 1 so we loop normally to avoid overhead cost incurred from Parallel with
+    # 1 job
     else:
-        parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
+        if progressbar:
+            iterme = tqdm(iterme)
 
-    if seeds is None and not enum:
-        call_list = [delayed(func)(elem) for elem in iterme]
-    elif seeds is None and enum:
-        call_list = [delayed(func)(elem, idx=i) for i, elem in enumerate(iterme)]
-    elif seeds is not None and not enum:
-        call_list = [
-            delayed(func)(elem, random_state=seed) for elem, seed in zip(iterme, seeds)
-        ]
-    elif seeds is not None and enum:
-        call_list = [
-            delayed(func)(elem, random_state=seed, idx=i)
-            for i, (elem, seed) in enumerate(zip(iterme, seeds))
-        ]
+        wrapped = func
 
-    out = parfor(call_list)
-    return out
+    # Without enumeration
+    if not enum:
+
+        # Without random seeds
+        if seeds is None:
+            iterator = iterme
+            if func_kwargs is None:
+                call_list = [wrapped(elem) for elem in iterator]
+            else:
+                call_list = [wrapped(elem, **func_kwargs) for elem in iterator]
+
+        # With random seeds
+        else:
+            iterator = zip(iterme, seeds)
+            if func_kwargs is None:
+                call_list = [
+                    wrapped(elem, random_state=seed) for elem, seed in iterator
+                ]
+            else:
+                call_list = [
+                    wrapped(elem, random_state=seed, **func_kwargs)
+                    for elem, seed in iterator
+                ]
+
+    # With enumeration
+    else:
+        # Without random seeds
+        if seeds is None:
+            iterator = enumerate(iterme)
+            if func_kwargs is None:
+                call_list = [wrapped(elem, idx=i) for i, elem in iterator]
+            else:
+                call_list = [
+                    wrapped(elem, idx=i, **func_kwargs) for i, elem in iterator
+                ]
+
+        # With random seeds
+        else:
+            iterator = enumerate(zip(iterme, seeds))
+            if func_kwargs is None:
+                call_list = [
+                    wrapped(elem, idx=i, random_state=seed)
+                    for i, (elem, seed) in iterator
+                ]
+            else:
+                call_list = [
+                    wrapped(elem, idx=i, random_state=seed, **func_kwargs)
+                    for i, (elem, seed) in iterator
+                ]
+
+    if n_jobs < 1 or n_jobs > 1:
+        return parfor(call_list)
+    else:
+        return call_list
 
 
 @curry
@@ -90,6 +140,7 @@ def mapcat(
     ignore_index: bool = True,
     pbar: bool = False,
     verbose: int = 0,
+    func_kwargs: Union[None, dict] = None,
 ):
     """
     Super-power your `for` loops with a progress-bar and optional *reproducible*
@@ -124,6 +175,8 @@ def mapcat(
         pbar (bool, optional): whether to use tqdm to sfunc a progressbar; Default
         False
         verbose (int): `joblib.Parallel` verbosity. Default 0
+        func_kwargs (dict, optional): optional keyword arguments to pass to func;
+        Default None
 
     Examples:
         >>> # Just like map
@@ -150,6 +203,10 @@ def mapcat(
 
     """
 
+    if func_kwargs is not None and not isinstance(func_kwargs, dict):
+        raise TypeError(
+            "func_kwargs should be pass as a dictionary of kwarg: value names, like: func_kwargs={'ddof': 2}"
+        )
     if func is None:
         # No-op if no function
         op = iterme
@@ -164,19 +221,26 @@ def mapcat(
         ):
             func_args = []
         else:
-            func_args = list(signature(func).parameters.keys())
+            try:
+                func_args = list(signature(func).parameters.keys())
+                if enum and "idx" not in func_args:
+                    raise ValueError(
+                        "Function must accept a keyword argument named 'idx' that accepts an integer if enum is True"
+                    )
 
-        if enum and "idx" not in func_args:
-            raise ValueError(
-                "Function must accept a keyword argument named 'idx' that accepts an integer if enum is True"
-            )
+                if random_state is not False:
+                    if "random_state" not in func_args:
+                        raise ValueError(
+                            "Function must have a keyword argument called 'random_state' if random_state is not False"
+                        )
+            except ValueError as _:
+                # some funcs like numpy c funcs are not inspectable so we have to ksip
+                # these checks
+                func_args = []
 
         if random_state is not False:
-            if "random_state" not in func_args:
-                raise ValueError(
-                    "Function must have a keyword argument called 'random_state' if random_state is not False"
-                )
-
+            # User can pass True instead of a number for non-reproducible
+            # parallelization
             random_state = None if random_state is True else random_state
 
             # Generate a list of random ints, that themselves are seeded by random_state
@@ -185,36 +249,10 @@ def mapcat(
         else:
             seeds = None
 
-        if n_jobs > 1 or n_jobs < 1:
-            # Parallel loop
-            op = _pmap(
-                func,
-                iterme,
-                enum,
-                seeds,
-                n_jobs,
-                backend,
-                pbar,
-                verbose,
-            )
-        else:
-            # Normal loop because its faster than joblib.Parallel with n_jobs == 1 (no
-            # overhead cost)
-            iterator = tqdm(iterme) if pbar else iterme
-
-            if seeds is None and not enum:
-                op = [func(elem) for elem in iterator]
-            elif seeds is None and enum:
-                op = [func(elem, idx=i) for i, elem in enumerate(iterator)]
-            elif seeds is not None and not enum:
-                op = [
-                    func(elem, random_state=seed) for elem, seed in zip(iterator, seeds)
-                ]
-            elif seeds is not None and enum:
-                op = [
-                    func(elem, random_state=seed, idx=i)
-                    for i, (elem, seed) in enumerate(zip(iterator, seeds))
-                ]
+        # Loop; parallel in n_jobs < 1 or > 1
+        op = _pmap(
+            func, iterme, enum, seeds, n_jobs, backend, pbar, verbose, func_kwargs
+        )
 
     if concat:
         return _concat(op, iterme, axis, ignore_index)
@@ -257,7 +295,9 @@ def filtercat(
 ):
     """
     Filter an iterable and concatenate the output to a list instead of a generator like
-    the standard `filter` in python. Filtering can be done by passing a function, a
+    the standard `filter` in python. By default always returns the *matching* elements
+    from iterme. This can be inverted using invert=True or split using invert='split'
+    which will return matches, nomatches. Filtering can be done by passing a function, a
     single `str/int/float`, or an iterable of `str/int/float`. Filtering by an iterable
     checks if `any` of the values in the iterable exist in each item of `iterme`.
 
@@ -304,14 +344,14 @@ def filtercat(
         matches = list(filter(func, iterme))
 
         if assert_notempty and (len(inverts) == 0 or len(matches) == 0):
-            raise AssertionError("Loaded data is empty!")
+            raise AssertionError("Filtered data is empty!")
         return matches, inverts
 
     elif isinstance(invert, bool):
         filtfunc = filterfalse if invert is True else filter
         out = list(filtfunc(func, iterme))
         if assert_notempty and len(out) == 0:
-            raise AssertionError("Loaded data is empty!")
+            raise AssertionError("Filtered data is empty!")
         return out
     else:
         raise TypeError("invert must be True, False, or 'split'")
