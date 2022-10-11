@@ -104,3 +104,56 @@ def test_select(df):
     # Dataframe has no unique method; only Series do
     with pytest.raises(AttributeError):
         dfg.unique()
+
+
+def test_to_long(df):
+
+    # No need to specify id_vars as the rest of the cols will be used by default
+    long = df.to_long(
+        columns=["sepal_width", "sepal_length"], into=("sepal_dim", "inches")
+    )
+    assert long.shape[0] == df.shape[0] * 2
+    assert long.sepal_dim.nunique() == 2
+
+    # Test pass single col without list
+    long = df.to_long("sepal_width")
+    assert long.shape == (df.shape[0], df.shape[1] + 1)
+    assert "sepal_width" not in long.columns
+    assert "sepal_width" in long["variable"].unique()
+
+    # Alias
+    assert long.equals(df.gather("sepal_width"))
+
+    # When remaining columns don't have a unique row id between them we can create one
+    # for the user and add it as a 'unique_id' column
+    long = df.to_long(
+        ["sepal_length", "sepal_width", "petal_length", "petal_width"],
+        into=("dimension", "inches"),
+        add_unique_id=True,
+    )
+    assert "unique_id" in long.columns
+
+
+def test_to_wide(df):
+    # First throw away unique id info
+    long = df.to_long(
+        ["sepal_length", "sepal_width", "petal_length", "petal_width"],
+        into=("dimension", "inches"),
+    )
+    # We can't infer uniques
+    with pytest.raises(ValueError):
+        wide = long.to_wide("dimension", "inches")
+
+    # Then repeat with uniques
+    long = df.to_long(
+        ["sepal_length", "sepal_width", "petal_length", "petal_width"],
+        into=("dimension", "inches"),
+        add_unique_id=True,
+    )
+    wide = long.to_wide("dimension", "inches")
+    assert wide.shape == df.shape
+
+    # Alias
+    assert wide.equals(long.spread("dimension", "inches"))
+
+    # TODO: test how well this works when multiple columns are passed to to_wide

@@ -9,11 +9,14 @@ Common data operations and transformations often on pandas dataframes. This crea
 __all__ = ["norm_by_group", "assert_balanced_groups", "assert_same_nunique"]
 
 import numpy as np
+import pandas as pd
 from functools import wraps
 from typing import Union, List
 from pandas.api.extensions import register_dataframe_accessor
 from pandas.core.groupby.groupby import GroupBy
 from utilz import filtercat, mapcat
+from itertools import permutations
+from math import factorial
 
 
 # Register a function as a method attached to the Pandas DataFrame. Note: credit for
@@ -195,3 +198,71 @@ def _select(dfg, *args):
 
 # Monkeypatch groupby object with a .select method
 GroupBy.select = _select
+
+
+@_register_dataframe_method
+def to_long(df, columns, into=("variable", "value"), add_unique_id=False):
+    if not isinstance(columns, list):
+        columns = [columns]
+    id_vars = [col for col in df.columns if col not in columns]
+    # Warning this is expensive
+    if add_unique_id:
+        num_unique_id_labels = df[id_vars].melt()["value"].nunique()
+        nuniques = int(
+            factorial(num_unique_id_labels)
+            / factorial(num_unique_id_labels - len(id_vars))
+        )
+        # nuniques = len(list(permutations(stacked_id_vars, len(id_vars))))
+        if nuniques < df.shape[0]:
+            print("non-unique index")
+            uniquified = (
+                df.reset_index()
+                .rename(columns={"index": "row_id"})
+                .assign(
+                    unique_id=lambda df: df[id_vars + ["row_id"]].apply(
+                        lambda row: "_".join(row.values.astype(str)), axis=1
+                    )
+                )
+            )
+            return uniquified.melt(
+                id_vars="unique_id",
+                value_vars=columns or list(df.columns),
+                var_name=into[0],
+                value_name=into[1],
+            )
+
+    return df.melt(
+        id_vars=[col for col in df.columns if col not in columns],
+        value_vars=columns or list(df.columns),
+        var_name=into[0],
+        value_name=into[1],
+    )
+
+
+@_register_dataframe_method
+def to_wide(df, column, by):
+
+    index = [col for col in df.columns if col not in [column, by]]
+    try:
+        out = df.pivot(
+            index=index,
+            columns=column,
+            values=by,
+        ).reset_index()
+        return out
+    except ValueError as e:
+        if "duplicate" in str(e):
+            print(
+                f"ERROR: It's not possible to infer what rows are unique from columns that make up the index: {index}. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise the .to_long/.gather methods can create a unique index for with the add_unique_id = True"
+            )
+        raise e
+
+
+@_register_dataframe_method
+def spread(df, *args, **kwargs):
+    return to_wide(df, *args, **kwargs)
+
+
+@_register_dataframe_method
+def gather(df, *args, **kwargs):
+    return to_long(df, *args, **kwargs)
