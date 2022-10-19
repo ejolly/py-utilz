@@ -5,6 +5,7 @@ from time import sleep, time
 from pathlib import Path
 from shutil import rmtree
 from joblib import Memory
+import pickle
 
 
 def test_show(capsys, df):
@@ -139,6 +140,33 @@ def test_maybe(tmp_path, capsys):
     assert "Exists: loading previously saved file" in captured.out
     assert isinstance(out_files, list)
     assert isinstance(out_files[0], Path)
+
+    # Test custom load
+    p = Path(f"{tmp_path}/test.p")
+
+    def myload(f):
+        print("custom load running!")
+        return pickle.load(open(f, "rb"))
+
+    @maybe(p, loadfunc=myload)
+    def f(p):
+        print("I'm running")
+        pickle.dump(["hi"], open(p, "wb"))
+
+    # First run: func executes and saves file
+    out = f(p)
+    captured = capsys.readouterr()
+    assert "I'm running" in captured.out
+    assert p.exists()
+
+    # Second run: just loads file
+    out_loaded = f(p)
+    captured = capsys.readouterr()
+    # assert "I'm running" not in captured.out
+    assert "Exists: loading previously saved file" in captured.out
+    assert "custom load running!" in captured.out
+
+    p.unlink()
 
 
 def test_expensive(df, capsys):

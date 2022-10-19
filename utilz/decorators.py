@@ -22,7 +22,7 @@ __all__ = [
 ]
 
 from functools import wraps
-from typing import Union, Any
+from typing import Union, Any, Callable
 import datetime as dt
 import pandas as pd
 import numpy as np
@@ -120,10 +120,12 @@ def timeit(func):
 
 def maybe(
     fpath: Union[str, Path],
+    loadfunc: Union[Callable, None] = None,
     force: bool = False,
     as_arr: bool = False,
     as_str: bool = False,
     verbose: bool = False,
+    **kwargs,
 ) -> Any:
     """
     Run the decorated `func` only if `fpath` doesn't exist or if it isn't an empty
@@ -148,6 +150,8 @@ def maybe(
             if not force and fpath.exists():
                 if fpath.is_file() or (fpath.is_dir() and any(fpath.iterdir())):
                     print(f"Exists: loading previously saved file: {fpath}")
+                    if loadfunc is not None:
+                        return loadfunc(fpath, **kwargs)
                     return load(
                         fpath,
                         as_str=as_str,

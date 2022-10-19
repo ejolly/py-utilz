@@ -6,7 +6,7 @@ __all__ = ["mpinit", "stripbarplot", "savefig"]
 
 import seaborn as sns
 from pathlib import Path
-from matplotlib.figure import Figure
+from matplotlib.figure import Figure, Axes
 import numpy as np
 
 
@@ -88,21 +88,21 @@ def stripbarplot(
             else:
                 legend = ax.legend(handles[half:], labels[half:], ncol=ncol, loc=loc)
 
-    if xlabel:
+    if xlabel is not None:
         ax.set_xlabel(xlabel)
-    if ylabel:
+    if ylabel is not None:
         ax.set_ylabel(ylabel)
-    if xticklabels:
+    if xticklabels is not None:
         ax.set_xticklabels(xticklabels)
-    if yticklabels:
+    if yticklabels is not None:
         ax.set_yticklabels(yticklabels)
-    if xticks:
+    if xticks is not None:
         ax.set_xticks(xticks)
-    if yticks:
+    if yticks is not None:
         ax.set_yticks(yticks)
-    if xlim:
+    if xlim is not None:
         ax.set(xlim=xlim)
-    if ylim:
+    if ylim is not None:
         ax.set(ylim=ylim)
     return ax
 
@@ -137,6 +137,8 @@ def savefig(
         overwrite (bool, optional): whether to overwrite any existing files. Defaults to True.
 
     """
+    if isinstance(f, Axes):
+        f = f.get_figure()
     if path is not None:
         if not isinstance(path, Path):
             raise TypeError("path must be a `pathlib.Path` object")
