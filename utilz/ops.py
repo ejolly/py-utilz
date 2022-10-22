@@ -14,6 +14,7 @@ __all__ = [
     "many2one",
     "many2many",
     "do",
+    "ifelse",
 ]
 
 from joblib import delayed, Parallel
@@ -488,3 +489,41 @@ def do(func, data, *args, **kwargs):
     if isinstance(func, str):
         func = mc(func, *args, **kwargs)
     return func(data)
+
+
+@curry
+def ifelse(data, conditional, if_true=None, if_false=None, **kwargs):
+    """
+    Simple oneline ternary operator. Pass in something to check, how to check it, what
+    to return if True, and what to return if False. If only one of if_true or if_false
+    is provided, then data is returned if the conditional matches that outcome. This
+    makes it easy to run shorthands like "do something only if this is true"
+
+    Args:
+        data (any): thing to check
+        conditional (bool or callable): a boolean expression or callable that will be
+        applied to data
+        if_true (None, any, optional): None, object, or callable. Defaults to None.
+        if_false (None, any, optional): None, object, or callable. Defaults to None.
+
+    Returns:
+        Any: return from if_true or if_false
+    """
+
+    if if_true is None and if_false is None:
+        raise ValueError("at least one of if_true or if_false must not be None")
+
+    if callable(conditional):
+        conditional = conditional(data)
+    if conditional:
+        if callable(if_true):
+            return if_true(data, **kwargs)
+        elif if_true is None:
+            return data
+        return if_true
+    else:
+        if callable(if_false):
+            return if_false(data, **kwargs)
+        elif if_false is None:
+            return data
+        return if_false

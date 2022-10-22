@@ -8,13 +8,13 @@ from utilz.ops import (
     many2one,
     many2many,
     do,
+    ifelse,
 )
 from utilz.boilerplate import randdf
 import numpy as np
 import pandas as pd
 from time import sleep, time
 import pytest
-from toolz import pipe
 
 
 def test_random_state():
@@ -237,3 +237,28 @@ def test_do():
     # like this
     out = pipe(df, do("head", n=10))
     assert out.equals(df.head(10))
+
+
+def test_ifelse():
+
+    x = 10
+    # If else, but else is implicit and returns input
+    y = ifelse(x, x > 10, x + 1)
+    assert y == x
+
+    # Can invert it too
+    y = ifelse(x, x > 10, if_false=x + 1)
+    assert y >= x
+
+    x = 11
+    # This time be explicit
+    y = ifelse(x, x > 10, x + 1, x)
+    assert y > x
+
+    # Can call funcs too
+    out = ifelse(x, lambda e: e * 2 > 20, "yes", "no")
+    assert out == "yes"
+
+    # Can return them too
+    out = ifelse(x, lambda e: e * 2 > 20, lambda e: e + 10, "no")
+    assert out == 21
