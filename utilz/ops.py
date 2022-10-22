@@ -27,6 +27,8 @@ from itertools import chain, filterfalse
 from inspect import signature
 from tqdm import tqdm
 from toolz import curry, juxt, do
+from matplotlib.figure import Figure, Axes
+from matplotlib.axes._subplots import Subplot
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -375,19 +377,50 @@ def sort(iterme: Iterable, **kwargs):
 
 
 def pipe(data: Any, *funcs: Iterable):
-    """Just like toolz.pipe but always displays last func evaluation and returns
-    second-to last evaluation if the last evaluation returns None, e.g. if print is the
-    las function in pipe"""
-    from IPython.display import display
+    """
+    A "smart" data pipe that makes executing a series of functions much easier. Similar
+    to toolz.pipe but also:
+    - always *displays* the last function evaluation, even when assigning to a variable
+    - recognizes if the the last function evaluation returns None and returns the last
+    non-None return
+    - same if the return is a matplotlib fig or axis
+    """
 
+    try:
+        shell = get_ipython().__class__.__name__
+        if shell == "ZMQInteractiveShell":
+            from IPython.display import display as printfunc
+        else:
+            printfunc = print
+    except NameError:
+        printfunc = print
+
+    show_last_eval = True
+    plot_types = (Figure, Axes, Subplot)
+    isorhasplot = lambda e: isinstance(e, plot_types) or (
+        isinstance(e, tuple) and isinstance(e[0], plot_types)
+    )
+
+    evals = []
     for f in funcs:
-        prev = data
         data = f(data)
+        evals.append(data)
 
-    display(data) if data is not None else display(prev)
-    if data is None:
-        return prev
-    return data
+    if isorhasplot(evals[-1]):
+        show_last_eval = False
+
+    for e in evals[::-1]:
+        if e is None:
+            continue
+        elif isorhasplot(e):
+            continue
+        else:
+            out = e
+            break
+
+    if show_last_eval:
+        printfunc(out)
+    return out
 
 
 @curry

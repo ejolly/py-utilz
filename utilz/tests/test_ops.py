@@ -203,7 +203,7 @@ def test_pipes():
     out = pipe(
         df,
         alongwith(lambda df: df.head(), out_name="head", in_name="data"),
-        alongwith(lambda d: d["data"].tail(), out_name="tail"),
+        alongwith(lambda dic: dic["data"].tail(), out_name="tail"),
     )
     assert list(out.keys()) == ["tail", "head", "data"]
 

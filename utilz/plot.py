@@ -2,11 +2,12 @@
 Plotting convenience functions
 """
 
-__all__ = ["mpinit", "stripbarplot", "savefig", "tweak"]
+__all__ = ["mpinit", "stripbarplot", "savefig", "tweak", "newax"]
 
 import seaborn as sns
 from pathlib import Path
 from matplotlib.figure import Figure, Axes
+import matplotlib.pyplot as plt
 import numpy as np
 from toolz import curry
 from typing import Union
@@ -175,3 +176,9 @@ def tweak(plot: Union[Figure, Axes], **kwargs) -> Union[Figure, Axes]:
     if isinstance(plot, Axes):
         plot.set(**kwargs)
         return plot
+
+
+def newax(*args, **kwargs):
+    """Short hand for a new axis on a new figure. Usueful for calling multiple plotting
+    routines in a pipe() but wanting separate figures."""
+    return plt.subplots()[1]

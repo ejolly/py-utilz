@@ -20,4 +20,4 @@ from .dftools import (
     assert_same_nunique,
     select,
 )
-from .plot import mpinit, stripbarplot, savefig, tweak
+from .plot import mpinit, stripbarplot, savefig, tweak, newax
