@@ -19,6 +19,5 @@ from .dftools import (
     assert_balanced_groups,
     assert_same_nunique,
     select,
-    apply,
 )
 from .plot import mpinit, stripbarplot, savefig, tweak
