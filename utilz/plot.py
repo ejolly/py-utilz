@@ -2,13 +2,14 @@
 Plotting convenience functions
 """
 
-__all__ = ["mpinit", "stripbarplot", "savefig"]
+__all__ = ["mpinit", "stripbarplot", "savefig", "tweak"]
 
 import seaborn as sns
 from pathlib import Path
 from matplotlib.figure import Figure, Axes
 import numpy as np
 from toolz import curry
+from typing import Union
 
 
 def mpinit(figsize: tuple = (8, 6), subplots: tuple = (1, 1)):
@@ -43,7 +44,7 @@ def stripbarplot(
     ylim=None,
     *args,
     **kwargs,
-):
+) -> Axes:
     """
     Combines a call to `sns.barplot` + `sns.stripplot`. Optionally set some axis level attributes during plot creation. Leaving these attributes None will return the default labels that seaborn sets.
 
@@ -121,7 +122,7 @@ def savefig(
     bbox_inches: str = "tight",
     overwrite: bool = True,
     **kwargs,
-):
+) -> None:
     """
     Quick figure saving function. Saves raster (jpg) and vector (pdf) by default. Can
     also optionally prevent file-overwriting
@@ -163,3 +164,14 @@ def savefig(
     if raster:
         if (raster_path.exists() and overwrite) or (not raster_path.exists()):
             f.savefig(raster_path, bbox_inches=bbox_inches, **kwargs)
+
+
+@curry
+def tweak(plot: Union[Figure, Axes], **kwargs) -> Union[Figure, Axes]:
+    """
+    swiss-army knife to quickly change most aesthetics on a plot, e.g. tick labels,
+    fontsize, etc, in a unified function call
+    """
+    if isinstance(plot, Axes):
+        plot.set(**kwargs)
+        return plot
