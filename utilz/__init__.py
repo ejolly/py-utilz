@@ -9,6 +9,7 @@ from .ops import (
     many2many,
     many2one,
     one2many,
+    do,
 )
 from .io import load, crawl
 from .boilerplate import randdf

@@ -7,6 +7,7 @@ from utilz.ops import (
     one2many,
     many2one,
     many2many,
+    do,
 )
 from utilz.boilerplate import randdf
 import numpy as np
@@ -205,3 +206,34 @@ def test_pipes():
         alongwith(lambda d: d["data"].tail(), out_name="tail"),
     )
     assert list(out.keys()) == ["tail", "head", "data"]
+
+
+def test_do():
+    df = randdf()
+
+    # Do is equivalent to a pipe with a single function, but the signature is reversed
+    # because do is also curried and can be used within a pipe:
+    # pipe(data, func)
+    # do(func, data)
+    out = do(lambda df: df.head(), df)
+    assert out.equals(df.head())
+    assert out.equals(pipe(df, lambda df: df.head()))
+
+    out = do("head", df)
+    assert out.equals(df.head())
+
+    out = pipe(df, do("head"))
+    assert out.equals(df.head())
+
+    # With no currying can omit kwarg names and they will be passed to func/method in
+    # positional order
+    out = do("head", df, 10)
+    assert out.equals(df.head(10))
+
+    # With currying you must use kwargs
+    with pytest.raises(AttributeError):
+        out = pipe(df, do("head", 10))
+
+    # like this
+    out = pipe(df, do("head", n=10))
+    assert out.equals(df.head(10))

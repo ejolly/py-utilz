@@ -13,6 +13,7 @@ __all__ = [
     "one2many",
     "many2one",
     "many2many",
+    "do",
 ]
 
 from joblib import delayed, Parallel
@@ -24,7 +25,7 @@ from collections.abc import Callable, Iterable
 from itertools import chain, filterfalse
 from inspect import signature
 from tqdm import tqdm
-from toolz import curry, juxt
+from toolz import curry, juxt, do
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -441,7 +442,7 @@ def one2many(funcs, data):
 
     if not isinstance(funcs, Iterable) or not len(funcs) > 1:
         raise TypeError(
-            "funcs needs to be iterable. For a apple a sing function use do()"
+            "funcs needs to be iterable. To apply a single function use do()"
         )
 
     together = juxt(*funcs)  # already returns tuple
@@ -471,8 +472,19 @@ def many2many(funcs, data):
 
     if not isinstance(funcs, Iterable) or not len(funcs) > 1:
         raise TypeError(
-            "funcs needs to be iterable. For a apple a sing function use do()"
+            "funcs needs to be iterable. To apply a single function use do()"
         )
     return tuple(
         [f(a) for f, a in zip(funcs, data)]
     )  # cast to tuple to agree with one2many
+
+
+@curry
+def do(func, data, *args, **kwargs):
+    """Apply a single function to data or call a method on data, while passing optional
+    kwargs to that functinon or method"""
+    from operator import methodcaller as mc
+
+    if isinstance(func, str):
+        func = mc(func, *args, **kwargs)
+    return func(data)
