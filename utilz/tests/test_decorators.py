@@ -26,6 +26,14 @@ def test_show(capsys, df):
     dfs = df.head().to_string() + "\n"
     assert captured.out == dfs
 
+    # If function returns nothing, show return input
+    @show
+    def f(x):
+        print("bye")
+
+    out = f("hi")
+    assert out == "hi"
+
 
 def test_log(df, capsys):
     @log

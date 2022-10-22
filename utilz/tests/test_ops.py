@@ -1,4 +1,13 @@
-from utilz.ops import check_random_state, mapcat, filtercat
+from utilz.ops import (
+    check_random_state,
+    mapcat,
+    filtercat,
+    pipe,
+    alongwith,
+    one2many,
+    many2one,
+    many2many,
+)
 from utilz.boilerplate import randdf
 import numpy as np
 import pandas as pd
@@ -149,3 +158,50 @@ def test_filtercat():
 
     # Normal filtering
     assert all(filtercat(lambda x: isinstance(x, str), arr))
+
+
+def test_pipes():
+
+    df = randdf((15, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5)
+
+    # input -> output
+    out = pipe(df, lambda df: df.head())
+    assert out.shape == (5, 4)
+
+    # input -> (output1, output2)
+    out = pipe(df, one2many((lambda df: df.head(), lambda df: df.mean())))
+    assert isinstance(out, tuple)
+    assert len(out) == 2
+
+    # (input1, input2) -> output
+    out = pipe([df, df], many2one(lambda df1, df2: df1 + df2))
+    assert out.equals(df + df)
+
+    # (input1, input2) -> (output1, output2)
+    out = pipe([df, df], many2many((lambda df: df.head(5), lambda df: df.tail(10))))
+    assert isinstance(out, tuple)
+    assert pd.concat(out).equals(df)
+
+    # input -> (output, input2)
+    out = pipe(df, alongwith(lambda df: df.head()))
+    assert isinstance(out, tuple)
+    assert out[0].equals(df.head()) and out[1].equals(df)
+
+    # When naming any inputs or outputs, return type is a dict
+    out = pipe(df, alongwith(lambda df: df.head(), out_name="head", in_name="data"))
+    assert list(out.keys()) == ["head", "data"]
+    assert out["head"].equals(df.head())
+    assert out["data"].equals(df)
+
+    # Can name only one input or output too
+    out = pipe(df, alongwith(lambda df: df.head(), out_name="head"))
+    assert list(out.keys()) == ["head", "input"]
+
+    # Can run multiple alongsides in a row and dicts will merge as the input_name key is
+    # not propagated forward if the input to alongwith is already a dict
+    out = pipe(
+        df,
+        alongwith(lambda df: df.head(), out_name="head", in_name="data"),
+        alongwith(lambda d: d["data"].tail(), out_name="tail"),
+    )
+    assert list(out.keys()) == ["tail", "head", "data"]

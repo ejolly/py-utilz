@@ -54,10 +54,18 @@ def show(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
-        if isinstance(result, pd.DataFrame):
+        if result is None:
+            # Return input
+            to_show = args[0]
+            to_return = to_show
+        elif isinstance(result, pd.DataFrame):
+            # print head, return result
             to_show = result.head()
+            to_return = result
         else:
+            # print and return result
             to_show = result
+            to_return = to_show
         if _is_notebook():
             from IPython.display import display
 
@@ -66,7 +74,7 @@ def show(func):
             print_func = print
 
         print_func(to_show)
-        return result
+        return to_return
 
     return wrapper
 

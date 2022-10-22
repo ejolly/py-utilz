@@ -8,6 +8,7 @@ import seaborn as sns
 from pathlib import Path
 from matplotlib.figure import Figure, Axes
 import numpy as np
+from toolz import curry
 
 
 def mpinit(figsize: tuple = (8, 6), subplots: tuple = (1, 1)):
@@ -27,6 +28,7 @@ def mpinit(figsize: tuple = (8, 6), subplots: tuple = (1, 1)):
     return f, ax
 
 
+@curry
 def stripbarplot(
     data,
     pointcolor="black",
@@ -107,6 +109,7 @@ def stripbarplot(
     return ax
 
 
+@curry
 def savefig(
     f: Figure,
     name: str,

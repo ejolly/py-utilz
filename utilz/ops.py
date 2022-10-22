@@ -3,7 +3,17 @@ Functional tools
 
 ---
 """
-__all__ = ["check_random_state", "mapcat", "filtercat"]
+__all__ = [
+    "check_random_state",
+    "mapcat",
+    "filtercat",
+    "sort",
+    "pipe",
+    "alongwith",
+    "one2many",
+    "many2one",
+    "many2many",
+]
 
 from joblib import delayed, Parallel
 from ._utils import ProgressParallel
@@ -14,7 +24,7 @@ from collections.abc import Callable, Iterable
 from itertools import chain, filterfalse
 from inspect import signature
 from tqdm import tqdm
-from toolz import curry
+from toolz import curry, juxt
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -360,3 +370,109 @@ def filtercat(
 @curry
 def sort(iterme: Iterable, **kwargs):
     return sorted(iterme, **kwargs)
+
+
+def pipe(data: Any, *funcs: Iterable):
+    """Just like toolz.pipe but always displays last func evaluation and returns
+    second-to last evaluation if the last evaluation returns None, e.g. if print is the
+    las function in pipe"""
+    from IPython.display import display
+
+    for f in funcs:
+        prev = data
+        data = f(data)
+
+    display(data) if data is not None else display(prev)
+    if data is None:
+        return prev
+    return data
+
+
+@curry
+def alongwith(
+    func,
+    data,
+    out_name=None,
+    in_name=None,
+):
+    """
+
+    Execute a function and return a dictionary of (out_name: func(data), in_name: data).
+    Primarily useful inside of a pipe when you want to add additional data to pass to
+    the next step of the pipe, e.g.
+
+    pipe(
+        data,
+        alongwith(lambda df: data.mean(), output_name='mean', input_name='data'),
+        lambda d: d['data'] - d['mean']
+    )
+
+    Multiple alongwith() inside of a pipe will merge resulting dictionaries. If out_name
+    and in_name are both None, then the return type is a tuple
+
+    Args:
+        func (callable): function to execute
+        data (any): input data
+        out_name (str, optional): dict key name to call function return. Defaults to 'output'.
+        in_name (str, optional): dict key name to call input data. Defaults to 'input'
+
+    Returns:
+        tuple/dict: (func(data), data) or {'output': func(data), 'input': data}
+    """
+
+    if out_name is None and in_name is None:
+        return func(data), data
+    if out_name is not None and in_name is None:
+        in_name = "input"
+    if in_name is not None and out_name is None:
+        out_name = "output"
+
+    out = {out_name: func(data)}
+    if isinstance(data, dict):
+        return {**out, **data}
+    else:
+        out[in_name] = data
+        return out
+
+
+@curry
+def one2many(funcs, data):
+    """Take a single input and execute multiple functions (as a tuple) on it, returning multiple outputs"""
+
+    if not isinstance(funcs, Iterable) or not len(funcs) > 1:
+        raise TypeError(
+            "funcs needs to be iterable. For a apple a sing function use do()"
+        )
+
+    together = juxt(*funcs)  # already returns tuple
+    return together(data)
+
+
+@curry
+def many2one(func, data):
+    """Take a multiple inputs (as a tuple) and jointly pass them to a single func,
+    returning a single output"""
+
+    if not isinstance(data, Iterable) or not len(data) > 1:
+        raise TypeError("input data needs to be iterable. For a single datum use do()")
+
+    return func(*data)
+
+
+@curry
+def many2many(funcs, data):
+    """Take a multiple inputs (as a tuple) and execute multiple functions (as a tuple)
+    on each one separately. Exectues each function-input pair, so returns the same
+    number of outputs as inputs"""
+    from collections.abc import Iterable
+
+    if not isinstance(data, Iterable) or not len(data) > 1:
+        raise TypeError("input data needs to be iterable. For a single datum use do()")
+
+    if not isinstance(funcs, Iterable) or not len(funcs) > 1:
+        raise TypeError(
+            "funcs needs to be iterable. For a apple a sing function use do()"
+        )
+    return tuple(
+        [f(a) for f, a in zip(funcs, data)]
+    )  # cast to tuple to agree with one2many
