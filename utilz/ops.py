@@ -390,6 +390,8 @@ def pipe(data: Any, *funcs: Iterable):
     return data
 
 
+# fatten()
+# fattening the pipe
 @curry
 def alongwith(
     func,
@@ -399,9 +401,9 @@ def alongwith(
 ):
     """
 
-    Execute a function and return a dictionary of (out_name: func(data), in_name: data).
-    Primarily useful inside of a pipe when you want to add additional data to pass to
-    the next step of the pipe, e.g.
+    Execute a function and return a tuple or dictionary of (out_name: func(data),
+    in_name: data). Primarily useful inside of a pipe when you want to add additional
+    data to pass to the next step of the pipe, i.e. "fatten" the pipe with more data
 
     pipe(
         data,
@@ -437,6 +439,8 @@ def alongwith(
         return out
 
 
+# distribute()
+# distribute single datum across multiple funcs
 @curry
 def one2many(funcs, data):
     """Take a single input and execute multiple functions (as a tuple) on it, returning multiple outputs"""
@@ -450,6 +454,8 @@ def one2many(funcs, data):
     return together(data)
 
 
+# condense()
+# condense multiple data into one func
 @curry
 def many2one(func, data):
     """Take a multiple inputs (as a tuple) and jointly pass them to a single func,
@@ -461,6 +467,8 @@ def many2one(func, data):
     return func(*data)
 
 
+# concurrently()
+# pass multiple data each through its own func
 @curry
 def many2many(funcs, data):
     """Take a multiple inputs (as a tuple) and execute multiple functions (as a tuple)
@@ -483,7 +491,8 @@ def many2many(funcs, data):
 @curry
 def do(func, data, *args, **kwargs):
     """Apply a single function to data or call a method on data, while passing optional
-    kwargs to that functinon or method"""
+    kwargs to that functinon or method. Useful for JS style IIFEs (immediately invoked
+    fuction expressions) outside of the context of a pipe"""
     from operator import methodcaller as mc
 
     if isinstance(func, str):

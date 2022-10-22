@@ -19,6 +19,6 @@ from .dftools import (
     assert_balanced_groups,
     assert_same_nunique,
     select,
-    apply,
 )
+from .dfverbs import apply, assign, groupby, head, tail
 from .plot import mpinit, stripbarplot, savefig, tweak

@@ -6,7 +6,7 @@ Common data operations and transformations often on pandas dataframes. This crea
 
 ---
 """
-__all__ = ["norm_by_group", "assert_balanced_groups", "assert_same_nunique", "apply"]
+__all__ = ["norm_by_group", "assert_balanced_groups", "assert_same_nunique"]
 
 import numpy as np
 import pandas as pd
@@ -267,35 +267,3 @@ def spread(df, *args, **kwargs):
 @_register_dataframe_method
 def gather(df, *args, **kwargs):
     return to_long(df, *args, **kwargs)
-
-
-@curry
-def assign(dfg, *args, **kwargs):
-    """
-    Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses `plydata.define/mutate` unless the input is a grouped DataFrame
-    in which case it falls back to pandas methods because `plydata` can only handle
-    grouped inputs resulting from its own (slow) `group_by` function
-    """
-
-    if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
-        prev = dfg.filter(lambda _: True).reset_index()
-        for _, (k, v) in enumerate(kwargs.items()):
-            res = dfg.apply(lambda group: group.eval(v)).reset_index()
-            group_col = res.columns[0]
-            if isinstance(res, pd.DataFrame) and "level_1" in res.columns:
-                res.columns = [res.columns[0], "index"] + [k]
-                prev = prev.merge(res.drop(columns=group_col), on="index")
-            else:
-                res.columns = [res.columns[0]] + [k]
-                prev = prev.merge(res, on=group_col)
-        prev = prev.sort_values(by="index").drop(columns="index").reset_index(drop=True)
-        return prev
-    else:
-        return dfg.assign(*args, **kwargs)
-
-
-@curry
-def apply(func, df, drop_index=True):
-    """Call a dataframe or groupby object's `.apply` method followed by a reset_index"""
-    out = df.apply(func)
-    return out.reset_index(drop=drop_index)
