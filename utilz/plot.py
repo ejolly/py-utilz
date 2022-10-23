@@ -165,6 +165,7 @@ def savefig(
     if raster:
         if (raster_path.exists() and overwrite) or (not raster_path.exists()):
             f.savefig(raster_path, bbox_inches=bbox_inches, **kwargs)
+    return f
 
 
 @curry

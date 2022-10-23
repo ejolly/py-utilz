@@ -11,8 +11,11 @@ __all__ = [
     "pipe",
     "alongwith",
     "one2many",
-    "many2one",
+    "fork",
     "many2many",
+    "distribute",
+    "many2one",
+    "altogether",
     "do",
     "ifelse",
 ]
@@ -376,15 +379,20 @@ def sort(iterme: Iterable, **kwargs):
     return sorted(iterme, **kwargs)
 
 
-def pipe(data: Any, *funcs: Iterable):
+def pipe(data: Any, *funcs: Iterable, output: bool = True):
     """
-    A "smart" data pipe that makes executing a series of functions much easier. Similar
-    to toolz.pipe but also:
-    - always *displays* the last function evaluation, even when assigning to a variable
-    - recognizes if the the last function evaluation returns None and returns the last
-    non-None return
-    - same if the return is a matplotlib fig or axis
+    A "smart" pipe function designed to pass data through a series of transformation.
+    Similar into `toolz.pipe` in that it performs a series of nested function
+    evaluations. But it always *displays* the last function evaluation, even when
+    assigning to a variable, making it useful when working in an interactive environment
+    or logging from a script. Also recognizes if the last function evaluation returns
+    None or a plot and returns last non-None/non-plot evaluation in the pipe. Passing
+    output = False will return nothing from the pipe, which is if you just want to
+    run a pipe for its side-effects, e.g. saving a figure, looking at something
     """
+
+    if not funcs:
+        return data
 
     try:
         shell = get_ipython().__class__.__name__
@@ -402,6 +410,8 @@ def pipe(data: Any, *funcs: Iterable):
     )
 
     evals = []
+    orig = data
+    out = None
     for f in funcs:
         data = f(data)
         evals.append(data)
@@ -418,9 +428,12 @@ def pipe(data: Any, *funcs: Iterable):
             out = e
             break
 
+    if out is None:
+        out = orig
     if show_last_eval:
         printfunc(out)
-    return out
+    if output:
+        return out
 
 
 @curry
@@ -474,6 +487,9 @@ def alongwith(
 def one2many(funcs, data):
     """Take a single input and execute multiple functions (as a tuple) on it, returning multiple outputs"""
 
+    if isinstance(funcs, int):
+        return tuple([data] * funcs)
+
     if not isinstance(funcs, Iterable) or not len(funcs) > 1:
         raise TypeError(
             "funcs needs to be iterable. To apply a single function use do()"
@@ -486,12 +502,16 @@ def one2many(funcs, data):
 @curry
 def many2one(func, data):
     """Take a multiple inputs (as a tuple) and jointly pass them to a single func,
-    returning a single output"""
+    returning a single output. Useful when following a fork/one2many or
+    togeher/many2many and you want pass a lambda to split up the args"""
 
     if not isinstance(data, Iterable) or not len(data) > 1:
         raise TypeError("input data needs to be iterable. For a single datum use do()")
 
-    return func(*data)
+    if isinstance(data, dict):
+        return func(**data)
+    else:
+        return func(*data)
 
 
 @curry
@@ -560,3 +580,19 @@ def ifelse(data, conditional, if_true=None, if_false=None, **kwargs):
         elif if_false is None:
             return data
         return if_false
+
+
+# Aliases
+@curry
+def fork(funcs, data):
+    return one2many(funcs, data)
+
+
+@curry
+def distribute(funcs, data):
+    return many2many(funcs, data)
+
+
+@curry
+def altogether(funcs, data):
+    return many2one(funcs, data)

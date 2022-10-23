@@ -7,8 +7,11 @@ from .ops import (
     sort,
     alongwith,
     many2many,
+    distribute,
     many2one,
+    altogether,
     one2many,
+    fork,
     do,
     ifelse,
 )
