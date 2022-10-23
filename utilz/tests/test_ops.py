@@ -170,7 +170,7 @@ def test_pipes():
     assert out.shape == (5, 4)
 
     # input -> (output1, output2)
-    out = pipe(df, one2many((lambda df: df.head(), lambda df: df.mean())))
+    out = pipe(df, one2many(lambda df: df.head(), lambda df: df.mean()))
     assert isinstance(out, tuple)
     assert len(out) == 2
 
@@ -179,9 +179,10 @@ def test_pipes():
     assert out.equals(df + df)
 
     # (input1, input2) -> (output1, output2)
-    out = pipe([df, df], many2many((lambda df: df.head(5), lambda df: df.tail(10))))
+    out = pipe([df, df], many2many(lambda df: df.head(5), lambda df: df.tail(10)))
     assert isinstance(out, tuple)
     assert pd.concat(out).equals(df)
+    breakpoint()
 
     # input -> (output, input2)
     out = pipe(df, alongwith(lambda df: df.head()))

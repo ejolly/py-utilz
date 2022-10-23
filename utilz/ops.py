@@ -484,9 +484,10 @@ def alongwith(
 
 
 @curry
-def one2many(funcs, data):
+def one2many(*args):
     """Take a single input and execute multiple functions (as a tuple) on it, returning multiple outputs"""
 
+    data, funcs = args[-1], args[:-1]
     if isinstance(funcs, int):
         return tuple([data] * funcs)
 
@@ -515,11 +516,13 @@ def many2one(func, data):
 
 
 @curry
-def many2many(funcs, data):
+def many2many(*args):
     """Take a multiple inputs (as a tuple) and execute multiple functions (as a tuple)
     on each one separately. Exectues each function-input pair, so returns the same
     number of outputs as inputs"""
     from collections.abc import Iterable
+
+    data, funcs = args[-1], args[:-1]
 
     if not isinstance(data, Iterable) or not len(data) > 1:
         raise TypeError("input data needs to be iterable. For a single datum use do()")
