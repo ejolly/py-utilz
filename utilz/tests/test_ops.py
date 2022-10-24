@@ -3,12 +3,12 @@ from utilz.ops import (
     mapcat,
     filtercat,
     pipe,
-    alongwith,
-    one2many,
-    many2one,
-    many2many,
+    spread,
+    gather,
+    separate,
     do,
     ifelse,
+    append,
 )
 from utilz.boilerplate import randdf
 import numpy as np
@@ -168,58 +168,91 @@ def test_pipes():
     # input -> output
     out = pipe(df, lambda df: df.head())
     assert out.shape == (5, 4)
+    out = pipe(df, lambda df: df.head(10), lambda df: df.tail(5))
+    assert out.shape == (5, 4)
+    assert out.equals(df.iloc[5:10, :])
 
-    # input -> (output1, output2, output3)
-    out = pipe(df, one2many(3))
+    # APPEND (simplified one2many)
+    # simplified version of spread when you know you need result from previous step and
+    # just 1 other thing
+    # input -> (input, output)
+    out = pipe(df, append(lambda df: df.head()))
     assert isinstance(out, tuple)
+    assert out[0].equals(df) and out[1].equals(df.head())
+
+    # multiple in a row:
+    # input -> (input, output) -> (input, output, output2)
+    out = pipe(df, append(lambda df: df.head()), append(lambda df: df.tail()))
     assert len(out) == 3
-    assert all(df.equals(ddf) for ddf in out)
-    assert all(df is not ddf for ddf in out)
+    assert not out[1].equals(out[2])
+    assert out[0].equals(df)
 
-    # input -> (output1, output2)
-    out = pipe(df, one2many(lambda df: df.head(), lambda df: df.mean()))
-    assert isinstance(out, tuple)
-    assert len(out) == 2
-    assert out[0].shape == (5, 4)
-    assert out[1].shape == (3,)
-
-    # (input1, input2) -> output
-    out = pipe([df, df], many2one(lambda df1, df2: df1 + df2))
-    assert out.equals(df + df)
-
+    # SEPARATE (many2many)
     # (input1, input2) -> (output1, output2)
-    out = pipe([df, df], many2many(lambda df: df.head(5), lambda df: df.tail(10)))
-    assert isinstance(out, tuple)
+
+    # 1 func
+    out = pipe([df, df], separate(lambda df: df.head(5)))
+    assert isinstance(out, tuple) and len(out) == 2  # 2x1
+    assert out[0].equals(out[1])
+    assert out[0].equals(df.head(5))
+
+    # 2 funcs, i.e. mini-pipe
+    out = pipe([df, df], separate(lambda df: df.head(10), lambda df: df.tail(5)))
+    assert isinstance(out, tuple) and len(out) == 2
+    assert out[0].equals(out[1])
+    assert out[0].equals(df.iloc[5:10, :])
+
+    # func-input pair
+    out = pipe(
+        [df, df], separate(lambda df: df.head(5), lambda df: df.tail(10), match=True)
+    )
+    assert len(out) == 2
     assert out[0].equals(df.head(5))
     assert out[1].equals(df.tail(10))
 
     # mismatch
     with pytest.raises(ValueError):
-        out = pipe([df, df], many2many(lambda df: df.head(5)))
+        out = pipe([df, df], separate(lambda df: df.head(5), match=True))
 
-    # input -> (output, input2)
-    out = pipe(df, alongwith(lambda df: df.head()))
+    # not enough data
+    with pytest.raises(TypeError):
+        out = pipe(df, separate(lambda df: df.head(5)))
+
+    # But this works if we wrap it in a list/tuple
+    out = pipe([df], separate(lambda df: df.head(5)))
+    assert isinstance(out, tuple) and len(out) == 1
+
+    # SPREAD (one2many)
+    # input -> (input, input, input)
+    out = pipe(df, spread(3))
     assert isinstance(out, tuple)
-    assert out[0].equals(df.head()) and out[1].equals(df)
+    assert len(out) == 3
+    assert all(df.equals(ddf) for ddf in out)
+    # make sure they're copies
+    assert all(df is not ddf for ddf in out)
 
-    # When naming any inputs or outputs, return type is a dict
-    out = pipe(df, alongwith(lambda df: df.head(), out_name="head", in_name="data"))
-    assert list(out.keys()) == ["head", "data"]
-    assert out["head"].equals(df.head())
-    assert out["data"].equals(df)
+    # input -> (output1, output2)
+    out = pipe(df, spread(lambda df: df.head(), lambda df: df.mean()))
+    assert isinstance(out, tuple)
+    assert len(out) == 2
+    assert out[0].shape == (5, 4)
+    assert out[1].shape == (3,)
 
-    # Can name only one input or output too
-    out = pipe(df, alongwith(lambda df: df.head(), out_name="head"))
-    assert list(out.keys()) == ["head", "input"]
+    # spread expects more than 1 func, should use do or inline instead
+    with pytest.raises(ValueError):
+        out = pipe(df, spread(lambda df: df.head()))
 
-    # Can run multiple alongsides in a row and dicts will merge as the input_name key is
-    # not propagated forward if the input to alongwith is already a dict
-    out = pipe(
-        df,
-        alongwith(lambda df: df.head(), out_name="head", in_name="data"),
-        alongwith(lambda dic: dic["data"].tail(), out_name="tail"),
-    )
-    assert list(out.keys()) == ["tail", "head", "data"]
+    # GATHER (many2one)
+    # (input1, input2) -> output
+    out = pipe([df, df], gather(lambda df1, df2: df1 + df2))
+    assert out.equals(df + df)
+    # same thing just nicer semantics gather
+    out = pipe([df, df], lambda dfs: dfs[0] + dfs[1])
+    assert out.equals(df + df)
+
+    # error not enough data
+    with pytest.raises(TypeError):
+        pipe(df, gather(lambda df: df.head()))
 
 
 def test_do():

@@ -9,13 +9,10 @@ __all__ = [
     "filtercat",
     "sort",
     "pipe",
-    "alongwith",
-    "one2many",
-    "fork",
-    "many2many",
-    "distribute",
-    "many2one",
-    "altogether",
+    "append",
+    "spread",
+    "separate",
+    "gather",
     "do",
     "ifelse",
 ]
@@ -437,99 +434,88 @@ def pipe(data: Any, *funcs: Iterable, output: bool = True):
 
 
 @curry
-def alongwith(
-    func,
-    data,
-    out_name=None,
-    in_name=None,
-):
-    """
-
-    Execute a function and return a dictionary of (out_name: func(data), in_name: data).
-    Primarily useful inside of a pipe when you want to add additional data to pass to
-    the next step of the pipe, e.g.
-
-    pipe(
-        data,
-        alongwith(lambda df: data.mean(), output_name='mean', input_name='data'),
-        lambda d: d['data'] - d['mean']
-    )
-
-    Multiple alongwith() inside of a pipe will merge resulting dictionaries. If out_name
-    and in_name are both None, then the return type is a tuple
-
-    Args:
-        func (callable): function to execute
-        data (any): input data
-        out_name (str, optional): dict key name to call function return. Defaults to 'output'.
-        in_name (str, optional): dict key name to call input data. Defaults to 'input'
-
-    Returns:
-        tuple/dict: (func(data), data) or {'output': func(data), 'input': data}
-    """
-
-    if out_name is None and in_name is None:
-        return func(data), data
-    if out_name is not None and in_name is None:
-        in_name = "input"
-    if in_name is not None and out_name is None:
-        out_name = "output"
-
-    out = {out_name: func(data)}
-    if isinstance(data, dict):
-        return {**out, **data}
-    else:
-        out[in_name] = data
-        return out
-
-
-@curry
-def one2many(*args):
-    """Take a single input and execute multiple functions (as a tuple) on it, returning
-    multiple outputs"""
+def spread(*args):
+    """Takes multiple functions and applies each to the input, returning a tuple the
+    same length as args"""
 
     from copy import deepcopy
 
-    if len(args) == 1 and isinstance(args[0], int):
+    if len(args) == 1:
+        if isinstance(args[0], int):
 
-        def duplicate(data):
-            copy = getattr(data, "copy", None)
-            if callable(copy):
-                return tuple([data.copy()] * args[0])
-            return tuple([deepcopy(data)] * args[0])
+            def duplicate(data):
+                copy = getattr(data, "copy", None)
+                if callable(copy):
+                    return tuple([data.copy()] * args[0])
+                return tuple([deepcopy(data)] * args[0])
 
-        return duplicate
+            return duplicate
+        else:
+            raise ValueError(
+                f"only 1 function passed to spread. Use do() instead or simply call the function directly in the pipe"
+            )
 
-    if all(callable(a) for a in args):
+    elif all(callable(a) for a in args):
         together = juxt(*args)
         return together
-
-
-@curry
-def many2one(func, data):
-    """Take a multiple inputs (as a tuple) and jointly pass them to a single func,
-    returning a single output. Useful when following a fork/one2many or
-    togeher/many2many and you want pass a lambda to split up the args"""
-
-    if not isinstance(data, Iterable) or not len(data) > 1:
-        raise TypeError("input data needs to be iterable. For a single datum use do()")
-
-    if isinstance(data, dict):
-        return func(**data)
     else:
-        return func(*data)
+        raise TypeError(f"spread expected an integer or 1+ functions")
 
 
 @curry
-def many2many(*args):
-    """Take a multiple inputs (as a tuple) and execute multiple functions (as a tuple)
-    on each one separately. Exectues each function-input pair, so returns the same
-    number of outputs as inputs"""
+def append(func):
+    def alongwith(data):
+        if isinstance(data, tuple):
+            out = func(data[0])
+            return (*data, out)
+        else:
+            out = func(data)
+            return (data, out)
+
+    return alongwith
+
+
+@curry
+def gather(func, data):
+    """Takes a single function and a tuple of data and unpacks the tuple as multiple
+    arguments to the function. Useful after a call to append, spread, separate, or any
+    function that returns more than 1 output
+    """
+
+    if not (isinstance(data, (list, tuple)) and len(data) > 1):
+        raise TypeError(
+            f"gather expects the previous step's output to be a list/tuple of length > 1 but received a {type(data)}"
+        )
+    return func(*data)
+
+
+@curry
+def separate(*args, match=False):
+    """Apply one or more functions to multiple inputs separately. If the number of
+    functions is great or less than the number of inputs, then each input will be run
+    through all functions in a sequence (like a mini-pipe). If the number of functions
+    == the number of inputs and match=True, then each input-function pair will be
+    evaluated separately."""
 
     def call(data):
-        if len(data) != len(args):
-            raise ValueError(f"{len(data)} data and {len(args)} functions to not match")
-        return tuple([f(a) for f, a in zip(args, data)])
+        if not isinstance(data, (list, tuple)):
+            raise TypeError(
+                f"Expected a list/tuple of input, but received a single {type(data)}. If you want to apply a function to a single input either use a lambda or do()"
+            )
+        # We apply each function to each data
+        if match:
+            if len(data) != len(args):
+                raise ValueError(
+                    f"To use match=True, the number of functions passed must equal the length of the previous output, but {len(data)} data and {len(args)} functions don't match"
+                )
+            return tuple([f(a) for f, a in zip(args, data)])
+        else:
+            out = []
+            for d in data:
+                for func in args:
+                    d = func(d)
+                out.append(d)
+            return tuple(out)
 
     return call
 
@@ -581,61 +567,3 @@ def ifelse(data, conditional, if_true=None, if_false=None, **kwargs):
         elif if_false is None:
             return data
         return if_false
-
-
-# Aliases
-@curry
-def fork(*args):
-    return one2many(*args)
-
-
-@curry
-def distribute(*args):
-    return one2many(*args)
-
-
-@curry
-def broadcast(*args):
-    return one2many(*args)
-
-
-@curry
-def spread(*args):
-    return one2many(*args)
-
-
-# @curry
-# def distribute(*args):
-#     return many2many(*args)
-
-
-# Top
-@curry
-def together(*args):
-    return many2many(*args)
-
-
-@curry
-def separate(*args):
-    return many2many(*args)
-
-
-@curry
-def sidebyside(*args):
-    return many2many(*args)
-
-
-@curry
-def altogether(funcs, data):
-    return many2one(funcs, data)
-
-
-@curry
-def gather(funcs, data):
-    return many2one(funcs, data)
-
-
-# Top
-@curry
-def combine(funcs, data):
-    return many2one(funcs, data)
