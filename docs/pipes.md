@@ -152,9 +152,9 @@ pipe(
     data,
     spread(
         lambda df: df,
-        lambda df: sine_filter(df),
-        lambda df: gamma_filter(df),
-        lambda df: band_filter(df),
+        sine_filter,
+        gamma_filter,
+        band_filter
         )
 )
 ```
@@ -174,6 +174,16 @@ graph TD
   end
 ```
 
+### `append` vs `spread`
+
+The primary way to think about the difference between `spread` and `append` is the following:
+
+- Use `append` when the next function in your pipe expects the output from one or more functions ago
+  - this allows you to store "state" in a different way
+- Use `spread` when you need to run two or more independent sub-pipelines
+  - this allows you to avoid having to create multiple `pipe`s with the same input data
+
+
 ## Handling multiple outputs
 
 `utilz` offers 2 way to handle multiple outputs from any step in a `pipe` , regardless of whether that's because of how your function works or because you used `append` or `spread`.
@@ -190,9 +200,9 @@ import seaborn as sns
 pipe(
     data,
     spread(
-        lambda df: sine_filter(df),
-        lambda df: gamma_filter(df),
-        lambda df: band_filter(df),
+        sine_filter,
+        gamma_filter,
+        band_filter
         ),
     separate(
         lambda df: df.groupby('group').agg('mean'),
@@ -215,13 +225,15 @@ graph TD
 
   out -->separate{separate}
   subgraph  
-  separate-- sine-filtered-data -->aggfunc[groupby-mean]
-  separate-- gamma-filtered-data -->aggfunc
-  separate-- band-filtered-data -->aggfunc
-  aggfunc-- sine-agg-mean -->aggcorr[corr]
-  aggfunc-- gamma-agg-mean -->aggcorr
-  aggfunc-- band-agg-mean -->aggcorr
-  aggcorr -->dfout[("(sine intergroup corr, gamma intergroup corr, band intergroup corr)")]
+  separate-- sine-filtered-data -->aggfuncsine[groupby-mean]
+  separate-- gamma-filtered-data -->aggfuncgamma[groupby-mean]
+  separate-- band-filtered-data -->aggfuncband[groupby-mean]
+  aggfuncsine-->aggcorrsine[corr]
+  aggfuncgamma-->aggcorrgamma[corr]
+  aggfuncband-->aggcorrband[corr]
+  aggcorrsine -->dfout[("(sine intergroup corr, gamma intergroup corr, band intergroup corr)")]
+  aggcorrgamma -->dfout
+  aggcorrband -->dfout
   end
 ```
 
@@ -231,9 +243,9 @@ If `separate` is passed `match = True` and the number of functions equals the nu
 pipe(
     data,
     spread(
-        lambda df: sine_filter(df),
-        lambda df: gamma_filter(df),
-        lambda df: band_filter(df),
+        sine_filter,
+        gamma_filter,
+        band_filter
         ),
     separate(
         lambda df: df.groupby('group').agg('mean')
@@ -278,9 +290,9 @@ import numpy as np
 pipe(
     data,
     spread(
-        lambda df: sine_filter(df),
-        lambda df: gamma_filter(df),
-        lambda df: band_filter(df),
+        sine_filter,
+        gamma_filter,
+        band_filter
         ),
     separate(
         lambda df: df.groupby('group').agg('mean'),
@@ -304,14 +316,16 @@ graph TD
 
   out -->separate{separate}
   subgraph  
-  separate-- sine-filtered-data -->aggmean[aggmean]
-  separate-- gamma-filtered-data -->aggmean
-  separate-- band-filtered-data -->aggmean
-  aggmean --> dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
+  separate-- sine-filtered-data -->aggfuncsine[groupby-mean]
+  separate-- gamma-filtered-data -->aggfuncgamma[groupby-mean]
+  separate-- band-filtered-data -->aggfuncband[groupby-mean]
+  aggfuncsine --> dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
+  aggfuncgamma -->dfout
+  aggfuncband -->dfout
   end
   dfout -->gather{gather}
   subgraph  
-  gather-- sine agg-mean -->func[combine]
+  gather-- sine agg-mean -->func[combine_filters]
   gather-- gamma agg-mean-->func
   gather-- band agg-mean-->func
   func-->combined[(combined)]
@@ -324,9 +338,9 @@ This saves you from having to write any tuple unpacking code in the `combine` fu
 pipe(
     data,
     spread(
-        lambda df: sine_filter(df),
-        lambda df: gamma_filter(df),
-        lambda df: band_filter(df),
+        sine_filter,
+        gamma_filter,
+        band_filter
         ),
     separate(
         lambda df: df.groupby('group').agg('mean'),
@@ -351,29 +365,31 @@ graph TD
 
   out -->separate{separate}
   subgraph  
-  separate-- sine-filtered-data -->aggmean[aggmean]
-  separate-- gamma-filtered-data -->aggmean
-  separate-- band-filtered-data -->aggmean
-  aggmean --> dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
+  separate-- sine-filtered-data -->aggfuncsine[groupby-mean]
+  separate-- gamma-filtered-data -->aggfuncgamma[groupby-mean]
+  separate-- band-filtered-data -->aggfuncband[groupby-mean]
+  aggfuncsine --> dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
+  aggfuncgamma -->dfout
+  aggfuncband -->dfout
   end
-  dfout -->func["combine (needs to hande a tuple!)"]
+  dfout -->func["combine_filters (needs to hande a tuple!)"]
   func-->combined[(combined)]
 ```
 
-Of course for some operations a tuple is totally fine and you don't really need `gather`:
+For some operations that expect a tuple/list skip `gather`:
 
 ```python
 pipe(
     data,
     spread(
-        lambda df: sine_filter(df),
-        lambda df: gamma_filter(df),
-        lambda df: band_filter(df),
+        sine_filter,
+        gamma_filter,
+        band_filter
         ),
     separate(
         lambda df: df.groupby('group').agg('mean'),
     ),
-    # Don't need to gather
+    # Don't need to gather; concat wants a lists/tuple
     lambda tup: pd.concat(tup)
         .assign(filter=lambda df: np.repeat(['sine', 'gamma', 'band'] * df.shape[0] / 3)
         .groupby('filter')
@@ -381,7 +397,7 @@ pipe(
 )
 ```
 
-Of course `gather` works with any output that's a tuple or list such as the outputs of `append` and `spread`:
+Of course `gather` works with any output that's a tuple or list such, as the outputs of `append` and `spread`:
 
 
 ```python
@@ -424,11 +440,15 @@ graph TD
   end
 ```
 
-## `append` vs `spread`
+### `separate` vs `gather`
 
-The primary way to think about the difference between `spread` and `append` is the following:
+The primary way to think about the differences between `separate` and `gather`:
 
-- Use `append` when the next function in your pipe expects the output from one or more functions ago
-  - this allows you to store "state" in a different way
-- Use `spread` when you need to run two or more independent sub-pipelines
-  - this allows you to avoid having to create multiple `pipe`s with the same input data
+- Use `gather` when the next function in your pipe is going to **combine** the previous inputs
+- Use `separate` when you want to run 1 ore more sub-pipelines separately for each input
+
+## Summary
+
+- for **one-to-many** operation use `append` or `spread`
+- for **many-to-many** operations use `separate`
+- for **many-to-one** operations use `gather` or make sure your function handle tuple/list input

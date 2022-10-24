@@ -10,11 +10,16 @@ extra_css:
 markdown_extensions:
   - admonition
   - codehilite
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.highlight
 nav:
   - Home: index.md
   - Quick Overview: intro.ipynb
+  - Working with Pipes: pipes.md
   - API:
       - Core: api/core.md
 plugins:
