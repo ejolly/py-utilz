@@ -525,20 +525,13 @@ def many2many(*args):
     """Take a multiple inputs (as a tuple) and execute multiple functions (as a tuple)
     on each one separately. Exectues each function-input pair, so returns the same
     number of outputs as inputs"""
-    from collections.abc import Iterable
 
-    data, funcs = args[-1], args[:-1]
+    def call(data):
+        if len(data) != len(args):
+            raise ValueError(f"{len(data)} data and {len(args)} functions to not match")
+        return tuple([f(a) for f, a in zip(args, data)])
 
-    if not isinstance(data, Iterable) or not len(data) > 1:
-        raise TypeError("input data needs to be iterable. For a single datum use do()")
-
-    if not isinstance(funcs, Iterable) or not len(funcs) > 1:
-        raise TypeError(
-            "funcs needs to be iterable. To apply a single function use do()"
-        )
-    return tuple(
-        [f(a) for f, a in zip(funcs, data)]
-    )  # cast to tuple to agree with one2many
+    return call
 
 
 @curry

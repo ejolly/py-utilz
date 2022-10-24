@@ -183,7 +183,6 @@ def test_pipes():
     assert out[0].shape == (5, 4)
     assert out[1].shape == (3,)
 
-    breakpoint()
     # (input1, input2) -> output
     out = pipe([df, df], many2one(lambda df1, df2: df1 + df2))
     assert out.equals(df + df)
@@ -191,8 +190,12 @@ def test_pipes():
     # (input1, input2) -> (output1, output2)
     out = pipe([df, df], many2many(lambda df: df.head(5), lambda df: df.tail(10)))
     assert isinstance(out, tuple)
-    assert pd.concat(out).equals(df)
-    breakpoint()
+    assert out[0].equals(df.head(5))
+    assert out[1].equals(df.tail(10))
+
+    # mismatch
+    with pytest.raises(ValueError):
+        out = pipe([df, df], many2many(lambda df: df.head(5)))
 
     # input -> (output, input2)
     out = pipe(df, alongwith(lambda df: df.head()))
