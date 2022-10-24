@@ -485,19 +485,24 @@ def alongwith(
 
 @curry
 def one2many(*args):
-    """Take a single input and execute multiple functions (as a tuple) on it, returning multiple outputs"""
+    """Take a single input and execute multiple functions (as a tuple) on it, returning
+    multiple outputs"""
 
-    data, funcs = args[-1], args[:-1]
-    if isinstance(funcs, int):
-        return tuple([data] * funcs)
+    from copy import deepcopy
 
-    if not isinstance(funcs, Iterable) or not len(funcs) > 1:
-        raise TypeError(
-            "funcs needs to be iterable. To apply a single function use do()"
-        )
+    if len(args) == 1 and isinstance(args[0], int):
 
-    together = juxt(*funcs)  # already returns tuple
-    return together(data)
+        def duplicate(data):
+            copy = getattr(data, "copy", None)
+            if callable(copy):
+                return tuple([data.copy()] * args[0])
+            return tuple([deepcopy(data)] * args[0])
+
+        return duplicate
+
+    if all(callable(a) for a in args):
+        together = juxt(*args)
+        return together
 
 
 @curry
@@ -587,15 +592,57 @@ def ifelse(data, conditional, if_true=None, if_false=None, **kwargs):
 
 # Aliases
 @curry
-def fork(funcs, data):
-    return one2many(funcs, data)
+def fork(*args):
+    return one2many(*args)
 
 
 @curry
-def distribute(funcs, data):
-    return many2many(funcs, data)
+def distribute(*args):
+    return one2many(*args)
+
+
+@curry
+def broadcast(*args):
+    return one2many(*args)
+
+
+@curry
+def spread(*args):
+    return one2many(*args)
+
+
+# @curry
+# def distribute(*args):
+#     return many2many(*args)
+
+
+# Top
+@curry
+def together(*args):
+    return many2many(*args)
+
+
+@curry
+def separate(*args):
+    return many2many(*args)
+
+
+@curry
+def sidebyside(*args):
+    return many2many(*args)
 
 
 @curry
 def altogether(funcs, data):
+    return many2one(funcs, data)
+
+
+@curry
+def gather(funcs, data):
+    return many2one(funcs, data)
+
+
+# Top
+@curry
+def combine(funcs, data):
     return many2one(funcs, data)

@@ -163,17 +163,27 @@ def test_filtercat():
 
 def test_pipes():
 
-    df = randdf((15, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5)
+    df = randdf((20, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5)
 
     # input -> output
     out = pipe(df, lambda df: df.head())
     assert out.shape == (5, 4)
 
+    # input -> (output1, output2, output3)
+    out = pipe(df, one2many(3))
+    assert isinstance(out, tuple)
+    assert len(out) == 3
+    assert all(df.equals(ddf) for ddf in out)
+    assert all(df is not ddf for ddf in out)
+
     # input -> (output1, output2)
     out = pipe(df, one2many(lambda df: df.head(), lambda df: df.mean()))
     assert isinstance(out, tuple)
     assert len(out) == 2
+    assert out[0].shape == (5, 4)
+    assert out[1].shape == (3,)
 
+    breakpoint()
     # (input1, input2) -> output
     out = pipe([df, df], many2one(lambda df1, df2: df1 + df2))
     assert out.equals(df + df)
