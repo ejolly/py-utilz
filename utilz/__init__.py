@@ -11,6 +11,8 @@ from .ops import (
     spread,
     do,
     ifelse,
+    compose,
+    curry,
 )
 from .io import load, crawl
 from .boilerplate import randdf

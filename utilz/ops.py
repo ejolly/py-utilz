@@ -15,6 +15,8 @@ __all__ = [
     "gather",
     "do",
     "ifelse",
+    "compose",
+    "curry",
 ]
 
 from joblib import delayed, Parallel
@@ -26,9 +28,11 @@ from collections.abc import Callable, Iterable
 from itertools import chain, filterfalse
 from inspect import signature
 from tqdm import tqdm
-from toolz import curry, juxt, do
+from toolz import curry, juxt
+from toolz.curried import compose_left as compose
 from matplotlib.figure import Figure, Axes
 from matplotlib.axes._subplots import Subplot
+from inspect import signature
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -277,7 +281,7 @@ def mapcat(
 def _concat(op, iterme, axis, ignore_index):
 
     try:
-        if isinstance(op[0], pd.DataFrame):
+        if isinstance(op[0], (pd.DataFrame, pd.Series)):
             return pd.concat(
                 op, axis=0 if axis is None else axis, ignore_index=ignore_index
             )
@@ -464,9 +468,19 @@ def spread(*args):
 
 @curry
 def append(func):
+    """Takes a function and returns a new function that prepends the args to the
+    function as part of the input, i.e. (input, funcval)"""
+
     def alongwith(data):
+        # If data is a tuple and func only takes 1 arg, then assume the user wants the
+        # original data in the chain
         if isinstance(data, tuple):
-            out = func(data[0])
+            sig = signature(func)
+            if len(sig.parameters) == 1:
+                out = func(data[0])
+            else:
+                # Otherwise give them the entire chain
+                out = func(*data)
             return (*data, out)
         else:
             out = func(data)
@@ -486,13 +500,14 @@ def gather(func, data):
         raise TypeError(
             f"gather expects the previous step's output to be a list/tuple of length > 1 but received a {type(data)}"
         )
+
     return func(*data)
 
 
 @curry
 def separate(*args, match=False):
     """Apply one or more functions to multiple inputs separately. If the number of
-    functions is great or less than the number of inputs, then each input will be run
+    functions is greater or less than the number of inputs, then each input will be run
     through all functions in a sequence (like a mini-pipe). If the number of functions
     == the number of inputs and match=True, then each input-function pair will be
     evaluated separately."""

@@ -9,6 +9,8 @@ from utilz.ops import (
     do,
     ifelse,
     append,
+    compose,
+    curry,
 )
 from utilz.boilerplate import randdf
 import numpy as np
@@ -176,16 +178,28 @@ def test_pipes():
     # simplified version of spread when you know you need result from previous step and
     # just 1 other thing
     # input -> (input, output)
-    out = pipe(df, append(lambda df: df.head()))
-    assert isinstance(out, tuple)
-    assert out[0].equals(df) and out[1].equals(df.head())
+    # out = pipe(df, append(lambda df: df.head()))
+    # assert isinstance(out, tuple)
+    # assert out[0].equals(df) and out[1].equals(df.head())
 
-    # multiple in a row:
-    # input -> (input, output) -> (input, output, output2)
-    out = pipe(df, append(lambda df: df.head()), append(lambda df: df.tail()))
+    # # multiple in a row:
+    # # input -> (input, output) -> (input, output, output2)
+    # out = pipe(df, append(lambda df: df.head()), append(lambda df: df.tail()))
+    # assert len(out) == 3
+    # assert not out[1].equals(out[2])
+    # assert out[0].equals(df)
+
+    # We can access all previously appended values by passing in a func that takes more
+    # than 1 arg
+    out = pipe(
+        df,
+        append(lambda df: df.head()),
+        append(lambda df, head: df.tail().iloc[:, :2] + head.iloc[:, :2]),
+    )
     assert len(out) == 3
-    assert not out[1].equals(out[2])
     assert out[0].equals(df)
+    assert out[1].equals(df.head())
+    assert out[2].equals(df.tail().iloc[:, :2] + df.head().iloc[:, :2])
 
     # SEPARATE (many2many)
     # (input1, input2) -> (output1, output2)

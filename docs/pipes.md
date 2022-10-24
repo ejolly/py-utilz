@@ -111,7 +111,24 @@ graph TD
   append2-- data -->df3[("(data, sub-pairs, condition-triplets)")]
   append2-- sub-pairs -->df3
   append2-- data -->lambda2[calc condition-triplets]-- condition-triplets -->df3
+  append2-- sub-pairs -->lambda2
   end
+```
+
+If the function passed to `append` only takes 1 argument, then `append` assumes you wanted the **first** value in the input which is the earliest value prior the first call of `append` inside a `pipe`. So although the first `append` returns a tuple `(data, sub_pairs)`, the second call to `append` received a function with only 1 arg leading `append` to only receive `data`. 
+
+If you want to access *all* the previous outputs, simply use a function that can handle that many outputs:
+
+```python
+pipe(
+    data,
+    append(
+        lambda df: list(it.combinations(df.Subject.unique(),2)),
+    ),
+    append(
+        lambda df, pairs: df.assign(pairs=pairs)
+    )
+)
 ```
 
 ### Duplicating (+transforming) outputs with `spread`
@@ -193,8 +210,7 @@ The primary way to think about the difference between `spread` and `append` is t
 To continue processing outputs **independently** of each other use `separate`. It expects one or more functions that will be applied to each output with no data sharing between function evaluations:
 
 ```python
-from utilz import separate
-from toolz import curry
+from utilz import separate, curry
 import seaborn as sns
 
 pipe(
@@ -408,7 +424,7 @@ pipe(
     ),
     # (data, sub-pairs)
     append(
-        lambda df: list(it.combinations(df.Conditions.unique(),3)),
+        lambda tup: list(it.combinations(tup[0].Conditions.unique(),3)),
     ),
     # (data, sub-pairs, condition-triplets)
     gather(
@@ -431,6 +447,7 @@ graph TD
   append2-- data -->df3[("(data, sub-pairs, condition-triplets)")]
   append2-- sub-pairs -->df3
   append2-- data -->lambda2[calc condition-triplets]-- condition-triplets -->df3
+  append2-- sub-pairs -->lambda2
   end
   df3 --> gather{gather}
   subgraph  
@@ -447,8 +464,60 @@ The primary way to think about the differences between `separate` and `gather`:
 - Use `gather` when the next function in your pipe is going to **combine** the previous inputs
 - Use `separate` when you want to run 1 ore more sub-pipelines separately for each input
 
+## Plotting in pipes
+
+One idiosyncratic feature of `pipe` is that it **only displays but does not return plots.** In other words, if a function returns a `matplotlib` `Figure` or `Axes`, these will be displayed in an interactive environment (i.e. notebook, qtconsole) and will pass between functions inside of a pipe but will not be returned. Instead pipe will **return the last non-plot output**. Also note when using libraries like `matplotlib` and `seaborn` you'll want to wrap their respective functions in `curry` so they handle partial inputs properly.:
+
+```python
+from utilz import curry
+
+out = pipe(
+    data,
+    # partial function application of seaborn call
+    curry(
+        sns.barplot, x='group', y='A1'
+    )
+)
+
+# Plots don't return!
+out.equals(data) # True
+```
+
+This is a deliberate choice as plots are intended to be *saved inside of a pipe* using `savefig()` from `utilz.plotting`. While strange at first, this as the nice effect of not messying-up the output of interactive runs with `matplotlib` objects and forces you to *do something with your plots*. This **also applies to functions that return `None`.**
+
+```python
+# Do this instead
+out = pipe(
+    data,
+    # partial function application of seaborn call
+    curry(
+        sns.barplot, x='group', y='A1'
+    ),
+    savefig(name='myplot')
+)
+
+# savefig returns a fig so it also doesn't return!
+out.equals(data) # True
+```
+
+You can also manually suppress any outputs by passing `output=False` as the last step to a `pipe`.
+
+```python
+out = pipe(
+    data,
+    # partial function application of seaborn call
+    curry(
+        sns.barplot, x='group', y='A1'
+    ),
+    output = False
+)
+
+out is None # True
+```
+
 ## Summary
 
 - for **one-to-many** operation use `append` or `spread`
 - for **many-to-many** operations use `separate`
 - for **many-to-one** operations use `gather` or make sure your function handle tuple/list input
+- **plots never return** and only display
