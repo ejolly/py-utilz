@@ -1,0 +1,1070 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Utility library for faster, easier, and more reliable data analysis">
+      
+      
+      
+        <link rel="canonical" href="https://eshinjolly.com/utilz/pipes/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.7">
+    
+    
+      
+        <title>Working with Pipes - Utilz</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#working-with-pipes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Utilz" class="md-header__button md-logo" aria-label="Utilz" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Utilz
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Working with Pipes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ejolly/utilz" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ejolly/utilz
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Utilz" class="md-nav__button md-logo" aria-label="Utilz" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Utilz
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ejolly/utilz" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ejolly/utilz
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Working with Pipes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Working with Pipes
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basics" class="md-nav__link">
+    Basics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#widening-pipes" class="md-nav__link">
+    Widening pipes
+  </a>
+  
+    <nav class="md-nav" aria-label="Widening pipes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#passing-previous-outputs-forward-with-append" class="md-nav__link">
+    Passing previous outputs forward with append
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#duplicating-transforming-outputs-with-spread" class="md-nav__link">
+    Duplicating (+transforming) outputs with spread
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#append-vs-spread" class="md-nav__link">
+    append vs spread
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-multiple-outputs" class="md-nav__link">
+    Handling multiple outputs
+  </a>
+  
+    <nav class="md-nav" aria-label="Handling multiple outputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#keeping-outputs-separated-with-separate" class="md-nav__link">
+    Keeping outputs separated with separate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#condensing-pipes-with-gather" class="md-nav__link">
+    Condensing pipes with gather
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#separate-vs-gather" class="md-nav__link">
+    separate vs gather
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plotting-in-pipes" class="md-nav__link">
+    Plotting in pipes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/core/" class="md-nav__link">
+        Core
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basics" class="md-nav__link">
+    Basics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#widening-pipes" class="md-nav__link">
+    Widening pipes
+  </a>
+  
+    <nav class="md-nav" aria-label="Widening pipes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#passing-previous-outputs-forward-with-append" class="md-nav__link">
+    Passing previous outputs forward with append
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#duplicating-transforming-outputs-with-spread" class="md-nav__link">
+    Duplicating (+transforming) outputs with spread
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#append-vs-spread" class="md-nav__link">
+    append vs spread
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-multiple-outputs" class="md-nav__link">
+    Handling multiple outputs
+  </a>
+  
+    <nav class="md-nav" aria-label="Handling multiple outputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#keeping-outputs-separated-with-separate" class="md-nav__link">
+    Keeping outputs separated with separate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#condensing-pipes-with-gather" class="md-nav__link">
+    Condensing pipes with gather
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#separate-vs-gather" class="md-nav__link">
+    separate vs gather
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plotting-in-pipes" class="md-nav__link">
+    Plotting in pipes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/ejolly/utilz/edit/master/docs/pipes.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="working-with-pipes">Working with Pipes</h1>
+<h2 id="overview">Overview</h2>
+<p>For many data-analysis tasks it's easier to think about creating a <em>pipeline</em> that data passes through rather than writing smaller blocks of code that store intermediate variables. For example rather than doing this, in which we create a bunch of intermediate variables:</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s1">&#39;data-file&#39;</span><span class="p">)</span>
+<span class="n">cleaned</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">fillna</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">long</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span>
+<span class="n">summary</span> <span class="o">=</span> <span class="n">describe</span><span class="p">(</span><span class="n">long</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+</code></pre></div>
+<p>We can thinking about a sequences of function steps instead:</p>
+<pre class="mermaid"><code>graph TD
+  data[(data-file)]--&gt;load--&gt;clean--&gt;transform--&gt;describe--&gt;result[(result)]</code></pre>
+<p><code>utilz</code> is designed to make this kind of coding experience possible and easy. Its API optimizes for two primary things:</p>
+<ol>
+<li>Reducing the number of intermediate variables you need to create</li>
+<li>Reducing the number of ancillary functions you have create and maintain, by providing semantics for defining and using functions <em>inline</em></li>
+</ol>
+<p>The goals is to <strong>minimize data polluting the global state</strong> in notebooks and scripts making data analysis less error-prone and more reproducible. This minimizes the risk of outputs changing when you run cells/lines out of order. It also cleans up your code a bit and relieves you of the cognitive overhead of naming your variables well.</p>
+<h2 id="basics">Basics</h2>
+<p>Lets start by importing what we need and generate some data. This data is from 20 individuals nested within one of 4 groups.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">randdf</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">randdf</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+</code></pre></div>
+<p>Let's see what it looks like to <code>pipe</code> this data through some operations. Here's the code and below is a visualization of what's happening:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">pipe</span>
+
+<span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="p">)</span>
+</code></pre></div>
+<pre class="mermaid"><code>graph TD
+  df[(data)]--&gt;fillna--&gt;demean--&gt;result[(result)]</code></pre>
+<p>Every argument to <code>pipe</code> after the first is a function that is executed in sequence. Of course this is a contrived example as we could just chain together pandas operations instead: <code>data.fillna(0).apply(lambda df: df- df.mean().mean()))</code>. However, <code>pipe</code> in can work on any kind of input not just dataframes, making it a more general pattern for chaining operations.</p>
+<h2 id="widening-pipes">Widening pipes</h2>
+<p><code>utilz</code> provides 2 functions to "widen" pipes, i.e. add/change outputs to the output of the previous step.</p>
+<h3 id="passing-previous-outputs-forward-with-append">Passing previous outputs forward with <code>append</code></h3>
+<p>Using <code>append</code> we can "inject" additional data into the pipeline before the next function call. <code>append</code> always takes a <strong>single function</strong> that should accept the output from the previous step. It always <strong>returns a tuple</strong> with the output of that function appended to the end:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">append</span>
+<span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">it</span>
+
+<span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">append</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">2</span><span class="p">)),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<pre class="mermaid"><code>graph TD
+  df[(data)]--&gt;append{append}
+  subgraph  
+  append-- data --&gt;df2[("(data, sub-pairs)")]
+  append-- data --&gt;lambda[calc sub-pairs]-- sub-pairs --&gt;df2
+  end</code></pre>
+<p>We can keep this going to add additional data into the pipelines. <code>append</code> is smart enough to flatten out the tuple in successive calls. This is a very powerful semantic that lets you keep outputs from earlier in a <code>pipe</code> around, without needed to create temporary variables:</p>
+<div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">append</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">2</span><span class="p">)),</span>
+    <span class="p">),</span>
+    <span class="n">append</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Conditions</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">3</span><span class="p">)),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<pre class="mermaid"><code>graph TD
+  df[(data)]--&gt;append{append}
+  subgraph  
+  append-- data --&gt;df2[("(data, sub-pairs)")]
+  append-- data --&gt;lambda[calc sub-pairs]-- sub-pairs --&gt;df2
+  end
+  df2 --&gt;append2{append}
+  subgraph  
+  append2-- data --&gt;df3[("(data, sub-pairs, condition-triplets)")]
+  append2-- sub-pairs --&gt;df3
+  append2-- data --&gt;lambda2[calc condition-triplets]-- condition-triplets --&gt;df3
+  append2-- sub-pairs --&gt;lambda2
+  end</code></pre>
+<p>If the function passed to <code>append</code> only takes 1 argument, then <code>append</code> assumes you wanted the <strong>first</strong> value in the input which is the earliest value prior the first call of <code>append</code> inside a <code>pipe</code>. So although the first <code>append</code> returns a tuple <code>(data, sub_pairs)</code>, the second call to <code>append</code> received a function with only 1 arg leading <code>append</code> to only receive <code>data</code>. </p>
+<p>If you want to access <em>all</em> the previous outputs, simply use a function that can handle that many outputs:</p>
+<div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">append</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">2</span><span class="p">)),</span>
+    <span class="p">),</span>
+    <span class="n">append</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">,</span> <span class="n">pairs</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">pairs</span><span class="o">=</span><span class="n">pairs</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="duplicating-transforming-outputs-with-spread">Duplicating (+transforming) outputs with <code>spread</code></h3>
+<p><code>utilz</code> also supports a more general semantic called <code>spread</code>. By passing in one or more functions, <code>spread</code> will pass an <strong>independent copy of each previous output to each function</strong>. This is similar to a <code>map</code>, but rather than mapping 1 function to multiple values in an iterable, we map <em>multiple functions</em>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">spread</span>
+
+<span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="c1"># each func expects a dataframe</span>
+    <span class="n">spread</span><span class="p">(</span>
+        <span class="n">sine_filter</span><span class="p">,</span>
+        <span class="n">gamma_filter</span><span class="p">,</span>
+        <span class="n">band_filter</span>
+        <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<pre class="mermaid"><code>graph TD
+  df[(data)]--&gt;spread{spread}
+  subgraph  
+  spread-- data --&gt;sine[sine_filter]
+  spread-- data --&gt;gamma[gamma_filter]
+  spread-- data --&gt;band[band_filter]
+  sine --&gt;out[("(sine-filtered-data, gamma-filtered-data, band-filtered-data)")]
+  gamma --&gt;out
+  band --&gt;out
+  end</code></pre>
+<p>Spreading it useful when you want to run <em>one input through multiple functions</em> or <strong>one-to-many</strong>. You can see how <code>spread</code> is a more general form of <code>append</code> because you can simply pass a no-op/identity functions as one of the arguments to pass previous outputs forward (<code>append</code> offers cleaner usage):</p>
+<div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">spread</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="p">,</span>
+        <span class="n">sine_filter</span><span class="p">,</span>
+        <span class="n">gamma_filter</span><span class="p">,</span>
+        <span class="n">band_filter</span>
+        <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<pre class="mermaid"><code>graph TD
+  df[(data)]--&gt;spread{spread}
+  subgraph  
+  spread-- data --&gt;identity[identity/noop]
+  spread-- data --&gt;sine[sine_filter]
+  spread-- data --&gt;gamma[gamma_filter]
+  spread-- data --&gt;band[band_filter]
+  identity --&gt;out[("(data, sine-filtered-data, gamma-filtered-data, band-filtered-data)")]
+  sine --&gt;out
+  gamma --&gt;out
+  band --&gt;out
+  end</code></pre>
+<h3 id="append-vs-spread"><code>append</code> vs <code>spread</code></h3>
+<p>The primary way to think about the difference between <code>spread</code> and <code>append</code> is the following:</p>
+<ul>
+<li>Use <code>append</code> when the next function in your pipe expects the output from one or more functions ago</li>
+<li>this allows you to store "state" in a different way</li>
+<li>Use <code>spread</code> when you need to run two or more independent sub-pipelines</li>
+<li>this allows you to avoid having to create multiple <code>pipe</code>s with the same input data</li>
+</ul>
+<h2 id="handling-multiple-outputs">Handling multiple outputs</h2>
+<p><code>utilz</code> offers 2 way to handle multiple outputs from any step in a <code>pipe</code> , regardless of whether that's because of how your function works or because you used <code>append</code> or <code>spread</code>.</p>
+<h3 id="keeping-outputs-separated-with-separate">Keeping outputs separated with <code>separate</code></h3>
+<p>To continue processing outputs <strong>independently</strong> of each other use <code>separate</code>. It expects one or more functions that will be applied to each output with no data sharing between function evaluations:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">separate</span><span class="p">,</span> <span class="n">curry</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">spread</span><span class="p">(</span>
+        <span class="n">sine_filter</span><span class="p">,</span>
+        <span class="n">gamma_filter</span><span class="p">,</span>
+        <span class="n">band_filter</span>
+        <span class="p">),</span>
+    <span class="n">separate</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+        <span class="k">lambda</span> <span class="n">dfagg</span><span class="p">:</span> <span class="n">dfagg</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<pre class="mermaid"><code>graph TD
+  df[(data)]--&gt;spread{spread}
+  subgraph  
+  spread-- data --&gt;sine[sine_filter]
+  spread-- data --&gt;gamma[gamma_filter]
+  spread-- data --&gt;band[band_filter]
+  sine --&gt;out[("(sine-filtered-data, gamma-filtered-data, band-filtered-data)")]
+  gamma --&gt;out
+  band --&gt;out
+  end
+
+  out --&gt;separate{separate}
+  subgraph  
+  separate-- sine-filtered-data --&gt;aggfuncsine[groupby-mean]
+  separate-- gamma-filtered-data --&gt;aggfuncgamma[groupby-mean]
+  separate-- band-filtered-data --&gt;aggfuncband[groupby-mean]
+  aggfuncsine--&gt;aggcorrsine[corr]
+  aggfuncgamma--&gt;aggcorrgamma[corr]
+  aggfuncband--&gt;aggcorrband[corr]
+  aggcorrsine --&gt;dfout[("(sine intergroup corr, gamma intergroup corr, band intergroup corr)")]
+  aggcorrgamma --&gt;dfout
+  aggcorrband --&gt;dfout
+  end</code></pre>
+<p>If <code>separate</code> is passed <code>match = True</code> and the number of functions equals the number of outputs from the previous step, each function will be applied to each output as a pair rather than each function executing on each input:</p>
+<div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">spread</span><span class="p">(</span>
+        <span class="n">sine_filter</span><span class="p">,</span>
+        <span class="n">gamma_filter</span><span class="p">,</span>
+        <span class="n">band_filter</span>
+        <span class="p">),</span>
+    <span class="n">separate</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;median&#39;</span><span class="p">)</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mode&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<pre class="mermaid"><code>graph TD
+  df[(data)]--&gt;spread{spread}
+  subgraph  
+  spread-- data --&gt;sine[sine_filter]
+  spread-- data --&gt;gamma[gamma_filter]
+  spread-- data --&gt;band[band_filter]
+  sine --&gt;out[("(sine-filtered-data, gamma-filtered-data, band-filtered-data)")]
+  gamma --&gt;out
+  band --&gt;out
+  end
+
+  out --&gt;separate{separate}
+  subgraph  
+  separate-- sine-filtered-data --&gt;aggmean[aggmean]
+  separate-- gamma-filtered-data --&gt;aggmedian[aggmedian]
+  separate-- band-filtered-data --&gt;aggmode[aggmode]
+  aggmean --&gt; dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
+  aggmedian --&gt;dfout
+  aggmode --&gt;dfout
+  end</code></pre>
+<h3 id="condensing-pipes-with-gather">Condensing pipes with <code>gather</code></h3>
+<p>The other idiom <code>utilz</code> supports is simply <code>gather</code>-ing up all the previous outputs so they're more conveniently accessible by the next step in the <code>pipe</code> which should make use of one ore more of these outputs:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">gather</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">spread</span><span class="p">(</span>
+        <span class="n">sine_filter</span><span class="p">,</span>
+        <span class="n">gamma_filter</span><span class="p">,</span>
+        <span class="n">band_filter</span>
+        <span class="p">),</span>
+    <span class="n">separate</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="c1"># contrived example</span>
+    <span class="n">gather</span><span class="p">(</span><span class="k">lambda</span> <span class="n">sine</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">band</span><span class="p">:</span> <span class="p">(</span><span class="n">sine</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="n">band</span><span class="p">))</span>
+<span class="p">)</span>
+</code></pre></div>
+<pre class="mermaid"><code>graph TD
+  df[(data)]--&gt;spread{spread}
+  subgraph  
+  spread-- data --&gt;sine[sine_filter]
+  spread-- data --&gt;gamma[gamma_filter]
+  spread-- data --&gt;band[band_filter]
+  sine --&gt;out[("(sine-filtered-data, gamma-filtered-data, band-filtered-data)")]
+  gamma --&gt;out
+  band --&gt;out
+  end
+
+  out --&gt;separate{separate}
+  subgraph  
+  separate-- sine-filtered-data --&gt;aggfuncsine[groupby-mean]
+  separate-- gamma-filtered-data --&gt;aggfuncgamma[groupby-mean]
+  separate-- band-filtered-data --&gt;aggfuncband[groupby-mean]
+  aggfuncsine --&gt; dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
+  aggfuncgamma --&gt;dfout
+  aggfuncband --&gt;dfout
+  end
+  dfout --&gt;gather{gather}
+  subgraph  
+  gather-- sine agg-mean --&gt;func[combine_filters]
+  gather-- gamma agg-mean--&gt;func
+  gather-- band agg-mean--&gt;func
+  func--&gt;combined[(combined)]
+  end</code></pre>
+<p>This saves you from having to write any tuple unpacking code in the <code>combine</code> function, which can make inlining-lambdas much clunkier as your function gets complicated:</p>
+<div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">spread</span><span class="p">(</span>
+        <span class="n">sine_filter</span><span class="p">,</span>
+        <span class="n">gamma_filter</span><span class="p">,</span>
+        <span class="n">band_filter</span>
+        <span class="p">),</span>
+    <span class="n">separate</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="c1"># harder to understand going on</span>
+    <span class="k">lambda</span> <span class="n">tup</span><span class="p">:</span> <span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">tupe</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">tup</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="p">)</span>
+</code></pre></div>
+<pre class="mermaid"><code>graph TD
+  df[(data)]--&gt;spread{spread}
+  subgraph  
+  spread-- data --&gt;sine[sine_filter]
+  spread-- data --&gt;gamma[gamma_filter]
+  spread-- data --&gt;band[band_filter]
+  sine --&gt;out[("(sine-filtered-data, gamma-filtered-data, band-filtered-data)")]
+  gamma --&gt;out
+  band --&gt;out
+  end
+
+  out --&gt;separate{separate}
+  subgraph  
+  separate-- sine-filtered-data --&gt;aggfuncsine[groupby-mean]
+  separate-- gamma-filtered-data --&gt;aggfuncgamma[groupby-mean]
+  separate-- band-filtered-data --&gt;aggfuncband[groupby-mean]
+  aggfuncsine --&gt; dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
+  aggfuncgamma --&gt;dfout
+  aggfuncband --&gt;dfout
+  end
+  dfout --&gt;func["combine_filters (needs to hande a tuple!)"]
+  func--&gt;combined[(combined)]</code></pre>
+<p>For some operations that expect a tuple/list skip <code>gather</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">spread</span><span class="p">(</span>
+        <span class="n">sine_filter</span><span class="p">,</span>
+        <span class="n">gamma_filter</span><span class="p">,</span>
+        <span class="n">band_filter</span>
+        <span class="p">),</span>
+    <span class="n">separate</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="c1"># Don&#39;t need to gather; concat wants a lists/tuple</span>
+    <span class="k">lambda</span> <span class="n">tup</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="s1">&#39;sine&#39;</span><span class="p">,</span> <span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="s1">&#39;band&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;filter&#39;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;std&#39;</span><span class="p">))</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Of course <code>gather</code> works with any output that's a tuple or list such, as the outputs of <code>append</code> and <code>spread</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">append</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">2</span><span class="p">)),</span>
+    <span class="p">),</span>
+    <span class="c1"># (data, sub-pairs)</span>
+    <span class="n">append</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">tup</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Conditions</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">3</span><span class="p">)),</span>
+    <span class="p">),</span>
+    <span class="c1"># (data, sub-pairs, condition-triplets)</span>
+    <span class="n">gather</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">data</span><span class="p">,</span> <span class="n">sub_pairs</span><span class="p">,</span> <span class="n">condition_triplets</span><span class="p">:</span> <span class="p">(</span>
+            <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">sub_pairs</span><span class="p">,</span> <span class="n">condition_triples</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+        <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<pre class="mermaid"><code>graph TD
+  df[(data)]--&gt;append{append}
+  subgraph  
+  append-- data --&gt;df2[("(data, sub-pairs)")]
+  append-- data --&gt;lambda[calc sub-pairs]-- sub-pairs --&gt;df2
+  end
+  df2 --&gt;append2{append}
+  subgraph  
+  append2-- data --&gt;df3[("(data, sub-pairs, condition-triplets)")]
+  append2-- sub-pairs --&gt;df3
+  append2-- data --&gt;lambda2[calc condition-triplets]-- condition-triplets --&gt;df3
+  append2-- sub-pairs --&gt;lambda2
+  end
+  df3 --&gt; gather{gather}
+  subgraph  
+  gather-- data --&gt; aggd[(concatenated value-counts)]
+  gather-- sub-pairs --&gt;aggd
+  gather-- condition-triplets --&gt;aggd
+  end</code></pre>
+<h3 id="separate-vs-gather"><code>separate</code> vs <code>gather</code></h3>
+<p>The primary way to think about the differences between <code>separate</code> and <code>gather</code>:</p>
+<ul>
+<li>Use <code>gather</code> when the next function in your pipe is going to <strong>combine</strong> the previous inputs</li>
+<li>Use <code>separate</code> when you want to run 1 ore more sub-pipelines separately for each input</li>
+</ul>
+<h2 id="plotting-in-pipes">Plotting in pipes</h2>
+<p>One idiosyncratic feature of <code>pipe</code> is that it <strong>only displays but does not return plots.</strong> In other words, if a function returns a <code>matplotlib</code> <code>Figure</code> or <code>Axes</code>, these will be displayed in an interactive environment (i.e. notebook, qtconsole) and will pass between functions inside of a pipe but will not be returned. Instead pipe will <strong>return the last non-plot output</strong>. Also note when using libraries like <code>matplotlib</code> and <code>seaborn</code> you'll want to wrap their respective functions in <code>curry</code> so they handle partial inputs properly.:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">curry</span>
+
+<span class="n">out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="c1"># partial function application of seaborn call</span>
+    <span class="n">curry</span><span class="p">(</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;A1&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Plots don&#39;t return!</span>
+<span class="n">out</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># True</span>
+</code></pre></div>
+<p>This is a deliberate choice as plots are intended to be <em>saved inside of a pipe</em> using <code>savefig()</code> from <code>utilz.plotting</code>. While strange at first, this as the nice effect of not messying-up the output of interactive runs with <code>matplotlib</code> objects and forces you to <em>do something with your plots</em>. This <strong>also applies to functions that return <code>None</code>.</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Do this instead</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="c1"># partial function application of seaborn call</span>
+    <span class="n">curry</span><span class="p">(</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;A1&#39;</span>
+    <span class="p">),</span>
+    <span class="n">savefig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;myplot&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># savefig returns a fig so it also doesn&#39;t return!</span>
+<span class="n">out</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># True</span>
+</code></pre></div>
+<p>You can also manually suppress any outputs by passing <code>output=False</code> as the last step to a <code>pipe</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="c1"># partial function application of seaborn call</span>
+    <span class="n">curry</span><span class="p">(</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;A1&#39;</span>
+    <span class="p">),</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span> <span class="c1"># True</span>
+</code></pre></div>
+<h2 id="summary">Summary</h2>
+<ul>
+<li>for <strong>one-to-many</strong> operation use <code>append</code> or <code>spread</code></li>
+<li>for <strong>many-to-many</strong> operations use <code>separate</code></li>
+<li>for <strong>many-to-one</strong> operations use <code>gather</code> or make sure your function handle tuple/list input</li>
+<li><strong>plots never return</strong> and only display</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../intro/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Overview
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../api/core/" class="md-footer__link md-footer__link--next" aria-label="Next: Core" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Core
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      
+    
+  </body>
+</html>
