@@ -43,11 +43,29 @@ jobs:
           poetry run python --version
           poetry run coverage run --source=utilz -m pytest
 
-      - name: Build docs
-        run: poetry run mkdocs build
-
       - name: Build package
         run: poetry build
+
+  docs:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Build & deploy docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Setup Environment
+        run: |
+          curl -sSL https://install.python-poetry.org | python
+          poetry install
+
+      - name: Build docs
+        run: poetry run mkdocs build
 
       - name: Deploy docs
         uses: peaceiris/actions-gh-pages@v3
