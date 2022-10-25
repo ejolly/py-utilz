@@ -121,9 +121,6 @@ def test_to_long(df):
     assert "sepal_width" not in long.columns
     assert "sepal_width" in long["variable"].unique()
 
-    # Alias
-    assert long.equals(df.gather("sepal_width"))
-
     # When remaining columns don't have a unique row id between them we can create one
     # for the user and add it as a 'unique_id' column
     long = df.to_long(
@@ -152,8 +149,5 @@ def test_to_wide(df):
     )
     wide = long.to_wide("dimension", "inches")
     assert wide.shape == df.shape
-
-    # Alias
-    assert wide.equals(long.spread("dimension", "inches"))
 
     # TODO: test how well this works when multiple columns are passed to to_wide

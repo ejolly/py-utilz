@@ -6,7 +6,14 @@ Common data operations and transformations often on pandas dataframes. This crea
 
 ---
 """
-__all__ = ["norm_by_group", "assert_balanced_groups", "assert_same_nunique"]
+__all__ = [
+    "norm_by_group",
+    "assert_balanced_groups",
+    "assert_same_nunique",
+    "select",
+    "to_long",
+    "to_wide",
+]
 
 import numpy as np
 import pandas as pd
@@ -254,16 +261,6 @@ def to_wide(df, column, by):
     except ValueError as e:
         if "duplicate" in str(e):
             print(
-                f"ERROR: It's not possible to infer what rows are unique from columns that make up the index: {index}. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise the .to_long/.gather methods can create a unique index for with the add_unique_id = True"
+                f"ERROR: It's not possible to infer what rows are unique from columns that make up the index: {index}. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise .to_long() can create a unique index for with the add_unique_id = True"
             )
         raise e
-
-
-@_register_dataframe_method
-def spread(df, *args, **kwargs):
-    return to_wide(df, *args, **kwargs)
-
-
-@_register_dataframe_method
-def gather(df, *args, **kwargs):
-    return to_long(df, *args, **kwargs)

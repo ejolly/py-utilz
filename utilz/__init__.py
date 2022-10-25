@@ -21,5 +21,7 @@ from .dftools import (
     assert_balanced_groups,
     assert_same_nunique,
     select,
+    to_long,
+    to_wide,
 )
 from .plot import mpinit, stripbarplot, savefig, tweak, newax
