@@ -547,7 +547,7 @@ def do(func, data, *args, **kwargs):
 
 
 @curry
-def ifelse(conditional, if_true=None, if_false=None, data=None, **kwargs):
+def ifelse(conditional, if_true, if_false, *args, **kwargs):
     """
     Simple oneline ternary operator. Pass in something to check, how to check it, what
     to return if True, and what to return if False. If only one of if_true or if_false
@@ -565,39 +565,40 @@ def ifelse(conditional, if_true=None, if_false=None, data=None, **kwargs):
         Any: return from if_true or if_false
     """
 
+    if len(args) == 0:
+        data = None
+    else:
+        data = args[0] if len(args) == 1 else args
+
     if data is None:
 
         if if_true is None or if_false is None:
             raise ValueError(
                 "when data is None, at least one of if_true or if_false must be provided"
             )
+
         if callable(conditional):
-            raise TypeError("when passing a function to ifelse, data must not be None")
+            conditional = conditional(data)
+
+        if isinstance(conditional, str):
+            conditional = eval(conditional)
 
         return if_true if conditional else if_false
 
     if callable(conditional):
-        if data is None:
-            raise TypeError("when passing a function to ifelse, data must not be None")
         conditional = conditional(data)
+    if isinstance(conditional, str):
+        conditional = eval(conditional)
 
     if conditional:
         if callable(if_true):
-            if data is None:
-                raise TypeError(
-                    "when passing a function to if_true, data must not be None"
-                )
             return if_true(data, **kwargs)
-        elif if_true is None:
+        if if_true is None:
             return data
         return if_true
     else:
         if callable(if_false):
-            if data is None:
-                raise TypeError(
-                    "when passing a function to if_true, data must not be None"
-                )
             return if_false(data, **kwargs)
-        elif if_false is None:
+        if if_false is None:
             return data
         return if_false
