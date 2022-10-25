@@ -301,25 +301,21 @@ def test_do():
 
 
 def test_ifelse():
+    # WIP support better currying in pipes
+    # out = pipe(10, ifelse(lambda x: x > 0, if_true="yes"))
+    # assert out == "yes"
 
     x = 10
-    # If else, but else is implicit and returns input
-    y = ifelse(x, x > 10, x + 1)
+    y = ifelse(x > 10, x + 1, x)
     assert y == x
 
-    # Can invert it too
-    y = ifelse(x, x > 10, if_false=x + 1)
-    assert y >= x
-
-    x = 11
-    # This time be explicit
-    y = ifelse(x, x > 10, x + 1, x)
+    y = ifelse(x > 1, x + 1, x)
     assert y > x
 
     # Can call funcs too
-    out = ifelse(x, lambda e: e * 2 > 20, "yes", "no")
-    assert out == "yes"
+    out = ifelse(lambda e: e * 2 > 20, "yes", "no", data=x)
+    assert out == "no"
 
     # Can return them too
-    out = ifelse(x, lambda e: e * 2 > 20, lambda e: e + 10, "no")
-    assert out == 21
+    out = ifelse(lambda e: e * 2 > 10, lambda e: e + 10, "no", data=x)
+    assert out == 20
