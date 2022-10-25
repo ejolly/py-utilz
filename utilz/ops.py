@@ -479,8 +479,8 @@ def append(func):
             if len(sig.parameters) == 1:
                 out = func(data[0])
             else:
-                # Otherwise give them the entire chain
                 out = func(*data)
+            # Otherwise give them the entire chain
             return (*data, out)
         else:
             out = func(data)
@@ -602,3 +602,27 @@ def ifelse(conditional, if_true, if_false, *args, **kwargs):
         if if_false is None:
             return data
         return if_false
+
+
+@curry
+def pop(idx):
+    """Given a tuple, removes an element located at an index. Useful for pruning down a
+    call to append or spread."""
+
+    if isinstance(idx, int):
+
+        def remove(data):
+            if isinstance(data, (tuple, list)):
+                data = list(data) if isinstance(data, tuple) else data
+                _ = data.pop(idx)
+                out = tuple(data)
+                out = out[0] if len(out) == 1 else out
+                return out
+            else:
+                raise TypeError(
+                    f"expected a tuple of input data by received a single {type(data)}"
+                )
+
+        return remove
+    else:
+        raise TypeError("pop requires an integer index to of the ouput to drop")

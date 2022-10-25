@@ -11,6 +11,7 @@ from utilz.ops import (
     append,
     compose,
     curry,
+    pop,
 )
 from utilz.boilerplate import randdf
 import numpy as np
@@ -337,3 +338,15 @@ def test_ifelse():
     # Combine with gather to name args
     out = pipe([10, 20], gather(lambda a, b: ifelse(a > b, "yes", "no")))
     assert out == "no"
+
+
+def test_pop():
+
+    df = randdf()
+    out = pipe(df, append(lambda df: df.mean()), pop(1))
+    assert out.equals(df)
+
+    out = pipe(df, append(lambda df: df.mean()), append(lambda df: df.head()), pop(0))
+    assert isinstance(out, tuple)
+    assert len(out) == 2
+    assert out[-1].equals(df.head())
