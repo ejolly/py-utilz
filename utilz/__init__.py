@@ -1,5 +1,6 @@
 from .decorators import log, timeit, maybe, show
 from .ops import (
+    equal,
     check_random_state,
     mapcat,
     filtercat,

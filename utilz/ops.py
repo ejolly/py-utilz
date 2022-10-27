@@ -4,7 +4,7 @@ Functional tools
 ---
 """
 __all__ = [
-    "check_random_state",
+    "equal," "check_random_state",
     "mapcat",
     "filtercat",
     "sort",
@@ -28,13 +28,18 @@ from collections.abc import Callable, Iterable
 from itertools import chain, filterfalse
 from inspect import signature
 from tqdm import tqdm
-from toolz import curry, juxt
+from toolz import curry, juxt, diff
 from toolz.curried import compose_left as compose
 from matplotlib.figure import Figure, Axes
 from matplotlib.axes._subplots import Subplot
 from inspect import signature
 
 MAX_INT = np.iinfo(np.int32).max
+
+
+def equal(*seqs):
+    """Lazily checks if two sequences of potentionally different lengths are equal"""
+    return not any(diff(*seqs, default=object()))
 
 
 def check_random_state(seed=None):
@@ -555,11 +560,13 @@ def ifelse(conditional, if_true, if_false, *args, **kwargs):
     makes it easy to run shorthands like "do something only if this is true"
 
     Args:
-        data (any): thing to check
-        conditional (bool or callable): a boolean expression or callable that will be
-        applied to data
+        conditional (bool or callable): a boolean expression, callable, or string
+        expression that will be passed to eval(). Can use the variable name 'data' to
+        refer to curried data
         if_true (None, any, optional): None, object, or callable. Defaults to None.
         if_false (None, any, optional): None, object, or callable. Defaults to None.
+        data (any): thing to check if not curried and conditional is not a boolean
+        expression or if_true/if_false are callable
 
     Returns:
         Any: return from if_true or if_false
