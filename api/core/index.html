@@ -376,6 +376,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#utilz.ops.equal" class="md-nav__link">
+    equal()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.ops.filtercat" class="md-nav__link">
     filtercat()
   </a>
@@ -406,6 +413,13 @@
           <li class="md-nav__item">
   <a href="#utilz.ops.pipe" class="md-nav__link">
     pipe()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.pop" class="md-nav__link">
+    pop()
   </a>
   
 </li>
@@ -509,6 +523,13 @@
           <li class="md-nav__item">
   <a href="#utilz.dftools.select" class="md-nav__link">
     select()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.dftools.to_wide" class="md-nav__link">
+    to_wide()
   </a>
   
 </li>
@@ -684,6 +705,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#utilz.ops.equal" class="md-nav__link">
+    equal()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.ops.filtercat" class="md-nav__link">
     filtercat()
   </a>
@@ -714,6 +742,13 @@
           <li class="md-nav__item">
   <a href="#utilz.ops.pipe" class="md-nav__link">
     pipe()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.pop" class="md-nav__link">
+    pop()
   </a>
   
 </li>
@@ -817,6 +852,13 @@
           <li class="md-nav__item">
   <a href="#utilz.dftools.select" class="md-nav__link">
     select()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.dftools.to_wide" class="md-nav__link">
+    to_wide()
   </a>
   
 </li>
@@ -1036,7 +1078,8 @@ while respecting gitignore files if present an any additional ignore file names 
 
       <details class="quote">
         <summary>Source code in <code>utilz/io.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">108</span>
+<span class="normal">109</span>
 <span class="normal">110</span>
 <span class="normal">111</span>
 <span class="normal">112</span>
@@ -1079,8 +1122,7 @@ while respecting gitignore files if present an any additional ignore file names 
 <span class="normal">149</span>
 <span class="normal">150</span>
 <span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">crawl</span><span class="p">(</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">crawl</span><span class="p">(</span>
     <span class="n">where</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
     <span class="n">ignore_git</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">respect_gitignore</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -1353,9 +1395,7 @@ string) and you'll back a python object based on the file-extension:</p>
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@memoize</span>
-<span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
+<span class="normal">105</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
     <span class="n">f</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">as_arr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">as_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1496,13 +1536,7 @@ function as part of the input, i.e. (input, funcval)</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">469</span>
-<span class="normal">470</span>
-<span class="normal">471</span>
-<span class="normal">472</span>
-<span class="normal">473</span>
-<span class="normal">474</span>
-<span class="normal">475</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">475</span>
 <span class="normal">476</span>
 <span class="normal">477</span>
 <span class="normal">478</span>
@@ -1516,7 +1550,13 @@ function as part of the input, i.e. (input, funcval)</p>
 <span class="normal">486</span>
 <span class="normal">487</span>
 <span class="normal">488</span>
-<span class="normal">489</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span>
+<span class="normal">494</span>
+<span class="normal">495</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes a function and returns a new function that prepends the args to the</span>
 <span class="sd">    function as part of the input, i.e. (input, funcval)&quot;&quot;&quot;</span>
@@ -1529,8 +1569,8 @@ function as part of the input, i.e. (input, funcval)</p>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Otherwise give them the entire chain</span>
                 <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">)</span>
+            <span class="c1"># Otherwise give them the entire chain</span>
             <span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -1583,13 +1623,7 @@ function as part of the input, i.e. (input, funcval)</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span>
@@ -1600,7 +1634,13 @@ function as part of the input, i.e. (input, funcval)</p>
 <span class="normal">54</span>
 <span class="normal">55</span>
 <span class="normal">56</span>
-<span class="normal">57</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.</span>
 
 <span class="sd">    Args:</span>
@@ -1641,15 +1681,15 @@ kwargs to that functinon or method</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">538</span>
-<span class="normal">539</span>
-<span class="normal">540</span>
-<span class="normal">541</span>
-<span class="normal">542</span>
-<span class="normal">543</span>
-<span class="normal">544</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">544</span>
 <span class="normal">545</span>
-<span class="normal">546</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span>
+<span class="normal">549</span>
+<span class="normal">550</span>
+<span class="normal">551</span>
+<span class="normal">552</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">do</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Apply a single function to data or call a method on data, while passing optional</span>
 <span class="sd">    kwargs to that functinon or method&quot;&quot;&quot;</span>
@@ -1658,6 +1698,33 @@ kwargs to that functinon or method</p>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">func</span> <span class="o">=</span> <span class="n">mc</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.ops.equal" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">equal</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Lazily checks if two sequences of potentionally different lengths are equal</p>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/ops.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Lazily checks if two sequences of potentionally different lengths are equal&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">diff</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">object</span><span class="p">()))</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1756,13 +1823,7 @@ checks if <code>any</code> of the values in the iterable exist in each item of <
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">307</span>
-<span class="normal">308</span>
-<span class="normal">309</span>
-<span class="normal">310</span>
-<span class="normal">311</span>
-<span class="normal">312</span>
-<span class="normal">313</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">313</span>
 <span class="normal">314</span>
 <span class="normal">315</span>
 <span class="normal">316</span>
@@ -1824,7 +1885,13 @@ checks if <code>any</code> of the values in the iterable exist in each item of <
 <span class="normal">372</span>
 <span class="normal">373</span>
 <span class="normal">374</span>
-<span class="normal">375</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">filtercat</span><span class="p">(</span>
     <span class="n">how</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
@@ -1917,19 +1984,19 @@ function that returns more than 1 output</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">492</span>
-<span class="normal">493</span>
-<span class="normal">494</span>
-<span class="normal">495</span>
-<span class="normal">496</span>
-<span class="normal">497</span>
-<span class="normal">498</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">498</span>
 <span class="normal">499</span>
 <span class="normal">500</span>
 <span class="normal">501</span>
 <span class="normal">502</span>
 <span class="normal">503</span>
-<span class="normal">504</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">gather</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes a single function and a tuple of data and unpacks the tuple as multiple</span>
 <span class="sd">    arguments to the function. Useful after a call to append, spread, separate, or any</span>
@@ -1977,21 +2044,11 @@ makes it easy to run shorthands like "do something only if this is true"</p>
     </thead>
     <tbody>
         <tr>
-          <td><code>data</code></td>
-          <td>
-                <code>any</code>
-          </td>
-          <td><p>thing to check</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
           <td><code>conditional</code></td>
           <td>
                 <code>bool or callable</code>
           </td>
-          <td><p>a boolean expression or callable that will be</p></td>
+          <td><p>a boolean expression, callable, or string</p></td>
           <td>
               <em>required</em>
           </td>
@@ -2012,6 +2069,16 @@ makes it easy to run shorthands like "do something only if this is true"</p>
                 <code>None, any</code>
           </td>
           <td><p>None, object, or callable. Defaults to None.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>data</code></td>
+          <td>
+                <code>any</code>
+          </td>
+          <td><p>thing to check if not curried and conditional is not a boolean</p></td>
           <td>
               <em>required</em>
           </td>
@@ -2038,13 +2105,7 @@ makes it easy to run shorthands like "do something only if this is true"</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">549</span>
-<span class="normal">550</span>
-<span class="normal">551</span>
-<span class="normal">552</span>
-<span class="normal">553</span>
-<span class="normal">554</span>
-<span class="normal">555</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">555</span>
 <span class="normal">556</span>
 <span class="normal">557</span>
 <span class="normal">558</span>
@@ -2093,7 +2154,15 @@ makes it easy to run shorthands like "do something only if this is true"</p>
 <span class="normal">601</span>
 <span class="normal">602</span>
 <span class="normal">603</span>
-<span class="normal">604</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">604</span>
+<span class="normal">605</span>
+<span class="normal">606</span>
+<span class="normal">607</span>
+<span class="normal">608</span>
+<span class="normal">609</span>
+<span class="normal">610</span>
+<span class="normal">611</span>
+<span class="normal">612</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">conditional</span><span class="p">,</span> <span class="n">if_true</span><span class="p">,</span> <span class="n">if_false</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simple oneline ternary operator. Pass in something to check, how to check it, what</span>
@@ -2102,11 +2171,13 @@ makes it easy to run shorthands like "do something only if this is true"</p>
 <span class="sd">    makes it easy to run shorthands like &quot;do something only if this is true&quot;</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        data (any): thing to check</span>
-<span class="sd">        conditional (bool or callable): a boolean expression or callable that will be</span>
-<span class="sd">        applied to data</span>
+<span class="sd">        conditional (bool or callable): a boolean expression, callable, or string</span>
+<span class="sd">        expression that will be passed to eval(). Can use the variable name &#39;data&#39; to</span>
+<span class="sd">        refer to curried data</span>
 <span class="sd">        if_true (None, any, optional): None, object, or callable. Defaults to None.</span>
 <span class="sd">        if_false (None, any, optional): None, object, or callable. Defaults to None.</span>
+<span class="sd">        data (any): thing to check if not curried and conditional is not a boolean</span>
+<span class="sd">        expression or if_true/if_false are callable</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Any: return from if_true or if_false</span>
@@ -2336,13 +2407,7 @@ list.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span>
-<span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">154</span>
 <span class="normal">155</span>
 <span class="normal">156</span>
 <span class="normal">157</span>
@@ -2465,7 +2530,13 @@ list.</p>
 <span class="normal">274</span>
 <span class="normal">275</span>
 <span class="normal">276</span>
-<span class="normal">277</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span>
     <span class="n">func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
     <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
@@ -2624,13 +2695,7 @@ run a pipe for its side-effects, e.g. saving a figure, looking at something</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">383</span>
-<span class="normal">384</span>
-<span class="normal">385</span>
-<span class="normal">386</span>
-<span class="normal">387</span>
-<span class="normal">388</span>
-<span class="normal">389</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">389</span>
 <span class="normal">390</span>
 <span class="normal">391</span>
 <span class="normal">392</span>
@@ -2678,7 +2743,13 @@ run a pipe for its side-effects, e.g. saving a figure, looking at something</p>
 <span class="normal">434</span>
 <span class="normal">435</span>
 <span class="normal">436</span>
-<span class="normal">437</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">*</span><span class="n">funcs</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">*</span><span class="n">funcs</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A &quot;smart&quot; pipe function designed to pass data through a series of transformation.</span>
 <span class="sd">    Similar into `toolz.pipe` in that it performs a series of nested function</span>
@@ -2743,6 +2814,72 @@ run a pipe for its side-effects, e.g. saving a figure, looking at something</p>
 
 
 
+<h4 id="utilz.ops.pop" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">pop</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Given a tuple, removes an element located at an index. Useful for pruning down a
+call to append or spread.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/ops.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">615</span>
+<span class="normal">616</span>
+<span class="normal">617</span>
+<span class="normal">618</span>
+<span class="normal">619</span>
+<span class="normal">620</span>
+<span class="normal">621</span>
+<span class="normal">622</span>
+<span class="normal">623</span>
+<span class="normal">624</span>
+<span class="normal">625</span>
+<span class="normal">626</span>
+<span class="normal">627</span>
+<span class="normal">628</span>
+<span class="normal">629</span>
+<span class="normal">630</span>
+<span class="normal">631</span>
+<span class="normal">632</span>
+<span class="normal">633</span>
+<span class="normal">634</span>
+<span class="normal">635</span>
+<span class="normal">636</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a tuple, removes an element located at an index. Useful for pruning down a</span>
+<span class="sd">    call to append or spread.&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">data</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">out</span>
+                <span class="k">return</span> <span class="n">out</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;expected a tuple of input data by received a single </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">remove</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;pop requires an integer index to of the ouput to drop&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
 <h4 id="utilz.ops.separate" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">separate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
@@ -2759,13 +2896,7 @@ evaluated separately.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">507</span>
-<span class="normal">508</span>
-<span class="normal">509</span>
-<span class="normal">510</span>
-<span class="normal">511</span>
-<span class="normal">512</span>
-<span class="normal">513</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">513</span>
 <span class="normal">514</span>
 <span class="normal">515</span>
 <span class="normal">516</span>
@@ -2787,7 +2918,13 @@ evaluated separately.</p>
 <span class="normal">532</span>
 <span class="normal">533</span>
 <span class="normal">534</span>
-<span class="normal">535</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">535</span>
+<span class="normal">536</span>
+<span class="normal">537</span>
+<span class="normal">538</span>
+<span class="normal">539</span>
+<span class="normal">540</span>
+<span class="normal">541</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">separate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Apply one or more functions to multiple inputs separately. If the number of</span>
 <span class="sd">    functions is greater or less than the number of inputs, then each input will be run</span>
@@ -2839,13 +2976,7 @@ same length as args</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">440</span>
-<span class="normal">441</span>
-<span class="normal">442</span>
-<span class="normal">443</span>
-<span class="normal">444</span>
-<span class="normal">445</span>
-<span class="normal">446</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">446</span>
 <span class="normal">447</span>
 <span class="normal">448</span>
 <span class="normal">449</span>
@@ -2865,7 +2996,13 @@ same length as args</p>
 <span class="normal">463</span>
 <span class="normal">464</span>
 <span class="normal">465</span>
-<span class="normal">466</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">spread</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes multiple functions and applies each to the input, returning a tuple the</span>
 <span class="sd">    same length as args&quot;&quot;&quot;</span>
@@ -3933,6 +4070,128 @@ the name. Rename columns using keyword arguments.</p>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">keep</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">drop</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">items</span><span class="o">=</span><span class="n">keep</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">drop</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.dftools.to_wide" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">to_wide</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">drop_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Cast a column of long-form tidy data to a set of wide columns based on the values in
+a another column ('by')</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
+          </td>
+          <td><p>input dataframe</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>column</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>string name of column to "explode"</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>by</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>string name of column who's values should be placed into the new columns</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/dftools.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="k">def</span> <span class="nf">to_wide</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">drop_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cast a column of long-form tidy data to a set of wide columns based on the values in</span>
+<span class="sd">    a another column (&#39;by&#39;)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (pd.DataFrame): input dataframe</span>
+<span class="sd">        column (str): string name of column to &quot;explode&quot;</span>
+<span class="sd">        by (str): string name of column who&#39;s values should be placed into the new columns</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">column</span><span class="p">,</span> <span class="n">by</span><span class="p">]]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">columns</span><span class="o">=</span><span class="n">column</span><span class="p">,</span>
+            <span class="n">values</span><span class="o">=</span><span class="n">by</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">drop_index</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;prev_index&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">out</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;duplicate&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;ERROR: It&#39;s not possible to infer what rows are unique from columns that make up the index: </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise .to_long() can create a unique index for with the add_unique_id = True&quot;</span>
+            <span class="p">)</span>
+        <span class="k">raise</span> <span class="n">e</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
