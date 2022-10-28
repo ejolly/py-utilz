@@ -14,6 +14,7 @@ from .ops import check_random_state
 def randdf(
     size: tuple = (10, 3),
     columns: Union[list, None] = None,
+    groups: Union[dict, None] = None,
     func=None,
     random_state=None,
     *args: any,
@@ -53,4 +54,17 @@ def randdf(
                 counter += 1
             columns.append(f"{next(letters)}{counter}")
 
-    return pd.DataFrame(data, columns=columns)
+    out = pd.DataFrame(data, columns=columns)
+    if groups is not None:
+        for col, num_groups in groups.items():
+            if out.shape[0] % num_groups != 0:
+                raise ValueError(
+                    f"{num_groups} for column {col} is not divisible by the shape of the data {out.shape[0]}"
+                )
+            letters = cycle(string.ascii_lowercase)
+            grps = [next(letters) for _ in range(num_groups)]
+            values = []
+            for g in grps:
+                values.extend([g] * int(out.shape[0] / num_groups))
+            out = out.assign(**{col: values})
+    return out

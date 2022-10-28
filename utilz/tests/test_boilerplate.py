@@ -22,3 +22,8 @@ def test_randdf():
     assert isinstance(df, pd.DataFrame)
     assert df.shape == (20, 5)
     assert all((a == b for a, b in zip(df.columns, five_col)))
+
+    # Groups
+    df = randdf((20, 3), groups={"condition": 2, "group": 4})
+    assert df["condition"].nunique() == 2
+    assert df["group"].nunique() == 4
