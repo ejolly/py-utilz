@@ -150,6 +150,5 @@ def test_to_wide(df):
     # Then this works just fine
     wide = long.to_wide("dimension", "inches")
     assert wide.shape == df.shape
-    breakpoint()
 
     # TODO: test how well this works when multiple columns are passed to to_wide

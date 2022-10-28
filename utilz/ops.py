@@ -34,6 +34,7 @@ from toolz.curried import compose_left as compose
 from matplotlib.figure import Figure, Axes
 from matplotlib.axes._subplots import Subplot
 from inspect import signature
+from seaborn import FacetGrid, PairGrid
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -411,7 +412,7 @@ def pipe(data: Any, *funcs: Iterable, output: bool = True):
         printfunc = print
 
     show_last_eval = True
-    plot_types = (Figure, Axes, Subplot)
+    plot_types = (Figure, Axes, Subplot, FacetGrid, PairGrid)
     isorhasplot = lambda e: isinstance(e, plot_types) or (
         isinstance(e, tuple) and isinstance(e[0], plot_types)
     )
@@ -437,8 +438,15 @@ def pipe(data: Any, *funcs: Iterable, output: bool = True):
 
     if out is None:
         out = orig
+
+    # Make sure we never return plots
+    if isinstance(out, tuple):
+        out = tuple(filtercat(isorhasplot, out, invert=True))
+        out = out[0] if len(out) == 1 else out
+
     if show_last_eval:
         printfunc(out)
+
     if output:
         return out
 
@@ -511,7 +519,7 @@ def gather(func, data):
 
 
 @curry
-def separate(*args, match=False):
+def separate(*args, match=True):
     """Apply one or more functions to multiple inputs separately. If the number of
     functions is greater or less than the number of inputs, then each input will be run
     through all functions in a sequence (like a mini-pipe). If the number of functions

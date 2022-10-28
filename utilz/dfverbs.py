@@ -15,6 +15,8 @@ __all__ = [
     "tail",
     "drop",
     "select",
+    "to_long",
+    "to_wide",
 ]
 
 import numpy as np
@@ -125,7 +127,7 @@ def assign(dfg, *args, **kwargs):
 
 
 @curry
-def query(query, **kwargs):
+def query(*queries, **kwargs):
     """
     Call a dataframe or groupby object's `.query` method. Resets and drops index by
     default. Change this with reset_index='drop'|'reset'|'none'
@@ -133,12 +135,13 @@ def query(query, **kwargs):
     reset_index = kwargs.pop("reset_index", "drop")
 
     def call(df):
-        if isinstance(query, str):
-            out = df.query(query, **kwargs)
-        elif callable(query):
-            out = df.loc[query]
+        for q in queries:
+            if isinstance(q, str):
+                df = df.query(q, **kwargs)
+            elif callable(query):
+                df = df.loc[q]
 
-        return _reset_index_helper(out, reset_index)
+        return _reset_index_helper(df, reset_index)
 
     return call
 
@@ -193,3 +196,21 @@ def select(*args):
         # return df.drop(columns=drop)
 
     return call
+
+
+@curry
+def to_wide(df, column=None, by=None, drop_index=True):
+    """
+    Select one ore more columns by name. Drop one or more columns by prepending '-' to
+    the name. Does not support renaming"""
+
+    return df.to_wide(column=column, by=by, drop_index=drop_index)
+
+
+@curry
+def to_long(df, columns=None, into=None, drop_index=True):
+    """
+    Select one ore more columns by name. Drop one or more columns by prepending '-' to
+    the name. Does not support renaming"""
+
+    return df.to_long(columns=columns, into=into, drop_index=drop_index)

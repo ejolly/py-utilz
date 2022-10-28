@@ -221,7 +221,7 @@ def to_long(df, columns, into=("variable", "value"), drop_index=True):
         value_name=into[1],
     )
     if drop_index:
-        df = df.drop(columns="prev_index")
+        df = df.drop(columns="prev_index", errors="ignore")
     return df
 
 
@@ -245,7 +245,7 @@ def to_wide(df, column, by, drop_index=True):
             values=by,
         ).reset_index()
         if drop_index:
-            out = out.drop(columns=["prev_index"])
+            out = out.drop(columns=["prev_index"], errors="ignore")
         return out
     except ValueError as e:
         if "duplicate" in str(e):

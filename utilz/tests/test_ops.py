@@ -206,36 +206,32 @@ def test_pipes():
     # (input1, input2) -> (output1, output2)
 
     # 1 func
-    out = pipe([df, df], separate(lambda df: df.head(5)))
+    out = pipe([df, df], separate(lambda df: df.head(5), match=False))
     assert isinstance(out, tuple) and len(out) == 2  # 2x1
     assert out[0].equals(out[1])
     assert out[0].equals(df.head(5))
 
-    # 2 funcs, i.e. mini-pipe
-    out = pipe([df, df], separate(lambda df: df.head(10), lambda df: df.tail(5)))
-    assert isinstance(out, tuple) and len(out) == 2
-    assert out[0].equals(out[1])
-    assert out[0].equals(df.iloc[5:10, :])
-
-    # func-input pair
-    out = pipe(
-        [df, df], separate(lambda df: df.head(5), lambda df: df.tail(10), match=True)
-    )
+    # 2 func-input pairs
+    out = pipe([df, df], separate(lambda df: df.head(5), lambda df: df.tail(10)))
     assert len(out) == 2
     assert out[0].equals(df.head(5))
     assert out[1].equals(df.tail(10))
 
+    # 2 funcs, i.e. mini-pipe
+    out = pipe(
+        [df, df], separate(lambda df: df.head(10), lambda df: df.tail(5), match=False)
+    )
+    assert isinstance(out, tuple) and len(out) == 2
+    assert out[0].equals(out[1])
+    assert out[0].equals(df.iloc[5:10, :])
+
     # mismatch
     with pytest.raises(ValueError):
-        out = pipe([df, df], separate(lambda df: df.head(5), match=True))
+        out = pipe([df, df], separate(lambda df: df.head(5)))
 
     # not enough data
     with pytest.raises(TypeError):
         out = pipe(df, separate(lambda df: df.head(5)))
-
-    # But this works if we wrap it in a list/tuple
-    out = pipe([df], separate(lambda df: df.head(5)))
-    assert isinstance(out, tuple) and len(out) == 1
 
     # SPREAD (one2many)
     # input -> (input, input, input)
