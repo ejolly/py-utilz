@@ -5,12 +5,11 @@ dplyr like *verbs* for working with pandas dataframes.
 
 __all__ = [
     "groupby",
-    "rows",
-    "cols",
     "rename",
     "to_csv",
     "summarize",
     "assign",
+    "query",
     "apply",
     "head",
     "tail",
@@ -126,15 +125,22 @@ def assign(dfg, *args, **kwargs):
 
 
 @curry
-def query(query, df, **kwargs):
+def query(query, **kwargs):
     """
     Call a dataframe or groupby object's `.query` method. Resets and drops index by
     default. Change this with reset_index='drop'|'reset'|'none'
     """
     reset_index = kwargs.pop("reset_index", "drop")
-    out = do("query", df, query, **kwargs)
 
-    return _reset_index_helper(out, reset_index)
+    def call(df):
+        if isinstance(query, str):
+            out = df.query(query, **kwargs)
+        elif callable(query):
+            out = df.loc[query]
+
+        return _reset_index_helper(out, reset_index)
+
+    return call
 
 
 @curry

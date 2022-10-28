@@ -17,6 +17,7 @@ __all__ = [
     "ifelse",
     "compose",
     "curry",
+    "pop",
 ]
 
 from joblib import delayed, Parallel

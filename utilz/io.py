@@ -15,7 +15,6 @@ from toolz import pipe
 from fnmatch import fnmatchcase
 
 
-@memoize
 def load(
     f: Union[Path, str],
     as_arr: bool = False,

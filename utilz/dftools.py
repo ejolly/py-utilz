@@ -209,47 +209,34 @@ GroupBy.select = _select
 
 
 @_register_dataframe_method
-def to_long(df, columns, into=("variable", "value"), add_unique_id=False):
+def to_long(df, columns, into=("variable", "value"), drop_index=True):
     if not isinstance(columns, list):
         columns = [columns]
-    id_vars = [col for col in df.columns if col not in columns]
-    # Warning this is expensive
-    if add_unique_id:
-        num_unique_id_labels = df[id_vars].melt()["value"].nunique()
-        nuniques = int(
-            factorial(num_unique_id_labels)
-            / factorial(num_unique_id_labels - len(id_vars))
-        )
-        # nuniques = len(list(permutations(stacked_id_vars, len(id_vars))))
-        if nuniques < df.shape[0]:
-            print("non-unique index")
-            uniquified = (
-                df.reset_index()
-                .rename(columns={"index": "row_id"})
-                .assign(
-                    unique_id=lambda df: df[id_vars + ["row_id"]].apply(
-                        lambda row: "_".join(row.values.astype(str)), axis=1
-                    )
-                )
-            )
-            return uniquified.melt(
-                id_vars="unique_id",
-                value_vars=columns or list(df.columns),
-                var_name=into[0],
-                value_name=into[1],
-            )
 
-    return df.melt(
+    df = df.reset_index().rename(columns={"index": "prev_index"})
+    df = df.melt(
         id_vars=[col for col in df.columns if col not in columns],
         value_vars=columns or list(df.columns),
         var_name=into[0],
         value_name=into[1],
     )
+    if drop_index:
+        df = df.drop(columns="prev_index")
+    return df
 
 
 @_register_dataframe_method
-def to_wide(df, column, by):
+def to_wide(df, column, by, drop_index=True):
+    """
+    Cast a column of long-form tidy data to a set of wide columns based on the values in
+    a another column ('by')
 
+    Args:
+        df (pd.DataFrame): input dataframe
+        column (str): string name of column to "explode"
+        by (str): string name of column who's values should be placed into the new columns
+
+    """
     index = [col for col in df.columns if col not in [column, by]]
     try:
         out = df.pivot(
@@ -257,6 +244,8 @@ def to_wide(df, column, by):
             columns=column,
             values=by,
         ).reset_index()
+        if drop_index:
+            out = out.drop(columns=["prev_index"])
         return out
     except ValueError as e:
         if "duplicate" in str(e):

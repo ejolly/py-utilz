@@ -126,28 +126,30 @@ def test_to_long(df):
     long = df.to_long(
         ["sepal_length", "sepal_width", "petal_length", "petal_width"],
         into=("dimension", "inches"),
-        add_unique_id=True,
     )
-    assert "unique_id" in long.columns
 
 
 def test_to_wide(df):
-    # First throw away unique id info
+
+    # Generate long form data with no unique id column
     long = df.to_long(
         ["sepal_length", "sepal_width", "petal_length", "petal_width"],
         into=("dimension", "inches"),
     )
-    # We can't infer uniques
+    # Because we can't infer uniques there are duplicate possibilities so this fails
     with pytest.raises(ValueError):
         wide = long.to_wide("dimension", "inches")
 
-    # Then repeat with uniques
+    # But if we have a unique identifier
     long = df.to_long(
         ["sepal_length", "sepal_width", "petal_length", "petal_width"],
         into=("dimension", "inches"),
-        add_unique_id=True,
+        drop_index=False,
     )
+
+    # Then this works just fine
     wide = long.to_wide("dimension", "inches")
     assert wide.shape == df.shape
+    breakpoint()
 
     # TODO: test how well this works when multiple columns are passed to to_wide

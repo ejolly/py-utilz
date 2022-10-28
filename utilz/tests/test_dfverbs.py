@@ -36,6 +36,10 @@ def test_query():
     out = pipe(df, query("A1 > 0.5"))
     assert out.shape[0] < df.shape[0]
 
+    x = 0.5
+    out = pipe(df, query(lambda df: df.A1 > x))
+    assert out.shape[0] < df.shape[0]
+
 
 def test_assign():
 
