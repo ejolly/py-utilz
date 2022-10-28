@@ -169,11 +169,11 @@ def test_pipes():
     df = randdf((20, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5)
 
     # input -> output
-    out = pipe(df, lambda df: df.head())
-    assert out.shape == (5, 4)
-    out = pipe(df, lambda df: df.head(10), lambda df: df.tail(5))
-    assert out.shape == (5, 4)
-    assert out.equals(df.iloc[5:10, :])
+    # out = pipe(df, lambda df: df.head())
+    # assert out.shape == (5, 4)
+    # out = pipe(df, lambda df: df.head(10), lambda df: df.tail(5))
+    # assert out.shape == (5, 4)
+    # assert out.equals(df.iloc[5:10, :])
 
     # APPEND (simplified one2many)
     # simplified version of spread when you know you need result from previous step and
@@ -185,10 +185,10 @@ def test_pipes():
 
     # # multiple in a row:
     # # input -> (input, output) -> (input, output, output2)
-    # out = pipe(df, append(lambda df: df.head()), append(lambda df: df.tail()))
-    # assert len(out) == 3
-    # assert not out[1].equals(out[2])
-    # assert out[0].equals(df)
+    out = pipe(df, append(lambda df: df.head()), append(lambda df: df.tail()))
+    assert len(out) == 3
+    assert not out[1].equals(out[2])
+    assert out[0].equals(df)
 
     # We can access all previously appended values by passing in a func that takes more
     # than 1 arg

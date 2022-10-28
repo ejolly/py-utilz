@@ -174,8 +174,21 @@ def tweak(plot: Union[Figure, Axes], **kwargs) -> Union[Figure, Axes]:
     swiss-army knife to quickly change most aesthetics on a plot, e.g. tick labels,
     fontsize, etc, in a unified function call
     """
+    xtick_rotation = kwargs.pop("xtick_rotation", None)
+    ytick_rotation = kwargs.pop("ytick_rotation", None)
+    despine = kwargs.pop("despine", False)
+    tight_layout = kwargs.pop("tight_layout", False)
+
     if isinstance(plot, Axes):
         plot.set(**kwargs)
+        if xtick_rotation is not None:
+            plot.tick_params(axis="x", rotation=xtick_rotation)
+        if ytick_rotation is not None:
+            plot.tick_params(axis="y", rotation=ytick_rotation)
+        if despine:
+            sns.despine()
+        if tight_layout:
+            plt.tight_layout()
         return plot
 
 

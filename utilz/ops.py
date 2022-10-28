@@ -411,27 +411,44 @@ def pipe(data: Any, *funcs: Iterable, output: bool = True):
     except NameError:
         printfunc = print
 
-    show_last_eval = True
     plot_types = (Figure, Axes, Subplot, FacetGrid, PairGrid)
-    isorhasplot = lambda e: isinstance(e, plot_types) or (
-        isinstance(e, tuple) and isinstance(e[0], plot_types)
-    )
+    bad_return = lambda e: isinstance(e, plot_types) or e is None
 
     evals = []
     orig = data
     out = None
+
+    # Execute functions in pipe
     for f in funcs:
         data = f(data)
         evals.append(data)
 
-    if isorhasplot(evals[-1]):
-        show_last_eval = False
+    # Now loop over results in reverse order to figure out what to return
+    # We never return plots or None so we search until we find the first non-plot,
+    # non-None evaluation. For each evaluation that's a tuple
 
     for e in evals[::-1]:
-        if e is None:
+        # if the return is None or is a plot keep looking
+        if bad_return(e):
             continue
-        elif isorhasplot(e):
-            continue
+        elif isinstance(e, tuple):
+            # If tuple contains all Nones, Plots, or any mixcture keep looking
+            if all(bad_return(elem) for elem in e):
+                continue
+            # If tuple contains no Nones or plots return it
+            elif all(not bad_return(elem) for elem in e):
+                out = e
+                break
+            # The tuple is mixed so we have to loop over it
+            else:
+                for elem in e:
+                    if bad_return(elem):
+                        continue
+                    else:
+                        out = e
+                        break
+                else:
+                    continue
         else:
             out = e
             break
@@ -439,12 +456,10 @@ def pipe(data: Any, *funcs: Iterable, output: bool = True):
     if out is None:
         out = orig
 
-    # Make sure we never return plots
     if isinstance(out, tuple):
-        out = tuple(filtercat(isorhasplot, out, invert=True))
-        out = out[0] if len(out) == 1 else out
-
-    if show_last_eval:
+        for o in out:
+            printfunc(o)
+    else:
         printfunc(out)
 
     if output:
