@@ -209,14 +209,19 @@ GroupBy.select = _select
 
 
 @_register_dataframe_method
-def to_long(df, columns, into=("variable", "value"), drop_index=True):
-    if not isinstance(columns, list):
-        columns = [columns]
-
-    df = df.reset_index().rename(columns={"index": "prev_index"})
+def to_long(
+    df, columns=None, id_vars=None, into=("variable", "value"), drop_index=True
+):
+    if columns is not None:
+        if not isinstance(columns, list):
+            columns = [columns]
+        if id_vars is None:
+            id_vars = [col for col in df.columns if col not in columns]
+    if id_vars is None:
+        df = df.reset_index().rename(columns={"index": "prev_index"})
     df = df.melt(
-        id_vars=[col for col in df.columns if col not in columns],
-        value_vars=columns or list(df.columns),
+        id_vars=id_vars,
+        value_vars=columns,
         var_name=into[0],
         value_name=into[1],
     )
