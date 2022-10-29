@@ -392,6 +392,7 @@ def pipe(
     data: Any,
     *funcs: Iterable,
     output: bool = True,
+    show: bool = True,
     debug: bool = False,
     keep: Union[int, None] = None,
 ):
@@ -470,11 +471,12 @@ def pipe(
     if out is None:
         out = orig
 
-    if isinstance(out, tuple):
-        for o in out:
-            printfunc(o)
-    else:
-        printfunc(out)
+    if show:
+        if isinstance(out, tuple):
+            for o in out:
+                printfunc(o)
+        else:
+            printfunc(out)
 
     if output:
         if keep is None:

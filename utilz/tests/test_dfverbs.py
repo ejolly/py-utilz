@@ -70,6 +70,34 @@ def test_select():
     assert equal(out, out2)
 
 
+def test_summarize():
+    df = randdf()
+
+    # All columns
+    out = pipe(df, summarize("mean", "std"))
+    assert all(out.columns == ["column", "stat", "value"])
+    assert out.shape[0] < df.shape[0]
+
+    # Some columns with select
+    out = pipe(
+        df,
+        select("-B1"),
+        summarize("mean", "std"),
+    )
+    assert out.shape[0] == 4
+    assert out["stat"].nunique() == 2
+    assert out["column"].nunique() == 2
+
+    # Columns with summarize directly
+    out = pipe(
+        df,
+        summarize(A1=["mean", "std"], B1=["size", "std"], C1=["mean", "var"]),
+    )
+    assert out.shape[0] == 6
+    assert out["stat"].nunique() == 4
+    assert out["column"].nunique() == 3
+
+
 def test_groupby():
     df = randdf((20, 3))
     out = pipe(
@@ -83,27 +111,82 @@ def test_groupby():
     # Single group
     groups = pipe(out, groupby("group"))
     assert isinstance(groups, pd.core.groupby.generic.DataFrameGroupBy)
-    # Grouped assign
-    groups = pipe(groups, assign(A1_mean_by_group="A1.mean()"))
-    assert "A1_mean_by_group" in groups.columns
-    assert groups["A1_mean_by_group"].nunique() == 2
+
+    # Grouped create 1 new col
+    groups = pipe(out, groupby("group"), assign(A1_demean_by_group="A1 - A1.mean()"))
+    assert groups.shape[0] == out.shape[0]
+    assert "A1_demean_by_group" in groups.columns
+    correct = (
+        out.groupby("group", group_keys=False)
+        .select("A1")
+        .apply(lambda c: c - c.mean())
+        .to_numpy(),
+    )
+    assert np.allclose(groups["A1_demean_by_group"].to_numpy(), correct)
+
+    # Multiple new cols
+    groups = pipe(
+        out,
+        groupby("group"),
+        assign(A1_group_mean="A1.mean()", A1_demean_by_group="A1 - A1.mean()"),
+    )
+    assert groups.shape[0] == groups.shape[0]
+    assert groups["A1_group_mean"].nunique() == 2
+    assert np.allclose(
+        groups["A1_demean_by_group"].to_numpy(),
+        out.groupby("group").A1.transform(lambda c: c - c.mean()),
+    )
 
     # Nested groups
     schools = pipe(out, groupby("group", "school"))
     assert isinstance(schools, pd.core.groupby.generic.DataFrameGroupBy)
+
     # Nested assign
     schools = pipe(
-        schools,
+        out,
+        groupby("group", "school"),
+        assign(
+            B1_mean_by_group_and_school="B1.mean()",
+        ),
+    )
+    assert schools.shape[0] == out.shape[0]
+    assert "B1_mean_by_group_and_school" in schools.columns
+    assert schools["B1_mean_by_group_and_school"].nunique() == 4
+
+    # Nested multi-assign
+    schools = pipe(
+        out,
+        groupby("group", "school"),
         assign(
             A1_mean_by_group_and_school="A1.mean()",
             B1_mean_by_group_and_school="B1.mean()",
         ),
     )
+    assert schools.shape[0] == out.shape[0]
     assert "A1_mean_by_group_and_school" in schools.columns
     assert "B1_mean_by_group_and_school" in schools.columns
     assert schools["B1_mean_by_group_and_school"].nunique() == 4
 
-    # Standard aggregate
+    # Nested multi-assign with mixed aggregations
+    schools = pipe(
+        out,
+        groupby("group", "school"),
+        assign(
+            A1_mean_by_group_and_school="A1.mean()",
+            B1_demeaned_by_group_and_school="B1 - B1.mean()",
+        ),
+    )
+    assert schools.shape[0] == out.shape[0]
+    assert "A1_mean_by_group_and_school" in schools.columns
+    assert "B1_demeaned_by_group_and_school" in schools.columns
+    assert np.allclose(
+        schools["B1_demeaned_by_group_and_school"].to_numpy(),
+        out.groupby(["group", "school"])["B1"]
+        .transform(lambda x: x - x.mean())
+        .to_numpy(),
+    )
+
+    # Groupby with summarize
     summ = pipe(
         out, groupby("group"), select("-B1"), summarize("mean", "std", tidy=False)
     )
@@ -115,29 +198,40 @@ def test_groupby():
     assert equal(summ.columns, ["group", "column", "stat", "value"])
     assert summ.shape == (8, 4)
 
-    # WIP for multiple groups
+    # Works with dicts too
+    summ = pipe(
+        out,
+        groupby("group"),
+        summarize(
+            {"A1": ["mean", "std"], "B1": ["size", "std"], "C1": ["mean", "var"]},
+        ),
+    )
+    assert summ.shape[0] == 3 * 2 * 2
+    assert summ["stat"].nunique() == 4
+    assert summ["column"].nunique() == 3
+    assert summ["group"].nunique() == 2
 
-    # summ = pipe(
-    #     out, groupby("group", "school"), select("-B1"), summarize("mean", "std")
-    # )
-    # assert equal(summ.columns, ["group", "school", "column", "stat", "value"])
-    # assert summ.shape == (32, 5)
-    # # Works with dicts too
-    # summ = pipe(
-    #     out,
-    #     groupby("group"),
-    #     summarize(
-    #         {"A1": ["mean", "std"], "B1": ["size", "std"], "C1": ["mean", "var"]},
-    #     ),
-    # )
-    # breakpoint()
+    # Nested groups
+    summ = pipe(
+        out, groupby("group", "school"), select("-B1"), summarize("mean", "std")
+    )
+    assert equal(summ.columns, ["group", "school", "column", "stat", "value"])
+    assert summ.shape == (16, 5)
+    assert summ["group"].nunique() == 2
+    assert summ["school"].nunique() == 4
+    assert summ["column"].nunique() == 2
 
-    # Doesn't quite work yet because first grouping factor is in wide format
-    # summ = pipe(
-    #     out,
-    #     groupby("group", "school"),
-    #     summarize(
-    #         {"A1": ["mean", "std"], "B1": ["size", "std"], "C1": ["mean", "var"]},
-    #     ),
-    # )
-    # assert summ.shape[1] == 5
+    # Nested + dict
+    summ = pipe(
+        out,
+        groupby("group", "school"),
+        summarize(
+            {"A1": ["mean", "std"], "B1": ["size", "std"], "C1": ["mean", "var"]},
+        ),
+    )
+
+    assert equal(summ.columns, ["group", "school", "column", "stat", "value"])
+    assert summ["stat"].nunique() == 4
+    assert summ["column"].nunique() == 3
+    assert summ["group"].nunique() == 2
+    assert summ["school"].nunique() == 4

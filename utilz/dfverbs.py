@@ -63,25 +63,45 @@ def summarize(*args, **kwargs):
     tidy = kwargs.pop("tidy", True)
 
     def call(df):
-        num_grps = len(list(df.groups.keys())[0])
-        out = df.agg((args), **kwargs)
+        if len(args) == 1 and isinstance(args[0], dict):
+            out = df.agg(args[0])
+        elif len(args) == 0:
+            out = df.agg(kwargs)
+        else:
+            out = df.agg((args))
         if tidy:
-            unstacker = list(range(num_grps))
-            out = out.unstack(unstacker)
+            if isinstance(df, pd.core.groupby.generic.DataFrameGroupBy):
+                num_grps = len(list(df.groups.keys())[0])
+                unstacker = list(range(num_grps))
+                out = out.unstack(unstacker)
+                out = out.reset_index().rename(
+                    columns={"level_0": "column", "level_1": "stat", 0: "value"}
+                )
+                if isinstance(args[0], str):
+                    out = out.assign(
+                        stat=np.repeat(args, int(out.shape[0] / len(args)))
+                    )
 
-            out = out.reset_index().rename(
-                columns={"level_0": "column", "level_1": "stat", 0: "value"}
-            )
-            if isinstance(args[0], str):
-                out = out.assign(stat=np.repeat(args, int(out.shape[0] / len(args))))
+                # Rearrange cols
+                cols = list(out.columns)
+                created, groups = filtercat(
+                    ["column", "stat", "value"], cols, invert="split"
+                )
+                new_order = groups + created
+                return (
+                    out[new_order]
+                    .dropna()
+                    .sort_values(by=groups)
+                    .reset_index(drop=True)
+                )
+            else:
+                out = (
+                    out.reset_index()
+                    .rename(columns={"index": "stat"})
+                    .melt(id_vars="stat", var_name="column")
+                )
+                return out[["column", "stat", "value"]].dropna().reset_index(drop=True)
 
-            # Rearrange columns
-            cols = list(out.columns)
-            created, groups = filtercat(
-                ["column", "stat", "value"], cols, invert="split"
-            )
-            new_order = groups + created
-            return out[new_order].sort_values(by=groups).reset_index(drop=True)
         else:
             return out
 
@@ -98,20 +118,26 @@ def assign(dfg, *args, **kwargs):
 
     eval = kwargs.pop("eval", True)
     if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
-        prev = dfg.filter(lambda _: True).reset_index()
+        prev = dfg.obj.copy()
         for _, (k, v) in enumerate(kwargs.items()):
             if isinstance(v, str):
                 res = dfg.apply(lambda group: group.eval(v)).reset_index()
             elif callable(v):
-                res = dfg.apply(v)
-            group_col = res.columns[:-1]
-            if isinstance(res, pd.DataFrame) and "level_1" in res.columns:
-                res.columns = [res.columns[0], "index"] + [k]
-                prev = prev.merge(res.drop(columns=group_col), on="index")
+                res = dfg.apply(v).reset_index()
+            # Calling an operation that returns df the same size as the original df,
+            # like transform, e.g. 'A1 - A1.mean()'
+            if res.shape[0] == prev.shape[0]:
+                keep_cols = [col for col in res.columns if not col.startswith("level_")]
+                res = res[keep_cols]
+                res = res.rename(columns={res.columns[-1]: k})
+                # Join on index cause same shape
+                prev = prev.join(res[k])
             else:
-                res = res.rename(columns={0: k})
-                prev = prev.merge(res, on=group_col.tolist())
-        prev = prev.sort_values(by="index").drop(columns="index").reset_index(drop=True)
+                # otherwise operation returns smaller
+                # so we need to join on the grouping col which is the name of the first
+                # col in the output
+                res = res.rename(columns={res.columns[-1]: k})
+                prev = prev.merge(res, on=res.columns[:-1].to_list())
         return prev
     else:
         if eval and any(map(lambda e: isinstance(e, str), kwargs.values())):
