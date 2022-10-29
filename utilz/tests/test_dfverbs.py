@@ -8,6 +8,11 @@ from utilz.dfverbs import (
     drop,
     select,
     summarize,
+    rename,
+    to_long,
+    to_wide,
+    split,
+    astype,
 )
 from utilz import randdf, pipe, equal
 import numpy as np
@@ -235,3 +240,69 @@ def test_groupby():
     assert summ["column"].nunique() == 3
     assert summ["group"].nunique() == 2
     assert summ["school"].nunique() == 4
+
+
+def test_rf_pipeline():
+    """Test data pipeline demo'd on https://github.com/maxhumber/redframes"""
+
+
+df = pd.DataFrame(
+    {
+        "bear": [
+            "Brown bear",
+            "Polar bear",
+            "Asian black bear",
+            "American black bear",
+            "Sun bear",
+            "Sloth bear",
+            "Spectacled bear",
+            "Giant panda",
+        ],
+        "genus": [
+            "Ursus",
+            "Ursus",
+            "Ursus",
+            "Ursus",
+            "Helarctos",
+            "Melursus",
+            "Tremarctos",
+            "Ailuropoda",
+        ],
+        "weight (male, lbs)": [
+            "300-860",
+            "880-1320",
+            "220-440",
+            "125-500",
+            "60-150",
+            "175-310",
+            "220-340",
+            "190-275",
+        ],
+        "weight (female, lbs)": [
+            "205-455",
+            "330-550",
+            "110-275",
+            "90-300",
+            "45-90",
+            "120-210",
+            "140-180",
+            "155-220",
+        ],
+    }
+)
+
+out = pipe(
+    df,
+    rename({"weight (male, lbs)": "male", "weight (female, lbs)": "female"}),
+    to_long(columns=["male", "female"], into=("sex", "weight")),
+    split("weight", ("min", "max"), sep="-"),
+    to_long(columns=["min", "max"], into=("stat", "weight")),
+    astype({"weight": float}),
+    groupby("genus", "sex"),
+    assign(weight="weight.mean()"),
+    to_wide(column="sex", by="weight"),
+    assign(dimorphism="male / female"),  # no rounding possible
+    assign(dimorphism=lambda df: np.round(df.male / df.female, 2)),
+)
+assert out.shape == (16, 6)
+assert all(out.columns == ["bear", "genus", "stat", "female", "male", "dimorphism"])

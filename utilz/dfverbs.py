@@ -17,6 +17,8 @@ __all__ = [
     "select",
     "to_long",
     "to_wide",
+    "split",
+    "astype",
 ]
 
 import numpy as np
@@ -46,6 +48,8 @@ def groupby(*args):
 @curry
 def rename(cols, df):
     """Call a dataframe's `.rename(columns={})` method"""
+    if isinstance(cols, tuple):
+        cols = {cols[0]: cols[1]}
     return df.rename(columns=cols)
 
 
@@ -77,7 +81,7 @@ def summarize(*args, **kwargs):
                 out = out.reset_index().rename(
                     columns={"level_0": "column", "level_1": "stat", 0: "value"}
                 )
-                if isinstance(args[0], str):
+                if len(args) and isinstance(args[0], str):
                     out = out.assign(
                         stat=np.repeat(args, int(out.shape[0] / len(args)))
                     )
@@ -88,7 +92,7 @@ def summarize(*args, **kwargs):
                     ["column", "stat", "value"], cols, invert="split"
                 )
                 new_order = groups + created
-                return (
+                out = (
                     out[new_order]
                     .dropna()
                     .sort_values(by=groups)
@@ -100,7 +104,13 @@ def summarize(*args, **kwargs):
                     .rename(columns={"index": "stat"})
                     .melt(id_vars="stat", var_name="column")
                 )
-                return out[["column", "stat", "value"]].dropna().reset_index(drop=True)
+                out = out[["column", "stat", "value"]].dropna().reset_index(drop=True)
+
+            # Drop the column column if it only has one value, e.g. if we did a
+            # summarize on a long-form and provided kwarg to summarize
+            if "column" in out and out["column"].nunique() == 1:
+                out = out.drop(columns="column")
+            return out
 
         else:
             return out
@@ -130,16 +140,28 @@ def assign(dfg, *args, **kwargs):
                 keep_cols = [col for col in res.columns if not col.startswith("level_")]
                 res = res[keep_cols]
                 res = res.rename(columns={res.columns[-1]: k})
+
                 # Join on index cause same shape
-                prev = prev.join(res[k])
+                # Allow column overwriting
+                if k in prev:
+                    prev = prev.drop(columns=k).join(res[k])
+                else:
+                    prev = prev.join(res[k])
             else:
                 # otherwise operation returns smaller
                 # so we need to join on the grouping col which is the name of the first
                 # col in the output
                 res = res.rename(columns={res.columns[-1]: k})
-                prev = prev.merge(res, on=res.columns[:-1].to_list())
+                # Allow column overwriting
+                if k in prev:
+                    prev = prev.drop(columns=k).merge(
+                        res, on=res.columns[:-1].to_list()
+                    )
+                else:
+                    prev = prev.merge(res, on=res.columns[:-1].to_list())
         return prev
     else:
+
         if eval and any(map(lambda e: isinstance(e, str), kwargs.values())):
             out = dfg.copy()
             for (
@@ -240,3 +262,28 @@ def to_long(df, columns=None, into=None, drop_index=True):
     the name. Does not support renaming"""
 
     return df.to_long(columns=columns, into=into, drop_index=drop_index)
+
+
+@curry
+def split(col, into, df, sep=" "):
+    """Split values in single df column into multiple columns by separator, e.g.
+    First-Last -> [First], [Last]. To split list elements use [] as the sep, e.g.
+    [1,2,3] -> [1], [2], [3]"""
+
+    if isinstance(sep, str):
+        out = df[col].str.split(sep, expand=True)
+    elif isinstance(sep, list):
+        out = pd.DataFrame(df[col].to_list())
+    if len(into) != out.shape[1]:
+        raise ValueError(
+            f"into has {len(into)} elements, but splitting creates a dataframe with {out.shape[1]} columns"
+        )
+    else:
+        out.columns = list(into)
+
+    return pd.concat([df.drop(columns=col), out], axis=1)
+
+
+@curry
+def astype(coldict, df):
+    return df.astype(coldict)
