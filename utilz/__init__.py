@@ -9,6 +9,7 @@ from .ops import (
     append,
     separate,
     gather,
+    unpack,
     spread,
     do,
     ifelse,

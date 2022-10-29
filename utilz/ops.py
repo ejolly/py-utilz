@@ -13,6 +13,7 @@ __all__ = [
     "spread",
     "separate",
     "gather",
+    "unpack",
     "do",
     "ifelse",
     "compose",
@@ -538,6 +539,12 @@ def gather(func, data):
         )
 
     return func(*data)
+
+
+# Alias
+@curry
+def unpack(func, data):
+    return gather(func, data)
 
 
 @curry

@@ -5,6 +5,7 @@ from utilz.ops import (
     pipe,
     spread,
     gather,
+    unpack,
     separate,
     do,
     ifelse,
@@ -258,6 +259,9 @@ def test_pipes_basic():
     # GATHER (many2one)
     # (input1, input2) -> output
     out = pipe([df, df], gather(lambda df1, df2: df1 + df2))
+    assert out.equals(df + df)
+    # Test alias
+    out = pipe([df, df], unpack(lambda df1, df2: df1 + df2))
     assert out.equals(df + df)
     # same thing just nicer semantics gather
     out = pipe([df, df], lambda dfs: dfs[0] + dfs[1])
