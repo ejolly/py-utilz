@@ -13,11 +13,13 @@ from utilz.ops import (
     curry,
     pop,
 )
+from utilz.plot import tweak
 from utilz.boilerplate import randdf
 import numpy as np
 import pandas as pd
 from time import sleep, time
 import pytest
+import seaborn as sns
 
 
 def test_random_state():
@@ -164,24 +166,24 @@ def test_filtercat():
     assert all(filtercat(lambda x: isinstance(x, str), arr))
 
 
-def test_pipes():
+def test_pipes_basic():
 
     df = randdf((20, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5)
 
     # input -> output
-    # out = pipe(df, lambda df: df.head())
-    # assert out.shape == (5, 4)
-    # out = pipe(df, lambda df: df.head(10), lambda df: df.tail(5))
-    # assert out.shape == (5, 4)
-    # assert out.equals(df.iloc[5:10, :])
+    out = pipe(df, lambda df: df.head())
+    assert out.shape == (5, 4)
+    out = pipe(df, lambda df: df.head(10), lambda df: df.tail(5))
+    assert out.shape == (5, 4)
+    assert out.equals(df.iloc[5:10, :])
 
     # APPEND (simplified one2many)
     # simplified version of spread when you know you need result from previous step and
     # just 1 other thing
     # input -> (input, output)
-    # out = pipe(df, append(lambda df: df.head()))
-    # assert isinstance(out, tuple)
-    # assert out[0].equals(df) and out[1].equals(df.head())
+    out = pipe(df, append(lambda df: df.head()))
+    assert isinstance(out, tuple)
+    assert out[0].equals(df) and out[1].equals(df.head())
 
     # # multiple in a row:
     # # input -> (input, output) -> (input, output, output2)
@@ -346,3 +348,110 @@ def test_pop():
     assert isinstance(out, tuple)
     assert len(out) == 2
     assert out[-1].equals(df.head())
+
+
+def test_pipes_advanced():
+    df = randdf((20, 3), groups={"condition": 2, "group": 4})
+
+    # df ->
+    # (df, labels) ->
+    #   barplot
+    #   regplot
+    # Returns: (df, labels)
+    out = pipe(
+        df,
+        append(lambda df: df["group"].unique()[::-1]),
+        spread(
+            lambda tup: sns.barplot(
+                x="group",
+                y="A1",
+                hue="condition",
+                order=tup[1],
+                data=tup[0],
+            ),
+            lambda tup: sns.regplot(x="A1", y="B1", data=tup[0]),
+        ),
+    )
+    assert len(out) == 2
+    assert out[0].equals(df)
+    assert all(out[1] == df["group"].unique()[::-1])
+
+    # Same as above but we stick a gather in their to more easily unpack the tuple
+    out = pipe(
+        df,
+        append(lambda df: df["group"].unique()[::-1]),
+        spread(
+            gather(
+                lambda data, order: sns.barplot(
+                    x="group", y="A1", hue="condition", order=order, data=data
+                ),
+            ),
+            gather(
+                lambda data, _: sns.regplot(x="A1", y="B1", data=data),
+            ),
+        ),
+    )
+    assert len(out) == 2
+    assert out[0].equals(df)
+    assert all(out[1] == df["group"].unique()[::-1])
+
+    # df ->
+    # df-grouped ->
+    #   A1 mean ->
+    #   B1 mean ->
+    # pd.concat
+    # Returns: df of (A1 mean, B1 mean)
+    out = pipe(
+        df,
+        lambda df: df.groupby("group"),
+        spread(
+            lambda dfg: dfg.select("A1").mean(),
+            lambda dfg: dfg.select("B1").mean(),
+        ),
+        curry(pd.concat, axis=1),
+    )
+    assert isinstance(out, pd.DataFrame)
+    assert out.shape == (4, 2)
+
+    # df ->
+    # df-grouped ->
+    #   A1 mean ->
+    #       distplot
+    #   B1 mean ->
+    #       boxplot
+    #
+    # Returns: tuple (A1 mean, B1 mean)
+    out = pipe(
+        df,
+        lambda df: df.groupby("group"),
+        spread(
+            lambda dfg: dfg.select("A1").mean(),
+            lambda dfg: dfg.select("B1").mean(),
+        ),
+        separate(
+            lambda means: sns.distplot(means),
+            lambda means: sns.boxplot(means),
+        ),
+        debug=True,
+    )
+    assert len(out) == 3  # 3 steps in pipe
+    assert isinstance(out[-1], tuple)  # plots
+    assert isinstance(out[-2], tuple)  # series
+    assert isinstance(out[-3], pd.core.groupby.generic.DataFrameGroupBy)
+
+    # Same as above but with a compose thrown in for extra complexity.
+    # Without debug=True we can unpack the tuple
+    out1, out2 = pipe(
+        df,
+        lambda df: df.groupby("group"),
+        spread(
+            lambda dfg: dfg.select("A1").mean(),
+            lambda dfg: dfg.select("B1").mean(),
+        ),
+        separate(
+            compose(lambda means: sns.distplot(means), tweak(title="distplot")),
+            compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
+        ),
+    )
+    assert isinstance(out1, pd.Series)
+    assert isinstance(out2, pd.Series)

@@ -387,7 +387,7 @@ def sort(iterme: Iterable, **kwargs):
     return sorted(iterme, **kwargs)
 
 
-def pipe(data: Any, *funcs: Iterable, output: bool = True):
+def pipe(data: Any, *funcs: Iterable, output: bool = True, debug: bool = False):
     """
     A "smart" pipe function designed to pass data through a series of transformation.
     Similar into `toolz.pipe` in that it performs a series of nested function
@@ -411,9 +411,12 @@ def pipe(data: Any, *funcs: Iterable, output: bool = True):
     except NameError:
         printfunc = print
 
+    # We don't return plots
     plot_types = (Figure, Axes, Subplot, FacetGrid, PairGrid)
+    # Or None
     bad_return = lambda e: isinstance(e, plot_types) or e is None
 
+    # Keep track of function evaluations
     evals = []
     orig = data
     out = None
@@ -423,9 +426,13 @@ def pipe(data: Any, *funcs: Iterable, output: bool = True):
         data = f(data)
         evals.append(data)
 
+    if debug:
+        return evals
     # Now loop over results in reverse order to figure out what to return
     # We never return plots or None so we search until we find the first non-plot,
-    # non-None evaluation. For each evaluation that's a tuple
+    # non-None evaluation. For each evaluation that's a tuple we return if none of it's
+    # elements is a plot or None, otherwise we search through its elements and return
+    # the first non-plot non-None.
 
     for e in evals[::-1]:
         # if the return is None or is a plot keep looking
