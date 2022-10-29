@@ -343,15 +343,28 @@ def test_ifelse():
 
 
 def test_pop():
+    # Pop is for shrinking outputs to other funcs
+    # Keep is pruning the final outputs of a complicated pipe
 
     df = randdf()
     out = pipe(df, append(lambda df: df.mean()), pop(1))
     assert out.equals(df)
 
+    # Equivalent using keep kwarg
+    out2 = pipe(df, append(lambda df: df.mean()), keep=0)
+    assert out2.equals(out)
+
     out = pipe(df, append(lambda df: df.mean()), append(lambda df: df.head()), pop(0))
     assert isinstance(out, tuple)
     assert len(out) == 2
     assert out[-1].equals(df.head())
+
+    # Equivalent using keep kwarg
+    out2 = pipe(
+        df, append(lambda df: df.mean()), append(lambda df: df.head()), keep=(1, 2)
+    )
+    assert isinstance(out2, tuple)
+    assert out2[-1].equals(df.head())
 
 
 def test_pipes_advanced():
@@ -459,3 +472,40 @@ def test_pipes_advanced():
     )
     assert isinstance(out1, pd.Series)
     assert isinstance(out2, pd.Series)
+
+    # Same but this time we pop off the last value and only get 1 return
+    a1_mean = pipe(
+        df,
+        lambda df: df.groupby("group"),
+        spread(
+            lambda dfg: dfg.select("A1").mean(),
+            lambda dfg: dfg.select("B1").mean(),
+        ),
+        separate(
+            compose(lambda means: sns.distplot(means), tweak(title="distplot")),
+            compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
+        ),
+        keep=0,
+    )
+    assert isinstance(a1_mean, pd.Series)
+
+    # NOTE: THIS DOESN"T WORK BY DESIGN
+    # Pop can only shrink outputs from the previous step
+    # in this case thats a tuple of plots which are discarded anyway
+    # so the real output (from spread) is unaffected
+    a1_mean_with_pop = pipe(
+        df,
+        lambda df: df.groupby("group"),
+        spread(
+            lambda dfg: dfg.select("A1").mean(),
+            lambda dfg: dfg.select("B1").mean(),
+        ),
+        separate(
+            compose(lambda means: sns.distplot(means), tweak(title="distplot")),
+            compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
+        ),
+        pop(0),
+    )
+    assert isinstance(a1_mean_with_pop, tuple)
+    assert len(a1_mean_with_pop) == 2
+    assert a1_mean_with_pop[0].equals(a1_mean)

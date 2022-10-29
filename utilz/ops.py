@@ -388,7 +388,13 @@ def sort(iterme: Iterable, **kwargs):
     return sorted(iterme, **kwargs)
 
 
-def pipe(data: Any, *funcs: Iterable, output: bool = True, debug: bool = False):
+def pipe(
+    data: Any,
+    *funcs: Iterable,
+    output: bool = True,
+    debug: bool = False,
+    keep: Union[int, None] = None,
+):
     """
     A "smart" pipe function designed to pass data through a series of transformation.
     Similar into `toolz.pipe` in that it performs a series of nested function
@@ -471,7 +477,13 @@ def pipe(data: Any, *funcs: Iterable, output: bool = True, debug: bool = False):
         printfunc(out)
 
     if output:
-        return out
+        if keep is None:
+            return out
+        else:
+            if isinstance(keep, int):
+                return out[keep]
+            else:
+                return tuple([out[i] for i in keep])
 
 
 @curry
