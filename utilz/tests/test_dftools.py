@@ -127,7 +127,6 @@ def test_to_long(df):
         ["sepal_length", "sepal_width", "petal_length", "petal_width"],
         into=("dimension", "inches"),
     )
-    breakpoint()
 
 
 def test_to_wide(df):
