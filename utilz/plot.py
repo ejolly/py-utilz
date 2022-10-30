@@ -2,7 +2,7 @@
 Plotting convenience functions
 """
 
-__all__ = ["mpinit", "stripbarplot", "savefig", "tweak", "newax"]
+__all__ = ["mpinit", "stripbarplot", "savefig", "tweak", "setcontext", "newax"]
 
 import seaborn as sns
 from pathlib import Path
@@ -186,10 +186,20 @@ def tweak(plot: Union[Figure, Axes], **kwargs) -> Union[Figure, Axes]:
         if ytick_rotation is not None:
             plot.tick_params(axis="y", rotation=ytick_rotation)
         if despine:
-            sns.despine()
+            sns.despine(ax=plot)
         if tight_layout:
             plt.tight_layout()
         return plot
+
+
+@curry
+def setcontext(data, context="notebook", font_scale=1, rc=None):
+    """Modify a plot context. Just call it once in a pipe at some point prior to any
+    plot commands or functions. Call it with default args to reset. Intended to be used
+    inside a pipe, because pipe's always reset context before they run"""
+
+    sns.set_context(context=context, font_scale=font_scale, rc=rc)
+    return data
 
 
 def newax(*args, **kwargs):

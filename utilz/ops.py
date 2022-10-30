@@ -19,6 +19,7 @@ __all__ = [
     "compose",
     "curry",
     "pop",
+    "across",
 ]
 
 from joblib import delayed, Parallel
@@ -317,6 +318,7 @@ def filtercat(
     how: Union[Callable, Iterable, str, int, float],
     iterme: Iterable,
     invert: Union[str, bool] = False,
+    substr_match: bool = True,
     assert_notempty: bool = True,
 ):
     """
@@ -348,12 +350,18 @@ def filtercat(
     if isinstance(how, Callable):
         func = how
     elif isinstance(how, str):
-        func = lambda elem: how in str(elem)
+        if substr_match:
+            func = lambda elem: how in str(elem)
+        else:
+            func = lambda elem: how == elem
     elif isinstance(how, (float, int)):
         func = lambda elem: how == elem
     elif isinstance(how, Iterable):
         if isinstance(how[0], str):
-            func = lambda elem: any(map(lambda h: h in str(elem), how))
+            if substr_match:
+                func = lambda elem: any(map(lambda h: h in str(elem), how))
+            else:
+                func = lambda elem: any(map(lambda h: h == elem, how))
         elif isinstance(how[1], (float, int)):
             func = lambda elem: any(map(lambda h: h == elem, how))
         else:
@@ -404,7 +412,8 @@ def pipe(
     or logging from a script. Also recognizes if the last function evaluation returns
     None or a plot and returns last non-None/non-plot evaluation in the pipe. Passing
     output = False will return nothing from the pipe, which is if you just want to
-    run a pipe for its side-effects, e.g. saving a figure, looking at something
+    run a pipe for its side-effects, e.g. saving a figure, looking at something. You can
+    use show = False to just save the outputs without displaying the last evaluation.
     """
 
     if not funcs:
@@ -429,7 +438,6 @@ def pipe(
     orig = data
     out = None
 
-    # Execute functions in pipe
     for f in funcs:
         data = f(data)
         evals.append(data)
@@ -519,23 +527,25 @@ def spread(*args):
 
 @curry
 def append(func):
-    """Takes a function and returns a new function that prepends the args to the
+    """Takes a function or obj and returns a new function that prepends the args to the
     function as part of the input, i.e. (input, funcval)"""
 
     def alongwith(data):
         # If data is a tuple and func only takes 1 arg, then assume the user wants the
         # original data in the chain
-        if isinstance(data, tuple):
-            sig = signature(func)
-            if len(sig.parameters) == 1:
-                out = func(data[0])
+        if callable(func):
+            if isinstance(data, tuple):
+                sig = signature(func)
+                if len(sig.parameters) == 1:
+                    out = func(data[0])
+                else:
+                    out = func(*data)
+                # Otherwise give them the entire chain
+                return (*data, out)
             else:
-                out = func(*data)
-            # Otherwise give them the entire chain
-            return (*data, out)
-        else:
-            out = func(data)
-            return (data, out)
+                out = func(data)
+                return (data, out)
+        return (data, func)
 
     return alongwith
 
@@ -588,6 +598,28 @@ def separate(*args, match=True):
                     d = func(d)
                 out.append(d)
             return tuple(out)
+
+    return call
+
+
+@curry
+def across(*args):
+    """Apply one or more functions to multiple inputs separately. If the number of
+    functions is greater or less than the number of inputs, then each input will be run
+    through all functions in a sequence (like a mini-pipe). If the number of functions
+    == the number of inputs and match=True, then each input-function pair will be
+    evaluated separately."""
+
+    def call(data):
+        if not isinstance(data, (list, tuple)):
+            raise TypeError(
+                f"Expected a list/tuple of input, but received a single {type(data)}. If you want to apply a function to a single input either use a lambda or do()"
+            )
+        if len(data) != len(args):
+            raise ValueError(
+                f"To use match=True, the number of functions passed must equal the length of the previous output, but {len(data)} data and {len(args)} functions don't match"
+            )
+        return tuple([f(a) for f, a in zip(args, data)])
 
     return call
 

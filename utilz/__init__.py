@@ -16,6 +16,7 @@ from .ops import (
     compose,
     curry,
     pop,
+    across,
 )
 from .io import load, crawl
 from .boilerplate import randdf
@@ -27,4 +28,4 @@ from .dftools import (
     to_long,
     to_wide,
 )
-from .plot import mpinit, stripbarplot, savefig, tweak, newax
+from .plot import mpinit, stripbarplot, savefig, tweak, newax, setcontext

@@ -138,7 +138,7 @@ def test_summarize():
             summarize(mean="disp - disp.mean()"),
         )
 
-    # More complicated
+    # TODO: More complicated
     df = randdf((20, 3))
     out = pipe(
         df,

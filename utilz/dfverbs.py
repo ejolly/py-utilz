@@ -6,6 +6,7 @@ dplyr like *verbs* for working with pandas dataframes.
 __all__ = [
     "groupby",
     "rename",
+    "read_csv",
     "to_csv",
     "summarize",
     "assign",
@@ -24,7 +25,203 @@ __all__ = [
 
 import pandas as pd
 from toolz import curry
-from .ops import do
+from .ops import do, filtercat
+from .plot import newax
+import seaborn as sns
+
+
+@curry
+def pairplot(**kwargs):
+    def plot(data):
+        return sns.pairplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def clustermap(**kwargs):
+    def plot(data):
+        return sns.clustermap(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def residplot(**kwargs):
+    def plot(data):
+        return sns.residplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def regplot(**kwargs):
+    def plot(data):
+        return sns.regplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def lmplot(**kwargs):
+    def plot(data):
+        return sns.lmplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def countplot(**kwargs):
+    def plot(data):
+        return sns.countplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def pointplot(**kwargs):
+    def plot(data):
+        return sns.pointplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def boxenplot(**kwargs):
+    def plot(data):
+        return sns.boxenplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def violinplot(**kwargs):
+    def plot(data):
+        return sns.violinplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def boxplot(**kwargs):
+    def plot(data):
+        return sns.boxplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def swarmplot(**kwargs):
+    def plot(data):
+        return sns.swarmplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def stripplot(**kwargs):
+    def plot(data):
+        return sns.stripplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def rugplot(**kwargs):
+    def plot(data):
+        return sns.rugplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def ecdfplot(**kwargs):
+    def plot(data):
+        return sns.ecdfplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def kdeplot(**kwargs):
+    def plot(data):
+        return sns.kdeplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def histplot(**kwargs):
+    def plot(data):
+        return sns.histplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def displot(**kwargs):
+    def plot(data):
+        return sns.displot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def scatterplot(**kwargs):
+    def plot(data):
+        return sns.scatterplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def relplot(**kwargs):
+    def plot(data):
+        return sns.relplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def heatmap(**kwargs):
+    def plot(data):
+        return sns.heatmap(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def lineplot(**kwargs):
+    def plot(data):
+        return sns.lineplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def catplot(**kwargs):
+    def plot(data):
+        return sns.catplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def barplot(**kwargs):
+    def plot(data):
+        return sns.barplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def plot(*args, **kwargs):
+    """Call a dataframe's .plot method"""
+
+    def call(df):
+        return df.plot(*args, **kwargs)
+
+    return call
 
 
 def _reset_index_helper(out, reset_index):
@@ -52,6 +249,12 @@ def rename(cols, df):
     if isinstance(cols, tuple):
         cols = {cols[0]: cols[1]}
     return df.rename(columns=cols)
+
+
+@curry
+def read_csv(*args, **kwargs):
+    """Call pd.read_csv"""
+    return pd.read_csv(*args, **kwargs)
 
 
 @curry
@@ -87,9 +290,10 @@ def summarize(dfg, **kwargs):
                 )
             if out is None:
                 out = res
-            out = out.drop(columns=k, errors="ignore").merge(
-                res, on=res.columns[:-1].to_list()
-            )
+            else:
+                out = out.drop(columns=k, errors="ignore").merge(
+                    res, on=res.columns[:-1].to_list()
+                )
         return out
     elif isinstance(dfg, pd.DataFrame):
         out = dict()
@@ -113,12 +317,11 @@ def summarize(dfg, **kwargs):
 @curry
 def assign(dfg, **kwargs):
     """
-    Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses `plydata.define/mutate` unless the input is a grouped DataFrame
-    in which case it falls back to pandas methods because `plydata` can only handle
-    grouped inputs resulting from its own (slow) `group_by` function
+    Creates a new column(s) in a DataFrame based on a function of existing columns in
+    the DataFrame. Always returns a dataframe the same size as the original. For groupby
+    inputs, the result is always ungrouped.
     """
 
-    eval = kwargs.pop("eval", True)
     if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
         prev = dfg.obj.copy()
         for _, (k, v) in enumerate(kwargs.items()):
@@ -153,8 +356,7 @@ def assign(dfg, **kwargs):
                     prev = prev.merge(res, on=res.columns[:-1].to_list())
         return prev
     else:
-
-        if eval and any(map(lambda e: isinstance(e, str), kwargs.values())):
+        if any(map(lambda e: isinstance(e, str), kwargs.values())):
             out = dfg.copy()
             for (
                 k,
@@ -164,6 +366,37 @@ def assign(dfg, **kwargs):
             return out
         else:
             return do("assign", dfg, **kwargs)
+
+
+# Alias
+@curry
+def mutate(dfg, **kwargs):
+    return assign(dfg, **kwargs)
+
+
+@curry
+def transmute(dfg, **kwargs):
+    """Like assign/mutate, but only returns the newly created columns."""
+    if isinstance(
+        dfg,
+        (
+            pd.core.groupby.generic.DataFrameGroupBy,
+            pd.core.groupby.generic.SeriesGroupBy,
+        ),
+    ):
+        orig = dfg.obj
+    else:
+        orig = dfg
+    out = assign(dfg, **kwargs)
+    cols = filtercat(list(orig.columns), list(out.columns), substr_match=False)
+    out = out.drop(columns=cols)
+
+    if out.shape[1] < 1:
+        raise ValueError(
+            "transmute does not support reassigning to an existing column. Give your new column(s) a different name(s) to extract"
+        )
+    else:
+        return out
 
 
 @curry
@@ -315,5 +548,58 @@ def sort(*args, **kwargs):
 
     def call(df):
         return df.sort_values(by=list(args), ignore_index=ignore_index, **kwargs)
+
+    return call
+
+
+@curry
+def call(*args, **kwargs):
+    def _call(df):
+        method_name = args[0]
+        func = getattr(df, method_name, None)
+        if func is not None:
+            return func(*args[1:], **kwargs)
+        else:
+            raise AttributeError(f"{type(df)} does not have a {method_name} method")
+
+    return _call
+
+
+@curry
+def splitquery(query, **kwargs):
+    """
+    Call a dataframe or groupby object's `.query` method and return 2 dataframes one
+    where containing results where the query is true and its inverse.
+    """
+    reset_index = kwargs.pop("reset_index", "drop")
+
+    def call(df):
+        if isinstance(query, str):
+            df_yes = df.query(query, **kwargs)
+            df_no = df.query(f"not ({query})", **kwargs)
+        elif callable(query):
+            df_yes = df.loc[query]
+            df_no = df.loc[~(query)]
+
+        return (
+            _reset_index_helper(df_yes, reset_index),
+            _reset_index_helper(df_no, reset_index),
+        )
+
+    return call
+
+
+@curry
+def fillna(*args, **kwargs):
+    def call(df):
+        return df.fillna(*args, **kwargs)
+
+    return call
+
+
+@curry
+def replace(*args, **kwargs):
+    def call(df):
+        return df.replace(*args, **kwargs)
 
     return call
