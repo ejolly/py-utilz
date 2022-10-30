@@ -355,6 +355,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#utilz.ops.across" class="md-nav__link">
+    across()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.ops.append" class="md-nav__link">
     append()
   </a>
@@ -528,6 +535,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#utilz.dftools.to_long" class="md-nav__link">
+    to_long()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.dftools.to_wide" class="md-nav__link">
     to_wide()
   </a>
@@ -564,6 +578,13 @@
           <li class="md-nav__item">
   <a href="#utilz.plot.savefig" class="md-nav__link">
     savefig()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.plot.setcontext" class="md-nav__link">
+    setcontext()
   </a>
   
 </li>
@@ -684,6 +705,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#utilz.ops.across" class="md-nav__link">
+    across()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.ops.append" class="md-nav__link">
     append()
   </a>
@@ -857,6 +885,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#utilz.dftools.to_long" class="md-nav__link">
+    to_long()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.dftools.to_wide" class="md-nav__link">
     to_wide()
   </a>
@@ -893,6 +928,13 @@
           <li class="md-nav__item">
   <a href="#utilz.plot.savefig" class="md-nav__link">
     savefig()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.plot.setcontext" class="md-nav__link">
+    setcontext()
   </a>
   
 </li>
@@ -1523,6 +1565,71 @@ string) and you'll back a python object based on the file-extension:</p>
 
 
 
+<h4 id="utilz.ops.across" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">across</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Apply one or more functions to multiple inputs separately. If the number of
+functions is greater or less than the number of inputs, then each input will be run
+through all functions in a sequence (like a mini-pipe). If the number of functions
+== the number of inputs and match=True, then each input-function pair will be
+evaluated separately.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/ops.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">605</span>
+<span class="normal">606</span>
+<span class="normal">607</span>
+<span class="normal">608</span>
+<span class="normal">609</span>
+<span class="normal">610</span>
+<span class="normal">611</span>
+<span class="normal">612</span>
+<span class="normal">613</span>
+<span class="normal">614</span>
+<span class="normal">615</span>
+<span class="normal">616</span>
+<span class="normal">617</span>
+<span class="normal">618</span>
+<span class="normal">619</span>
+<span class="normal">620</span>
+<span class="normal">621</span>
+<span class="normal">622</span>
+<span class="normal">623</span>
+<span class="normal">624</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">across</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Apply one or more functions to multiple inputs separately. If the number of</span>
+<span class="sd">    functions is greater or less than the number of inputs, then each input will be run</span>
+<span class="sd">    through all functions in a sequence (like a mini-pipe). If the number of functions</span>
+<span class="sd">    == the number of inputs and match=True, then each input-function pair will be</span>
+<span class="sd">    evaluated separately.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Expected a list/tuple of input, but received a single </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">. If you want to apply a function to a single input either use a lambda or do()&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;To use match=True, the number of functions passed must equal the length of the previous output, but </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2"> data and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="si">}</span><span class="s2"> functions don&#39;t match&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">data</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">call</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
 <h4 id="utilz.ops.append" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></code>
 
@@ -1531,50 +1638,54 @@ string) and you'll back a python object based on the file-extension:</p>
 
   <div class="doc doc-contents ">
   
-      <p>Takes a function and returns a new function that prepends the args to the
+      <p>Takes a function or obj and returns a new function that prepends the args to the
 function as part of the input, i.e. (input, funcval)</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">498</span>
-<span class="normal">499</span>
-<span class="normal">500</span>
-<span class="normal">501</span>
-<span class="normal">502</span>
-<span class="normal">503</span>
-<span class="normal">504</span>
-<span class="normal">505</span>
-<span class="normal">506</span>
-<span class="normal">507</span>
-<span class="normal">508</span>
-<span class="normal">509</span>
-<span class="normal">510</span>
-<span class="normal">511</span>
-<span class="normal">512</span>
-<span class="normal">513</span>
-<span class="normal">514</span>
-<span class="normal">515</span>
-<span class="normal">516</span>
-<span class="normal">517</span>
-<span class="normal">518</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span>
+<span class="normal">532</span>
+<span class="normal">533</span>
+<span class="normal">534</span>
+<span class="normal">535</span>
+<span class="normal">536</span>
+<span class="normal">537</span>
+<span class="normal">538</span>
+<span class="normal">539</span>
+<span class="normal">540</span>
+<span class="normal">541</span>
+<span class="normal">542</span>
+<span class="normal">543</span>
+<span class="normal">544</span>
+<span class="normal">545</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span>
+<span class="normal">549</span>
+<span class="normal">550</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Takes a function and returns a new function that prepends the args to the</span>
+    <span class="sd">&quot;&quot;&quot;Takes a function or obj and returns a new function that prepends the args to the</span>
 <span class="sd">    function as part of the input, i.e. (input, funcval)&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">alongwith</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
         <span class="c1"># If data is a tuple and func only takes 1 arg, then assume the user wants the</span>
         <span class="c1"># original data in the chain</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-            <span class="n">sig</span> <span class="o">=</span> <span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">sig</span> <span class="o">=</span> <span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">)</span>
+                <span class="c1"># Otherwise give them the entire chain</span>
+                <span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">)</span>
-            <span class="c1"># Otherwise give them the entire chain</span>
-            <span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">alongwith</span>
 </code></pre></div></td></tr></table></div>
@@ -1623,9 +1734,7 @@ function as part of the input, i.e. (input, funcval)</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">49</span>
 <span class="normal">50</span>
 <span class="normal">51</span>
 <span class="normal">52</span>
@@ -1640,7 +1749,9 @@ function as part of the input, i.e. (input, funcval)</p>
 <span class="normal">61</span>
 <span class="normal">62</span>
 <span class="normal">63</span>
-<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.</span>
 
 <span class="sd">    Args:</span>
@@ -1681,15 +1792,15 @@ kwargs to that functinon or method</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">567</span>
-<span class="normal">568</span>
-<span class="normal">569</span>
-<span class="normal">570</span>
-<span class="normal">571</span>
-<span class="normal">572</span>
-<span class="normal">573</span>
-<span class="normal">574</span>
-<span class="normal">575</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">627</span>
+<span class="normal">628</span>
+<span class="normal">629</span>
+<span class="normal">630</span>
+<span class="normal">631</span>
+<span class="normal">632</span>
+<span class="normal">633</span>
+<span class="normal">634</span>
+<span class="normal">635</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">do</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Apply a single function to data or call a method on data, while passing optional</span>
 <span class="sd">    kwargs to that functinon or method&quot;&quot;&quot;</span>
@@ -1720,9 +1831,9 @@ kwargs to that functinon or method</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Lazily checks if two sequences of potentionally different lengths are equal&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">diff</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">object</span><span class="p">()))</span>
 </code></pre></div></td></tr></table></div>
@@ -1736,7 +1847,7 @@ kwargs to that functinon or method</p>
 
 
 <h4 id="utilz.ops.filtercat" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">filtercat</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">assert_notempty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">filtercat</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">substr_match</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">assert_notempty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
 
 </h4>
 
@@ -1823,9 +1934,7 @@ checks if <code>any</code> of the values in the iterable exist in each item of <
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">314</span>
-<span class="normal">315</span>
-<span class="normal">316</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">316</span>
 <span class="normal">317</span>
 <span class="normal">318</span>
 <span class="normal">319</span>
@@ -1891,11 +2000,21 @@ checks if <code>any</code> of the values in the iterable exist in each item of <
 <span class="normal">379</span>
 <span class="normal">380</span>
 <span class="normal">381</span>
-<span class="normal">382</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">filtercat</span><span class="p">(</span>
     <span class="n">how</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
     <span class="n">invert</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">substr_match</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">assert_notempty</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1927,12 +2046,18 @@ checks if <code>any</code> of the values in the iterable exist in each item of <
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">Callable</span><span class="p">):</span>
         <span class="n">func</span> <span class="o">=</span> <span class="n">how</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="n">how</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">substr_match</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="n">how</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="n">how</span> <span class="o">==</span> <span class="n">elem</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
         <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="n">how</span> <span class="o">==</span> <span class="n">elem</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">),</span> <span class="n">how</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">substr_match</span><span class="p">:</span>
+                <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">),</span> <span class="n">how</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="o">==</span> <span class="n">elem</span><span class="p">,</span> <span class="n">how</span><span class="p">))</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
             <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="o">==</span> <span class="n">elem</span><span class="p">,</span> <span class="n">how</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1984,19 +2109,19 @@ function that returns more than 1 output</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">521</span>
-<span class="normal">522</span>
-<span class="normal">523</span>
-<span class="normal">524</span>
-<span class="normal">525</span>
-<span class="normal">526</span>
-<span class="normal">527</span>
-<span class="normal">528</span>
-<span class="normal">529</span>
-<span class="normal">530</span>
-<span class="normal">531</span>
-<span class="normal">532</span>
-<span class="normal">533</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">553</span>
+<span class="normal">554</span>
+<span class="normal">555</span>
+<span class="normal">556</span>
+<span class="normal">557</span>
+<span class="normal">558</span>
+<span class="normal">559</span>
+<span class="normal">560</span>
+<span class="normal">561</span>
+<span class="normal">562</span>
+<span class="normal">563</span>
+<span class="normal">564</span>
+<span class="normal">565</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">gather</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes a single function and a tuple of data and unpacks the tuple as multiple</span>
 <span class="sd">    arguments to the function. Useful after a call to append, spread, separate, or any</span>
@@ -2105,64 +2230,64 @@ makes it easy to run shorthands like "do something only if this is true"</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">578</span>
-<span class="normal">579</span>
-<span class="normal">580</span>
-<span class="normal">581</span>
-<span class="normal">582</span>
-<span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span>
-<span class="normal">586</span>
-<span class="normal">587</span>
-<span class="normal">588</span>
-<span class="normal">589</span>
-<span class="normal">590</span>
-<span class="normal">591</span>
-<span class="normal">592</span>
-<span class="normal">593</span>
-<span class="normal">594</span>
-<span class="normal">595</span>
-<span class="normal">596</span>
-<span class="normal">597</span>
-<span class="normal">598</span>
-<span class="normal">599</span>
-<span class="normal">600</span>
-<span class="normal">601</span>
-<span class="normal">602</span>
-<span class="normal">603</span>
-<span class="normal">604</span>
-<span class="normal">605</span>
-<span class="normal">606</span>
-<span class="normal">607</span>
-<span class="normal">608</span>
-<span class="normal">609</span>
-<span class="normal">610</span>
-<span class="normal">611</span>
-<span class="normal">612</span>
-<span class="normal">613</span>
-<span class="normal">614</span>
-<span class="normal">615</span>
-<span class="normal">616</span>
-<span class="normal">617</span>
-<span class="normal">618</span>
-<span class="normal">619</span>
-<span class="normal">620</span>
-<span class="normal">621</span>
-<span class="normal">622</span>
-<span class="normal">623</span>
-<span class="normal">624</span>
-<span class="normal">625</span>
-<span class="normal">626</span>
-<span class="normal">627</span>
-<span class="normal">628</span>
-<span class="normal">629</span>
-<span class="normal">630</span>
-<span class="normal">631</span>
-<span class="normal">632</span>
-<span class="normal">633</span>
-<span class="normal">634</span>
-<span class="normal">635</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">638</span>
+<span class="normal">639</span>
+<span class="normal">640</span>
+<span class="normal">641</span>
+<span class="normal">642</span>
+<span class="normal">643</span>
+<span class="normal">644</span>
+<span class="normal">645</span>
+<span class="normal">646</span>
+<span class="normal">647</span>
+<span class="normal">648</span>
+<span class="normal">649</span>
+<span class="normal">650</span>
+<span class="normal">651</span>
+<span class="normal">652</span>
+<span class="normal">653</span>
+<span class="normal">654</span>
+<span class="normal">655</span>
+<span class="normal">656</span>
+<span class="normal">657</span>
+<span class="normal">658</span>
+<span class="normal">659</span>
+<span class="normal">660</span>
+<span class="normal">661</span>
+<span class="normal">662</span>
+<span class="normal">663</span>
+<span class="normal">664</span>
+<span class="normal">665</span>
+<span class="normal">666</span>
+<span class="normal">667</span>
+<span class="normal">668</span>
+<span class="normal">669</span>
+<span class="normal">670</span>
+<span class="normal">671</span>
+<span class="normal">672</span>
+<span class="normal">673</span>
+<span class="normal">674</span>
+<span class="normal">675</span>
+<span class="normal">676</span>
+<span class="normal">677</span>
+<span class="normal">678</span>
+<span class="normal">679</span>
+<span class="normal">680</span>
+<span class="normal">681</span>
+<span class="normal">682</span>
+<span class="normal">683</span>
+<span class="normal">684</span>
+<span class="normal">685</span>
+<span class="normal">686</span>
+<span class="normal">687</span>
+<span class="normal">688</span>
+<span class="normal">689</span>
+<span class="normal">690</span>
+<span class="normal">691</span>
+<span class="normal">692</span>
+<span class="normal">693</span>
+<span class="normal">694</span>
+<span class="normal">695</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">conditional</span><span class="p">,</span> <span class="n">if_true</span><span class="p">,</span> <span class="n">if_false</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simple oneline ternary operator. Pass in something to check, how to check it, what</span>
@@ -2407,9 +2532,7 @@ list.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">157</span>
 <span class="normal">158</span>
 <span class="normal">159</span>
 <span class="normal">160</span>
@@ -2536,7 +2659,9 @@ list.</p>
 <span class="normal">281</span>
 <span class="normal">282</span>
 <span class="normal">283</span>
-<span class="normal">284</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span>
     <span class="n">func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
     <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
@@ -2677,7 +2802,7 @@ list.</p>
 
 
 <h4 id="utilz.ops.pipe" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">pipe</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">funcs</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">pipe</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">funcs</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h4>
 
@@ -2691,20 +2816,12 @@ assigning to a variable, making it useful when working in an interactive environ
 or logging from a script. Also recognizes if the last function evaluation returns
 None or a plot and returns last non-None/non-plot evaluation in the pipe. Passing
 output = False will return nothing from the pipe, which is if you just want to
-run a pipe for its side-effects, e.g. saving a figure, looking at something</p>
+run a pipe for its side-effects, e.g. saving a figure, looking at something. You can
+use show = False to just save the outputs without displaying the last evaluation.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">390</span>
-<span class="normal">391</span>
-<span class="normal">392</span>
-<span class="normal">393</span>
-<span class="normal">394</span>
-<span class="normal">395</span>
-<span class="normal">396</span>
-<span class="normal">397</span>
-<span class="normal">398</span>
-<span class="normal">399</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">399</span>
 <span class="normal">400</span>
 <span class="normal">401</span>
 <span class="normal">402</span>
@@ -2771,7 +2888,44 @@ run a pipe for its side-effects, e.g. saving a figure, looking at something</p>
 <span class="normal">463</span>
 <span class="normal">464</span>
 <span class="normal">465</span>
-<span class="normal">466</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">*</span><span class="n">funcs</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span>
+<span class="normal">475</span>
+<span class="normal">476</span>
+<span class="normal">477</span>
+<span class="normal">478</span>
+<span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span>
+<span class="normal">482</span>
+<span class="normal">483</span>
+<span class="normal">484</span>
+<span class="normal">485</span>
+<span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span>
+<span class="normal">494</span>
+<span class="normal">495</span>
+<span class="normal">496</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="o">*</span><span class="n">funcs</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">output</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">show</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">keep</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A &quot;smart&quot; pipe function designed to pass data through a series of transformation.</span>
 <span class="sd">    Similar into `toolz.pipe` in that it performs a series of nested function</span>
@@ -2780,7 +2934,8 @@ run a pipe for its side-effects, e.g. saving a figure, looking at something</p>
 <span class="sd">    or logging from a script. Also recognizes if the last function evaluation returns</span>
 <span class="sd">    None or a plot and returns last non-None/non-plot evaluation in the pipe. Passing</span>
 <span class="sd">    output = False will return nothing from the pipe, which is if you just want to</span>
-<span class="sd">    run a pipe for its side-effects, e.g. saving a figure, looking at something</span>
+<span class="sd">    run a pipe for its side-effects, e.g. saving a figure, looking at something. You can</span>
+<span class="sd">    use show = False to just save the outputs without displaying the last evaluation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">funcs</span><span class="p">:</span>
@@ -2795,21 +2950,27 @@ run a pipe for its side-effects, e.g. saving a figure, looking at something</p>
     <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
         <span class="n">printfunc</span> <span class="o">=</span> <span class="nb">print</span>
 
+    <span class="c1"># We don&#39;t return plots</span>
     <span class="n">plot_types</span> <span class="o">=</span> <span class="p">(</span><span class="n">Figure</span><span class="p">,</span> <span class="n">Axes</span><span class="p">,</span> <span class="n">Subplot</span><span class="p">,</span> <span class="n">FacetGrid</span><span class="p">,</span> <span class="n">PairGrid</span><span class="p">)</span>
+    <span class="c1"># Or None</span>
     <span class="n">bad_return</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">plot_types</span><span class="p">)</span> <span class="ow">or</span> <span class="n">e</span> <span class="ow">is</span> <span class="kc">None</span>
 
+    <span class="c1"># Keep track of function evaluations</span>
     <span class="n">evals</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">orig</span> <span class="o">=</span> <span class="n">data</span>
     <span class="n">out</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="c1"># Execute functions in pipe</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">funcs</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="n">evals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">evals</span>
     <span class="c1"># Now loop over results in reverse order to figure out what to return</span>
     <span class="c1"># We never return plots or None so we search until we find the first non-plot,</span>
-    <span class="c1"># non-None evaluation. For each evaluation that&#39;s a tuple</span>
+    <span class="c1"># non-None evaluation. For each evaluation that&#39;s a tuple we return if none of it&#39;s</span>
+    <span class="c1"># elements is a plot or None, otherwise we search through its elements and return</span>
+    <span class="c1"># the first non-plot non-None.</span>
 
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">evals</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
         <span class="c1"># if the return is None or is a plot keep looking</span>
@@ -2840,14 +3001,21 @@ run a pipe for its side-effects, e.g. saving a figure, looking at something</p>
     <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">orig</span>
 
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">out</span><span class="p">:</span>
-            <span class="n">printfunc</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">printfunc</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">out</span><span class="p">:</span>
+                <span class="n">printfunc</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">printfunc</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">out</span>
+        <span class="k">if</span> <span class="n">keep</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">out</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">keep</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">out</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">keep</span><span class="p">])</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -2871,28 +3039,28 @@ call to append or spread.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">638</span>
-<span class="normal">639</span>
-<span class="normal">640</span>
-<span class="normal">641</span>
-<span class="normal">642</span>
-<span class="normal">643</span>
-<span class="normal">644</span>
-<span class="normal">645</span>
-<span class="normal">646</span>
-<span class="normal">647</span>
-<span class="normal">648</span>
-<span class="normal">649</span>
-<span class="normal">650</span>
-<span class="normal">651</span>
-<span class="normal">652</span>
-<span class="normal">653</span>
-<span class="normal">654</span>
-<span class="normal">655</span>
-<span class="normal">656</span>
-<span class="normal">657</span>
-<span class="normal">658</span>
-<span class="normal">659</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">698</span>
+<span class="normal">699</span>
+<span class="normal">700</span>
+<span class="normal">701</span>
+<span class="normal">702</span>
+<span class="normal">703</span>
+<span class="normal">704</span>
+<span class="normal">705</span>
+<span class="normal">706</span>
+<span class="normal">707</span>
+<span class="normal">708</span>
+<span class="normal">709</span>
+<span class="normal">710</span>
+<span class="normal">711</span>
+<span class="normal">712</span>
+<span class="normal">713</span>
+<span class="normal">714</span>
+<span class="normal">715</span>
+<span class="normal">716</span>
+<span class="normal">717</span>
+<span class="normal">718</span>
+<span class="normal">719</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a tuple, removes an element located at an index. Useful for pruning down a</span>
 <span class="sd">    call to append or spread.&quot;&quot;&quot;</span>
@@ -2940,35 +3108,35 @@ evaluated separately.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">536</span>
-<span class="normal">537</span>
-<span class="normal">538</span>
-<span class="normal">539</span>
-<span class="normal">540</span>
-<span class="normal">541</span>
-<span class="normal">542</span>
-<span class="normal">543</span>
-<span class="normal">544</span>
-<span class="normal">545</span>
-<span class="normal">546</span>
-<span class="normal">547</span>
-<span class="normal">548</span>
-<span class="normal">549</span>
-<span class="normal">550</span>
-<span class="normal">551</span>
-<span class="normal">552</span>
-<span class="normal">553</span>
-<span class="normal">554</span>
-<span class="normal">555</span>
-<span class="normal">556</span>
-<span class="normal">557</span>
-<span class="normal">558</span>
-<span class="normal">559</span>
-<span class="normal">560</span>
-<span class="normal">561</span>
-<span class="normal">562</span>
-<span class="normal">563</span>
-<span class="normal">564</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">574</span>
+<span class="normal">575</span>
+<span class="normal">576</span>
+<span class="normal">577</span>
+<span class="normal">578</span>
+<span class="normal">579</span>
+<span class="normal">580</span>
+<span class="normal">581</span>
+<span class="normal">582</span>
+<span class="normal">583</span>
+<span class="normal">584</span>
+<span class="normal">585</span>
+<span class="normal">586</span>
+<span class="normal">587</span>
+<span class="normal">588</span>
+<span class="normal">589</span>
+<span class="normal">590</span>
+<span class="normal">591</span>
+<span class="normal">592</span>
+<span class="normal">593</span>
+<span class="normal">594</span>
+<span class="normal">595</span>
+<span class="normal">596</span>
+<span class="normal">597</span>
+<span class="normal">598</span>
+<span class="normal">599</span>
+<span class="normal">600</span>
+<span class="normal">601</span>
+<span class="normal">602</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">separate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Apply one or more functions to multiple inputs separately. If the number of</span>
 <span class="sd">    functions is greater or less than the number of inputs, then each input will be run</span>
@@ -3020,33 +3188,33 @@ same length as args</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">469</span>
-<span class="normal">470</span>
-<span class="normal">471</span>
-<span class="normal">472</span>
-<span class="normal">473</span>
-<span class="normal">474</span>
-<span class="normal">475</span>
-<span class="normal">476</span>
-<span class="normal">477</span>
-<span class="normal">478</span>
-<span class="normal">479</span>
-<span class="normal">480</span>
-<span class="normal">481</span>
-<span class="normal">482</span>
-<span class="normal">483</span>
-<span class="normal">484</span>
-<span class="normal">485</span>
-<span class="normal">486</span>
-<span class="normal">487</span>
-<span class="normal">488</span>
-<span class="normal">489</span>
-<span class="normal">490</span>
-<span class="normal">491</span>
-<span class="normal">492</span>
-<span class="normal">493</span>
-<span class="normal">494</span>
-<span class="normal">495</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">499</span>
+<span class="normal">500</span>
+<span class="normal">501</span>
+<span class="normal">502</span>
+<span class="normal">503</span>
+<span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span>
+<span class="normal">511</span>
+<span class="normal">512</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span>
+<span class="normal">516</span>
+<span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">spread</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes multiple functions and applies each to the input, returning a tuple the</span>
 <span class="sd">    same length as args&quot;&quot;&quot;</span>
@@ -4124,8 +4292,177 @@ the name. Rename columns using keyword arguments.</p>
 
 
 
+<h4 id="utilz.dftools.to_long" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">to_long</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">into</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span> <span class="n">make_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Take multiple columns or multiple id_vars and melt them into 2 columns. If columns
+is provided, id_vars is inferred and visa-versa. If make_index=True, will use the
+current index as a new id_var to ensure a unique index.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>df</code></td>
+          <td>
+                <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
+          </td>
+          <td><p>input DataFrame</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>columns</code></td>
+          <td>
+                <code>list or None</code>
+          </td>
+          <td><p>columns to melt; Defaults to None</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>id_vars</code></td>
+          <td>
+                <code>list or None</code>
+          </td>
+          <td><p>columns to use as id variables; Default to None</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>into</code></td>
+          <td>
+                <code>tuple</code>
+          </td>
+          <td><p>cols to create Defaults to ("variable", "value").</p></td>
+          <td>
+                <code>(&#39;variable&#39;, &#39;value&#39;)</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>make_index</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>does a reset_index prior to melting and adds the</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/dftools.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="k">def</span> <span class="nf">to_long</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">into</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span> <span class="n">make_index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Take multiple columns or multiple id_vars and melt them into 2 columns. If columns</span>
+<span class="sd">    is provided, id_vars is inferred and visa-versa. If make_index=True, will use the</span>
+<span class="sd">    current index as a new id_var to ensure a unique index.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (pd.DataFrame): input DataFrame</span>
+<span class="sd">        columns (list or None): columns to melt; Defaults to None</span>
+<span class="sd">        id_vars (list or None): columns to use as id variables; Default to None</span>
+<span class="sd">        into (tuple, optional): cols to create Defaults to (&quot;variable&quot;, &quot;value&quot;).</span>
+<span class="sd">        make_index (bool, optional): does a reset_index prior to melting and adds the</span>
+<span class="sd">        index col to id_vars. Defaults to False.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># User provide list of columns to gather -&gt; like in R</span>
+    <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Grab remaining columns if id_vars isn&#39;t provided</span>
+        <span class="k">if</span> <span class="n">id_vars</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">id_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">id_vars</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">id_vars</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">make_index</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;prev_index&quot;</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">id_vars</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">id_vars</span> <span class="o">=</span> <span class="s2">&quot;prev_index&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">id_vars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">id_vars</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;prev_index&quot;</span><span class="p">]</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span>
+        <span class="n">id_vars</span><span class="o">=</span><span class="n">id_vars</span><span class="p">,</span>
+        <span class="n">value_vars</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span>
+        <span class="n">var_name</span><span class="o">=</span><span class="n">into</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">value_name</span><span class="o">=</span><span class="n">into</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
 <h4 id="utilz.dftools.to_wide" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">to_wide</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">drop_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">to_wide</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">using</span><span class="p">,</span> <span class="n">drop_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
 
 </h4>
 
@@ -4133,7 +4470,7 @@ the name. Rename columns using keyword arguments.</p>
   <div class="doc doc-contents ">
   
       <p>Cast a column of long-form tidy data to a set of wide columns based on the values in
-a another column ('by')</p>
+a another column ('using')</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -4167,13 +4504,23 @@ a another column ('by')</p>
           </td>
         </tr>
         <tr>
-          <td><code>by</code></td>
+          <td><code>using</code></td>
           <td>
                 <code>str</code>
           </td>
-          <td><p>string name of column who's values should be placed into the new columns</p></td>
+          <td><p>string name of column who's values should be placed into the new</p></td>
           <td>
               <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>drop_index</code></td>
+          <td>
+                <code>bool; optional</code>
+          </td>
+          <td><p>if a 'prev_index' col exists (usually created by</p></td>
+          <td>
+                <code>True</code>
           </td>
         </tr>
     </tbody>
@@ -4181,51 +4528,57 @@ a another column ('by')</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dftools.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">228</span>
-<span class="normal">229</span>
-<span class="normal">230</span>
-<span class="normal">231</span>
-<span class="normal">232</span>
-<span class="normal">233</span>
-<span class="normal">234</span>
-<span class="normal">235</span>
-<span class="normal">236</span>
-<span class="normal">237</span>
-<span class="normal">238</span>
-<span class="normal">239</span>
-<span class="normal">240</span>
-<span class="normal">241</span>
-<span class="normal">242</span>
-<span class="normal">243</span>
-<span class="normal">244</span>
-<span class="normal">245</span>
-<span class="normal">246</span>
-<span class="normal">247</span>
-<span class="normal">248</span>
-<span class="normal">249</span>
-<span class="normal">250</span>
-<span class="normal">251</span>
-<span class="normal">252</span>
-<span class="normal">253</span>
-<span class="normal">254</span>
-<span class="normal">255</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
-<span class="k">def</span> <span class="nf">to_wide</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">drop_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@_register_dataframe_method</span>
+<span class="k">def</span> <span class="nf">to_wide</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">using</span><span class="p">,</span> <span class="n">drop_index</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cast a column of long-form tidy data to a set of wide columns based on the values in</span>
-<span class="sd">    a another column (&#39;by&#39;)</span>
+<span class="sd">    a another column (&#39;using&#39;)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        df (pd.DataFrame): input dataframe</span>
 <span class="sd">        column (str): string name of column to &quot;explode&quot;</span>
-<span class="sd">        by (str): string name of column who&#39;s values should be placed into the new columns</span>
+<span class="sd">        using (str): string name of column who&#39;s values should be placed into the new</span>
+<span class="sd">        columns</span>
+<span class="sd">        drop_index (bool; optional): if a &#39;prev_index&#39; col exists (usually created by</span>
+<span class="sd">        make_index=True in to_long) will drop it; Default True</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">column</span><span class="p">,</span> <span class="n">by</span><span class="p">]]</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">column</span><span class="p">,</span> <span class="n">using</span><span class="p">]]</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span>
             <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
             <span class="n">columns</span><span class="o">=</span><span class="n">column</span><span class="p">,</span>
-            <span class="n">values</span><span class="o">=</span><span class="n">by</span><span class="p">,</span>
+            <span class="n">values</span><span class="o">=</span><span class="n">using</span><span class="p">,</span>
         <span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">drop_index</span><span class="p">:</span>
             <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;prev_index&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
@@ -4233,7 +4586,7 @@ a another column ('by')</p>
     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">if</span> <span class="s2">&quot;duplicate&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
             <span class="nb">print</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;ERROR: It&#39;s not possible to infer what rows are unique from columns that make up the index: </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise .to_long() can create a unique index for with the add_unique_id = True&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;ERROR: It&#39;s not possible to infer what rows are unique from columns that make up the index: </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise .to_long() can create a unique index for with make_index = True&quot;</span>
             <span class="p">)</span>
         <span class="k">raise</span> <span class="n">e</span>
 </code></pre></div></td></tr></table></div>
@@ -4391,10 +4744,10 @@ routines in a pipe() but wanting separate figures.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/plot.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">newax</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">newax</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Short hand for a new axis on a new figure. Usueful for calling multiple plotting</span>
 <span class="sd">    routines in a pipe() but wanting separate figures.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
@@ -4634,6 +4987,45 @@ also optionally prevent file-overwriting</p>
         <span class="k">if</span> <span class="p">(</span><span class="n">raster_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">raster_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()):</span>
             <span class="n">f</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">raster_path</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="n">bbox_inches</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">f</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.plot.setcontext" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">setcontext</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s1">&#39;notebook&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rc</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Modify a plot context. Just call it once in a pipe at some point prior to any
+plot commands or functions. Call it with default args to reset. Intended to be used
+inside a pipe, because pipe's always reset context before they run</p>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/plot.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">setcontext</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;notebook&quot;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Modify a plot context. Just call it once in a pipe at some point prior to any</span>
+<span class="sd">    plot commands or functions. Call it with default args to reset. Intended to be used</span>
+<span class="sd">    inside a pipe, because pipe&#39;s always reset context before they run&quot;&quot;&quot;</span>
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="n">font_scale</span><span class="p">,</span> <span class="n">rc</span><span class="o">=</span><span class="n">rc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -5007,7 +5399,7 @@ fontsize, etc, in a unified function call</p>
         <span class="k">if</span> <span class="n">ytick_rotation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">plot</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="n">ytick_rotation</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">despine</span><span class="p">:</span>
-            <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">plot</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">tight_layout</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">plot</span>
@@ -5051,7 +5443,7 @@ fontsize, etc, in a unified function call</p>
 
 
 <h4 id="utilz.boilerplate.randdf" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">randdf</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">randdf</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h4>
 
@@ -5178,9 +5570,24 @@ fontsize, etc, in a unified function call</p>
 <span class="normal">53</span>
 <span class="normal">54</span>
 <span class="normal">55</span>
-<span class="normal">56</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">randdf</span><span class="p">(</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">randdf</span><span class="p">(</span>
     <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
     <span class="n">columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">groups</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">any</span><span class="p">,</span>
@@ -5220,7 +5627,20 @@ fontsize, etc, in a unified function call</p>
                 <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">next</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span><span class="si">}{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">groups</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">num_groups</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="n">num_groups</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_groups</span><span class="si">}</span><span class="s2"> for column </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> is not divisible by the shape of the data </span><span class="si">{</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="n">letters</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">)</span>
+            <span class="n">grps</span> <span class="o">=</span> <span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_groups</span><span class="p">)]</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grps</span><span class="p">:</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">g</span><span class="p">]</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">num_groups</span><span class="p">))</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="n">values</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">out</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
