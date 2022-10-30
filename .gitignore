@@ -15,3 +15,4 @@ docs/dev
 cachedir
 .venv
 dist
+!**/mtcars.csv

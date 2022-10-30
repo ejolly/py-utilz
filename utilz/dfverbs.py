@@ -21,10 +21,9 @@ __all__ = [
     "astype",
 ]
 
-import numpy as np
 import pandas as pd
 from toolz import curry
-from .ops import do, filtercat, mapcat
+from .ops import do
 
 
 def _reset_index_helper(out, reset_index):
@@ -108,119 +107,6 @@ def summarize(dfg, **kwargs):
         raise TypeError(
             f"summarize expected previous step to be a DataFrame or GroupBy, but received a {type(dfg)}. If you used select(), you should instead select the column in the expression or function passed to summarize(). If you intended to run an expression summarize taks wargs organized like: new_colname = str | func. This differs from agg in pandas which expects an column name and expression!"
         )
-
-
-# @curry
-# def summarize(*args, **kwargs):
-#     """
-#     Summarize the output of one or more columns. Accepts grouped or ungrouped
-#     dataframe. If following a select() just pass funcs directly:
-#     pipe(data, select('col'), summarize('mean','std'))
-
-#     Otherwise you can pass in kwargs to select and run funcs for diff columns:
-#     pipe(data, summarize(col=['mean','std'], col2=['mode']))
-#     """
-
-#     tidy = kwargs.pop("tidy", True)
-
-#     def call(df):
-#         if len(args) == 1 and isinstance(args[0], dict):
-#             out = df.agg(args[0])
-#         elif len(args) == 0:
-#             out = df.agg(kwargs)
-#         else:
-#             out = df.agg((args))
-#         if tidy:
-#             # groupby
-#             if isinstance(
-#                 df,
-#                 (
-#                     pd.core.groupby.generic.DataFrameGroupBy,
-#                     pd.core.groupby.generic.SeriesGroupBy,
-#                 ),
-#             ):
-
-#                 num_grps = len(out.index.names)
-#                 unstacker = list(range(num_grps))
-#                 breakpoint()
-#                 out = out.unstack(unstacker).reset_index()
-
-#                 # groupby(), select(), summarize()
-#                 # 1, 1, 1
-#                 # = groupby series, 1 level of stacking
-#                 # = level_0 is stat
-
-#                 # 1, 1, 2
-#                 # = groupby series, 1 level of stacking
-#                 # = level_0 is stat
-
-#                 # 1, 2, 1
-#                 # = groupby dataframe, 1 level of stacking
-#                 # = level_0 is column name
-#                 # = level_1 i stat
-
-#                 # 1, 2, 2
-#                 # = groupby dataframe, 1 level of stacking
-#                 # = level_0 is column name
-#                 # = level_1 i stat
-
-#                 # 2, 1, 1
-#                 # = groupby series, 2 levels of stacking
-#                 # = level_0 is stat
-
-#                 # 2, 1, 2
-#                 # = groupby series, 2 levels of stacking
-#                 # = level_0 is stat
-
-#                 # 2, 2, 2
-#                 # = groupby dataframe, 2 levels of stacking
-#                 # = level_0 is column name
-#                 # = level_1 is stat
-#                 # need dropna if groups are nested
-
-#                 if isinstance(df, pd.core.groupby.generic.DataFrameGroupBy):
-#                     out = out.rename(
-#                         columns={"level_0": "column", "level_1": "stat", 0: "value"}
-#                     )
-#                     colnames = ["column", "stat", "value"]
-#                 else:
-#                     out = out.rename(columns={"level_0": "stat", 0: "value"})
-#                     colnames = ["stat", "value"]
-
-#                 if len(args) and isinstance(args[0], str):
-#                     out = out.assign(
-#                         stat=np.repeat(args, int(out.shape[0] / len(args)))
-#                     )
-
-#                 # Rearrange cols
-#                 cols = list(out.columns)
-#                 created, groups = filtercat(colnames, cols, invert="split")
-#                 new_order = groups + created
-#                 out = (
-#                     out[new_order]
-#                     .dropna()
-#                     .sort_values(by=groups)
-#                     .reset_index(drop=True)
-#                 )
-#             else:
-#                 # non-grouped
-#                 out = (
-#                     out.reset_index()
-#                     .rename(columns={"index": "stat"})
-#                     .melt(id_vars="stat", var_name="column")
-#                 )
-#                 out = out[["column", "stat", "value"]].dropna().reset_index(drop=True)
-
-#             # Drop the column column if it only has one value, e.g. if we did a
-#             # summarize on a long-form and provided kwarg to summarize
-#             if "column" in out and out["column"].nunique() == 1:
-#                 out = out.drop(columns="column")
-#             return out
-
-#         else:
-#             return out
-
-#     return call
 
 
 @curry

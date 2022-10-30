@@ -88,6 +88,7 @@ def test_assign():
     assert all(out.A1 * 2 == out.A1_doubled)
 
 
+# TODO: test with groupby
 def test_select():
     df = randdf()
 
@@ -113,6 +114,7 @@ def test_summarize():
     assert out.shape == (1, 2)
     assert np.allclose(out.values, np.array([[20.090625, 32.0]]))
 
+    # With groupby
     out = pipe(
         df, groupby("cyl"), summarize(mean="disp.mean()", n=lambda g: g.shape[0])
     )
@@ -145,56 +147,8 @@ def test_summarize():
         ),
     )
 
-    # # All columns 1 op
-    # out = pipe(df, summarize("mean"))
-    # assert all(out.columns == ["column", "stat", "value"])
-    # assert out.shape[0] < df.shape[0]
 
-    # # All columns multiple ops
-    # out = pipe(df, summarize("mean", "std"))
-    # assert all(out.columns == ["column", "stat", "value"])
-    # assert out.shape[0] < df.shape[0]
-
-    # # Select one-col one-op
-    # out = pipe(
-    #     df,
-    #     select("B1"),
-    #     summarize("mean"),
-    # )
-    # # Select one-col multi-op
-    # out = pipe(
-    #     df,
-    #     select("B1"),
-    #     summarize("mean", "std"),
-    # )
-
-    # # Select multi-col one-op
-    # out = pipe(
-    #     df,
-    #     select("-B1"),
-    #     summarize("mean"),
-    # )
-
-    # # Select multi-col mutli-op
-    # out = pipe(
-    #     df,
-    #     select("-B1"),
-    #     summarize("mean", "std"),
-    # )
-    # assert out.shape[0] == 4
-    # assert out["stat"].nunique() == 2
-    # assert out["column"].nunique() == 2
-
-    # # Columns with summarize directly
-    # out = pipe(
-    #     df,
-    #     summarize(A1=["mean", "std"], B1=["size", "std"], C1=["mean", "var"]),
-    # )
-    # assert out.shape[0] == 6
-    # assert out["stat"].nunique() == 4
-    # assert out["column"].nunique() == 3
-
-
+# TODO: consolidate with test_assign
 def test_groupby():
     df = randdf((20, 3))
     out = pipe(
@@ -362,33 +316,6 @@ def test_groupby_select_summarize():
     )
     assert equal(summ.columns, ["group", "school", "column", "stat", "value"])
     assert summ.shape == (16, 5)
-
-    # summ = pipe(
-    #     out,
-    #     groupby("group"),
-    #     summarize(
-    #         {"A1": ["mean", "std"], "B1": ["size", "std"], "C1": ["mean", "var"]},
-    #     ),
-    # )
-    # assert summ.shape[0] == 3 * 2 * 2
-    # assert summ["stat"].nunique() == 4
-    # assert summ["column"].nunique() == 3
-    # assert summ["group"].nunique() == 2
-
-    # # Nested + dict
-    # summ = pipe(
-    #     out,
-    #     groupby("group", "school"),
-    #     summarize(
-    #         {"A1": ["mean", "std"], "B1": ["size", "std"], "C1": ["mean", "var"]},
-    #     ),
-    # )
-
-    # assert equal(summ.columns, ["group", "school", "column", "stat", "value"])
-    # assert summ["stat"].nunique() == 4
-    # assert summ["column"].nunique() == 3
-    # assert summ["group"].nunique() == 2
-    # assert summ["school"].nunique() == 4
 
 
 def test_rf_pipeline():
