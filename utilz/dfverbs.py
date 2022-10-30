@@ -47,7 +47,8 @@ def groupby(*args):
 
 @curry
 def rename(cols, df):
-    """Call a dataframe's `.rename(columns={})` method"""
+    """Rename one ore more columns. Can either input a single tuple to rename 1 column
+    or a dict to rename multiple"""
     if isinstance(cols, tuple):
         cols = {cols[0]: cols[1]}
     return df.rename(columns=cols)
@@ -61,65 +62,169 @@ def to_csv(path, df):
 
 
 @curry
-def summarize(*args, **kwargs):
-    """Call a dataframe or groupby object's `.agg` method"""
+def summarize(dfg, **kwargs):
+    """
+    Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses `plydata.define/mutate` unless the input is a grouped DataFrame
+    in which case it falls back to pandas methods because `plydata` can only handle
+    grouped inputs resulting from its own (slow) `group_by` function
+    """
 
-    tidy = kwargs.pop("tidy", True)
-
-    def call(df):
-        if len(args) == 1 and isinstance(args[0], dict):
-            out = df.agg(args[0])
-        elif len(args) == 0:
-            out = df.agg(kwargs)
-        else:
-            out = df.agg((args))
-        if tidy:
-            if isinstance(df, pd.core.groupby.generic.DataFrameGroupBy):
-                num_grps = len(list(df.groups.keys())[0])
-                unstacker = list(range(num_grps))
-                out = out.unstack(unstacker)
-                out = out.reset_index().rename(
-                    columns={"level_0": "column", "level_1": "stat", 0: "value"}
-                )
-                if len(args) and isinstance(args[0], str):
-                    out = out.assign(
-                        stat=np.repeat(args, int(out.shape[0] / len(args)))
-                    )
-
-                # Rearrange cols
-                cols = list(out.columns)
-                created, groups = filtercat(
-                    ["column", "stat", "value"], cols, invert="split"
-                )
-                new_order = groups + created
-                out = (
-                    out[new_order]
-                    .dropna()
-                    .sort_values(by=groups)
-                    .reset_index(drop=True)
-                )
+    if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
+        out = None
+        for k, v in kwargs.items():
+            if isinstance(v, str):
+                res = dfg.apply(lambda group: group.eval(v)).reset_index()
+            elif callable(v):
+                res = dfg.apply(v).reset_index()
             else:
-                out = (
-                    out.reset_index()
-                    .rename(columns={"index": "stat"})
-                    .melt(id_vars="stat", var_name="column")
+                raise TypeError(
+                    f"summarize expects input kwargs organized like: new_colname = str | func, but receive type: {type(v)}"
                 )
-                out = out[["column", "stat", "value"]].dropna().reset_index(drop=True)
+            res = res.rename(columns={res.columns[-1]: k})
+            if not res.shape[0] < dfg.obj.shape[0]:
+                raise ValueError(
+                    "functions and expressions received by summarize should return a scalar output. If you want to broadcast this value over the entire dataframe use assign() instead."
+                )
+            if out is None:
+                out = res
+            out = out.drop(columns=k, errors="ignore").merge(
+                res, on=res.columns[:-1].to_list()
+            )
+        return out
+    elif isinstance(dfg, pd.DataFrame):
+        out = dict()
+        for k, v in kwargs.items():
+            if isinstance(v, str):
+                out[k] = dfg.eval(v)
+            elif callable(v):
+                out[k] = v(dfg)
+            else:
+                raise TypeError(
+                    f"summarized expects input kwargs organized like: new_colname = str | func, but receive type: {type(v)}"
+                )
 
-            # Drop the column column if it only has one value, e.g. if we did a
-            # summarize on a long-form and provided kwarg to summarize
-            if "column" in out and out["column"].nunique() == 1:
-                out = out.drop(columns="column")
-            return out
+        return pd.DataFrame(out, index=[0])
+    else:
+        raise TypeError(
+            f"summarize expected previous step to be a DataFrame or GroupBy, but received a {type(dfg)}. If you used select(), you should instead select the column in the expression or function passed to summarize(). If you intended to run an expression summarize taks wargs organized like: new_colname = str | func. This differs from agg in pandas which expects an column name and expression!"
+        )
 
-        else:
-            return out
 
-    return call
+# @curry
+# def summarize(*args, **kwargs):
+#     """
+#     Summarize the output of one or more columns. Accepts grouped or ungrouped
+#     dataframe. If following a select() just pass funcs directly:
+#     pipe(data, select('col'), summarize('mean','std'))
+
+#     Otherwise you can pass in kwargs to select and run funcs for diff columns:
+#     pipe(data, summarize(col=['mean','std'], col2=['mode']))
+#     """
+
+#     tidy = kwargs.pop("tidy", True)
+
+#     def call(df):
+#         if len(args) == 1 and isinstance(args[0], dict):
+#             out = df.agg(args[0])
+#         elif len(args) == 0:
+#             out = df.agg(kwargs)
+#         else:
+#             out = df.agg((args))
+#         if tidy:
+#             # groupby
+#             if isinstance(
+#                 df,
+#                 (
+#                     pd.core.groupby.generic.DataFrameGroupBy,
+#                     pd.core.groupby.generic.SeriesGroupBy,
+#                 ),
+#             ):
+
+#                 num_grps = len(out.index.names)
+#                 unstacker = list(range(num_grps))
+#                 breakpoint()
+#                 out = out.unstack(unstacker).reset_index()
+
+#                 # groupby(), select(), summarize()
+#                 # 1, 1, 1
+#                 # = groupby series, 1 level of stacking
+#                 # = level_0 is stat
+
+#                 # 1, 1, 2
+#                 # = groupby series, 1 level of stacking
+#                 # = level_0 is stat
+
+#                 # 1, 2, 1
+#                 # = groupby dataframe, 1 level of stacking
+#                 # = level_0 is column name
+#                 # = level_1 i stat
+
+#                 # 1, 2, 2
+#                 # = groupby dataframe, 1 level of stacking
+#                 # = level_0 is column name
+#                 # = level_1 i stat
+
+#                 # 2, 1, 1
+#                 # = groupby series, 2 levels of stacking
+#                 # = level_0 is stat
+
+#                 # 2, 1, 2
+#                 # = groupby series, 2 levels of stacking
+#                 # = level_0 is stat
+
+#                 # 2, 2, 2
+#                 # = groupby dataframe, 2 levels of stacking
+#                 # = level_0 is column name
+#                 # = level_1 is stat
+#                 # need dropna if groups are nested
+
+#                 if isinstance(df, pd.core.groupby.generic.DataFrameGroupBy):
+#                     out = out.rename(
+#                         columns={"level_0": "column", "level_1": "stat", 0: "value"}
+#                     )
+#                     colnames = ["column", "stat", "value"]
+#                 else:
+#                     out = out.rename(columns={"level_0": "stat", 0: "value"})
+#                     colnames = ["stat", "value"]
+
+#                 if len(args) and isinstance(args[0], str):
+#                     out = out.assign(
+#                         stat=np.repeat(args, int(out.shape[0] / len(args)))
+#                     )
+
+#                 # Rearrange cols
+#                 cols = list(out.columns)
+#                 created, groups = filtercat(colnames, cols, invert="split")
+#                 new_order = groups + created
+#                 out = (
+#                     out[new_order]
+#                     .dropna()
+#                     .sort_values(by=groups)
+#                     .reset_index(drop=True)
+#                 )
+#             else:
+#                 # non-grouped
+#                 out = (
+#                     out.reset_index()
+#                     .rename(columns={"index": "stat"})
+#                     .melt(id_vars="stat", var_name="column")
+#                 )
+#                 out = out[["column", "stat", "value"]].dropna().reset_index(drop=True)
+
+#             # Drop the column column if it only has one value, e.g. if we did a
+#             # summarize on a long-form and provided kwarg to summarize
+#             if "column" in out and out["column"].nunique() == 1:
+#                 out = out.drop(columns="column")
+#             return out
+
+#         else:
+#             return out
+
+#     return call
 
 
 @curry
-def assign(dfg, *args, **kwargs):
+def assign(dfg, **kwargs):
     """
     Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses `plydata.define/mutate` unless the input is a grouped DataFrame
     in which case it falls back to pandas methods because `plydata` can only handle
@@ -171,7 +276,7 @@ def assign(dfg, *args, **kwargs):
                 out = out.assign(**{k: dfg.eval(v)})
             return out
         else:
-            return do("assign", dfg, *args, **kwargs)
+            return do("assign", dfg, **kwargs)
 
 
 @curry
@@ -195,21 +300,36 @@ def query(*queries, **kwargs):
 
 
 @curry
-def apply(func, df, **kwargs):
+def apply(*args, **kwargs):
     """Call a dataframe or groupby object's `.apply` method"""
-    return do("apply", df, func, **kwargs)
+
+    def call(df):
+        out = df.apply(*args, **kwargs)
+        if isinstance(df, pd.core.groupby.generic.DataFrameGroupBy):
+            out = out.reset_index()
+        return out
+
+    return call
 
 
 @curry
-def head(df, **kwargs):
+def head(*args, **kwargs):
     """Call dataframe's `.head()` method"""
-    return do("head", df, **kwargs)
+
+    def call(df):
+        return df.head(*args, **kwargs)
+
+    return call
 
 
 @curry
-def tail(df, **kwargs):
+def tail(*args, **kwargs):
     """Call dataframe's `.tail()` method"""
-    return do("tail", df, **kwargs)
+
+    def call(df):
+        return df.tail(*args, **kwargs)
+
+    return call
 
 
 @curry
@@ -230,38 +350,47 @@ def select(*args):
 
     def call(df):
         return do("select", df, *args)
-        # if isinstance(df, pd.core.groupby.generic.DataFrameGroupBy):
-        #     do('select', df, *args)
-        # # Get col via name or exclude -name
-        # col_list = [*args]
-        # # Split columns to keep and drop based on '-' prefix
-        # drop, keep = filtercat("-", col_list, invert="split", assert_notempty=False)
-        # # Remove the prefix
-        # if len(drop):
-        #     drop = mapcat(lambda col: col[1:], drop)
-        # if len(keep):
-        #     return df.drop(columns=drop).filter(items=keep, axis="columns")
-        # return df.drop(columns=drop)
 
     return call
 
 
 @curry
-def to_wide(df, column=None, by=None, drop_index=True):
+def to_wide(*args, **kwargs):
     """
-    Select one ore more columns by name. Drop one or more columns by prepending '-' to
-    the name. Does not support renaming"""
+    Convert a pair of columns to multiple columns
 
-    return df.to_wide(column=column, by=by, drop_index=drop_index)
+    Args:
+        column (str): string name of column to "explode"
+        using (str): string name of column who's values should be placed into the new columns
+        drop_index (bool; optional): if a 'prev_index' col exists (usually created by
+        make_index=True in to_long) will drop it; Default True
+
+    """
+
+    def call(df):
+        return df.to_wide(*args, **kwargs)
+
+    return call
 
 
 @curry
-def to_long(df, columns=None, into=None, drop_index=True):
+def to_long(*args, **kwargs):
     """
-    Select one ore more columns by name. Drop one or more columns by prepending '-' to
-    the name. Does not support renaming"""
+    Convert a list of columns into 2 columns. Does not support renaming.
 
-    return df.to_long(columns=columns, into=into, drop_index=drop_index)
+    Args:
+        columns (list or None): columns to melt; Defaults to None
+        id_vars (list or None): columns to use as id variables; Default to None
+        into (tuple, optional): cols to create Defaults to ("variable", "value").
+        make_index (bool, optional): does a reset_index prior to melting and adds the
+        index col to id_vars. Defaults to False.
+
+    """
+
+    def call(df):
+        return df.to_long(*args, **kwargs)
+
+    return call
 
 
 @curry
@@ -285,5 +414,9 @@ def split(col, into, df, sep=" "):
 
 
 @curry
-def astype(coldict, df):
-    return df.astype(coldict)
+def astype(cols, df):
+    """Cast one ore more columns to a type. Can either input a single tuple to cast 1
+    column or a dict to cast multiple"""
+    if isinstance(cols, tuple):
+        cols = {cols[0]: cols[1]}
+    return df.astype(cols)

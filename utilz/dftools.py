@@ -210,44 +210,68 @@ GroupBy.select = _select
 
 @_register_dataframe_method
 def to_long(
-    df, columns=None, id_vars=None, into=("variable", "value"), drop_index=True
+    df, columns=None, id_vars=None, into=("variable", "value"), make_index=False
 ):
+    """
+    Take multiple columns or multiple id_vars and melt them into 2 columns. If columns
+    is provided, id_vars is inferred and visa-versa. If make_index=True, will use the
+    current index as a new id_var to ensure a unique index.
+
+    Args:
+        df (pd.DataFrame): input DataFrame
+        columns (list or None): columns to melt; Defaults to None
+        id_vars (list or None): columns to use as id variables; Default to None
+        into (tuple, optional): cols to create Defaults to ("variable", "value").
+        make_index (bool, optional): does a reset_index prior to melting and adds the
+        index col to id_vars. Defaults to False.
+
+    """
+    # User provide list of columns to gather -> like in R
     if columns is not None:
-        if not isinstance(columns, list):
-            columns = [columns]
+        # Grab remaining columns if id_vars isn't provided
         if id_vars is None:
             id_vars = [col for col in df.columns if col not in columns]
-    if id_vars is None:
+    else:
+        if id_vars is not None:
+            columns = [col for col in df.columns if col not in id_vars]
+
+    if make_index:
         df = df.reset_index().rename(columns={"index": "prev_index"})
+        if id_vars is None:
+            id_vars = "prev_index"
+        else:
+            id_vars = list(id_vars) + ["prev_index"]
+
     df = df.melt(
         id_vars=id_vars,
         value_vars=columns,
         var_name=into[0],
         value_name=into[1],
     )
-    if drop_index:
-        df = df.drop(columns="prev_index", errors="ignore")
     return df
 
 
 @_register_dataframe_method
-def to_wide(df, column, by, drop_index=True):
+def to_wide(df, column, using, drop_index=True):
     """
     Cast a column of long-form tidy data to a set of wide columns based on the values in
-    a another column ('by')
+    a another column ('using')
 
     Args:
         df (pd.DataFrame): input dataframe
         column (str): string name of column to "explode"
-        by (str): string name of column who's values should be placed into the new columns
+        using (str): string name of column who's values should be placed into the new
+        columns
+        drop_index (bool; optional): if a 'prev_index' col exists (usually created by
+        make_index=True in to_long) will drop it; Default True
 
     """
-    index = [col for col in df.columns if col not in [column, by]]
+    index = [col for col in df.columns if col not in [column, using]]
     try:
         out = df.pivot(
             index=index,
             columns=column,
-            values=by,
+            values=using,
         ).reset_index()
         if drop_index:
             out = out.drop(columns=["prev_index"], errors="ignore")
@@ -255,6 +279,6 @@ def to_wide(df, column, by, drop_index=True):
     except ValueError as e:
         if "duplicate" in str(e):
             print(
-                f"ERROR: It's not possible to infer what rows are unique from columns that make up the index: {index}. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise .to_long() can create a unique index for with the add_unique_id = True"
+                f"ERROR: It's not possible to infer what rows are unique from columns that make up the index: {index}. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise .to_long() can create a unique index for with make_index = True"
             )
         raise e

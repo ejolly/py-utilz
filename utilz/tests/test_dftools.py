@@ -144,11 +144,9 @@ def test_to_wide(df):
     long = df.to_long(
         ["sepal_length", "sepal_width", "petal_length", "petal_width"],
         into=("dimension", "inches"),
-        drop_index=False,
+        make_index=True,
     )
 
     # Then this works just fine
     wide = long.to_wide("dimension", "inches")
     assert wide.shape == df.shape
-
-    # TODO: test how well this works when multiple columns are passed to to_wide
