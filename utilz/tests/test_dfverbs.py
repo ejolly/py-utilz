@@ -13,6 +13,7 @@ from utilz.dfverbs import (
     to_wide,
     split,
     astype,
+    sort,
 )
 from utilz import randdf, pipe, equal
 import numpy as np
@@ -236,6 +237,23 @@ def test_groupby():
         .transform(lambda x: x - x.mean())
         .to_numpy(),
     )
+
+
+def test_sort():
+
+    data = randdf((20, 3), groups={"condition": 2, "group": 4})
+
+    out = pipe(data, sort("group", "condition", ascending=False))
+    assert out.equals(
+        data.sort_values(by=["group", "condition"], ascending=False, ignore_index=True)
+    )
+
+    out = pipe(
+        data,
+        groupby("group"),
+        assign(A1_sorted_by_group="A1.sort_values()"),
+    )
+    assert "A1_sorted_by_group" in out
 
 
 @pytest.mark.skip(reason="API change, may just deprecate this")

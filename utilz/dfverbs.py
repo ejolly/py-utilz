@@ -19,6 +19,7 @@ __all__ = [
     "to_wide",
     "split",
     "astype",
+    "sort",
 ]
 
 import pandas as pd
@@ -306,3 +307,13 @@ def astype(cols, df):
     if isinstance(cols, tuple):
         cols = {cols[0]: cols[1]}
     return df.astype(cols)
+
+
+@curry
+def sort(*args, **kwargs):
+    ignore_index = kwargs.pop("ignore_index", True)
+
+    def call(df):
+        return df.sort_values(by=list(args), ignore_index=ignore_index, **kwargs)
+
+    return call
