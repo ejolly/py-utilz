@@ -4,6 +4,7 @@ Internal package utilities
 
 from joblib import Parallel
 from tqdm import tqdm
+from os.path import dirname, join, sep
 
 
 class ProgressParallel(Parallel):
@@ -21,3 +22,7 @@ class ProgressParallel(Parallel):
             self._pbar.total = self.n_dispatched_tasks
         self._pbar.n = self.n_completed_tasks
         self._pbar.refresh()
+
+
+def get_resource_path():
+    return join(dirname(__file__), "resources") + sep

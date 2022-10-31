@@ -6,6 +6,7 @@ authors = ["ejolly <eshin.jolly@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "utilz" }]
+include = ["utilz/jquery-3.6.1.min.js", "utilz/jquery.dataTables.min.css", "utilz/jquery.dataTables.min.js"]
 
 [tool.poetry.dependencies]
 python = "^3.8"

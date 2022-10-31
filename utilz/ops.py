@@ -37,8 +37,71 @@ from matplotlib.figure import Figure, Axes
 from matplotlib.axes._subplots import Subplot
 from inspect import signature
 from seaborn import FacetGrid, PairGrid
+import uuid
 
 MAX_INT = np.iinfo(np.int32).max
+
+
+def datatable(df):
+    """Prints a pandas.DataFrame using the jQuery DataTable plugin"""
+
+    try:
+        shell = get_ipython().__class__.__name__
+        if shell == "ZMQInteractiveShell":
+            from IPython.display import HTML
+
+            table_id = uuid.uuid1()
+
+            output = f"""
+
+                <link rel="stylesheet" type="text/css" href="./utilz/jquery.dataTables.min.css">
+                
+                <script type="text/javascript">
+                    console.log('setting up requirejs imports...')
+
+                    require.config({{
+                        paths: {{
+                            jquery: './utilz/jquery-3.6.1.min.js',
+                            datatables: './utilz/jquery.datatables.min'
+                        }}
+                    }});
+
+                </script>
+
+                <div id='datatable-{table_id}'>
+
+                    {df.to_html(classes=f"datatable display compact")}
+
+                    <script type="text/javascript">
+                        $(document).ready( function () {{
+                            console.log('rendering interactive datatable...')
+
+                            require(['datatables'], function () {{
+
+                                    $('#datatable-{table_id}').find('table.datatable').dataTable();
+                            }});
+                        }});
+                    </script>
+
+                    <style>
+                        .dataTables_info, 
+                        .dataTables_wrapper label, 
+                        .dataTables_wrapper select,
+                        .dataTables_wrapper .dataTables_filter input,
+                        .dataTables_wrapper .dataTables_paginate .paginate_button {{
+                            color: #CCCAC2 !important;
+                        }}
+                    
+                    </style>
+
+                </div>
+
+            """
+            return HTML(output)
+        else:
+            return df
+    except NameError:
+        return df
 
 
 def equal(*seqs):
@@ -403,6 +466,7 @@ def pipe(
     show: bool = True,
     debug: bool = False,
     keep: Union[int, None] = None,
+    interactive_tables: bool = True,
 ):
     """
     A "smart" pipe function designed to pass data through a series of transformation.
@@ -482,9 +546,15 @@ def pipe(
     if show:
         if isinstance(out, tuple):
             for o in out:
-                printfunc(o)
+                if isinstance(o, pd.DataFrame) and interactive_tables:
+                    printfunc(datatable(o))
+                else:
+                    printfunc(o)
         else:
-            printfunc(out)
+            if isinstance(out, pd.DataFrame) and interactive_tables:
+                printfunc(datatable(out))
+            else:
+                printfunc(out)
 
     if output:
         if keep is None:
