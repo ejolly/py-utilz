@@ -2,27 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://eshinjolly.com/utilz/</loc>
-         <lastmod>2022-10-30</lastmod>
+         <lastmod>2022-10-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://eshinjolly.com/utilz/intro/</loc>
-         <lastmod>2022-10-30</lastmod>
+         <lastmod>2022-10-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://eshinjolly.com/utilz/pipes/</loc>
-         <lastmod>2022-10-30</lastmod>
+         <lastmod>2022-10-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://eshinjolly.com/utilz/api/core/</loc>
-         <lastmod>2022-10-30</lastmod>
+         <lastmod>2022-10-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://eshinjolly.com/utilz/api/experimental/fp_data_analysis/</loc>
-         <lastmod>2022-10-30</lastmod>
+         <lastmod>2022-10-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
