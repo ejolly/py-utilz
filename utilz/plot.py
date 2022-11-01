@@ -65,6 +65,8 @@ def stripbarplot(
         Axis: plot axis handle
     """
     ax = kwargs.pop("ax", None)
+    if ax == "newax":
+        ax = newax()
     estimator = kwargs.pop("estimator", np.mean)
     ncol = kwargs.pop("ncol", None)
     loc = kwargs.pop("loc", None)
@@ -78,19 +80,22 @@ def stripbarplot(
         _ = ax.get_legend().remove()
 
     elif remove_duplicate_legend:
-        handles, labels = ax.get_legend_handles_labels()
-        half = int(len(handles) / 2)
-        if ncol is None:
-            if loc is None:
-                legend = ax.legend(handles[half:], labels[half:])
-            else:
-                legend = ax.legend(handles[half:], labels[half:], loc=loc)
+        if ax.get_legend() is not None:
+            handles, labels = ax.get_legend_handles_labels()
+            half = int(len(handles) / 2)
+            if ncol is None:
+                if loc is None:
+                    legend = ax.legend(handles[half:], labels[half:])
+                else:
+                    legend = ax.legend(handles[half:], labels[half:], loc=loc)
 
-        elif ncol is not None:
-            if loc is None:
-                legend = ax.legend(handles[half:], labels[half:], ncol=ncol)
-            else:
-                legend = ax.legend(handles[half:], labels[half:], ncol=ncol, loc=loc)
+            elif ncol is not None:
+                if loc is None:
+                    legend = ax.legend(handles[half:], labels[half:], ncol=ncol)
+                else:
+                    legend = ax.legend(
+                        handles[half:], labels[half:], ncol=ncol, loc=loc
+                    )
 
     if xlabel is not None:
         ax.set_xlabel(xlabel)

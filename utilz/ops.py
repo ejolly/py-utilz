@@ -20,10 +20,11 @@ __all__ = [
     "curry",
     "pop",
     "across",
+    "datatable",
 ]
 
 from joblib import delayed, Parallel
-from ._utils import ProgressParallel
+from ._utils import ProgressParallel, get_resource_path
 import numpy as np
 import pandas as pd
 from typing import Union, Any
@@ -38,12 +39,17 @@ from matplotlib.axes._subplots import Subplot
 from inspect import signature
 from seaborn import FacetGrid, PairGrid
 import uuid
+from warnings import warn
 
 MAX_INT = np.iinfo(np.int32).max
 
 
+@curry
 def datatable(df):
     """Prints a pandas.DataFrame using the jQuery DataTable plugin"""
+    if not isinstance(df, pd.DataFrame):
+        warn("Not a pandas dataframe returning input...")
+        return df
 
     try:
         shell = get_ipython().__class__.__name__
@@ -51,18 +57,21 @@ def datatable(df):
             from IPython.display import HTML
 
             table_id = uuid.uuid1()
+            loc = get_resource_path()
+            if df.shape[0] > 500:
+                warn("df has more than 500 rows endering...")
 
             output = f"""
 
-                <link rel="stylesheet" type="text/css" href="./utilz/jquery.dataTables.min.css">
+                <link rel="stylesheet" type="text/css" href="{loc}/jquery.dataTables.min.css">
                 
                 <script type="text/javascript">
                     console.log('setting up requirejs imports...')
 
                     require.config({{
                         paths: {{
-                            jquery: './utilz/jquery-3.6.1.min.js',
-                            datatables: './utilz/jquery.datatables.min'
+                            jquery: '{loc}/jquery-3.6.1.min.js',
+                            datatables: '{loc}/jquery.datatables.min'
                         }}
                     }});
 
@@ -466,7 +475,6 @@ def pipe(
     show: bool = True,
     debug: bool = False,
     keep: Union[int, None] = None,
-    interactive_tables: bool = True,
 ):
     """
     A "smart" pipe function designed to pass data through a series of transformation.
@@ -518,7 +526,7 @@ def pipe(
         # if the return is None or is a plot keep looking
         if bad_return(e):
             continue
-        elif isinstance(e, tuple):
+        elif isinstance(e, (tuple, list)):
             # If tuple contains all Nones, Plots, or any mixcture keep looking
             if all(bad_return(elem) for elem in e):
                 continue
@@ -546,15 +554,9 @@ def pipe(
     if show:
         if isinstance(out, tuple):
             for o in out:
-                if isinstance(o, pd.DataFrame) and interactive_tables:
-                    printfunc(datatable(o))
-                else:
-                    printfunc(o)
+                printfunc(o)
         else:
-            if isinstance(out, pd.DataFrame) and interactive_tables:
-                printfunc(datatable(out))
-            else:
-                printfunc(out)
+            printfunc(out)
 
     if output:
         if keep is None:

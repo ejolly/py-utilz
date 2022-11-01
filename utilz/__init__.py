@@ -17,6 +17,7 @@ from .ops import (
     curry,
     pop,
     across,
+    datatable,
 )
 from .io import load, crawl
 from .boilerplate import randdf

@@ -4,7 +4,7 @@ Internal package utilities
 
 from joblib import Parallel
 from tqdm import tqdm
-from os.path import dirname, join, sep
+from os.path import dirname
 
 
 class ProgressParallel(Parallel):
@@ -25,4 +25,4 @@ class ProgressParallel(Parallel):
 
 
 def get_resource_path():
-    return join(dirname(__file__), "resources") + sep
+    return dirname(__file__)

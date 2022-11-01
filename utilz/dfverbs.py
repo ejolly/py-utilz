@@ -26,7 +26,7 @@ __all__ = [
 import pandas as pd
 from toolz import curry
 from .ops import do, filtercat
-from .plot import newax
+from .plot import newax, stripbarplot as _stripbarplot
 import seaborn as sns
 
 
@@ -210,6 +210,14 @@ def catplot(**kwargs):
 def barplot(**kwargs):
     def plot(data):
         return sns.barplot(data=data, ax=newax(), **kwargs)
+
+    return plot
+
+
+@curry
+def stripbarplot(**kwargs):
+    def plot(data):
+        return _stripbarplot(data=data, ax="newax", **kwargs)
 
     return plot
 
