@@ -2456,8 +2456,9 @@ makes it easy to run shorthands like "do something only if this is true"</p>
 <span class="normal">764</span>
 <span class="normal">765</span>
 <span class="normal">766</span>
-<span class="normal">767</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
-<span class="k">def</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">conditional</span><span class="p">,</span> <span class="n">if_true</span><span class="p">,</span> <span class="n">if_false</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">767</span>
+<span class="normal">768</span>
+<span class="normal">769</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">conditional</span><span class="p">,</span> <span class="n">if_true</span><span class="p">,</span> <span class="n">if_false</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simple oneline ternary operator. Pass in something to check, how to check it, what</span>
 <span class="sd">    to return if True, and what to return if False. If only one of if_true or if_false</span>
@@ -2490,12 +2491,15 @@ makes it easy to run shorthands like "do something only if this is true"</p>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">conditional</span><span class="p">):</span>
-            <span class="n">conditional</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">conditional</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conditional</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conditional</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">conditional</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">conditional</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">if_true</span> <span class="k">if</span> <span class="n">conditional</span> <span class="k">else</span> <span class="n">if_false</span>
+        <span class="k">if</span> <span class="n">conditional</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">if_true</span><span class="p">()</span> <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">if_true</span><span class="p">)</span> <span class="k">else</span> <span class="n">if_true</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">if_false</span><span class="p">()</span> <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">if_false</span><span class="p">)</span> <span class="k">else</span> <span class="n">if_true</span>
 
     <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">conditional</span><span class="p">):</span>
         <span class="n">conditional</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -3208,9 +3212,7 @@ call to append or spread.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">770</span>
-<span class="normal">771</span>
-<span class="normal">772</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">772</span>
 <span class="normal">773</span>
 <span class="normal">774</span>
 <span class="normal">775</span>
@@ -3229,7 +3231,9 @@ call to append or spread.</p>
 <span class="normal">788</span>
 <span class="normal">789</span>
 <span class="normal">790</span>
-<span class="normal">791</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">791</span>
+<span class="normal">792</span>
+<span class="normal">793</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a tuple, removes an element located at an index. Useful for pruning down a</span>
 <span class="sd">    call to append or spread.&quot;&quot;&quot;</span>
