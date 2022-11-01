@@ -707,7 +707,6 @@ def do(func, data, *args, **kwargs):
     return func(data)
 
 
-@curry
 def ifelse(conditional, if_true, if_false, *args, **kwargs):
     """
     Simple oneline ternary operator. Pass in something to check, how to check it, what
@@ -741,12 +740,15 @@ def ifelse(conditional, if_true, if_false, *args, **kwargs):
             )
 
         if callable(conditional):
-            conditional = conditional(data)
+            conditional = conditional()
 
-        if isinstance(conditional, str):
+        elif isinstance(conditional, str):
             conditional = eval(conditional)
 
-        return if_true if conditional else if_false
+        if conditional:
+            return if_true() if callable(if_true) else if_true
+        else:
+            return if_false() if callable(if_false) else if_true
 
     if callable(conditional):
         conditional = conditional(data)

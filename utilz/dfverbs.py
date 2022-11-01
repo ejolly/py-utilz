@@ -268,7 +268,9 @@ def read_csv(*args, **kwargs):
 @curry
 def to_csv(path, df):
     """Call a dataframe's `.to_csv(index=False)` method"""
-    df.to_csv(f"{path}.csv", index=False)
+    if not str(path).endswith(".csv"):
+        path = f"{path}.csv"
+    df.to_csv(f"{path}", index=False)
     return df
 
 
