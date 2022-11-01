@@ -310,12 +310,9 @@ def test_ifelse():
     # Can call with boolean expressions
     y = ifelse(x > 10, x + 1, x - 1)
     assert y < x
+
     y = ifelse(x > 1, x + 1, x)
     assert y > x
-
-    # Can call as eval string with special variable 'data'
-    y = ifelse("data > 10", x + 1, x - 1, x)
-    assert y < x
 
     # Can call as func and then use whatever name
     out = ifelse(lambda e: e * 2 > 20, "yes", "no", x)
@@ -324,22 +321,6 @@ def test_ifelse():
     # Can return them too
     out = ifelse(lambda e: e * 2 > 10, lambda e: e + 10, "no", x)
     assert out == 20
-
-    # In pipes, ifelse is curried
-    out = pipe(10, ifelse("data > 0", "yes", "no"))
-    assert out == "yes"
-
-    # Same thing
-    out = pipe(10, ifelse(lambda data: data > 0, "yes", "no"))
-    assert out == "yes"
-
-    # But more powerful
-    out = pipe([10, 20], ifelse(lambda list: list[0] > list[1], "yes", "no"))
-    assert out == "no"
-
-    # Combine with gather to name args
-    out = pipe([10, 20], gather(lambda a, b: ifelse(a > b, "yes", "no")))
-    assert out == "no"
 
 
 def test_pop():

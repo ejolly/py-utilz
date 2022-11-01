@@ -728,45 +728,33 @@ def ifelse(conditional, if_true, if_false, *args, **kwargs):
     """
 
     if len(args) == 0:
-        data = None
-    else:
-        data = args[0] if len(args) == 1 else args
-
-    if data is None:
-
-        if if_true is None or if_false is None:
-            raise ValueError(
-                "when data is None, at least one of if_true or if_false must be provided"
-            )
 
         if callable(conditional):
-            conditional = conditional()
+            conditional = conditional(**kwargs)
 
-        elif isinstance(conditional, str):
+        if conditional:
+            return if_true(**kwargs) if callable(if_true) else if_true
+        else:
+            return if_false(**kwargs) if callable(if_false) else if_false
+    else:
+
+        if callable(conditional):
+            conditional = conditional(*args, **kwargs)
+        if isinstance(conditional, str):
             conditional = eval(conditional)
 
         if conditional:
-            return if_true() if callable(if_true) else if_true
+            if callable(if_true):
+                return if_true(*args, **kwargs)
+            if if_true is None:
+                return args
+            return if_true
         else:
-            return if_false() if callable(if_false) else if_true
-
-    if callable(conditional):
-        conditional = conditional(data)
-    if isinstance(conditional, str):
-        conditional = eval(conditional)
-
-    if conditional:
-        if callable(if_true):
-            return if_true(data, **kwargs)
-        if if_true is None:
-            return data
-        return if_true
-    else:
-        if callable(if_false):
-            return if_false(data, **kwargs)
-        if if_false is None:
-            return data
-        return if_false
+            if callable(if_false):
+                return if_false(*args, **kwargs)
+            if if_false is None:
+                return args
+            return if_false
 
 
 @curry
