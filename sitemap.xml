@@ -6,12 +6,22 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://eshinjolly.com/utilz/dplyr/</loc>
+         <lastmod>2022-11-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://eshinjolly.com/utilz/intro/</loc>
          <lastmod>2022-11-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://eshinjolly.com/utilz/pipes/</loc>
+         <lastmod>2022-11-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://eshinjolly.com/utilz/verbs/</loc>
          <lastmod>2022-11-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
