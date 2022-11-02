@@ -179,22 +179,71 @@ def tweak(plot: Union[Figure, Axes], **kwargs) -> Union[Figure, Axes]:
     swiss-army knife to quickly change most aesthetics on a plot, e.g. tick labels,
     fontsize, etc, in a unified function call
     """
+
+    # Params that can't be set with ax.set()
     xtick_rotation = kwargs.pop("xtick_rotation", None)
     ytick_rotation = kwargs.pop("ytick_rotation", None)
+    xlabel_fontsize = kwargs.pop("xlabel_fontsize", None)
+    ylabel_fontsize = kwargs.pop("ylabel_fontsize", None)
+    xticklabel_fontsize = kwargs.pop("xticklabel_fontsize", None)
+    yticklabel_fontsize = kwargs.pop("yticklabel_fontsize", None)
     despine = kwargs.pop("despine", False)
     tight_layout = kwargs.pop("tight_layout", False)
+    handles, labels = plot.get_legend_handles_labels()
 
-    if isinstance(plot, Axes):
-        plot.set(**kwargs)
-        if xtick_rotation is not None:
-            plot.tick_params(axis="x", rotation=xtick_rotation)
-        if ytick_rotation is not None:
-            plot.tick_params(axis="y", rotation=ytick_rotation)
-        if despine:
-            sns.despine(ax=plot)
-        if tight_layout:
-            plt.tight_layout()
-        return plot
+    # Title settings
+    title = kwargs.get("title", None)
+    title_x = kwargs.pop("title_x", None)
+    title_y = kwargs.pop("title_y", None)
+    title_loc = kwargs.pop("title_loc", None)
+    title_fontsize = kwargs.pop("title_fontsize", None)
+    title_params = dict(label=title)
+    if title_x is not None:
+        title_params["x"] = title_x
+    if title_y is not None:
+        title_params["y"] = title_y
+    if title_loc is not None:
+        title_params["loc"] = title_loc
+    if title_fontsize is not None:
+        title_params["fontsize"] = title_fontsize
+
+    # Legend settings
+    legend_params = dict()
+    legend_params["loc"] = kwargs.pop("loc", "best")
+    legend_params["ncols"] = kwargs.pop("loc", 1)
+    legend_params["fontsize"] = kwargs.pop("fontsize", None)
+    legend_params["title"] = kwargs.pop("legend_title", None)
+    legend_params["title_fontsize"] = kwargs.pop("legend_title_fontsize", None)
+    legend_params["fontsize"] = kwargs.pop("legend_labels_fontsize", None)
+    legend_params["frameon"] = kwargs.pop("legend_frame", True)
+    legend_labels = kwargs.pop("legend_labels", None)
+    labels = labels if legend_labels is None else legend_labels
+
+    # Set main params
+    plot.set(**kwargs)
+    # Set legend params
+    plot.legend(handles, labels, **legend_params)
+    # Set title params
+    plot.set_title(**title_params)
+    # Set other params
+    if xtick_rotation is not None:
+        plot.tick_params(axis="x", rotation=xtick_rotation)
+    if ytick_rotation is not None:
+        plot.tick_params(axis="y", rotation=ytick_rotation)
+    if xlabel_fontsize is not None:
+        plot.xaxis.label.set_size(xlabel_fontsize)
+    if ylabel_fontsize is not None:
+        plot.yaxis.label.set_size(ylabel_fontsize)
+    if xticklabel_fontsize is not None:
+        plt.tick_params(axis="x", labelsize=xticklabel_fontsize)
+    if yticklabel_fontsize is not None:
+        plt.tick_params(axis="y", labelsize=yticklabel_fontsize)
+    if despine:
+        sns.despine(ax=plot)
+    if tight_layout:
+        plt.tight_layout()
+
+    return plot
 
 
 @curry

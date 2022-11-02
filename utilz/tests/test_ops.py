@@ -413,7 +413,7 @@ def test_pipes_advanced():
     # df ->
     # df-grouped ->
     #   A1 mean ->
-    #       displot
+    #       histplot
     #   B1 mean ->
     #       boxplot
     #
@@ -426,7 +426,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         across(
-            lambda means: sns.displot(means),
+            lambda means: sns.histplot(means),
             lambda means: sns.boxplot(means),
         ),
         debug=True,
@@ -446,7 +446,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         across(
-            compose(lambda means: sns.displot(means), tweak(title="displot")),
+            compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
         ),
     )
@@ -462,7 +462,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         across(
-            compose(lambda means: sns.displot(means), tweak(title="displot")),
+            compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
         ),
         keep=0,
@@ -481,7 +481,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         across(
-            compose(lambda means: sns.displot(means), tweak(title="displot")),
+            compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
         ),
         pop(0),

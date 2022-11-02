@@ -318,11 +318,11 @@ def read_csv(*args, **kwargs):
 
 
 @curry
-def to_csv(path, df):
+def to_csv(path, df, index=False):
     """Call a dataframe's `.to_csv(index=False)` method"""
     if not str(path).endswith(".csv"):
         path = f"{path}.csv"
-    df.to_csv(f"{path}", index=False)
+    df.to_csv(f"{path}", index=index)
     return df
 
 
@@ -382,7 +382,28 @@ def summarize(dfg, **kwargs):
 
 
 @curry
-def assign(dfg, **kwargs):
+def assign(**kwargs):
+    """Call a dataframe object's `.assign` method"""
+
+    def call(df):
+        out = df.assign(**kwargs)
+        return out
+
+    return call
+
+
+@curry
+def mutate(dfg, **kwargs):
+    """
+    Creates a new column(s) in a DataFrame based on a function of existing columns in
+    the DataFrame. Always returns a dataframe the same size as the original. For groupby
+    inputs, **the result is always ungrouped.**
+
+    Just like `.summarize()`, input should be kwargs organized like `new_column = str|
+    function`. Such as: `_.mutate(weight_centered ='weight - weight.mean()')`
+     or `_.mutate(weight_centered_ = lambda df: df['weight].apply(lambda x: x -
+     x.mean())`. To return output *smaller* than the input dataframe use `.summarize()` instead.
+    """
 
     if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
         prev = dfg.obj.copy()
@@ -430,23 +451,6 @@ def assign(dfg, **kwargs):
             return do("assign", dfg, **kwargs)
 
 
-# Alias
-@curry
-def mutate(dfg, **kwargs):
-    """
-    Creates a new column(s) in a DataFrame based on a function of existing columns in
-    the DataFrame. Always returns a dataframe the same size as the original. For groupby
-    inputs, **the result is always ungrouped.**
-
-    Just like `.summarize()`, input should be kwargs organized like `new_column = str|
-    function`. Such as: `_.mutate(weight_centered ='weight - weight.mean()')`
-     or `_.mutate(weight_centered_ = lambda df: df['weight].apply(lambda x: x -
-     x.mean())`. To return output *smaller* than the input dataframe use `.summarize()` instead.
-    """
-
-    return assign(dfg, **kwargs)
-
-
 @curry
 def transmute(dfg, **kwargs):
     """Just like `.mutate()`, but only returns the newly created columns."""
@@ -460,7 +464,7 @@ def transmute(dfg, **kwargs):
         orig = dfg.obj
     else:
         orig = dfg
-    out = assign(dfg, **kwargs)
+    out = mutate(dfg, **kwargs)
     cols = filtercat(list(orig.columns), list(out.columns), substr_match=False)
     out = out.drop(columns=cols)
 

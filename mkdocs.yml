@@ -20,6 +20,7 @@ nav:
   - Home: index.md
   - Quick Overview: intro.ipynb
   - Working with Pipes: pipes.md
+  - Functional/Verb-based data manipulation: verbs.ipynb
   - API:
       - I/O: api/io.md
       - Operations and Pipes: api/ops.md

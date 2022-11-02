@@ -3,6 +3,7 @@ from utilz.dfverbs import (
     tail,
     apply,
     query,
+    mutate,
     assign,
     groupby,
     drop,
@@ -53,39 +54,39 @@ def test_query():
     assert out.shape[0] < df.shape[0]
 
 
-def test_assign():
+def test_mutate():
 
     df = pd.read_csv("./utilz/tests/mtcars.csv")
 
-    out = pipe(df, assign(hp_norm="hp / hp.mean()"))
+    out = pipe(df, mutate(hp_norm="hp / hp.mean()"))
 
-    out2 = pipe(df, groupby("cyl"), assign(hp_norm="hp / hp.mean()"))
+    out2 = pipe(df, groupby("cyl"), mutate(hp_norm="hp / hp.mean()"))
 
     assert out.shape == out2.shape
     assert "hp_norm" in out and "hp_norm" in out2
     assert not out.equals(out2)
 
     # multiple groups
-    out3 = pipe(df, groupby("cyl", "gear"), assign(hp_norm="hp / hp.mean()"))
+    out3 = pipe(df, groupby("cyl", "gear"), mutate(hp_norm="hp / hp.mean()"))
     assert out.shape == out3.shape
     assert not out2.equals(out3)
 
     # broadcast scalar
-    out = pipe(df, groupby("cyl", "gear"), assign(hp_grp_mean="hp.mean()"))
+    out = pipe(df, groupby("cyl", "gear"), mutate(hp_grp_mean="hp.mean()"))
     assert out["hp_grp_mean"].nunique() == 8
 
     df = randdf((20, 3))
 
     # Assign values
-    out = pipe(df, assign(group=["A"] * 10 + ["B"] * 10))
+    out = pipe(df, mutate(group=["A"] * 10 + ["B"] * 10))
     assert "group" in out.columns
 
     # Or using functions
-    out = pipe(out, assign(A1_doubled=lambda df: df.A1 * 2))
+    out = pipe(out, mutate(A1_doubled=lambda df: df.A1 * 2))
     assert all(out.A1 * 2 == out.A1_doubled)
 
     # Or using strs (also tests drop)
-    out = pipe(out, drop("A1_doubled"), assign(A1_doubled="A1 * 2"))
+    out = pipe(out, drop("A1_doubled"), mutate(A1_doubled="A1 * 2"))
     assert all(out.A1 * 2 == out.A1_doubled)
 
 
@@ -154,7 +155,7 @@ def test_groupby():
     df = randdf((20, 3))
     out = pipe(
         df,
-        assign(
+        mutate(
             group=["A"] * 10 + ["B"] * 10,
             school=["a"] * 5 + ["b"] * 5 + ["c"] * 5 + ["d"] * 5,
         ),
@@ -165,7 +166,7 @@ def test_groupby():
     assert isinstance(groups, pd.core.groupby.generic.DataFrameGroupBy)
 
     # Grouped create 1 new col
-    groups = pipe(out, groupby("group"), assign(A1_demean_by_group="A1 - A1.mean()"))
+    groups = pipe(out, groupby("group"), mutate(A1_demean_by_group="A1 - A1.mean()"))
     assert groups.shape[0] == out.shape[0]
     assert "A1_demean_by_group" in groups.columns
     correct = (
@@ -180,7 +181,7 @@ def test_groupby():
     groups = pipe(
         out,
         groupby("group"),
-        assign(A1_group_mean="A1.mean()", A1_demean_by_group="A1 - A1.mean()"),
+        mutate(A1_group_mean="A1.mean()", A1_demean_by_group="A1 - A1.mean()"),
     )
     assert groups.shape[0] == groups.shape[0]
     assert groups["A1_group_mean"].nunique() == 2
@@ -197,7 +198,7 @@ def test_groupby():
     schools = pipe(
         out,
         groupby("group", "school"),
-        assign(
+        mutate(
             B1_mean_by_group_and_school="B1.mean()",
         ),
     )
@@ -209,7 +210,7 @@ def test_groupby():
     schools = pipe(
         out,
         groupby("group", "school"),
-        assign(
+        mutate(
             A1_mean_by_group_and_school="A1.mean()",
             B1_mean_by_group_and_school="B1.mean()",
         ),
@@ -223,7 +224,7 @@ def test_groupby():
     schools = pipe(
         out,
         groupby("group", "school"),
-        assign(
+        mutate(
             A1_mean_by_group_and_school="A1.mean()",
             B1_demeaned_by_group_and_school="B1 - B1.mean()",
         ),
@@ -251,7 +252,7 @@ def test_sort():
     out = pipe(
         data,
         groupby("group"),
-        assign(A1_sorted_by_group="A1.sort_values()"),
+        mutate(A1_sorted_by_group="A1.sort_values()"),
     )
     assert "A1_sorted_by_group" in out
 
@@ -392,10 +393,10 @@ def test_rf_pipeline():
         to_long(columns=["min", "max"], into=("stat", "weight")),
         astype({"weight": float}),
         groupby("genus", "sex"),
-        assign(weight="weight.mean()"),
+        mutate(weight="weight.mean()"),
         to_wide(column="sex", using="weight"),
-        assign(dimorphism="male / female"),  # no rounding possible
-        assign(dimorphism=lambda df: np.round(df.male / df.female, 2)),
+        mutate(dimorphism="male / female"),  # no rounding possible
+        mutate(dimorphism=lambda df: np.round(df.male / df.female, 2)),
     )
     assert out.shape == (16, 6)
     assert all(out.columns == ["bear", "genus", "stat", "female", "male", "dimorphism"])
