@@ -6,7 +6,8 @@ from utilz.ops import (
     spread,
     gather,
     unpack,
-    separate,
+    across,
+    mapmany,
     do,
     ifelse,
     append,
@@ -208,33 +209,31 @@ def test_pipes_basic():
     # SEPARATE (many2many)
     # (input1, input2) -> (output1, output2)
 
-    # 1 func
-    out = pipe([df, df], separate(lambda df: df.head(5), match=False))
+    # 1 func same as map
+    out = pipe([df, df], mapmany(lambda df: df.head(5)))
     assert isinstance(out, tuple) and len(out) == 2  # 2x1
     assert out[0].equals(out[1])
     assert out[0].equals(df.head(5))
 
     # 2 func-input pairs
-    out = pipe([df, df], separate(lambda df: df.head(5), lambda df: df.tail(10)))
+    out = pipe([df, df], across(lambda df: df.head(5), lambda df: df.tail(10)))
     assert len(out) == 2
     assert out[0].equals(df.head(5))
     assert out[1].equals(df.tail(10))
 
     # 2 funcs, i.e. mini-pipe
-    out = pipe(
-        [df, df], separate(lambda df: df.head(10), lambda df: df.tail(5), match=False)
-    )
+    out = pipe([df, df], mapmany(lambda df: df.head(10), lambda df: df.tail(5)))
     assert isinstance(out, tuple) and len(out) == 2
     assert out[0].equals(out[1])
     assert out[0].equals(df.iloc[5:10, :])
 
-    # mismatch
+    # not enough funcs
     with pytest.raises(ValueError):
-        out = pipe([df, df], separate(lambda df: df.head(5)))
+        out = pipe([df, df], across(lambda df: df.head(5)))
 
     # not enough data
     with pytest.raises(TypeError):
-        out = pipe(df, separate(lambda df: df.head(5)))
+        out = pipe(df, mapmany(lambda df: df.head(5)))
 
     # SPREAD (one2many)
     # input -> (input, input, input)
@@ -414,7 +413,7 @@ def test_pipes_advanced():
     # df ->
     # df-grouped ->
     #   A1 mean ->
-    #       distplot
+    #       displot
     #   B1 mean ->
     #       boxplot
     #
@@ -426,8 +425,8 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
-        separate(
-            lambda means: sns.distplot(means),
+        across(
+            lambda means: sns.displot(means),
             lambda means: sns.boxplot(means),
         ),
         debug=True,
@@ -446,8 +445,8 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
-        separate(
-            compose(lambda means: sns.distplot(means), tweak(title="distplot")),
+        across(
+            compose(lambda means: sns.displot(means), tweak(title="displot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
         ),
     )
@@ -462,8 +461,8 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
-        separate(
-            compose(lambda means: sns.distplot(means), tweak(title="distplot")),
+        across(
+            compose(lambda means: sns.displot(means), tweak(title="displot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
         ),
         keep=0,
@@ -481,8 +480,8 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
-        separate(
-            compose(lambda means: sns.distplot(means), tweak(title="distplot")),
+        across(
+            compose(lambda means: sns.displot(means), tweak(title="displot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
         ),
         pop(0),

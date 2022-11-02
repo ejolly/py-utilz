@@ -12,6 +12,7 @@ __all__ = [
     "append",
     "spread",
     "separate",
+    "mapmany",
     "gather",
     "unpack",
     "do",
@@ -670,43 +671,36 @@ def unpack(func, data):
 
 
 @curry
-def separate(*args, match=True):
-    """Apply one or more functions to multiple inputs separately. If the number of
-    functions is greater or less than the number of inputs, then each input will be run
-    through all functions in a sequence (like a mini-pipe). If the number of functions
-    == the number of inputs and match=True, then each input-function pair will be
-    evaluated separately."""
+def separate(*args):
+    """Apply one or more functions to multiple inputs separately. If only one function
+    is provided then this is equivalent to map()-ing that function over the inputs. If
+    more than one function is provided it's equivalent to map(compose())-ing those
+    functions over the inputs; like a mini-pipe per input."""
 
     def call(data):
         if not isinstance(data, (list, tuple)):
             raise TypeError(
                 f"Expected a list/tuple of input, but received a single {type(data)}. If you want to apply a function to a single input either use a lambda or do()"
             )
-        # We apply each function to each data
-        if match:
-            if len(data) != len(args):
-                raise ValueError(
-                    f"To use match=True, the number of functions passed must equal the length of the previous output, but {len(data)} data and {len(args)} functions don't match"
-                )
-            return tuple([f(a) for f, a in zip(args, data)])
-        else:
-            out = []
-            for d in data:
-                for func in args:
-                    d = func(d)
-                out.append(d)
-            return tuple(out)
+        out = []
+        for d in data:
+            for func in args:
+                d = func(d)
+            out.append(d)
+        return tuple(out)
 
     return call
 
 
+# Alias
+@curry
+def mapmany(*args):
+    return separate(*args)
+
+
 @curry
 def across(*args):
-    """Apply one or more functions to multiple inputs separately. If the number of
-    functions is greater or less than the number of inputs, then each input will be run
-    through all functions in a sequence (like a mini-pipe). If the number of functions
-    == the number of inputs and match=True, then each input-function pair will be
-    evaluated separately."""
+    """Apply N functions to N inputs as a set of matched pairs."""
 
     def call(data):
         if not isinstance(data, (list, tuple)):
@@ -715,7 +709,7 @@ def across(*args):
             )
         if len(data) != len(args):
             raise ValueError(
-                f"To use match=True, the number of functions passed must equal the length of the previous output, but {len(data)} data and {len(args)} functions don't match"
+                f"Te number of functions passed must equal the length of the previous output, but {len(data)} data and {len(args)} functions don't match. To run the same set of functions over the previous inputs see separate()"
             )
         return tuple([f(a) for f, a in zip(args, data)])
 

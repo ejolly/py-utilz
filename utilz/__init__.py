@@ -8,6 +8,7 @@ from .ops import (
     sort,
     append,
     separate,
+    mapmany,
     gather,
     unpack,
     spread,
