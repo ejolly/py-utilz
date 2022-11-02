@@ -27,7 +27,7 @@ out = pipe(
     _.assign(weight="weight.mean()"),
     _.to_wide(column="sex", using="weight"),
     _.mutate(dimorphism="male / female"),  # no rounding possible
-    _.mutate(dimorphism=lambda df: np.round(df.male / df.female, 2)),
+    _.mutate(dimorphism=lambda male, female: np.round(male / female, 2)) # instead use a func
 )
 ```
 

@@ -52,13 +52,13 @@ def test_mutate():
     out = pipe(out, _.mutate(A1_doubled="A1 * 2"))
     assert all(out.A1 * 2 == out.A1_doubled)
 
-    # Can use functions too, if function takes a single arg "df" then it's like
-    # pandas.assign
+    # Can use functions too, if function takes a single arg "df, g, group" then it's
+    # like pandas.assign
     out2 = pipe(out, _.mutate(A1_B1=lambda df: df.A1 + df.B1))
     assert all((out.A1 + out.B1) == out2.A1_B1)
 
     # Otherwise you can give a lambda with another name and it'll be evaluated against
-    # column names
+    # column names, like pandas transform
     out3 = pipe(out, _.mutate(A1_log=lambda A1: np.log(A1)))
     assert all(out.A1.apply(np.log) == out3.A1_log)
 
@@ -183,11 +183,19 @@ def test_summarize():
 
     df = pd.read_csv("./utilz/tests/mtcars.csv")
 
+    # str
     out = pipe(df, _.summarize(avg="mpg.mean()"))
     assert isinstance(out, pd.DataFrame)
     assert out.shape == (1, 1)
 
+    # funcs, where if lambda takes 'df, g, group' will give lamba entire frame
     out = pipe(df, _.summarize(avg="mpg.mean()", n=lambda df: df.shape[0]))
+    assert isinstance(out, pd.DataFrame)
+    assert out.shape == (1, 2)
+    assert np.allclose(out.values, np.array([[20.090625, 32.0]]))
+
+    # Can also use function shorthand
+    out = pipe(df, _.summarize(avg=lambda mpg: mpg.mean(), n=lambda df: df.shape[0]))
     assert isinstance(out, pd.DataFrame)
     assert out.shape == (1, 2)
     assert np.allclose(out.values, np.array([[20.090625, 32.0]]))
@@ -206,6 +214,13 @@ def test_summarize():
     )
     assert isinstance(out, pd.DataFrame)
     assert out.shape == (8, 4)
+
+    out2 = pipe(
+        df,
+        _.groupby("cyl", "gear"),
+        _.summarize(mean=lambda disp: disp.mean(), n=lambda g: g.shape[0]),
+    )
+    assert out2.equals(out)
 
     # Expressions and opertions to summarize should return smaller df
     with pytest.raises(ValueError):
@@ -393,7 +408,9 @@ def test_rf_pipeline():
         _.mutate(weight="weight.mean()"),
         _.pivot_wider(column="sex", using="weight"),
         _.mutate(dimorphism="male / female"),  # no rounding possible
-        _.mutate(dimorphism=lambda df: np.round(df.male / df.female, 2)),
+        _.mutate(
+            dimorphism=lambda male, female: np.round(male / female, 2)
+        ),  # instead use a func
     )
     assert out.shape == (16, 6)
     assert all(out.columns == ["bear", "genus", "stat", "female", "male", "dimorphism"])

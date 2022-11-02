@@ -105,7 +105,7 @@ def summarize(dfg, **kwargs):
 
     Just like `.mutate()/.transmute()`, input should be kwargs organized like
     `new_column = str| function`. Such as: `_.summarize(weight_mean ='weight.mean()')`
-    or `_.summarize(weight_mean = lambda df: df['weight].mean())`. To return output the
+    or `_.summarize(weight_mean = lambda weight: weight.mean())` or `_.summarize(weight_mean = lambda df: df['weight].mean())`. To return output the
     same size as the input dataframe use `.mutate()` or `.transmute()` instead as
     either will *broadcast* values to the right size.
     """
@@ -116,7 +116,16 @@ def summarize(dfg, **kwargs):
             if isinstance(v, str):
                 res = dfg.apply(lambda group: group.eval(v)).reset_index()
             elif callable(v):
-                res = dfg.apply(v).reset_index()
+                name = v.__code__.co_varnames
+                if len(name) == 1:
+                    if name[0] in ["df", "g", "group"]:
+                        res = dfg.apply(v).reset_index()
+                    else:
+                        # Single column summarize
+                        res = dfg.apply(lambda g: v(g[name[0]])).reset_index()
+                else:
+                    # Multi-column summarize
+                    res = dfg.apply(lambda g: v(*[g[e] for e in name])).reset_index()
             else:
                 raise TypeError(
                     f"summarize expects input kwargs organized like: new_colname = str | func, but receive type: {type(v)}"
@@ -139,7 +148,17 @@ def summarize(dfg, **kwargs):
             if isinstance(v, str):
                 out[k] = dfg.eval(v)
             elif callable(v):
-                out[k] = v(dfg)
+                name = v.__code__.co_varnames
+                if len(name) == 1:
+                    if name[0] == "df":
+                        out[k] = v(dfg)
+                    else:
+                        # Single column summarize
+                        out[k] = v(dfg[name[0]])
+                else:
+                    # multi-col summarize
+                    cols = [dfg[e] for e in name]
+                    out[k] = v(*cols)
             else:
                 raise TypeError(
                     f"summarized expects input kwargs organized like: new_colname = str | func, but receive type: {type(v)}"
@@ -172,7 +191,7 @@ def mutate(dfg, **kwargs):
 
     Just like `.summarize()`, input should be kwargs organized like `new_column = str|
     function`. Such as: `_.mutate(weight_centered ='weight - weight.mean()')`
-     or `_.mutate(weight_centered_ = lambda df: df['weight].apply(lambda x: x -
+     or `_.mutate(weight_centered = lambda weight: weight - weight.mean())` or `_.mutate(weight_centered = lambda df: df['weight].apply(lambda x: x -
      x.mean())`. To return output *smaller* than the input dataframe use `.summarize()` instead.
     """
 
@@ -194,6 +213,10 @@ def mutate(dfg, **kwargs):
                 else:
                     # Multi-columm
                     res = dfg.apply(lambda g: v(*[g[e] for e in name])).reset_index()
+            else:
+                raise TypeError(
+                    f"grouped dataframes cannot make direct assignments. You must pass in a str to be evaluated or a function but you passed in a type{v}"
+                )
 
             # Calling an operation that returns df the same size as the original df,
             # like transform, e.g. 'A1 - A1.mean()'
@@ -248,13 +271,14 @@ def mutate(dfg, **kwargs):
                         out = out.assign(**{k: v})
                     else:
                         # Single column apply
-                        out = out.assign(**{k: lambda df: df[name[0]].apply(v)})
+                        out = out.assign(**{k: lambda df: v(df[name[0]])})
                 else:
                     # Multi-columm
                     # get columns as list
                     cols = [dfg[e] for e in name]
                     out = out.assign(**{k: v(*cols)})
             else:
+                # Normal assignment
                 out = out.assign(**{k: v})
 
         return out
