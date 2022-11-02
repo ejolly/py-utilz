@@ -4,12 +4,13 @@ dplyr like *verbs* for working with pandas dataframes.
 """
 
 __all__ = [
-    "groupby",
-    "rename",
     "read_csv",
     "to_csv",
     "summarize",
-    "assign",
+    "mutate",
+    "transmute",
+    "groupby",
+    "rename",
     "query",
     "apply",
     "head",
@@ -21,6 +22,9 @@ __all__ = [
     "split",
     "astype",
     "sort",
+    "replace",
+    "fillna",
+    "splitquery",
 ]
 
 import pandas as pd
@@ -32,6 +36,8 @@ import seaborn as sns
 
 @curry
 def pairplot(**kwargs):
+    """Call to seaborn pairplot"""
+
     def plot(data):
         return sns.pairplot(data=data, ax=newax(), **kwargs)
 
@@ -40,6 +46,8 @@ def pairplot(**kwargs):
 
 @curry
 def clustermap(**kwargs):
+    """Call to seaborn clustermap"""
+
     def plot(data):
         return sns.clustermap(data=data, ax=newax(), **kwargs)
 
@@ -48,6 +56,8 @@ def clustermap(**kwargs):
 
 @curry
 def residplot(**kwargs):
+    """Call to seaborn residplot"""
+
     def plot(data):
         return sns.residplot(data=data, ax=newax(), **kwargs)
 
@@ -56,6 +66,8 @@ def residplot(**kwargs):
 
 @curry
 def regplot(**kwargs):
+    """Call to seaborn regplot"""
+
     def plot(data):
         return sns.regplot(data=data, ax=newax(), **kwargs)
 
@@ -64,6 +76,8 @@ def regplot(**kwargs):
 
 @curry
 def lmplot(**kwargs):
+    """Call to seaborn lmplot"""
+
     def plot(data):
         return sns.lmplot(data=data, ax=newax(), **kwargs)
 
@@ -72,6 +86,8 @@ def lmplot(**kwargs):
 
 @curry
 def countplot(**kwargs):
+    """Call to seaborn countplot"""
+
     def plot(data):
         return sns.countplot(data=data, ax=newax(), **kwargs)
 
@@ -80,6 +96,8 @@ def countplot(**kwargs):
 
 @curry
 def pointplot(**kwargs):
+    """Call to seaborn pointplot"""
+
     def plot(data):
         return sns.pointplot(data=data, ax=newax(), **kwargs)
 
@@ -88,6 +106,8 @@ def pointplot(**kwargs):
 
 @curry
 def boxenplot(**kwargs):
+    """Call to seaborn boxenplot"""
+
     def plot(data):
         return sns.boxenplot(data=data, ax=newax(), **kwargs)
 
@@ -96,6 +116,8 @@ def boxenplot(**kwargs):
 
 @curry
 def violinplot(**kwargs):
+    """Call to seaborn violinplot"""
+
     def plot(data):
         return sns.violinplot(data=data, ax=newax(), **kwargs)
 
@@ -104,6 +126,8 @@ def violinplot(**kwargs):
 
 @curry
 def boxplot(**kwargs):
+    """Call to seaborn boxplot"""
+
     def plot(data):
         return sns.boxplot(data=data, ax=newax(), **kwargs)
 
@@ -112,6 +136,8 @@ def boxplot(**kwargs):
 
 @curry
 def swarmplot(**kwargs):
+    """Call to seaborn swarmplot"""
+
     def plot(data):
         return sns.swarmplot(data=data, ax=newax(), **kwargs)
 
@@ -120,6 +146,8 @@ def swarmplot(**kwargs):
 
 @curry
 def stripplot(**kwargs):
+    """Call to seaborn stripplot"""
+
     def plot(data):
         return sns.stripplot(data=data, ax=newax(), **kwargs)
 
@@ -128,6 +156,8 @@ def stripplot(**kwargs):
 
 @curry
 def rugplot(**kwargs):
+    """Call to seaborn rugplot"""
+
     def plot(data):
         return sns.rugplot(data=data, ax=newax(), **kwargs)
 
@@ -136,6 +166,8 @@ def rugplot(**kwargs):
 
 @curry
 def ecdfplot(**kwargs):
+    """Call to seaborn ecdfplot"""
+
     def plot(data):
         return sns.ecdfplot(data=data, ax=newax(), **kwargs)
 
@@ -144,6 +176,8 @@ def ecdfplot(**kwargs):
 
 @curry
 def kdeplot(**kwargs):
+    """Call to seaborn kdeplot"""
+
     def plot(data):
         return sns.kdeplot(data=data, ax=newax(), **kwargs)
 
@@ -152,6 +186,8 @@ def kdeplot(**kwargs):
 
 @curry
 def histplot(**kwargs):
+    """Call to seaborn histplot"""
+
     def plot(data):
         return sns.histplot(data=data, ax=newax(), **kwargs)
 
@@ -160,6 +196,8 @@ def histplot(**kwargs):
 
 @curry
 def displot(**kwargs):
+    """Call to seaborn displot"""
+
     def plot(data):
         return sns.displot(data=data, ax=newax(), **kwargs)
 
@@ -168,6 +206,8 @@ def displot(**kwargs):
 
 @curry
 def scatterplot(**kwargs):
+    """Call to seaborn scatterplot"""
+
     def plot(data):
         return sns.scatterplot(data=data, ax=newax(), **kwargs)
 
@@ -176,6 +216,8 @@ def scatterplot(**kwargs):
 
 @curry
 def relplot(**kwargs):
+    """Call to seaborn relplot"""
+
     def plot(data):
         return sns.relplot(data=data, ax=newax(), **kwargs)
 
@@ -184,6 +226,8 @@ def relplot(**kwargs):
 
 @curry
 def heatmap(**kwargs):
+    """Call to seaborn heatmap"""
+
     def plot(data):
         return sns.heatmap(data=data, ax=newax(), **kwargs)
 
@@ -192,6 +236,8 @@ def heatmap(**kwargs):
 
 @curry
 def lineplot(**kwargs):
+    """Call to seaborn lineplot"""
+
     def plot(data):
         return sns.lineplot(data=data, ax=newax(), **kwargs)
 
@@ -200,6 +246,8 @@ def lineplot(**kwargs):
 
 @curry
 def catplot(**kwargs):
+    """Call to seaborn catplot"""
+
     def plot(data):
         return sns.catplot(data=data, ax=newax(), **kwargs)
 
@@ -208,6 +256,8 @@ def catplot(**kwargs):
 
 @curry
 def barplot(**kwargs):
+    """Call to seaborn barplot"""
+
     def plot(data):
         return sns.barplot(data=data, ax=newax(), **kwargs)
 
@@ -216,6 +266,8 @@ def barplot(**kwargs):
 
 @curry
 def stripbarplot(**kwargs):
+    """Call to combined stripplot and barplot. See utilz.plot.stripbarplot"""
+
     def plot(data):
         return _stripbarplot(data=data, ax="newax", **kwargs)
 
@@ -277,9 +329,14 @@ def to_csv(path, df):
 @curry
 def summarize(dfg, **kwargs):
     """
-    Creates a new column(s) in a DataFrame based on a function of existing columns in the DataFrame. Uses `plydata.define/mutate` unless the input is a grouped DataFrame
-    in which case it falls back to pandas methods because `plydata` can only handle
-    grouped inputs resulting from its own (slow) `group_by` function
+    Create new columns based on existing columns in a dataframe but return a
+    **smaller** dataframe than the original. Works with the output of `groupby` as well:
+
+    Just like `.mutate()/.transmute()`, input should be kwargs organized like
+    `new_column = str| function`. Such as: `_.summarize(weight_mean ='weight.mean()')`
+    or `_.summarize(weight_mean = lambda df: df['weight].mean())`. To return output the
+    same size as the input dataframe use `.mutate()` or `.transmute()` instead as
+    either will *broadcast* values to the right size.
     """
 
     if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
@@ -326,11 +383,6 @@ def summarize(dfg, **kwargs):
 
 @curry
 def assign(dfg, **kwargs):
-    """
-    Creates a new column(s) in a DataFrame based on a function of existing columns in
-    the DataFrame. Always returns a dataframe the same size as the original. For groupby
-    inputs, the result is always ungrouped.
-    """
 
     if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
         prev = dfg.obj.copy()
@@ -381,12 +433,23 @@ def assign(dfg, **kwargs):
 # Alias
 @curry
 def mutate(dfg, **kwargs):
+    """
+    Creates a new column(s) in a DataFrame based on a function of existing columns in
+    the DataFrame. Always returns a dataframe the same size as the original. For groupby
+    inputs, **the result is always ungrouped.**
+
+    Just like `.summarize()`, input should be kwargs organized like `new_column = str|
+    function`. Such as: `_.mutate(weight_centered ='weight - weight.mean()')`
+     or `_.mutate(weight_centered_ = lambda df: df['weight].apply(lambda x: x -
+     x.mean())`. To return output *smaller* than the input dataframe use `.summarize()` instead.
+    """
+
     return assign(dfg, **kwargs)
 
 
 @curry
 def transmute(dfg, **kwargs):
-    """Like assign/mutate, but only returns the newly created columns."""
+    """Just like `.mutate()`, but only returns the newly created columns."""
     if isinstance(
         dfg,
         (
@@ -413,7 +476,7 @@ def transmute(dfg, **kwargs):
 def query(*queries, **kwargs):
     """
     Call a dataframe or groupby object's `.query` method. Resets and drops index by
-    default. Change this with reset_index='drop'|'reset'|'none'
+    default. Change this with `reset_index='drop'|'reset'|'none'`
     """
     reset_index = kwargs.pop("reset_index", "drop")
 
@@ -464,7 +527,8 @@ def tail(*args, **kwargs):
 
 @curry
 def drop(*args):
-    """Call a dataframe's `.drop(axis=1)` method"""
+    """Call a dataframe's `.drop(axis=1)` method. Column names should be passed as
+    multiple args like `.select()`, e.g. `_.drop('height', 'weight')`"""
 
     def call(df):
         return do("drop", df, [*args], axis=1)
@@ -475,7 +539,7 @@ def drop(*args):
 @curry
 def select(*args):
     """
-    Select one ore more columns by name. Drop one or more columns by prepending '-' to
+    Select one or more columns by name. Drop one or more columns by prepending '-' to
     the name. Does not support renaming"""
 
     def call(df):
@@ -487,7 +551,7 @@ def select(*args):
 @curry
 def to_wide(*args, **kwargs):
     """
-    Convert a pair of columns to multiple columns
+    Convert a pair of columns to multiple columns, e.g. `_.to_wide('condition', using='response')`
 
     Args:
         column (str): string name of column to "explode"
@@ -506,7 +570,9 @@ def to_wide(*args, **kwargs):
 @curry
 def to_long(*args, **kwargs):
     """
-    Convert a list of columns into 2 columns. Does not support renaming.
+    Convert a list of columns into 2 columns. Can pass a list of columsn to melt-down or
+    `id_vars` to select everything else: e.g. `_.to_long(['male', 'female'],
+    into=('gender', 'response'))` or `_.to_long(id_vars='SID', into=('gender','response'))`
 
     Args:
         columns (list or None): columns to melt; Defaults to None
@@ -545,7 +611,7 @@ def split(col, into, df, sep=" "):
 
 @curry
 def astype(cols, df):
-    """Cast one ore more columns to a type. Can either input a single tuple to cast 1
+    """Cast one ore more columns to a type. Like `.rename()` you can either input a single tuple to cast 1
     column or a dict to cast multiple"""
     if isinstance(cols, tuple):
         cols = {cols[0]: cols[1]}
@@ -554,6 +620,8 @@ def astype(cols, df):
 
 @curry
 def sort(*args, **kwargs):
+    """Sort df by one or more columns passed as args. Ignores index by default by you
+    can change that with `ignore_index=False`."""
     ignore_index = kwargs.pop("ignore_index", True)
 
     def call(df):
@@ -564,6 +632,9 @@ def sort(*args, **kwargs):
 
 @curry
 def call(*args, **kwargs):
+    """Call an arbitrary method or function on an object, e.g. `pipe(df,
+    _.call('mean'))` would call `df.mean()`"""
+
     def _call(df):
         method_name = args[0]
         func = getattr(df, method_name, None)
@@ -580,6 +651,7 @@ def splitquery(query, **kwargs):
     """
     Call a dataframe or groupby object's `.query` method and return 2 dataframes one
     where containing results where the query is true and its inverse.
+    Resets and drops index by default. Change this with `reset_index='drop'|'reset'|'none'`
     """
     reset_index = kwargs.pop("reset_index", "drop")
 
@@ -601,6 +673,8 @@ def splitquery(query, **kwargs):
 
 @curry
 def fillna(*args, **kwargs):
+    """Call a dataframe's fillna method"""
+
     def call(df):
         return df.fillna(*args, **kwargs)
 
@@ -609,6 +683,8 @@ def fillna(*args, **kwargs):
 
 @curry
 def replace(*args, **kwargs):
+    """Call a dataframe's replace method"""
+
     def call(df):
         return df.replace(*args, **kwargs)
 

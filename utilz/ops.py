@@ -490,6 +490,19 @@ def pipe(
     output = False will return nothing from the pipe, which is if you just want to
     run a pipe for its side-effects, e.g. saving a figure, looking at something. You can
     use show = False to just save the outputs without displaying the last evaluation.
+
+    Args:
+        data (Any): input data
+        output (bool, optional): whether to return a result. Defaults to True.
+        show (bool, optional): whether to display the result. Defaults to True.
+        debug (bool, optional): whether to return a list of all function evaluations. Defaults to False.
+        keep (Union[int, None], optional): indices to slices in the input if the last
+        step of the pipe returns multiple outputes. Defaults to None.
+        load_existing (bool, optional): is `save` is not `False`, will try to load the
+        path(s) provided to `save` thus bypassing the pipe. Defaults to False.
+        save (Union[list, Path, str, bool, None], optional): one or more file paths to
+        save the outputs of the pipe to. Defaults to False.
+
     """
 
     if not funcs:
@@ -597,8 +610,9 @@ def pipe(
 
 @curry
 def spread(*args):
-    """Takes multiple functions and applies each to the input, returning a tuple the
-    same length as args"""
+    """
+    **Spread/Fork** data out by either duplicating it or running it through multiple
+    functions. Pass an integer to just make copies."""
 
     from copy import deepcopy
 
@@ -649,12 +663,9 @@ def append(func):
     return alongwith
 
 
+# Alias
 @curry
 def gather(func, data):
-    """Takes a single function and a tuple of data and unpacks the tuple as multiple
-    arguments to the function. Useful after a call to append, spread, separate, or any
-    function that returns more than 1 output
-    """
 
     if not (isinstance(data, (list, tuple)) and len(data) > 1):
         raise TypeError(
@@ -664,19 +675,21 @@ def gather(func, data):
     return func(*data)
 
 
-# Alias
 @curry
 def unpack(func, data):
+    """Wraps a function that takes multiple inputs to make the output of a previous
+    function with multiple outputs easier to work with. Useful after a call to `append`,
+    `spread`, `across` or `mapmany` e.g.
+
+    `unpack(lambda first_name, last_name: first_name + last_name)`
+    """
+
     return gather(func, data)
 
 
+# Alias for mapmany
 @curry
 def separate(*args):
-    """Apply one or more functions to multiple inputs separately. If only one function
-    is provided then this is equivalent to map()-ing that function over the inputs. If
-    more than one function is provided it's equivalent to map(compose())-ing those
-    functions over the inputs; like a mini-pipe per input."""
-
     def call(data):
         if not isinstance(data, (list, tuple)):
             raise TypeError(
@@ -692,15 +705,26 @@ def separate(*args):
     return call
 
 
-# Alias
 @curry
 def mapmany(*args):
+    """Apply one or more functions to multiple inputs separately (many-to-one/many). If
+    only one function is provided then this is equivalent to using `map` over the
+    inputs. If more than one function is provided it's equivalent to using
+    `map(compose(..))` over the inputs, i.e. a mini-pipe per input. Unlike `mapcat` this
+    has no additional bells or whistles (e.g. parallelization, progressbar, etc)
+
+    """
+
     return separate(*args)
 
 
 @curry
 def across(*args):
-    """Apply N functions to N inputs as a set of matched pairs."""
+    """Apply multiple functions **across** multiple inputs separately. Unlike `mapmany`
+    which applies *the same* function(s) to all inputs, in `across`, the number of
+    functions must *match* the number of inputs as evaluation is performed across
+    **input-function pairs**. To run more than one function per input, wrap your
+    functions in `utilz.compose()`"""
 
     def call(data):
         if not isinstance(data, (list, tuple)):

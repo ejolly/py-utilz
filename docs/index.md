@@ -8,6 +8,8 @@ Convenient helper functions, decorators, and data analysis tools to make life ea
 
 `pip install py-utilz` 
 
+More convenient (parallel) looping:
+
 ```python
 from utilz import mapcat
 
@@ -17,6 +19,8 @@ mapcat(myfunc, myiterable)
 # Syntactic sugar for joblib.Parallel
 mapcat(myfunc, myiterable, n_jobs=4)
 ```
+
+Useful decorators for data analysis:
 
 ```python
 from utilz import log, maybe
@@ -30,6 +34,27 @@ def myfunc(args):
 @maybe('results.csv')
 def myfunc(args):
     return out
+```
+
+[dplyr](https://dplyr.tidyverse.org/) like data grammar:
+
+
+```python
+from utilz import pipe
+import utilz.dfverbs as _
+
+out = pipe(
+    df,
+    _.rename({"weight (male, lbs)": "male", "weight (female, lbs)": "female"}),
+    _.to_long(columns=["male", "female"], into=("sex", "weight")),
+    _.split("weight", ("min", "max"), sep="-"),
+    _.to_long(columns=["min", "max"], into=("stat", "weight")),
+    _.astype({"weight": float}),
+    _.groupby("genus", "sex"),
+    _.assign(weight="weight.mean()"),
+    _.to_wide(column="sex", using="weight"),
+    _.mutate(dimorphism="male / female")
+)
 ```
 
 Checkout the [overview](intro.ipynb) page for more!
