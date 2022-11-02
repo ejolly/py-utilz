@@ -40,6 +40,7 @@ from inspect import signature
 from seaborn import FacetGrid, PairGrid
 import uuid
 from warnings import warn
+from pathlib import Path
 
 MAX_INT = np.iinfo(np.int32).max
 
@@ -475,6 +476,8 @@ def pipe(
     show: bool = True,
     debug: bool = False,
     keep: Union[int, None] = None,
+    load_existing: bool = False,
+    save: Union[list, Path, str, bool, None] = False,
 ):
     """
     A "smart" pipe function designed to pass data through a series of transformation.
@@ -491,6 +494,7 @@ def pipe(
     if not funcs:
         return data
 
+    # For auto-displaying in interactive environments
     try:
         shell = get_ipython().__class__.__name__
         if shell == "ZMQInteractiveShell":
@@ -507,49 +511,56 @@ def pipe(
 
     # Keep track of function evaluations
     evals = []
-    orig = data
     out = None
 
-    for f in funcs:
-        data = f(data)
-        evals.append(data)
+    # load_existing guard
+    if save:
+        if not isinstance(save, list):
+            save = [save]
+        if load_existing:
+            # Only support csvs for now
+            print("Existing csv(s) found. Bypassing pipe and loading from disk...")
+            out = tuple([pd.read_csv(s) for s in save])
 
-    if debug:
-        return evals
-    # Now loop over results in reverse order to figure out what to return
-    # We never return plots or None so we search until we find the first non-plot,
-    # non-None evaluation. For each evaluation that's a tuple we return if none of it's
-    # elements is a plot or None, otherwise we search through its elements and return
-    # the first non-plot non-None.
+    # Actually run pipe
+    if out is None:
+        for f in funcs:
+            data = f(data)
+            evals.append(data)
 
-    for e in evals[::-1]:
-        # if the return is None or is a plot keep looking
-        if bad_return(e):
-            continue
-        elif isinstance(e, (tuple, list)):
-            # If tuple contains all Nones, Plots, or any mixcture keep looking
-            if all(bad_return(elem) for elem in e):
+        if debug:
+            return evals
+        # Now loop over results in reverse order to figure out what to return
+        # We never return plots or None so we search until we find the first non-plot,
+        # non-None evaluation. For each evaluation that's a tuple we return if none of it's
+        # elements is a plot or None, otherwise we search through its elements and return
+        # the first non-plot non-None.
+
+        for e in evals[::-1]:
+            # if the return is None or is a plot keep looking
+            if bad_return(e):
                 continue
-            # If tuple contains no Nones or plots return it
-            elif all(not bad_return(elem) for elem in e):
+            elif isinstance(e, (tuple, list)):
+                # If tuple contains all Nones, Plots, or any mixcture keep looking
+                if all(bad_return(elem) for elem in e):
+                    continue
+                # If tuple contains no Nones or plots return it
+                elif all(not bad_return(elem) for elem in e):
+                    out = e
+                    break
+                # The tuple is mixed so we have to loop over it
+                else:
+                    for elem in e:
+                        if bad_return(elem):
+                            continue
+                        else:
+                            out = e
+                            break
+                    else:
+                        continue
+            else:
                 out = e
                 break
-            # The tuple is mixed so we have to loop over it
-            else:
-                for elem in e:
-                    if bad_return(elem):
-                        continue
-                    else:
-                        out = e
-                        break
-                else:
-                    continue
-        else:
-            out = e
-            break
-
-    if out is None:
-        out = orig
 
     if show:
         if isinstance(out, tuple):
@@ -559,13 +570,28 @@ def pipe(
             printfunc(out)
 
     if output:
-        if keep is None:
-            return out
-        else:
-            if isinstance(keep, int):
-                return out[keep]
-            else:
-                return tuple([out[i] for i in keep])
+        # Single index output
+        if isinstance(keep, int):
+            out = out[keep]
+        # Fancy index output
+        elif isinstance(keep, (list, tuple, np.ndarray)):
+            out = tuple([out[i] for i in keep])
+        # Squeeze
+        elif isinstance(out, tuple) and len(out) == 1:
+            out = out[0]
+
+        # Can only save things with output
+        if save and not load_existing:
+            if isinstance(out, pd.DataFrame):
+                out.to_csv(save, index=False)
+            elif isinstance(out, tuple):
+                if not isinstance(save, list):
+                    save = [save]
+
+                for o, s in zip(out, save):
+                    o.to_csv(s, index=False)
+
+        return out
 
 
 @curry
