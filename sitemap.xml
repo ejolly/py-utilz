@@ -16,7 +16,32 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/api/core/</loc>
+         <loc>https://eshinjolly.com/utilz/api/boilerplate/</loc>
+         <lastmod>2022-11-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://eshinjolly.com/utilz/api/decorators/</loc>
+         <lastmod>2022-11-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://eshinjolly.com/utilz/api/df/</loc>
+         <lastmod>2022-11-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://eshinjolly.com/utilz/api/io/</loc>
+         <lastmod>2022-11-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://eshinjolly.com/utilz/api/ops/</loc>
+         <lastmod>2022-11-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://eshinjolly.com/utilz/api/plot/</loc>
          <lastmod>2022-11-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
