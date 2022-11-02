@@ -43,38 +43,123 @@ def test_query():
 
 def test_mutate():
 
-    df = pd.read_csv("./utilz/tests/mtcars.csv")
-
-    out = pipe(df, _.mutate(hp_norm="hp / hp.mean()"))
-
-    out2 = pipe(df, _.groupby("cyl"), _.mutate(hp_norm="hp / hp.mean()"))
-
-    assert out.shape == out2.shape
-    assert "hp_norm" in out and "hp_norm" in out2
-    assert not out.equals(out2)
-
-    # multiple groups
-    out3 = pipe(df, _.groupby("cyl", "gear"), _.mutate(hp_norm="hp / hp.mean()"))
-    assert out.shape == out3.shape
-    assert not out2.equals(out3)
-
-    # broadcast scalar
-    out = pipe(df, _.groupby("cyl", "gear"), _.mutate(hp_grp_mean="hp.mean()"))
-    assert out["hp_grp_mean"].nunique() == 8
-
     df = randdf((20, 3))
-
-    # Assign values
+    # Assign values directly
     out = pipe(df, _.mutate(group=["A"] * 10 + ["B"] * 10))
     assert "group" in out.columns
 
-    # Or using functions
-    out = pipe(out, _.mutate(A1_doubled=lambda df: df.A1 * 2))
+    # Or use str eval ops
+    out = pipe(out, _.mutate(A1_doubled="A1 * 2"))
     assert all(out.A1 * 2 == out.A1_doubled)
 
-    # Or using strs (also tests drop)
-    out = pipe(out, _.drop("A1_doubled"), _.mutate(A1_doubled="A1 * 2"))
-    assert all(out.A1 * 2 == out.A1_doubled)
+    # Can use functions too, if function takes a single arg "df" then it's like
+    # pandas.assign
+    out2 = pipe(out, _.mutate(A1_B1=lambda df: df.A1 + df.B1))
+    assert all((out.A1 + out.B1) == out2.A1_B1)
+
+    # Otherwise you can give a lambda with another name and it'll be evaluated against
+    # column names
+    out3 = pipe(out, _.mutate(A1_log=lambda A1: np.log(A1)))
+    assert all(out.A1.apply(np.log) == out3.A1_log)
+
+    # works with multiple cols too
+    out3 = pipe(out, _.mutate(A1_B1=lambda A1, B1: A1 + B1))
+    assert all((out.A1 + out.B1) == out3.A1_B1)
+
+    df = pd.read_csv("./utilz/tests/mtcars.csv")
+
+    # broadcast scalar
+    out = pipe(df, _.mutate(hp_grp_mean="hp.mean()"))
+    assert out.shape[0] == df.shape[0]
+    assert out["hp_grp_mean"].nunique() == 1
+
+    # Groupby mutate returns same size as mutate like pandas transform
+    out = pipe(df, _.mutate(hp_norm="hp / hp.mean()"))
+    out_grouped = pipe(df, _.groupby("cyl"), _.mutate(hp_norm="hp / hp.mean()"))
+
+    assert "hp_norm" in out and "hp_norm" in out_grouped
+    assert out.shape == out_grouped.shape
+    assert all(out["hp_norm"] == df["hp"] / df["hp"].mean())
+    correct = (
+        df.groupby("cyl")
+        .apply(lambda g: g.hp / g.hp.mean())
+        .reset_index()
+        .sort_values(by="level_1")["hp"]
+        .reset_index(drop=True)
+    )
+    assert all(out_grouped["hp_norm"] == correct)
+
+    # multiple groups broadcast scalar
+    out = pipe(df, _.groupby("cyl", "gear"), _.mutate(hp_grp_mean="hp.mean()"))
+    assert out["hp_grp_mean"].nunique() == 8
+
+    # multiple group vector
+    out_grouped_two = pipe(
+        df, _.groupby("cyl", "gear"), _.mutate(hp_norm="hp / hp.mean()")
+    )
+    assert out.shape == out_grouped_two.shape
+    assert not out_grouped.equals(out_grouped_two)
+
+    # Can also use function shorthand
+    out = pipe(
+        df, _.groupby("cyl", "gear"), _.mutate(hp_grp_mean=lambda hp: np.mean(hp))
+    )
+    assert out["hp_grp_mean"].nunique() == 8
+
+    # multiple groups and cols
+    out_twogrp = pipe(
+        df,
+        _.groupby("cyl", "gear"),
+        _.mutate(hp_norm_disp_by_cycl_gear=lambda hp, disp: hp / disp),
+    )
+    correct = (
+        df.groupby(["cyl", "gear"])
+        .apply(lambda g: g.hp / g.disp)
+        .reset_index()
+        .sort_values(by="level_2")[0]
+        .reset_index(drop=True)
+    )
+    assert all(out_twogrp["hp_norm_disp_by_cycl_gear"] == correct)
+
+    out_onegrp = pipe(
+        df,
+        _.groupby("cyl"),
+        _.mutate(hp_norm_disp_by_cycl_gear=lambda hp, disp: hp / disp),
+    )
+    assert all(out_onegrp["hp_norm_disp_by_cycl_gear"] == correct)
+
+    out_nogrp = pipe(
+        df,
+        _.mutate(hp_norm_disp_by_cycl_gear=lambda hp, disp: hp / disp),
+    )
+    assert all(out_nogrp["hp_norm_disp_by_cycl_gear"] == correct)
+    # Since in this case grouping doesn't affect the function out come we'd expect
+    # results to be same as grouping by fewer calls or not using groupby at all
+    assert all(
+        out_onegrp["hp_norm_disp_by_cycl_gear"]
+        == out_twogrp["hp_norm_disp_by_cycl_gear"]
+    ) and all(
+        out_twogrp["hp_norm_disp_by_cycl_gear"]
+        == out_nogrp["hp_norm_disp_by_cycl_gear"]
+    )
+
+    out_asstr = pipe(
+        df,
+        _.groupby("cyl"),
+        _.mutate(hp_norm="hp - hp.mean()", disp_norm="disp-disp.mean()"),
+    )
+    assert "hp_norm" in out_asstr and "disp_norm" in out_asstr
+
+    out_asfunc = pipe(
+        df,
+        _.groupby("cyl"),
+        _.mutate(
+            hp_norm=lambda hp: hp - hp.mean(), disp_norm=lambda disp: disp - disp.mean()
+        ),
+    )
+    assert "hp_norm" in out_asfunc and "disp_norm" in out_asfunc
+
+    assert out_asstr.equals(out_asfunc)
 
 
 def test_select():

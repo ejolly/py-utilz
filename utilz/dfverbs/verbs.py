@@ -29,6 +29,7 @@ __all__ = [
     "concat",
     "merge",
     "join",
+    "ngroups",
 ]
 
 import pandas as pd
@@ -181,20 +182,45 @@ def mutate(dfg, **kwargs):
             if isinstance(v, str):
                 res = dfg.apply(lambda group: group.eval(v)).reset_index()
             elif callable(v):
-                res = dfg.apply(v).reset_index()
+                name = v.__code__.co_varnames
+                if len(name) == 1:
+                    # Normal assign where we pass in the entire dataframe to the calling
+                    # function
+                    if name[0] in ["df", "g", "group"]:
+                        res = dfg.apply(v).reset_index()
+                    else:
+                        # Single column apply
+                        res = dfg.apply(lambda g: v(g[name[0]])).reset_index()
+                else:
+                    # Multi-columm
+                    res = dfg.apply(lambda g: v(*[g[e] for e in name])).reset_index()
+
             # Calling an operation that returns df the same size as the original df,
             # like transform, e.g. 'A1 - A1.mean()'
             if res.shape[0] == prev.shape[0]:
-                keep_cols = [col for col in res.columns if not col.startswith("level_")]
-                res = res[keep_cols]
+                level_col_idx, level_col_name = [
+                    (i, col)
+                    for i, col in enumerate(res.columns)
+                    if str(col).startswith("level_")
+                ][0]
+
                 res = res.rename(columns={res.columns[-1]: k})
 
-                # Join on index cause same shape
                 # Allow column overwriting
                 if k in prev:
-                    prev = prev.drop(columns=k).join(res[k])
+                    prev = prev.drop(columns=k).merge(
+                        res.iloc[:, level_col_idx:],
+                        left_index=True,
+                        right_on=level_col_name,
+                    )
                 else:
-                    prev = prev.join(res[k])
+                    # prev = prev.join(res[k])
+                    prev = prev.merge(
+                        res.iloc[:, level_col_idx:],
+                        left_index=True,
+                        right_on=level_col_name,
+                    )
+                prev = prev.drop(columns=level_col_name).reset_index(drop=True)
             else:
                 # otherwise operation returns smaller
                 # so we need to join on the grouping col which is the name of the first
@@ -209,16 +235,29 @@ def mutate(dfg, **kwargs):
                     prev = prev.merge(res, on=res.columns[:-1].to_list())
         return prev
     else:
-        if any(map(lambda e: isinstance(e, str), kwargs.values())):
-            out = dfg.copy()
-            for (
-                k,
-                v,
-            ) in kwargs.items():
+        out = dfg.copy()
+        for k, v in kwargs.items():
+            if isinstance(v, str):
                 out = out.assign(**{k: dfg.eval(v)})
-            return out
-        else:
-            return do("assign", dfg, **kwargs)
+            elif callable(v):
+                name = v.__code__.co_varnames
+                if len(name) == 1:
+                    # Normal assign where we pass in the entire dataframe to the calling
+                    # function
+                    if name[0] == "df":
+                        out = out.assign(**{k: v})
+                    else:
+                        # Single column apply
+                        out = out.assign(**{k: lambda df: df[name[0]].apply(v)})
+                else:
+                    # Multi-columm
+                    # get columns as list
+                    cols = [dfg[e] for e in name]
+                    out = out.assign(**{k: v(*cols)})
+            else:
+                out = out.assign(**{k: v})
+
+        return out
 
 
 @curry
@@ -465,5 +504,28 @@ def replace(*args, **kwargs):
 
     def call(df):
         return df.replace(*args, **kwargs)
+
+    return call
+
+
+@curry
+def ngroups(*args, **kwargs):
+    def call(dfg):
+        if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
+            return dfg.ngroups
+        raise TypeError("ngroups only works on grouped dataframes")
+
+    return call
+
+
+@curry
+def get_group(group):
+    def call(dfg):
+        if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
+            if isinstance(group, str):
+                return dfg.get_group(group)
+            elif isinstance(group, int):
+                return dfg.get_group(list(dfg.groups.keys())[group])
+        raise TypeError("get_group only works on grouped dataframes")
 
     return call
