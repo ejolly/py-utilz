@@ -1753,23 +1753,23 @@ pipe(
   <tbody>
     <tr>
       <th>0</th>
-      <td>-2.500000</td>
+      <td>-38.009709</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>-2.500000</td>
+      <td>4.990291</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>7.500000</td>
+      <td>-27.009709</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>-2.500000</td>
+      <td>-41.009709</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>3.203431</td>
+      <td>-43.009709</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1777,23 +1777,23 @@ pipe(
     </tr>
     <tr>
       <th>393</th>
-      <td>-78.009709</td>
+      <td>30.203431</td>
     </tr>
     <tr>
       <th>394</th>
-      <td>14.990291</td>
+      <td>-12.796569</td>
     </tr>
     <tr>
       <th>395</th>
-      <td>4.990291</td>
+      <td>25.203431</td>
     </tr>
     <tr>
       <th>396</th>
-      <td>-85.009709</td>
+      <td>10.203431</td>
     </tr>
     <tr>
       <th>397</th>
-      <td>4.990291</td>
+      <td>9.203431</td>
     </tr>
   </tbody>
 </table>
@@ -1826,7 +1826,7 @@ pipe(
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1846,7 +1846,7 @@ pipe(
     <span class="n">_</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;model_year&quot;</span><span class="p">),</span>
     <span class="n">_</span><span class="o">.</span><span class="n">summarize</span><span class="p">(</span><span class="n">avg_accel</span><span class="o">=</span><span class="s2">&quot;acceleration.mean()&quot;</span><span class="p">,</span> <span class="n">avg_weight</span><span class="o">=</span><span class="s2">&quot;weight.mean()&quot;</span><span class="p">),</span>
     <span class="n">_</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span>
-        <span class="n">model_year</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">model_year</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="n">model_year</span><span class="o">=</span><span class="k">lambda</span> <span class="n">model_year</span><span class="p">:</span> <span class="n">model_year</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
             <span class="k">lambda</span> <span class="n">year</span><span class="p">:</span> <span class="s2">&quot;early&quot;</span> <span class="k">if</span> <span class="n">year</span> <span class="o">&lt;</span> <span class="mi">76</span> <span class="k">else</span> <span class="s2">&quot;late&quot;</span>
         <span class="p">)</span>
     <span class="p">),</span>
@@ -1870,7 +1870,7 @@ pipe(
         <span class="n">title_y</span><span class="o">=</span><span class="mf">1.05</span><span class="p">,</span>
         <span class="n">legend_labels_fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
     <span class="p">),</span>
-    <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 <div id="cell-3" class="clipboard-copy-txt">out = pipe(
@@ -1878,7 +1878,7 @@ pipe(
     _.groupby("model_year"),
     _.summarize(avg_accel="acceleration.mean()", avg_weight="weight.mean()"),
     _.mutate(
-        model_year=lambda df: df.model_year.apply(
+        model_year=lambda model_year: model_year.apply(
             lambda year: "early" if year < 76 else "late"
         )
     ),
@@ -1902,7 +1902,7 @@ pipe(
         title_y=1.05,
         legend_labels_fontsize=12,
     ),
-    show=False,
+    show=True,
 )</div>
     
         </div>
@@ -1917,6 +1917,123 @@ pipe(
 
 
 <div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model_year</th>
+      <th>avg_accel</th>
+      <th>avg_weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>early</td>
+      <td>12.948276</td>
+      <td>3372.793103</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>early</td>
+      <td>15.142857</td>
+      <td>2995.428571</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>early</td>
+      <td>15.125000</td>
+      <td>3237.714286</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>early</td>
+      <td>14.312500</td>
+      <td>3419.025000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>early</td>
+      <td>16.203704</td>
+      <td>2877.925926</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>early</td>
+      <td>16.050000</td>
+      <td>3176.800000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>late</td>
+      <td>15.941176</td>
+      <td>3078.735294</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>late</td>
+      <td>15.435714</td>
+      <td>2997.357143</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>late</td>
+      <td>15.805556</td>
+      <td>2861.805556</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>late</td>
+      <td>15.813793</td>
+      <td>3055.344828</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>late</td>
+      <td>16.934483</td>
+      <td>2436.655172</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>late</td>
+      <td>16.306897</td>
+      <td>2522.931034</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>late</td>
+      <td>16.638710</td>
+      <td>2453.548387</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
 
 <div class="jp-OutputArea-child">
 
