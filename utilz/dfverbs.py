@@ -377,7 +377,7 @@ def summarize(dfg, **kwargs):
         return pd.DataFrame(out, index=[0])
     else:
         raise TypeError(
-            f"summarize expected previous step to be a DataFrame or GroupBy, but received a {type(dfg)}. If you used select(), you should instead select the column in the expression or function passed to summarize(). If you intended to run an expression summarize taks wargs organized like: new_colname = str | func. This differs from agg in pandas which expects an column name and expression!"
+            f"summarize expected previous step to be a DataFrame or GroupBy, but received a {type(dfg)}. If you used select(), you should instead select the column in the expression or function passed to summarize(new_col='old_col.mean()'). If you intended to run an expression summarize takes kwargs organized like: new_colname = str | func. This differs from agg in pandas which expects a column name and expression!"
         )
 
 
@@ -479,7 +479,7 @@ def transmute(dfg, **kwargs):
 @curry
 def query(*queries, **kwargs):
     """
-    Call a dataframe or groupby object's `.query` method. Resets and drops index by
+    Call a dataframe object's `.query` method. Resets and drops index by
     default. Change this with `reset_index='drop'|'reset'|'none'`
     """
     reset_index = kwargs.pop("reset_index", "drop")
@@ -498,12 +498,16 @@ def query(*queries, **kwargs):
 
 @curry
 def apply(*args, **kwargs):
-    """Call a dataframe or groupby object's `.apply` method"""
+    """Call a dataframe or groupby object's `.apply` method
+    For groupbed dataframes, resets and drops index by default. Change this with `reset_index='drop'|'reset'|'none'`
+    """
+
+    reset_index = kwargs.pop("reset_index", "drop")
 
     def call(df):
         out = df.apply(*args, **kwargs)
         if isinstance(df, pd.core.groupby.generic.DataFrameGroupBy):
-            out = out.reset_index()
+            out = (_reset_index_helper(out, reset_index),)
         return out
 
     return call
@@ -544,7 +548,7 @@ def drop(*args):
 def select(*args):
     """
     Select one or more columns by name. Drop one or more columns by prepending '-' to
-    the name. Does not support renaming"""
+    the name. **Always returns a dataframe** even if there is just 1 column. Does not support renaming"""
 
     def call(df):
         return do("select", df, *args)

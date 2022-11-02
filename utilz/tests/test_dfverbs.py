@@ -15,6 +15,7 @@ from utilz.dfverbs import (
     split,
     astype,
     sort,
+    call,
 )
 from utilz import randdf, pipe, equal
 import numpy as np
@@ -36,14 +37,16 @@ def test_tail():
     assert pipe(df, tail(n=10)).equals(df.tail(10))
 
 
-# TODO test with groupby
 def test_apply():
     df = randdf()
-
     assert pipe(df, apply(np.sqrt)).equals(df.apply(np.sqrt))
+    df = randdf((20, 3), groups={"group": 4})
+    out = pipe(
+        df, groupby("group"), apply(lambda g: g.A1 - g.A1.mean(), reset_index="none")
+    )
+    assert out.equals(df.groupby("group").apply(lambda g: g.A1 - g.A1.mean()))
 
 
-# TODO: test with groupby
 def test_query():
     df = randdf()
     out = pipe(df, query("A1 > 0.5"))
@@ -90,10 +93,10 @@ def test_mutate():
     assert all(out.A1 * 2 == out.A1_doubled)
 
 
-# TODO: test with groupby
 def test_select():
     df = randdf()
 
+    # Always returns a dataframe
     out = pipe(df, select("A1"))
     assert out.equals(pd.DataFrame(df["A1"]))
 
@@ -101,6 +104,10 @@ def test_select():
     assert equal(out.columns, ["A1", "C1"])
     out2 = pipe(df, select("A1", "C1"))
     assert equal(out, out2)
+
+    df = randdf((20, 3), groups={"group": 4})
+    out = pipe(df, groupby("group"), select("A1"), call("mean"))
+    assert out.equals(df.groupby("group")["A1"].mean())
 
 
 def test_summarize():
@@ -139,18 +146,14 @@ def test_summarize():
             summarize(mean="disp - disp.mean()"),
         )
 
-    # TODO: More complicated
-    df = randdf((20, 3))
-    out = pipe(
-        df,
-        assign(
-            group=["A"] * 10 + ["B"] * 10,
-            school=["a"] * 5 + ["b"] * 5 + ["c"] * 5 + ["d"] * 5,
-        ),
-    )
+    # Summarize doesn't work after select
+    with pytest.raises(TypeError):
+        out = pipe(
+            df, groupby("cyl", "gear"), select("disp"), summarize(mean="disp.mean")
+        )
 
 
-# TODO: consolidate with test_assign
+# Also tests advanced mutate
 def test_groupby():
     df = randdf((20, 3))
     out = pipe(
@@ -255,86 +258,6 @@ def test_sort():
         mutate(A1_sorted_by_group="A1.sort_values()"),
     )
     assert "A1_sorted_by_group" in out
-
-
-@pytest.mark.skip(reason="API change, may just deprecate this")
-def test_groupby_select_summarize():
-
-    df = randdf((20, 3))
-    out = pipe(
-        df,
-        assign(
-            group=["A"] * 10 + ["B"] * 10,
-            school=["a"] * 5 + ["b"] * 5 + ["c"] * 5 + ["d"] * 5,
-        ),
-    )
-
-    # summ = pipe(
-    #     out, groupby("group"), select("-B1"), summarize("mean", "std", tidy=False)
-    # )
-    # assert summ.shape == (2, 4)
-    # assert equal(summ.index, ["A", "B"])
-
-    # # 1g, 1c, 1s
-    # summ = pipe(out, groupby("group"), select("A1"), summarize("mean"))
-    # assert equal(summ.columns, ["group", "stat", "value"])
-    # assert summ.shape == (2, 3)
-
-    # # 1g, 1c, 2s
-    # summ = pipe(out, groupby("group"), select("A1"), summarize("mean", "std"))
-    # assert equal(summ.columns, ["group", "stat", "value"])
-    # assert summ.shape == (4, 3)
-
-    # # 1g, 2c, 1s
-    # summ = pipe(out, groupby("group"), select("A1", "B1"), summarize("mean"))
-    # assert equal(summ.columns, ["group", "column", "stat", "value"])
-    # assert summ.shape == (4, 4)
-
-    # # 1g, 2c, 2s
-    # summ = pipe(out, groupby("group"), select("A1", "B1"), summarize("mean", "std"))
-    # assert equal(summ.columns, ["group", "column", "stat", "value"])
-    # assert summ.shape == (8, 4)
-
-    # # 2g, 2c, 2s
-    # summ = pipe(
-    #     out, groupby("group", "school"), select("A1", "C1"), summarize("mean", "std")
-    # )
-    # assert equal(summ.columns, ["group", "school", "column", "stat", "value"])
-    # assert summ.shape == (16, 5)
-    # assert summ["group"].nunique() == 2
-    # assert summ["school"].nunique() == 4
-    # assert summ["column"].nunique() == 2
-
-    # Select using dict instead:
-    # groupby() -> summarize(kwargs)
-
-    # 1g, 1c, 1s
-    summ = pipe(out, groupby("group"), summarize({"A1": "mean"}))
-    assert equal(summ.columns, ["group", "stat", "value"])
-    assert summ.shape == (2, 3)
-    breakpoint()
-
-    # 1g, 1c, 2s
-    summ = pipe(out, groupby("group"), summarize({"A1": ["mean", "std"]}))
-    assert equal(summ.columns, ["group", "stat", "value"])
-    assert summ.shape == (4, 3)
-
-    # 1g, 2c, 1s
-    summ = pipe(out, groupby("group"), select("A1", "B1"), summarize("mean"))
-    assert equal(summ.columns, ["group", "column", "stat", "value"])
-    assert summ.shape == (4, 4)
-
-    # 1g, 2c, 2s
-    summ = pipe(out, groupby("group"), select("A1", "B1"), summarize("mean", "std"))
-    assert equal(summ.columns, ["group", "column", "stat", "value"])
-    assert summ.shape == (8, 4)
-
-    # 2g, 2c, 2s
-    summ = pipe(
-        out, groupby("group", "school"), select("A1", "C1"), summarize("mean", "std")
-    )
-    assert equal(summ.columns, ["group", "school", "column", "stat", "value"])
-    assert summ.shape == (16, 5)
 
 
 def test_rf_pipeline():
