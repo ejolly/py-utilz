@@ -36,10 +36,17 @@ out = pipe(
     The `dftools` module on the other handed is **not intended to be imported at all.** Instead it defines new `.methods` on pandas `DataFrame` and `DataFrameGroupBy` objects automatically, e.g. `df.select('-Col1')` is a new method that allows for R-style column selection.
 
 
-## `utilz.dfverbs`
+## Verbs
 
-::: utilz.dfverbs
+::: utilz.dfverbs.verbs
 
+## Stats
+
+::: utilz.dfverbs.stats
+
+## Plots
+
+::: utilz.dfverbs.plot
 
 ## `utilz.dftools` 
 
