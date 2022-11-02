@@ -50,7 +50,7 @@ def pairplot(**kwargs):
     """Call to seaborn pairplot"""
 
     def plot(data):
-        return sns.pairplot(data=data, ax=newax(), **kwargs)
+        return sns.pairplot(data=data, **kwargs)
 
     return plot
 
@@ -60,7 +60,7 @@ def clustermap(**kwargs):
     """Call to seaborn clustermap"""
 
     def plot(data):
-        return sns.clustermap(data=data, ax=newax(), **kwargs)
+        return sns.clustermap(data=data, **kwargs)
 
     return plot
 
@@ -90,7 +90,7 @@ def lmplot(**kwargs):
     """Call to seaborn lmplot"""
 
     def plot(data):
-        return sns.lmplot(data=data, ax=newax(), **kwargs)
+        return sns.lmplot(data=data, **kwargs)
 
     return plot
 
@@ -210,7 +210,7 @@ def displot(**kwargs):
     """Call to seaborn displot"""
 
     def plot(data):
-        return sns.displot(data=data, ax=newax(), **kwargs)
+        return sns.displot(data=data, **kwargs)
 
     return plot
 
@@ -230,7 +230,7 @@ def relplot(**kwargs):
     """Call to seaborn relplot"""
 
     def plot(data):
-        return sns.relplot(data=data, ax=newax(), **kwargs)
+        return sns.relplot(data=data, **kwargs)
 
     return plot
 
@@ -260,7 +260,7 @@ def catplot(**kwargs):
     """Call to seaborn catplot"""
 
     def plot(data):
-        return sns.catplot(data=data, ax=newax(), **kwargs)
+        return sns.catplot(data=data, **kwargs)
 
     return plot
 

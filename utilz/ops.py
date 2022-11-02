@@ -39,6 +39,7 @@ from matplotlib.figure import Figure, Axes
 from matplotlib.axes._subplots import Subplot
 from inspect import signature
 from seaborn import FacetGrid, PairGrid
+from seaborn.matrix import ClusterGrid
 import uuid
 from warnings import warn
 from pathlib import Path
@@ -519,7 +520,7 @@ def pipe(
         printfunc = print
 
     # We don't return plots
-    plot_types = (Figure, Axes, Subplot, FacetGrid, PairGrid)
+    plot_types = (Figure, Axes, Subplot, FacetGrid, PairGrid, ClusterGrid)
     # Or None
     bad_return = lambda e: isinstance(e, plot_types) or e is None
 
