@@ -19,6 +19,8 @@ from .ops import (
     pop,
     across,
     datatable,
+    keep,
+    discard,
 )
 from .io import load, crawl
 from .boilerplate import randdf

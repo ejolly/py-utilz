@@ -22,6 +22,8 @@ __all__ = [
     "pop",
     "across",
     "datatable",
+    "keep",
+    "discard",
 ]
 
 from joblib import delayed, Parallel
@@ -386,6 +388,20 @@ def _concat(op, iterme, axis, ignore_index):
     except Exception as e:
         print(e)
         return op
+
+
+@curry
+def keep(*args, **kwargs):
+    """Alias for filtercat with invert=False"""
+    invert = kwargs.pop("invert", False)
+    return filtercat(*args, invert=invert, **kwargs)
+
+
+@curry
+def discard(*args, **kwargs):
+    """Alias for filtercat with invert=True"""
+    invert = kwargs.pop("invert", True)
+    return filtercat(*args, invert=invert, **kwargs)
 
 
 @curry

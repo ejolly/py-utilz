@@ -14,6 +14,8 @@ from utilz.ops import (
     compose,
     curry,
     pop,
+    keep,
+    discard,
 )
 from utilz.plot import tweak
 from utilz.boilerplate import randdf
@@ -146,8 +148,12 @@ def test_filtercat():
     arr = ["aa", "ab", "ac", "ba", "bb", "bc", "ca", "cb", "cc"]
     # Keep anything containing "a"
     assert len(filtercat("a", arr)) == 5
+    # Alias
+    assert len(keep("a", arr)) == 5
     # Drop anything containing "a"
     assert len(filtercat("a", arr, invert=True)) == 4
+    # Alias
+    assert len(discard("a", arr)) == 4
 
     matches, filtered = filtercat("a", arr, invert="split")
     assert len(matches) == 5
