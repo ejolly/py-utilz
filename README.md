@@ -8,6 +8,27 @@ Convenient helper functions, decorators, and data analysis tools to make life ea
 
 `pip install py-utilz`
 
+[dplyr](https://dplyr.tidyverse.org/) like data grammar:
+
+
+```python
+from utilz import pipe
+import utilz.dfverbs as _
+
+out = pipe(
+    df,
+    _.rename({"weight (male, lbs)": "male", "weight (female, lbs)": "female"}),
+    _.pivot_longer(columns=["male", "female"], into=("sex", "weight")),
+    _.split("weight", ("min", "max"), sep="-"),
+    _.pivot_longer(columns=["min", "max"], into=("stat", "weight")),
+    _.astype({"weight": float}),
+    _.groupby("genus", "sex"),
+    _.mutate(weight="weight.mean()"),
+    _.pivot_wider(column="sex", using="weight"),
+    _.mutate(dimorphism="male / female")
+)
+```
+
 ```python
 from utilz import mapcat
 
