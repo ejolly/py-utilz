@@ -26,6 +26,9 @@ __all__ = [
     "fillna",
     "splitquery",
     "call",
+    "concat",
+    "merge",
+    "join",
 ]
 
 import pandas as pd
@@ -64,6 +67,24 @@ def rename(cols, df):
 def read_csv(*args, **kwargs):
     """Call pd.read_csv"""
     return pd.read_csv(*args, **kwargs)
+
+
+@curry
+def concat(*args, **kwargs):
+    """Call pd.concat"""
+    return pd.concat(*args, **kwargs)
+
+
+@curry
+def merge(*args, **kwargs):
+    """Call pd.concat"""
+    return pd.merge(*args, **kwargs)
+
+
+@curry
+def join(*args, **kwargs):
+    """Call pd.concat"""
+    return pd.join(*args, **kwargs)
 
 
 @curry
