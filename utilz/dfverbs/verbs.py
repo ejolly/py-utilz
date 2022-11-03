@@ -30,6 +30,9 @@ __all__ = [
     "merge",
     "join",
     "ngroups",
+    "squeeze",
+    "to_numpy",
+    "to_list",
 ]
 
 import pandas as pd
@@ -43,6 +46,36 @@ def _reset_index_helper(out, reset_index):
     if reset_index == "reset":
         return out.reset_index()
     return out
+
+
+@curry
+def squeeze(*args, **kwargs):
+    """Call a dataframe's `.squeeze` method"""
+
+    def call(df):
+        return df.squeeze(*args, **kwargs)
+
+    return call
+
+
+@curry
+def to_numpy(*args, **kwargs):
+    """Call a dataframe's `.to_numpy` method"""
+
+    def call(df):
+        return df.to_numpy(*args, **kwargs)
+
+    return call
+
+
+@curry
+def to_list(*args, **kwargs):
+    """Call a dataframe's `.to_list` method"""
+
+    def call(df):
+        return df.to_list(*args, **kwargs)
+
+    return call
 
 
 @curry

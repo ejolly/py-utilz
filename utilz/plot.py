@@ -30,7 +30,6 @@ def mpinit(figsize: tuple = (8, 6), subplots: tuple = (1, 1)):
     return f, ax
 
 
-@curry
 def stripbarplot(
     data,
     pointcolor="black",
@@ -74,6 +73,8 @@ def stripbarplot(
     alpha = kwargs.pop("alpha", 1)
 
     ax = sns.barplot(*args, **kwargs, data=data, ax=ax, estimator=estimator)
+    # stripplot doesn't have units
+    _ = kwargs.pop("units", None)
     if pointcolor == "hue":
         ax = sns.stripplot(*args, **kwargs, data=data, ax=ax, alpha=alpha)
     else:
