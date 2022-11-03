@@ -28,6 +28,7 @@ __all__ = [
     "clustermap",
     "pairplot",
     "jointplot",
+    "stripbarplot",
 ]
 
 from toolz import curry

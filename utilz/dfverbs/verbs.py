@@ -340,7 +340,7 @@ def apply(*args, **kwargs):
     def call(df):
         out = df.apply(*args, **kwargs)
         if isinstance(df, pd.core.groupby.generic.DataFrameGroupBy):
-            out = (_reset_index_helper(out, reset_index),)
+            out = _reset_index_helper(out, reset_index)
         return out
 
     return call
