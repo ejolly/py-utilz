@@ -66,11 +66,11 @@ def test_mapcat():
     assert out.ndim == 2
 
     # This is the same as setting axis to 1
-    out = mapcat(lambda x: np.power(x, 2), data, axis=1)
+    out = mapcat(lambda x: np.power(x, 2), data, concat_axis=1)
     assert out.ndim == 2
 
     # Axis = 0 will flatten the array to 1d
-    out = mapcat(lambda x: np.power(x, 2), data, axis=0)
+    out = mapcat(lambda x: np.power(x, 2), data, concat_axis=0)
     assert out.ndim == 1
 
     # But when concat is false just return a list of numpy arrays
@@ -80,13 +80,10 @@ def test_mapcat():
     assert isinstance(out[0], np.ndarray)
 
     # Passing kwargs to function works
-    out = mapcat(np.std, data, func_kwargs={"ddof": 2})
+    out = mapcat(np.std, data, ddof=1)
     assert isinstance(out, np.ndarray)
+    assert np.allclose(out, np.std(data, ddof=1, axis=1))
     assert len(out) == 2
-
-    # But they need to be passed as a dict
-    with pytest.raises(TypeError):
-        out = mapcat(np.std, data, func_kwargs=2)
 
     # Loading files into a single dataframe
     def load_data(i):
@@ -98,7 +95,7 @@ def test_mapcat():
     assert isinstance(out, pd.DataFrame)
     assert out.shape == (30, 3)
 
-    out = mapcat(load_data, ["file1.txt", "file2.txt", "file3.txt"], axis=1)
+    out = mapcat(load_data, ["file1.txt", "file2.txt", "file3.txt"], concat_axis=1)
     assert isinstance(out, pd.DataFrame)
     assert out.shape == (10, 9)
 

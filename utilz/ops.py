@@ -235,16 +235,7 @@ def _pmap(
 def mapcat(
     func: Union[Callable, None],
     iterme: Iterable,
-    concat: bool = True,
-    enum: bool = False,
-    random_state: Union[bool, int, np.random.RandomState] = False,
-    n_jobs: int = 1,
-    backend: Union[None, str] = None,
-    axis: Union[None, int] = None,
-    ignore_index: bool = True,
-    pbar: bool = False,
-    verbose: int = 0,
-    func_kwargs: Union[None, dict] = None,
+    **kwargs,
 ):
     """
     Super-power your `for` loops with a progress-bar and optional *reproducible*
@@ -273,14 +264,13 @@ def mapcat(
         n_jobs (int, optional): number of cpus/threads; Default 1 (no parallel)
         backend (str, optional): Only applies if `n_jobs > 1`. See `joblib.Parallel` for
         options; Default None which uses `loky`
-        axis (int; optional): what axis to concatenate over; Default 0 (first)
+        concat_axis (int; optional): what axis to concatenate over; Default 0 (first)
         ignore_index (bool; optional): ignore the index when combining DataFrames;
         Default True
         pbar (bool, optional): whether to use tqdm to sfunc a progressbar; Default
         False
         verbose (int): `joblib.Parallel` verbosity. Default 0
-        func_kwargs (dict, optional): optional keyword arguments to pass to func;
-        Default None
+        **kwargs (dict, optional): optional keyword arguments to pass to func
 
     Examples:
         >>> # Just like map
@@ -307,22 +297,21 @@ def mapcat(
 
     """
 
-    if func_kwargs is not None and not isinstance(func_kwargs, dict):
-        raise TypeError(
-            "func_kwargs should be pass as a dictionary of kwarg: value names, like: func_kwargs={'ddof': 2}"
-        )
+    concat = kwargs.pop("concat", True)
+    enum = kwargs.pop("enum", False)
+    random_state = kwargs.pop("random_state", False)
+    n_jobs = kwargs.pop("n_jobs", 1)
+    backend = kwargs.pop("backend", None)
+    concat_axis = kwargs.pop("concat_axis", None)
+    ignore_index = kwargs.pop("ignore_index", True)
+    pbar = kwargs.pop("pbar", False)
+    verbose = kwargs.pop("verbose", 0)
+
     if func is None:
         # No-op if no function
         op = iterme
     else:
-        if (
-            func is str
-            or func is dict
-            or func is int
-            or func is float
-            or func is tuple
-            or func is dict
-        ):
+        if isinstance(func, (str, dict, int, float, tuple, dict)):
             func_args = []
         else:
             try:
@@ -354,12 +343,10 @@ def mapcat(
             seeds = None
 
         # Loop; parallel in n_jobs < 1 or > 1
-        op = _pmap(
-            func, iterme, enum, seeds, n_jobs, backend, pbar, verbose, func_kwargs
-        )
+        op = _pmap(func, iterme, enum, seeds, n_jobs, backend, pbar, verbose, kwargs)
 
     if concat:
-        return _concat(op, iterme, axis, ignore_index)
+        return _concat(op, iterme, concat_axis, ignore_index)
     return op
 
 
