@@ -486,14 +486,26 @@ def pipe(
 ):
     """
     A "smart" pipe function designed to pass data through a series of transformation.
-    Similar into `toolz.pipe` in that it performs a series of nested function
-    evaluations. But it always *displays* the last function evaluation, even when
+    Accepts an initial object "data" and then inumerable additional `args` which are
+    functions run in sequence: `data -> f1(data) -> f2(f1_output) -> f3(f2_output)...`.
+
+    By default `pipe` always *displays* the last function evaluation, even when
     assigning to a variable, making it useful when working in an interactive environment
-    or logging from a script. Also recognizes if the last function evaluation returns
-    None or a plot and returns last non-None/non-plot evaluation in the pipe. Passing
-    output = False will return nothing from the pipe, which is if you just want to
-    run a pipe for its side-effects, e.g. saving a figure, looking at something. You can
-    use show = False to just save the outputs without displaying the last evaluation.
+    or logging from a script. You can set `show=False` to disable this. `pipe` also
+    **never returns plots**. Instead, `pipe` recognizes if the last function evaluation
+    returns `None` or a matplotlib/seaborn figure/axis and returns last
+    non-None/non-plot evaluation in the pipe.
+
+    Passing `output = False` will return nothing from the pipe, which is if you just
+    want to run a pipe for its side-effects, e.g. saving a figure, looking at something.
+    Using `load_existing` with `save` can fully bypass the evaluation of a pipe if a
+    file already exists on disk.
+
+    Lastly `pipe` treat the `Ellipses` operator specially, i.e. `...`. It can be use to
+    demarcate where you want a pipe to "freeze" its return value, even if there are more
+    functions left to execute. For example in `out = pipe(data, f1, f2, ..., f3, f4)`
+    only the output up until `...` will be stored in `out`, so `f2(f1(data))`. `f3` and
+    `f4` will still run, but never return their outputs.
 
     Args:
         data (Any): input data
@@ -543,17 +555,25 @@ def pipe(
     # Actually run pipe
     if out is None:
         for f in funcs:
+            if f is Ellipsis:
+                if out is None:
+                    out = data
+                    continue
+                else:
+                    raise ValueError("There can only be one ... inside a pipe")
             data = f(data)
             evals.append(data)
 
         if debug:
             return evals
+
+    # If the pipe was passed an ..., then we don't need to run this block
+    if out is None:
         # Now loop over results in reverse order to figure out what to return
         # We never return plots or None so we search until we find the first non-plot,
         # non-None evaluation. For each evaluation that's a tuple we return if none of it's
         # elements is a plot or None, otherwise we search through its elements and return
         # the first non-plot non-None.
-
         for e in evals[::-1]:
             # if the return is None or is a plot keep looking
             if bad_return(e):

@@ -182,6 +182,21 @@ def test_pipes_basic():
     assert out.shape == (5, 4)
     assert out.equals(df.iloc[5:10, :])
 
+    # ellipses can be use to terminate a pipe's return value early
+    out = pipe(df, lambda df: df.head(10), ..., lambda df: df.tail(5))
+    assert out.equals(df.head(10))
+
+    # But there can only be 1
+    with pytest.raises(ValueError):
+        pipe(
+            df,
+            lambda df: df.head(10),
+            ...,
+            lambda df: df.tail(5),
+            ...,
+            lambda df: df.head(2),
+        )
+
     # APPEND (simplified one2many)
     # simplified version of spread when you know you need result from previous step and
     # just 1 other thing
