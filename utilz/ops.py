@@ -483,6 +483,7 @@ def pipe(
     keep: Union[int, None] = None,
     load_existing: bool = False,
     save: Union[list, Path, str, bool, None] = False,
+    flatten: bool = False,
 ):
     """
     A "smart" pipe function designed to pass data through a series of transformation.
@@ -629,6 +630,14 @@ def pipe(
                 for o, s in zip(out, save):
                     o.to_csv(s, index=False)
 
+        if flatten and isinstance(out, tuple):
+            _out = []
+            for o in out:
+                if isinstance(o, tuple):
+                    _out.extend(list(o))
+                else:
+                    _out.append(o)
+            out = tuple(_out)
         return out
 
 
@@ -713,7 +722,7 @@ def unpack(func, data):
 
 # Alias for mapmany
 @curry
-def separate(*args):
+def separate(*args, **kwargs):
     def call(data):
         if not isinstance(data, (list, tuple)):
             raise TypeError(
@@ -722,7 +731,7 @@ def separate(*args):
         out = []
         for d in data:
             for func in args:
-                d = func(d)
+                d = func(d, **kwargs)
             out.append(d)
         return tuple(out)
 
@@ -730,7 +739,7 @@ def separate(*args):
 
 
 @curry
-def mapmany(*args):
+def mapmany(*args, **kwargs):
     """Apply one or more functions to multiple inputs separately (many-to-one/many). If
     only one function is provided then this is equivalent to using `map` over the
     inputs. If more than one function is provided it's equivalent to using
@@ -739,7 +748,7 @@ def mapmany(*args):
 
     """
 
-    return separate(*args)
+    return separate(*args, **kwargs)
 
 
 @curry
