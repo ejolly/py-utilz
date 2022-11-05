@@ -37,7 +37,8 @@ __all__ = [
 
 import pandas as pd
 from toolz import curry
-from ..ops import do, filtercat
+from ..ops import do
+from ..maps import filter
 
 
 def _reset_index_helper(out, reset_index):
@@ -331,7 +332,7 @@ def transmute(dfg, **kwargs):
     else:
         orig = dfg
     out = mutate(dfg, **kwargs)
-    cols = filtercat(list(orig.columns), list(out.columns), substr_match=False)
+    cols = filter(list(orig.columns), list(out.columns), substr_match=False)
     out = out.drop(columns=cols)
 
     if out.shape[1] < 1:

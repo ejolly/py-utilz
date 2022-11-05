@@ -1,42 +1,40 @@
 """
-Functional tools
+Functional tools intended to be used with `pipe()`. Everything in this module except for
+`pipe` itself, is *curried* so can be called without a full set of args.
 
 ---
 """
 __all__ = [
-    "equal," "check_random_state",
-    "mapcat",
-    "filtercat",
-    "sort",
     "pipe",
     "append",
-    "spread",
+    "alongwith",
     "separate",
-    "mapmany",
+    "across",
+    "sort",
+    "fork",
+    "many",
+    "spread",
     "gather",
     "unpack",
     "do",
-    "ifelse",
+    "iffy",
     "compose",
     "curry",
     "pop",
-    "across",
+    "nth",
+    "check_random_state",
     "datatable",
-    "keep",
-    "discard",
 ]
 
-from joblib import delayed, Parallel
-from ._utils import ProgressParallel, get_resource_path
+from ._utils import get_resource_path
 import numpy as np
 import pandas as pd
 from typing import Union, Any
 from collections.abc import Callable, Iterable
-from itertools import chain, filterfalse
+from itertools import chain as it_chain
 from inspect import signature
-from tqdm import tqdm
-from toolz import curry, juxt, diff
-from toolz.curried import compose_left as compose
+from toolz import curry, juxt
+from toolz.curried import compose_left as compose, nth
 from matplotlib.figure import Figure, Axes
 from matplotlib.axes._subplots import Subplot
 from inspect import signature
@@ -45,8 +43,6 @@ from seaborn.matrix import ClusterGrid
 import uuid
 from warnings import warn
 from pathlib import Path
-
-MAX_INT = np.iinfo(np.int32).max
 
 
 @curry
@@ -118,11 +114,6 @@ def datatable(df):
         return df
 
 
-def equal(*seqs):
-    """Lazily checks if two sequences of potentionally different lengths are equal"""
-    return not any(diff(*seqs, default=object()))
-
-
 def check_random_state(seed=None):
     """Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.
 
@@ -143,215 +134,8 @@ def check_random_state(seed=None):
     )
 
 
-# Helper used by mapcat
-def _pmap(
-    func: Callable,
-    iterme: Iterable,
-    enum: bool = False,
-    seeds: Union[None, list] = None,
-    n_jobs: int = 2,
-    backend: Union[None, str] = None,
-    progressbar: bool = True,
-    verbose: int = 0,
-    func_kwargs: Union[None, dict] = None,
-) -> Any:
-
-    # Setup progress bars and parallelization
-    if n_jobs < 1 or n_jobs > 1:
-        # Initialize joblib parallelizer
-        if progressbar:
-            parfor = ProgressParallel(
-                prefer=backend, n_jobs=n_jobs, verbose=verbose, total=len(iterme)
-            )
-        else:
-            parfor = Parallel(prefer=backend, n_jobs=n_jobs, verbose=verbose)
-
-        wrapped = delayed(func)
-    # n_jobs == 1 so we loop normally to avoid overhead cost incurred from Parallel with
-    # 1 job
-    else:
-        if progressbar:
-            iterme = tqdm(iterme)
-
-        wrapped = func
-
-    # Without enumeration
-    if not enum:
-
-        # Without random seeds
-        if seeds is None:
-            iterator = iterme
-            if func_kwargs is None:
-                call_list = [wrapped(elem) for elem in iterator]
-            else:
-                call_list = [wrapped(elem, **func_kwargs) for elem in iterator]
-
-        # With random seeds
-        else:
-            iterator = zip(iterme, seeds)
-            if func_kwargs is None:
-                call_list = [
-                    wrapped(elem, random_state=seed) for elem, seed in iterator
-                ]
-            else:
-                call_list = [
-                    wrapped(elem, random_state=seed, **func_kwargs)
-                    for elem, seed in iterator
-                ]
-
-    # With enumeration
-    else:
-        # Without random seeds
-        if seeds is None:
-            iterator = enumerate(iterme)
-            if func_kwargs is None:
-                call_list = [wrapped(elem, idx=i) for i, elem in iterator]
-            else:
-                call_list = [
-                    wrapped(elem, idx=i, **func_kwargs) for i, elem in iterator
-                ]
-
-        # With random seeds
-        else:
-            iterator = enumerate(zip(iterme, seeds))
-            if func_kwargs is None:
-                call_list = [
-                    wrapped(elem, idx=i, random_state=seed)
-                    for i, (elem, seed) in iterator
-                ]
-            else:
-                call_list = [
-                    wrapped(elem, idx=i, random_state=seed, **func_kwargs)
-                    for i, (elem, seed) in iterator
-                ]
-
-    if n_jobs < 1 or n_jobs > 1:
-        return parfor(call_list)
-    else:
-        return call_list
-
-
-@curry
-def mapcat(
-    func: Union[Callable, None],
-    iterme: Iterable,
-    **kwargs,
-):
-    """
-    Super-power your `for` loops with a progress-bar and optional *reproducible*
-    parallelization!
-
-    **map**s `func` to `iterme` and con**cat**enates the result into a single, list,
-    DataFrame or array. Includes a progress-bar powered by `tqdm`.
-
-    Supports parallelization with `jobllib.Parallel` multi-processing by setting `n_jobs > 1`. Progress-bar *accurately* tracks parallel jobs!
-
-    `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single
-    list.
-
-    See the examples below for interesting use cases beyond standard looping!
-
-    Args:
-        func (callable): function to map
-        iterme (iterable): an iterable for which each element will be passed to func
-        concat (bool): if `func` returns an interable, will try to flatten iterables
-        into a single list, array, or dataframe based on `axis`; Default True
-        enum (bool, optional): whether the value of the current iteration should be passed to `func` as the special kwarg `idx`. Make sure `func` can handle a kwarg named `idx`. Default False
-        random_state (bool/int, optional): whether a randomly initialized seed should be
-        passed to `func` as the special kwarg `random_state`. The function should pass
-        this seed to the `utilz.check_random_state` helper to generate a random number
-        generator for all computations rather than relying on `np.random`
-        n_jobs (int, optional): number of cpus/threads; Default 1 (no parallel)
-        backend (str, optional): Only applies if `n_jobs > 1`. See `joblib.Parallel` for
-        options; Default None which uses `loky`
-        concat_axis (int; optional): what axis to concatenate over; Default 0 (first)
-        ignore_index (bool; optional): ignore the index when combining DataFrames;
-        Default True
-        pbar (bool, optional): whether to use tqdm to sfunc a progressbar; Default
-        False
-        verbose (int): `joblib.Parallel` verbosity. Default 0
-        **kwargs (dict, optional): optional keyword arguments to pass to func
-
-    Examples:
-        >>> # Just like map
-        >>>  out = mapcat(lambda x: x * 2, [1, 2, 3, 4])
-
-        >>> # Concatenating nested lists
-        >>> data = [[1, 2], [3, 4]]
-        >>> out = mapcat(None, data)
-
-        >>> # Load multiple files into a single dataframe
-        >>> out = mapcat(pd.read_csv, ["file1.txt", "file2.txt", "file3.txt"])
-
-        >>> # Parallelization with randomness
-        >>> def f_random(x, random_state=None):
-        >>>     random_state = check_random_state(random_state)
-        >>>     sleep(0.5)
-        >>>     # Use the random state's number generator rather than np.random
-        >>>     return x + random_state.rand()
-        >>>
-        >>> # Now set a random_state in mapcat to reproduce the parallel runs
-        >>> # It doesn't pass the value, but rather generates a reproducible list
-        >>> # of seeds that are passed to each function execution
-        >>> out = mapcat(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
-
-    """
-
-    concat = kwargs.pop("concat", True)
-    enum = kwargs.pop("enum", False)
-    random_state = kwargs.pop("random_state", False)
-    n_jobs = kwargs.pop("n_jobs", 1)
-    backend = kwargs.pop("backend", None)
-    concat_axis = kwargs.pop("concat_axis", None)
-    ignore_index = kwargs.pop("ignore_index", True)
-    pbar = kwargs.pop("pbar", False)
-    verbose = kwargs.pop("verbose", 0)
-
-    if func is None:
-        # No-op if no function
-        op = iterme
-    else:
-        if isinstance(func, (str, dict, int, float, tuple, dict)):
-            func_args = []
-        else:
-            try:
-                func_args = list(signature(func).parameters.keys())
-                if enum and "idx" not in func_args:
-                    raise ValueError(
-                        "Function must accept a keyword argument named 'idx' that accepts an integer if enum is True"
-                    )
-
-                if random_state is not False:
-                    if "random_state" not in func_args:
-                        raise ValueError(
-                            "Function must have a keyword argument called 'random_state' if random_state is not False"
-                        )
-            except ValueError as _:
-                # some funcs like numpy c funcs are not inspectable so we have to ksip
-                # these checks
-                func_args = []
-
-        if random_state is not False:
-            # User can pass True instead of a number for non-reproducible
-            # parallelization
-            random_state = None if random_state is True else random_state
-
-            # Generate a list of random ints, that themselves are seeded by random_state
-            # and passed to func
-            seeds = check_random_state(random_state).randint(MAX_INT, size=len(iterme))
-        else:
-            seeds = None
-
-        # Loop; parallel in n_jobs < 1 or > 1
-        op = _pmap(func, iterme, enum, seeds, n_jobs, backend, pbar, verbose, kwargs)
-
-    if concat:
-        return _concat(op, iterme, concat_axis, ignore_index)
-    return op
-
-
-# Helper used by mapcat
-def _concat(op, iterme, axis, ignore_index):
+def concat(op, iterme, axis, ignore_index):
+    """Intelligently try to concatenate an iterable. Supports dataframe, arrays, and lists"""
 
     try:
         if isinstance(op[0], (pd.DataFrame, pd.Series)):
@@ -369,104 +153,12 @@ def _concat(op, iterme, axis, ignore_index):
             except ValueError as _:
                 return np.array(op)
         if isinstance(op[0], list):
-            return list(chain.from_iterable(op))
+            return list(it_chain.from_iterable(op))
         return op
 
     except Exception as e:
         print(e)
         return op
-
-
-@curry
-def keep(*args, **kwargs):
-    """Alias for filtercat with invert=False"""
-    invert = kwargs.pop("invert", False)
-    return filtercat(*args, invert=invert, **kwargs)
-
-
-@curry
-def discard(*args, **kwargs):
-    """Alias for filtercat with invert=True"""
-    invert = kwargs.pop("invert", True)
-    return filtercat(*args, invert=invert, **kwargs)
-
-
-@curry
-def filtercat(
-    how: Union[Callable, Iterable, str, int, float],
-    iterme: Iterable,
-    invert: Union[str, bool] = False,
-    substr_match: bool = True,
-    assert_notempty: bool = True,
-):
-    """
-    Filter an iterable and concatenate the output to a list instead of a generator like
-    the standard `filter` in python. By default always returns the *matching* elements
-    from iterme. This can be inverted using invert=True or split using invert='split'
-    which will return matches, nomatches. Filtering can be done by passing a function, a
-    single `str/int/float`, or an iterable of `str/int/float`. Filtering by an iterable
-    checks if `any` of the values in the iterable exist in each item of `iterme`.
-
-    Args:
-        func (Union[Callable, Iterable, str, int, float]): if a function is passed it
-        must return `True` or `False`, otherwise will compare each element in `iterme`
-        to the element passed for `func`. String comparisons check if `func` is `in` and
-        element of `iterme` while float/integer comparisons check for value equality. If
-        an iterable is passed filtering is performed for `any` of the elements in the ierable
-        iterme (Iterable): iterable to filter
-        invert (bool/str optional): if `True`, drops items where `how` resolves to
-        `True` rather than keeping them. If passed the string `'split'` will return both
-        matching and inverted results
-        assert_notempty (bool, optional): raise an error if the returned output is
-        empty; Default True
-
-
-    Returns:
-        list: filtered version of `iterme
-    """
-
-    if isinstance(how, Callable):
-        func = how
-    elif isinstance(how, str):
-        if substr_match:
-            func = lambda elem: how in str(elem)
-        else:
-            func = lambda elem: how == elem
-    elif isinstance(how, (float, int)):
-        func = lambda elem: how == elem
-    elif isinstance(how, Iterable):
-        if isinstance(how[0], str):
-            if substr_match:
-                func = lambda elem: any(map(lambda h: h in str(elem), how))
-            else:
-                func = lambda elem: any(map(lambda h: h == elem, how))
-        elif isinstance(how[1], (float, int)):
-            func = lambda elem: any(map(lambda h: h == elem, how))
-        else:
-            raise TypeError(
-                "If an iterable is passed it must contain strings, ints or floats"
-            )
-    else:
-        raise TypeError(
-            "Must pass a function, iterable, string, int, or float to filter by"
-        )
-
-    if invert == "split":
-        inverts = list(filterfalse(func, iterme))
-        matches = list(filter(func, iterme))
-
-        if assert_notempty and (len(inverts) == 0 or len(matches) == 0):
-            raise AssertionError("Filtered data is empty!")
-        return matches, inverts
-
-    elif isinstance(invert, bool):
-        filtfunc = filterfalse if invert is True else filter
-        out = list(filtfunc(func, iterme))
-        if assert_notempty and len(out) == 0:
-            raise AssertionError("Filtered data is empty!")
-        return out
-    else:
-        raise TypeError("invert must be True, False, or 'split'")
 
 
 @curry
@@ -642,10 +334,54 @@ def pipe(
 
 
 @curry
+def chain(*args, **kwargs):
+    """Chain a sequence of functions on an input, i.e. a mini-pipe"""
+
+    def call(data):
+        for f in args:
+            data = f(data, **kwargs)
+
+    return call
+
+
+@curry
+def many(*args):
+    """Apply many functions separately to a single input. Operates like the inverse of
+    map(). Whereas map takes applies 1 func to multiple elements, many applies multiple funcs to 1 element. Returns a tuple the same length as args containing the output of each function"""
+
+    def call(data):
+        if isinstance(data, (list, tuple)):
+            raise TypeError(
+                f"Expected a single input but receive {len(data)}. Use mapmany() to operate on an iterable"
+            )
+        if len(args) <= 1:
+            raise ValueError(
+                f"many applies *multiple* function calls separately but only received {len(args)} function. Use map() to apply a single function."
+            )
+
+        return tuple([f(data) for f in args])
+
+    return call
+
+
+@curry
+def fork(*args):
+    """Duplicate an input N number of times"""
+    from copy import deepcopy
+
+    def duplicate(data):
+        copy = getattr(data, "copy", None)
+        if callable(copy):
+            return tuple([data.copy()] * args[0])
+        return tuple([deepcopy(data)] * args[0])
+
+    return duplicate
+
+
+# Deprecate?
+@curry
 def spread(*args):
-    """
-    **Spread/Fork** data out by either duplicating it or running it through multiple
-    functions. Pass an integer to just make copies."""
+    """Generalization of fork OR many"""
 
     from copy import deepcopy
 
@@ -698,66 +434,13 @@ def append(func):
 
 # Alias
 @curry
-def gather(func, data):
-
-    if not (isinstance(data, (list, tuple)) and len(data) > 1):
-        raise TypeError(
-            f"gather expects the previous step's output to be a list/tuple of length > 1 but received a {type(data)}"
-        )
-
-    return func(*data)
+def alongwith(thing):
+    return append(thing)
 
 
-@curry
-def unpack(func, data):
-    """Wraps a function that takes multiple inputs to make the output of a previous
-    function with multiple outputs easier to work with. Useful after a call to `append`,
-    `spread`, `across` or `mapmany` e.g.
-
-    `unpack(lambda first_name, last_name: first_name + last_name)`
-    """
-
-    return gather(func, data)
-
-
-# Alias for mapmany
-@curry
-def separate(*args, **kwargs):
-    def call(data):
-        if not isinstance(data, (list, tuple)):
-            raise TypeError(
-                f"Expected a list/tuple of input, but received a single {type(data)}. If you want to apply a function to a single input either use a lambda or do()"
-            )
-        out = []
-        for d in data:
-            for func in args:
-                d = func(d, **kwargs)
-            out.append(d)
-        return tuple(out)
-
-    return call
-
-
-@curry
-def mapmany(*args, **kwargs):
-    """Apply one or more functions to multiple inputs separately (many-to-one/many). If
-    only one function is provided then this is equivalent to using `map` over the
-    inputs. If more than one function is provided it's equivalent to using
-    `map(compose(..))` over the inputs, i.e. a mini-pipe per input. Unlike `mapcat` this
-    has no additional bells or whistles (e.g. parallelization, progressbar, etc)
-
-    """
-
-    return separate(*args, **kwargs)
-
-
-@curry
+# Alias for mapacross but returns tuple
 def across(*args):
-    """Apply multiple functions **across** multiple inputs separately. Unlike `mapmany`
-    which applies *the same* function(s) to all inputs, in `across`, the number of
-    functions must *match* the number of inputs as evaluation is performed across
-    **input-function pairs**. To run more than one function per input, wrap your
-    functions in `utilz.compose()`"""
+    """Like mapacross but returns a tuple"""
 
     def call(data):
         if not isinstance(data, (list, tuple)):
@@ -774,6 +457,36 @@ def across(*args):
 
 
 @curry
+def gather(func, data):
+
+    if not (isinstance(data, (list, tuple)) and len(data) > 1):
+        raise TypeError(
+            f"gather expects the previous step's output to be a list/tuple of length > 1 but received a {type(data)}"
+        )
+
+    return func(*data)
+
+
+# Alias for gather
+@curry
+def unpack(func, data):
+    """Wraps a function that takes multiple inputs to make the output of a previous
+    function with multiple outputs easier to work with. Useful after a call to `append`,
+    `spread`, `across` or `mapmany` e.g.
+
+    `unpack(lambda first_name, last_name: first_name + last_name)`
+    """
+
+    return gather(func, data)
+
+
+# Alias for mapmany
+@curry
+def separate(*args, **kwargs):
+    return mapmany(*args, **kwargs)
+
+
+@curry
 def do(func, data, *args, **kwargs):
     """Apply a single function to data or call a method on data, while passing optional
     kwargs to that functinon or method"""
@@ -784,54 +497,31 @@ def do(func, data, *args, **kwargs):
     return func(data)
 
 
-def ifelse(conditional, if_true, if_false, *args, **kwargs):
+@curry
+def iffy(predicate_func: Callable, if_true: Union[Any, Callable], data: Any):
     """
-    Simple oneline ternary operator. Pass in something to check, how to check it, what
-    to return if True, and what to return if False. If only one of if_true or if_false
-    is provided, then data is returned if the conditional matches that outcome. This
-    makes it easy to run shorthands like "do something only if this is true"
+    Conditionally apply a function based on a predicate function. Useful to
+    conditionally map a function to an interable when combined with mapcat
 
     Args:
-        conditional (bool or callable): a boolean expression, callable, or string
-        expression that will be passed to eval(). Can use the variable name 'data' to
-        refer to curried data
-        if_true (None, any, optional): None, object, or callable. Defaults to None.
-        if_false (None, any, optional): None, object, or callable. Defaults to None.
-        data (any): thing to check if not curried and conditional is not a boolean
-        expression or if_true/if_false are callable
+        conditional (callable): callable function on which data will be evaluated.
+        Should return a boolean value
+        if_true (any, callable, optional): Value or function to call if predicate_func
+        is True
+        data (any): previous pipe output
 
-    Returns:
-        Any: return from if_true or if_false
     """
 
-    if len(args) == 0:
+    if not callable(predicate_func):
+        raise TypeError("ifelse requires a function that returns a boolean value")
 
-        if callable(conditional):
-            conditional = conditional(**kwargs)
-
-        if conditional:
-            return if_true(**kwargs) if callable(if_true) else if_true
+    if predicate_func(data):
+        if callable(if_true):
+            return if_true(data)
         else:
-            return if_false(**kwargs) if callable(if_false) else if_false
-    else:
-
-        if callable(conditional):
-            conditional = conditional(*args, **kwargs)
-        if isinstance(conditional, str):
-            conditional = eval(conditional)
-
-        if conditional:
-            if callable(if_true):
-                return if_true(*args, **kwargs)
-            if if_true is None:
-                return args
             return if_true
-        else:
-            if callable(if_false):
-                return if_false(*args, **kwargs)
-            if if_false is None:
-                return args
-            return if_false
+    else:
+        return data
 
 
 @curry

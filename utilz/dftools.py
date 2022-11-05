@@ -16,15 +16,11 @@ __all__ = [
 ]
 
 import numpy as np
-import pandas as pd
 from functools import wraps
 from typing import Union, List
 from pandas.api.extensions import register_dataframe_accessor
 from pandas.core.groupby.groupby import GroupBy
-from utilz import filtercat, mapcat
-from itertools import permutations
-from math import factorial
-from toolz import curry
+from utilz import filter, mapcat
 
 
 # Register a function as a method attached to the Pandas DataFrame. Note: credit for
@@ -160,7 +156,7 @@ def select(df, *args, **kwargs):
     # Get col via name or exclude -name
     col_list = [*args]
     # Split columns to keep and drop based on '-' prefix
-    drop, keep = filtercat("-", col_list, invert="split", assert_notempty=False)
+    drop, keep = filter("-", col_list, invert="split", assert_notempty=False)
     # Remove the prefix
     if len(drop):
         drop = mapcat(lambda col: col[1:], drop)
@@ -177,7 +173,7 @@ def _select(dfg, *args):
         col = args[0]
         if not col.startswith("-"):
             return dfg[args[0]]
-        cols = filtercat(col[1:], dfg.obj.columns, invert=True)
+        cols = filter(col[1:], dfg.obj.columns, invert=True)
         # Incase we only have 2 cols and filter out 1 ensure series return type
         cols = cols[0] if len(cols) == 1 else cols
         return dfg[cols]
@@ -186,7 +182,7 @@ def _select(dfg, *args):
     col_list = [*args]
 
     # Split columns to keep and drop based on '-' prefix
-    drop, keep = filtercat("-", col_list, invert="split", assert_notempty=False)
+    drop, keep = filter("-", col_list, invert="split", assert_notempty=False)
 
     # Remove the prefix
     if len(drop):
@@ -194,10 +190,10 @@ def _select(dfg, *args):
 
     # Add the grouping cols to the drop list
     drop += dfg.grouper.names
-    cols = filtercat(drop, dfg.obj.columns, invert=True, assert_notempty=False)
+    cols = filter(drop, dfg.obj.columns, invert=True, assert_notempty=False)
 
     if len(keep):
-        cols = filtercat(keep, cols)
+        cols = filter(keep, cols)
 
     # Incase we filter down to 1 col ensure series return type
     cols = cols[0] if len(cols) == 1 else cols
