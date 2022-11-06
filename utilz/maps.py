@@ -4,19 +4,30 @@ on **iterables**. Here are the parallels:
 
 | map function (s)   | op function(s)  | description |
 |---|---|---|
-| `map`  | `do`  | apply **1 function** |
+| `map`  | `do`  | apply **one function** |
 | `mapcompose`  | `pipe`/`do(compose())`  | apply **multiple functions in sequence** |
 | `mapmany`  | `many`  | apply **multiple functions in parallel** |
 | `mapacross`  | `None`  | apply **multiple functions** to **multiple inputs** in pairs
 | `mapif`  | `iffy`  | apply **one function** if a *predicate function* otherwise noop |
 | `mapcat`  | `None`/`concat`  | apply **one multi-output function** and flatten the results |
+| `maparound`  | `None`  | really one useful in pipes; create iterable from **one
+  input** and a secondary iterable |
 
 
 All members of the `map` family, *except* `mapcat`,
 return a sequence the same length as the input they receive.
 """
 
-__all__ = ["filter", "map", "mapcat", "mapcompose", "mapmany", "mapacross", "mapif"]
+__all__ = [
+    "filter",
+    "map",
+    "mapcat",
+    "mapcompose",
+    "mapmany",
+    "mapacross",
+    "mapif",
+    "maparound",
+]
 
 from joblib import delayed, Parallel
 from collections.abc import Callable, Iterable
@@ -389,3 +400,21 @@ def filter(
         return out
     else:
         raise TypeError("invert must be True, False, or 'split'")
+
+
+@curry
+def maparound(func, iterme, around, **kwargs):
+    """Apply a function to each element of iterme with a fixed second arg set to
+    `around`. Primarily useful in `pipe`s when the previous input is a singleton (e.g.
+    dataframe) and you need to create a sequence using another iterable. In this case
+    we're mapping *around* the dataframe."""
+
+    if isinstance(around, (list, tuple)):
+        raise TypeError(
+            f"maparound expects a single input to be curried but received {type(around)}: {len(around)}."
+        )
+
+    out = []
+    for e in iterme:
+        out.append(func(e, around, **kwargs))
+    return out

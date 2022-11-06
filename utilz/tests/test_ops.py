@@ -6,6 +6,7 @@ from utilz import (
     mapcompose,
     mapacross,
     mapif,
+    maparound,
     filter,
     pipe,
     spread,
@@ -184,6 +185,16 @@ def test_mapalts():
     bigger_5 = lambda x: x > 5
     out = pipe(seq(10), mapif(lambda x: x * 2, bigger_5))
     assert equal(out, [0, 1, 2, 3, 4, 5, 12, 14, 16, 18])
+
+    # Map around a fixed input
+    out = pipe(randdf(), maparound(lambda e, df: df.shape[0] > e, [5, 10, 20]))
+    assert equal([True, False, False], out)
+
+    df = randdf((20, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5)
+
+    out = pipe(df, maparound(lambda label, df: df.query("Group == @label"), ["A", "C"]))
+    assert len(out) == 2
+    assert out[0].shape[0] == int(df.shape[0] / 4)
 
 
 def test_filter():
