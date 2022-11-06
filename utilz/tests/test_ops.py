@@ -3,7 +3,7 @@ from utilz import (
     map,
     mapcat,
     mapmany,
-    mapchain,
+    mapcompose,
     mapacross,
     mapif,
     filter,
@@ -150,7 +150,7 @@ def test_mapalts():
     """Just easier shorthands for things we can do with default mapcat"""
 
     # Map a sequence of functions on after another
-    out = pipe(seq(10), mapchain(lambda x: x**2, np.sqrt))
+    out = pipe(seq(10), mapcompose(lambda x: x**2, np.sqrt))
     correct = pipe(seq(10), map(lambda x: x**2), map(np.sqrt))
 
     assert np.allclose(out, correct)
@@ -158,14 +158,10 @@ def test_mapalts():
 
     # Map multiple functions separately
     out = pipe(seq(10), mapmany(lambda x: x**2, np.sqrt))
-    assert len(out) == 2
-    assert len(out[0]) == 10 and len(out[1]) == 10
+    assert len(out) == 10
+    assert all([len(e) == 2 for e in out])
 
-    correct = pipe(
-        seq(10),
-        fork(2),
-        lambda tup: (map(lambda x: x**2, tup[0]), map(np.sqrt, tup[1])),
-    )
+    correct = pipe(seq(10), map(lambda e: pipe(e, spread(lambda x: x**2, np.sqrt))))
     assert all(np.allclose(o, c) for o, c in zip(out, correct))
 
     # Map multiple functions as matched pairs
@@ -289,7 +285,7 @@ def test_pipes_basic():
     assert out[1].equals(df.tail(10))
 
     # 2 funcs, i.e. mini-pipe
-    out = pipe([df, df], mapchain(lambda df: df.head(10), lambda df: df.tail(5)))
+    out = pipe([df, df], mapcompose(lambda df: df.head(10), lambda df: df.tail(5)))
     assert isinstance(out, list) and len(out) == 2
     assert out[0].equals(out[1])
     assert out[0].equals(df.iloc[5:10, :])

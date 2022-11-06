@@ -343,8 +343,9 @@ def transmute(dfg, **kwargs):
         return out
 
 
+# TODO: make this like mutate where the callable can use column names args
 @curry
-def query(*queries, **kwargs):
+def query(q, **kwargs):
     """
     Call a dataframe object's `.query` method. Resets and drops index by
     default. Change this with `reset_index='drop'|'reset'|'none'`
@@ -352,11 +353,17 @@ def query(*queries, **kwargs):
     reset_index = kwargs.pop("reset_index", "drop")
 
     def call(df):
-        for q in queries:
-            if isinstance(q, str):
-                df = df.query(q, **kwargs)
-            elif callable(query):
-                df = df.loc[q]
+        if isinstance(q, str):
+            df = df.query(q, **kwargs)
+        elif callable(q):
+            name = q.__code__.co_varnames
+            if len(name) == 1:
+                if name[0] == "df":
+                    df = df.loc[q]
+                else:
+                    df = df[q(df[name[0]])]
+            else:
+                df = df[q(*[df[e] for e in name])]
 
         return _reset_index_helper(df, reset_index)
 

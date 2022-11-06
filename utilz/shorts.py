@@ -9,20 +9,20 @@ from toolz import diff
 
 @curry
 def keep(*args, **kwargs):
-    """Alias for filter with invert=False"""
+    """Alias for `filter` with `invert=False`"""
     invert = kwargs.pop("invert", False)
     return filter(*args, invert=invert, **kwargs)
 
 
 @curry
 def discard(*args, **kwargs):
-    """Alias for filter with invert=True"""
+    """Alias for `filter` with `invert=True`"""
     invert = kwargs.pop("invert", True)
     return filter(*args, invert=invert, **kwargs)
 
 
 def seq(n):
-    """Enumerated list list"""
+    """Enumerated `list`"""
     return list(range(n))
 
 

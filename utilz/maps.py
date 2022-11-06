@@ -1,13 +1,27 @@
 """
-Functions that operate on sequences
+The maps module is a generalization of many of the functions in `utilz.ops` that operate
+on **iterables**. Here are the parallels:
+
+| map function (s)   | op function(s)  | description |
+|---|---|---|
+| `map`  | `do`  | apply **1 function** |
+| `mapcompose`  | `pipe`/`do(compose())`  | apply **multiple functions in sequence** |
+| `mapmany`  | `many`  | apply **multiple functions in parallel** |
+| `mapacross`  | `None`  | apply **multiple functions** to **multiple inputs** in pairs
+| `mapif`  | `iffy`  | apply **one function** if a *predicate function* otherwise noop |
+| `mapcat`  | `None`/`concat`  | apply **one multi-output function** and flatten the results |
+
+
+All members of the `map` family, *except* `mapcat`,
+return a sequence the same length as the input they receive.
 """
 
-__all__ = ["filter", "map", "mapcat", "mapchain", "mapmany", "mapacross", "mapif"]
+__all__ = ["filter", "map", "mapcat", "mapcompose", "mapmany", "mapacross", "mapif"]
 
 from joblib import delayed, Parallel
 from collections.abc import Callable, Iterable
 from typing import Union, Any
-from .ops import curry, concat, check_random_state, iffy
+from .ops import curry, concat, check_random_state, iffy, compose, many
 from ._utils import ProgressParallel
 from tqdm import tqdm
 from inspect import signature
@@ -249,7 +263,9 @@ def mapacross(*args):
 
 @curry
 def mapmany(*args, **kwargs):
-    """Map multiple functions separately to each element in an iterable. Returns a list of nested lists containing the out of each map"""
+    """Map multiple functions separately to each element in an iterable. Returns a list
+     of nested lists containing the output of each function evaluation on each element in
+    iterme"""
 
     def call(data):
         if not isinstance(data, (list, tuple)):
@@ -261,18 +277,17 @@ def mapmany(*args, **kwargs):
                 f"mapmany applies *multiple* function calls separately but only received {len(args)} function. Use mapcat() to apply a single function."
             )
 
-        out = []
-        for f in args:
-            out.append(map(f, data, **kwargs))
-        return out
+        together = many(*args)
+        return map(together, data, **kwargs)
 
     return call
 
 
 @curry
-def mapchain(*args, **kwargs):
-    """Map a sequence of functions to each item in an iterable i.e. a mini-pipe per
-    element. Returns a tuple of lists containing each map evaluation"""
+def mapcompose(*args, **kwargs):
+    """Compose multiple functions together and map them over a sequences, i.e. a
+    mini-pipe per element. Returns a list the same length as the input iterable
+    containing the final function evaluation for each element."""
 
     def call(data):
         if not isinstance(data, (list, tuple)):
@@ -281,12 +296,11 @@ def mapchain(*args, **kwargs):
             )
         if len(args) <= 1:
             raise ValueError(
-                f"mapchain applies *multiple* function calls in sequence but only received {len(args)} function. Use mapcat() to apply a single function."
+                f"mapcompose applies *multiple* function calls in sequence but only received {len(args)} function. Use mapcat() to apply a single function."
             )
 
-        for f in args:
-            data = map(f, data, **kwargs)
-        return data
+        composed = compose(*args)
+        return map(composed, data, **kwargs)
 
     return call
 

@@ -40,6 +40,9 @@ def test_query():
     out = pipe(df, _.query(lambda df: df.A1 > x))
     assert out.shape[0] < df.shape[0]
 
+    out = pipe(df, _.query(lambda A1: A1 > x))
+    assert out.shape[0] < df.shape[0]
+
 
 def test_mutate():
 

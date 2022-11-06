@@ -2,13 +2,27 @@
 Functional tools intended to be used with `pipe()`. Everything in this module except for
 `pipe` itself, is *curried* so can be called without a full set of args.
 
+## Overview
+
+| function (s)   | description  | 
+|---|---|
+| `do`  | apply a function or method to an object |
+| `pipe`  | run an input through a sequence of functions  |
+| `append`/`alongwith`  | apply a function and return `(input, result)` as a `tuple` |
+| `fork`  | call `input.copy` if possible otheriwse create `n` duplicate `deepcopy`'s of `input` |
+| `many`  | applies **multiple functions in parallel** to a **single** input and returns an iterable; like an "inverse `map`" |
+| `spread`  | acts like `fork` if given an `int` otherwise acts like `many` |
+| `across`  | apply **multiple functions** to **multiple inputs** in pairs; alias for `mapacross` |
+| `compose`  | combine **multiple functions** into **one function** sequence (mini-pipe) |
+| `gather`/`unpack`  | make an iterable's items separately accessible to a **single function** |
+| `iffy`  | apply a function if a predicate function is true otherwise noop |
+
 ---
 """
 __all__ = [
     "pipe",
     "append",
     "alongwith",
-    "separate",
     "across",
     "sort",
     "fork",
@@ -478,12 +492,6 @@ def unpack(func, data):
     """
 
     return gather(func, data)
-
-
-# Alias for mapmany
-@curry
-def separate(*args, **kwargs):
-    return mapmany(*args, **kwargs)
 
 
 @curry
