@@ -390,6 +390,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../maps/" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shorts/" class="md-nav__link">
+        Shorthands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../df/" class="md-nav__link">
         Dataframe verbs and tools
       </a>
@@ -707,7 +735,7 @@ while respecting gitignore files if present an any additional ignore file names 
 
     <span class="n">ignore_list</span> <span class="o">+=</span> <span class="n">ignore</span>
     <span class="c1"># Split glob patterns and regular file/folder name matches</span>
-    <span class="n">globs</span><span class="p">,</span> <span class="n">nonglobs</span> <span class="o">=</span> <span class="n">filtercat</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">ignore_list</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="s2">&quot;split&quot;</span><span class="p">)</span>
+    <span class="n">globs</span><span class="p">,</span> <span class="n">nonglobs</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">ignore_list</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="s2">&quot;split&quot;</span><span class="p">)</span>
 
     <span class="c1"># Generator for all files</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">where</span><span class="p">)</span>
@@ -717,8 +745,8 @@ while respecting gitignore files if present an any additional ignore file names 
     <span class="c1"># Filter out glob patters from gitignore</span>
     <span class="k">return</span> <span class="n">pipe</span><span class="p">(</span>
         <span class="n">files</span><span class="p">,</span>
-        <span class="n">filtercat</span><span class="p">(</span><span class="n">nonglobs</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="n">filtercat</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="n">fnmatchcase</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">globs</span><span class="p">),</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="nb">filter</span><span class="p">(</span><span class="n">nonglobs</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="n">fnmatchcase</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">globs</span><span class="p">),</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
         <span class="n">sort</span><span class="p">,</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>

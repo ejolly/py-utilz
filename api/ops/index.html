@@ -357,6 +357,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#utilz.ops--overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.ops.across" class="md-nav__link">
     across()
   </a>
@@ -371,8 +378,22 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#utilz.ops.chain" class="md-nav__link">
+    chain()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.ops.check_random_state" class="md-nav__link">
     check_random_state()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.concat" class="md-nav__link">
+    concat()
   </a>
   
 </li>
@@ -385,13 +406,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilz.ops.discard" class="md-nav__link">
-    discard()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#utilz.ops.do" class="md-nav__link">
     do()
   </a>
@@ -399,43 +413,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilz.ops.equal" class="md-nav__link">
-    equal()
+  <a href="#utilz.ops.fork" class="md-nav__link">
+    fork()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilz.ops.filtercat" class="md-nav__link">
-    filtercat()
+  <a href="#utilz.ops.iffy" class="md-nav__link">
+    iffy()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilz.ops.ifelse" class="md-nav__link">
-    ifelse()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#utilz.ops.keep" class="md-nav__link">
-    keep()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#utilz.ops.mapcat" class="md-nav__link">
-    mapcat()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#utilz.ops.mapmany" class="md-nav__link">
-    mapmany()
+  <a href="#utilz.ops.many" class="md-nav__link">
+    many()
   </a>
   
 </li>
@@ -477,6 +470,34 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maps/" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shorts/" class="md-nav__link">
+        Shorthands
+      </a>
     </li>
   
 
@@ -579,6 +600,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#utilz.ops--overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.ops.across" class="md-nav__link">
     across()
   </a>
@@ -593,8 +621,22 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#utilz.ops.chain" class="md-nav__link">
+    chain()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.ops.check_random_state" class="md-nav__link">
     check_random_state()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.ops.concat" class="md-nav__link">
+    concat()
   </a>
   
 </li>
@@ -607,13 +649,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilz.ops.discard" class="md-nav__link">
-    discard()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#utilz.ops.do" class="md-nav__link">
     do()
   </a>
@@ -621,43 +656,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilz.ops.equal" class="md-nav__link">
-    equal()
+  <a href="#utilz.ops.fork" class="md-nav__link">
+    fork()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilz.ops.filtercat" class="md-nav__link">
-    filtercat()
+  <a href="#utilz.ops.iffy" class="md-nav__link">
+    iffy()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilz.ops.ifelse" class="md-nav__link">
-    ifelse()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#utilz.ops.keep" class="md-nav__link">
-    keep()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#utilz.ops.mapcat" class="md-nav__link">
-    mapcat()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#utilz.ops.mapmany" class="md-nav__link">
-    mapmany()
+  <a href="#utilz.ops.many" class="md-nav__link">
+    many()
   </a>
   
 </li>
@@ -725,7 +739,59 @@
 
   <div class="doc doc-contents first">
   
-      <p>Functional tools</p>
+      <p>Functional tools intended to be used with <code>pipe()</code>. Everything in this module except for
+<code>pipe</code> itself, is <em>curried</em> so can be called without a full set of args.</p>
+<h5 id="utilz.ops--overview">Overview</h5>
+<table>
+<thead>
+<tr>
+<th>function (s)</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>do</code></td>
+<td>apply a function or method to an object</td>
+</tr>
+<tr>
+<td><code>pipe</code></td>
+<td>run an input through a sequence of functions</td>
+</tr>
+<tr>
+<td><code>append</code>/<code>alongwith</code></td>
+<td>apply a function and return <code>(input, result)</code> as a <code>tuple</code></td>
+</tr>
+<tr>
+<td><code>fork</code></td>
+<td>call <code>input.copy</code> if possible otheriwse create <code>n</code> duplicate <code>deepcopy</code>'s of <code>input</code></td>
+</tr>
+<tr>
+<td><code>many</code></td>
+<td>applies <strong>multiple functions in parallel</strong> to a <strong>single</strong> input and returns an iterable; like an "inverse <code>map</code>"</td>
+</tr>
+<tr>
+<td><code>spread</code></td>
+<td>acts like <code>fork</code> if given an <code>int</code> otherwise acts like <code>many</code></td>
+</tr>
+<tr>
+<td><code>across</code></td>
+<td>apply <strong>multiple functions</strong> to <strong>multiple inputs</strong> in pairs; alias for <code>mapacross</code></td>
+</tr>
+<tr>
+<td><code>compose</code></td>
+<td>combine <strong>multiple functions</strong> into <strong>one function</strong> sequence (mini-pipe)</td>
+</tr>
+<tr>
+<td><code>gather</code>/<code>unpack</code></td>
+<td>make an iterable's items separately accessible to a <strong>single function</strong></td>
+</tr>
+<tr>
+<td><code>iffy</code></td>
+<td>apply a function if a predicate function is true otherwise noop</td>
+</tr>
+</tbody>
+</table>
 <hr />
 
   
@@ -752,40 +818,26 @@
 
   <div class="doc doc-contents ">
   
-      <p>Apply multiple functions <strong>across</strong> multiple inputs separately. Unlike <code>mapmany</code>
-which applies <em>the same</em> function(s) to all inputs, in <code>across</code>, the number of
-functions must <em>match</em> the number of inputs as evaluation is performed across
-<strong>input-function pairs</strong>. To run more than one function per input, wrap your
-functions in <code>utilz.compose()</code></p>
+      <p>Like mapacross but returns a tuple</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">745</span>
-<span class="normal">746</span>
-<span class="normal">747</span>
-<span class="normal">748</span>
-<span class="normal">749</span>
-<span class="normal">750</span>
-<span class="normal">751</span>
-<span class="normal">752</span>
-<span class="normal">753</span>
-<span class="normal">754</span>
-<span class="normal">755</span>
-<span class="normal">756</span>
-<span class="normal">757</span>
-<span class="normal">758</span>
-<span class="normal">759</span>
-<span class="normal">760</span>
-<span class="normal">761</span>
-<span class="normal">762</span>
-<span class="normal">763</span>
-<span class="normal">764</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
-<span class="k">def</span> <span class="nf">across</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Apply multiple functions **across** multiple inputs separately. Unlike `mapmany`</span>
-<span class="sd">    which applies *the same* function(s) to all inputs, in `across`, the number of</span>
-<span class="sd">    functions must *match* the number of inputs as evaluation is performed across</span>
-<span class="sd">    **input-function pairs**. To run more than one function per input, wrap your</span>
-<span class="sd">    functions in `utilz.compose()`&quot;&quot;&quot;</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">457</span>
+<span class="normal">458</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">across</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Like mapacross but returns a tuple&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
@@ -822,29 +874,29 @@ function as part of the input, i.e. (input, funcval)</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">665</span>
-<span class="normal">666</span>
-<span class="normal">667</span>
-<span class="normal">668</span>
-<span class="normal">669</span>
-<span class="normal">670</span>
-<span class="normal">671</span>
-<span class="normal">672</span>
-<span class="normal">673</span>
-<span class="normal">674</span>
-<span class="normal">675</span>
-<span class="normal">676</span>
-<span class="normal">677</span>
-<span class="normal">678</span>
-<span class="normal">679</span>
-<span class="normal">680</span>
-<span class="normal">681</span>
-<span class="normal">682</span>
-<span class="normal">683</span>
-<span class="normal">684</span>
-<span class="normal">685</span>
-<span class="normal">686</span>
-<span class="normal">687</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes a function or obj and returns a new function that prepends the args to the</span>
 <span class="sd">    function as part of the input, i.e. (input, funcval)&quot;&quot;&quot;</span>
@@ -867,6 +919,45 @@ function as part of the input, i.e. (input, funcval)</p>
         <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">alongwith</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.ops.chain" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Chain a sequence of functions on an input, i.e. a mini-pipe</p>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/ops.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">chain</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Chain a sequence of functions on an input, i.e. a mini-pipe&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">call</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -913,12 +1004,7 @@ function as part of the input, i.e. (input, funcval)</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">131</span>
 <span class="normal">132</span>
 <span class="normal">133</span>
 <span class="normal">134</span>
@@ -930,7 +1016,12 @@ function as part of the input, i.e. (input, funcval)</p>
 <span class="normal">140</span>
 <span class="normal">141</span>
 <span class="normal">142</span>
-<span class="normal">143</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_random_state</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.</span>
 
 <span class="sd">    Args:</span>
@@ -958,6 +1049,77 @@ function as part of the input, i.e. (input, funcval)</p>
 
 
 
+<h4 id="utilz.ops.concat" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">concat</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Intelligently try to concatenate an iterable. Supports dataframe, arrays, and lists</p>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/ops.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Intelligently try to concatenate an iterable. Supports dataframe, arrays, and lists&quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+                <span class="n">op</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="n">ignore_index</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterme</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">AxisError</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">it_chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">op</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">op</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">op</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
 <h4 id="utilz.ops.datatable" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">datatable</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
 
@@ -970,17 +1132,7 @@ function as part of the input, i.e. (input, funcval)</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 52</span>
-<span class="normal"> 53</span>
-<span class="normal"> 54</span>
-<span class="normal"> 55</span>
-<span class="normal"> 56</span>
-<span class="normal"> 57</span>
-<span class="normal"> 58</span>
-<span class="normal"> 59</span>
-<span class="normal"> 60</span>
-<span class="normal"> 61</span>
-<span class="normal"> 62</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 62</span>
 <span class="normal"> 63</span>
 <span class="normal"> 64</span>
 <span class="normal"> 65</span>
@@ -1036,7 +1188,17 @@ function as part of the input, i.e. (input, funcval)</p>
 <span class="normal">115</span>
 <span class="normal">116</span>
 <span class="normal">117</span>
-<span class="normal">118</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">datatable</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Prints a pandas.DataFrame using the jQuery DataTable plugin&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
@@ -1113,37 +1275,6 @@ function as part of the input, i.e. (input, funcval)</p>
 
 
 
-<h4 id="utilz.ops.discard" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">discard</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-</h4>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Alias for filtercat with invert=True</p>
-
-      <details class="quote">
-        <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">387</span>
-<span class="normal">388</span>
-<span class="normal">389</span>
-<span class="normal">390</span>
-<span class="normal">391</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
-<span class="k">def</span> <span class="nf">discard</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Alias for filtercat with invert=True&quot;&quot;&quot;</span>
-    <span class="n">invert</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;invert&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">filtercat</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="n">invert</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
 <h4 id="utilz.ops.do" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">do</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
@@ -1157,15 +1288,15 @@ kwargs to that functinon or method</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">767</span>
-<span class="normal">768</span>
-<span class="normal">769</span>
-<span class="normal">770</span>
-<span class="normal">771</span>
-<span class="normal">772</span>
-<span class="normal">773</span>
-<span class="normal">774</span>
-<span class="normal">775</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">498</span>
+<span class="normal">499</span>
+<span class="normal">500</span>
+<span class="normal">501</span>
+<span class="normal">502</span>
+<span class="normal">503</span>
+<span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">do</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Apply a single function to data or call a method on data, while passing optional</span>
 <span class="sd">    kwargs to that functinon or method&quot;&quot;&quot;</span>
@@ -1184,23 +1315,41 @@ kwargs to that functinon or method</p>
 
 
 
-<h4 id="utilz.ops.equal" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">equal</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">)</span></code>
+<h4 id="utilz.ops.fork" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">fork</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></code>
 
 </h4>
 
 
   <div class="doc doc-contents ">
   
-      <p>Lazily checks if two sequences of potentionally different lengths are equal</p>
+      <p>Duplicate an input N number of times</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Lazily checks if two sequences of potentionally different lengths are equal&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">diff</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">object</span><span class="p">()))</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">fork</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Duplicate an input N number of times&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
+    <span class="k">def</span> <span class="nf">duplicate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">copy</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;copy&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">copy</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span> <span class="o">*</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span> <span class="o">*</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">duplicate</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1211,267 +1360,16 @@ kwargs to that functinon or method</p>
 
 
 
-<h4 id="utilz.ops.filtercat" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">filtercat</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">substr_match</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">assert_notempty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+<h4 id="utilz.ops.iffy" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">iffy</span><span class="p">(</span><span class="n">predicate_func</span><span class="p">,</span> <span class="n">if_true</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 </h4>
 
 
   <div class="doc doc-contents ">
   
-      <p>Filter an iterable and concatenate the output to a list instead of a generator like
-the standard <code>filter</code> in python. By default always returns the <em>matching</em> elements
-from iterme. This can be inverted using invert=True or split using invert='split'
-which will return matches, nomatches. Filtering can be done by passing a function, a
-single <code>str/int/float</code>, or an iterable of <code>str/int/float</code>. Filtering by an iterable
-checks if <code>any</code> of the values in the iterable exist in each item of <code>iterme</code>.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>func</code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[<span title="collections.abc.Callable">Callable</span>, <span title="collections.abc.Iterable">Iterable</span>, str, int, float]</code>
-          </td>
-          <td><p>if a function is passed it</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>iterme</code></td>
-          <td>
-                <code><span title="collections.abc.Iterable">Iterable</span></code>
-          </td>
-          <td><p>iterable to filter</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>invert</code></td>
-          <td>
-                <code>bool/str optional</code>
-          </td>
-          <td><p>if <code>True</code>, drops items where <code>how</code> resolves to</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>assert_notempty</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>raise an error if the returned output is</p></td>
-          <td>
-                <code>True</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-<td><code>list</code></td>          <td>
-          </td>
-          <td><p>filtered version of `iterme</p></td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">394</span>
-<span class="normal">395</span>
-<span class="normal">396</span>
-<span class="normal">397</span>
-<span class="normal">398</span>
-<span class="normal">399</span>
-<span class="normal">400</span>
-<span class="normal">401</span>
-<span class="normal">402</span>
-<span class="normal">403</span>
-<span class="normal">404</span>
-<span class="normal">405</span>
-<span class="normal">406</span>
-<span class="normal">407</span>
-<span class="normal">408</span>
-<span class="normal">409</span>
-<span class="normal">410</span>
-<span class="normal">411</span>
-<span class="normal">412</span>
-<span class="normal">413</span>
-<span class="normal">414</span>
-<span class="normal">415</span>
-<span class="normal">416</span>
-<span class="normal">417</span>
-<span class="normal">418</span>
-<span class="normal">419</span>
-<span class="normal">420</span>
-<span class="normal">421</span>
-<span class="normal">422</span>
-<span class="normal">423</span>
-<span class="normal">424</span>
-<span class="normal">425</span>
-<span class="normal">426</span>
-<span class="normal">427</span>
-<span class="normal">428</span>
-<span class="normal">429</span>
-<span class="normal">430</span>
-<span class="normal">431</span>
-<span class="normal">432</span>
-<span class="normal">433</span>
-<span class="normal">434</span>
-<span class="normal">435</span>
-<span class="normal">436</span>
-<span class="normal">437</span>
-<span class="normal">438</span>
-<span class="normal">439</span>
-<span class="normal">440</span>
-<span class="normal">441</span>
-<span class="normal">442</span>
-<span class="normal">443</span>
-<span class="normal">444</span>
-<span class="normal">445</span>
-<span class="normal">446</span>
-<span class="normal">447</span>
-<span class="normal">448</span>
-<span class="normal">449</span>
-<span class="normal">450</span>
-<span class="normal">451</span>
-<span class="normal">452</span>
-<span class="normal">453</span>
-<span class="normal">454</span>
-<span class="normal">455</span>
-<span class="normal">456</span>
-<span class="normal">457</span>
-<span class="normal">458</span>
-<span class="normal">459</span>
-<span class="normal">460</span>
-<span class="normal">461</span>
-<span class="normal">462</span>
-<span class="normal">463</span>
-<span class="normal">464</span>
-<span class="normal">465</span>
-<span class="normal">466</span>
-<span class="normal">467</span>
-<span class="normal">468</span>
-<span class="normal">469</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
-<span class="k">def</span> <span class="nf">filtercat</span><span class="p">(</span>
-    <span class="n">how</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
-    <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
-    <span class="n">invert</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">substr_match</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">assert_notempty</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Filter an iterable and concatenate the output to a list instead of a generator like</span>
-<span class="sd">    the standard `filter` in python. By default always returns the *matching* elements</span>
-<span class="sd">    from iterme. This can be inverted using invert=True or split using invert=&#39;split&#39;</span>
-<span class="sd">    which will return matches, nomatches. Filtering can be done by passing a function, a</span>
-<span class="sd">    single `str/int/float`, or an iterable of `str/int/float`. Filtering by an iterable</span>
-<span class="sd">    checks if `any` of the values in the iterable exist in each item of `iterme`.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        func (Union[Callable, Iterable, str, int, float]): if a function is passed it</span>
-<span class="sd">        must return `True` or `False`, otherwise will compare each element in `iterme`</span>
-<span class="sd">        to the element passed for `func`. String comparisons check if `func` is `in` and</span>
-<span class="sd">        element of `iterme` while float/integer comparisons check for value equality. If</span>
-<span class="sd">        an iterable is passed filtering is performed for `any` of the elements in the ierable</span>
-<span class="sd">        iterme (Iterable): iterable to filter</span>
-<span class="sd">        invert (bool/str optional): if `True`, drops items where `how` resolves to</span>
-<span class="sd">        `True` rather than keeping them. If passed the string `&#39;split&#39;` will return both</span>
-<span class="sd">        matching and inverted results</span>
-<span class="sd">        assert_notempty (bool, optional): raise an error if the returned output is</span>
-<span class="sd">        empty; Default True</span>
-
-
-<span class="sd">    Returns:</span>
-<span class="sd">        list: filtered version of `iterme</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">Callable</span><span class="p">):</span>
-        <span class="n">func</span> <span class="o">=</span> <span class="n">how</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">substr_match</span><span class="p">:</span>
-            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="n">how</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="n">how</span> <span class="o">==</span> <span class="n">elem</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
-        <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="n">how</span> <span class="o">==</span> <span class="n">elem</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">substr_match</span><span class="p">:</span>
-                <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">),</span> <span class="n">how</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="o">==</span> <span class="n">elem</span><span class="p">,</span> <span class="n">how</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">how</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
-            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">elem</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="o">==</span> <span class="n">elem</span><span class="p">,</span> <span class="n">how</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s2">&quot;If an iterable is passed it must contain strings, ints or floats&quot;</span>
-            <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-            <span class="s2">&quot;Must pass a function, iterable, string, int, or float to filter by&quot;</span>
-        <span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">invert</span> <span class="o">==</span> <span class="s2">&quot;split&quot;</span><span class="p">:</span>
-        <span class="n">inverts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">filterfalse</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">))</span>
-        <span class="n">matches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">))</span>
-
-        <span class="k">if</span> <span class="n">assert_notempty</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">inverts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Filtered data is empty!&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">matches</span><span class="p">,</span> <span class="n">inverts</span>
-
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">invert</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
-        <span class="n">filtfunc</span> <span class="o">=</span> <span class="n">filterfalse</span> <span class="k">if</span> <span class="n">invert</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="nb">filter</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">filtfunc</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">assert_notempty</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Filtered data is empty!&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">out</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;invert must be True, False, or &#39;split&#39;&quot;</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h4 id="utilz.ops.ifelse" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">ifelse</span><span class="p">(</span><span class="n">conditional</span><span class="p">,</span> <span class="n">if_true</span><span class="p">,</span> <span class="n">if_false</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-</h4>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Simple oneline ternary operator. Pass in something to check, how to check it, what
-to return if True, and what to return if False. If only one of if_true or if_false
-is provided, then data is returned if the conditional matches that outcome. This
-makes it easy to run shorthands like "do something only if this is true"</p>
+      <p>Conditionally apply a function based on a predicate function. Useful to
+conditionally map a function to an interable when combined with mapcat</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1487,9 +1385,9 @@ makes it easy to run shorthands like "do something only if this is true"</p>
         <tr>
           <td><code>conditional</code></td>
           <td>
-                <code>bool or callable</code>
+                <code>callable</code>
           </td>
-          <td><p>a boolean expression, callable, or string</p></td>
+          <td><p>callable function on which data will be evaluated.</p></td>
           <td>
               <em>required</em>
           </td>
@@ -1497,19 +1395,9 @@ makes it easy to run shorthands like "do something only if this is true"</p>
         <tr>
           <td><code>if_true</code></td>
           <td>
-                <code>None, any</code>
+                <code>any, callable</code>
           </td>
-          <td><p>None, object, or callable. Defaults to None.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>if_false</code></td>
-          <td>
-                <code>None, any</code>
-          </td>
-          <td><p>None, object, or callable. Defaults to None.</p></td>
+          <td><p>Value or function to call if predicate_func</p></td>
           <td>
               <em>required</em>
           </td>
@@ -1519,7 +1407,7 @@ makes it easy to run shorthands like "do something only if this is true"</p>
           <td>
                 <code>any</code>
           </td>
-          <td><p>thing to check if not curried and conditional is not a boolean</p></td>
+          <td><p>previous pipe output</p></td>
           <td>
               <em>required</em>
           </td>
@@ -1527,120 +1415,57 @@ makes it easy to run shorthands like "do something only if this is true"</p>
     </tbody>
   </table>
 
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-<td><code>Any</code></td>          <td>
-          </td>
-          <td><p>return from if_true or if_false</p></td>
-        </tr>
-    </tbody>
-  </table>
-
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">778</span>
-<span class="normal">779</span>
-<span class="normal">780</span>
-<span class="normal">781</span>
-<span class="normal">782</span>
-<span class="normal">783</span>
-<span class="normal">784</span>
-<span class="normal">785</span>
-<span class="normal">786</span>
-<span class="normal">787</span>
-<span class="normal">788</span>
-<span class="normal">789</span>
-<span class="normal">790</span>
-<span class="normal">791</span>
-<span class="normal">792</span>
-<span class="normal">793</span>
-<span class="normal">794</span>
-<span class="normal">795</span>
-<span class="normal">796</span>
-<span class="normal">797</span>
-<span class="normal">798</span>
-<span class="normal">799</span>
-<span class="normal">800</span>
-<span class="normal">801</span>
-<span class="normal">802</span>
-<span class="normal">803</span>
-<span class="normal">804</span>
-<span class="normal">805</span>
-<span class="normal">806</span>
-<span class="normal">807</span>
-<span class="normal">808</span>
-<span class="normal">809</span>
-<span class="normal">810</span>
-<span class="normal">811</span>
-<span class="normal">812</span>
-<span class="normal">813</span>
-<span class="normal">814</span>
-<span class="normal">815</span>
-<span class="normal">816</span>
-<span class="normal">817</span>
-<span class="normal">818</span>
-<span class="normal">819</span>
-<span class="normal">820</span>
-<span class="normal">821</span>
-<span class="normal">822</span>
-<span class="normal">823</span>
-<span class="normal">824</span>
-<span class="normal">825</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">conditional</span><span class="p">,</span> <span class="n">if_true</span><span class="p">,</span> <span class="n">if_false</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">509</span>
+<span class="normal">510</span>
+<span class="normal">511</span>
+<span class="normal">512</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span>
+<span class="normal">516</span>
+<span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span>
+<span class="normal">526</span>
+<span class="normal">527</span>
+<span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span>
+<span class="normal">532</span>
+<span class="normal">533</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">iffy</span><span class="p">(</span><span class="n">predicate_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">if_true</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Simple oneline ternary operator. Pass in something to check, how to check it, what</span>
-<span class="sd">    to return if True, and what to return if False. If only one of if_true or if_false</span>
-<span class="sd">    is provided, then data is returned if the conditional matches that outcome. This</span>
-<span class="sd">    makes it easy to run shorthands like &quot;do something only if this is true&quot;</span>
+<span class="sd">    Conditionally apply a function based on a predicate function. Useful to</span>
+<span class="sd">    conditionally map a function to an interable when combined with mapcat</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        conditional (bool or callable): a boolean expression, callable, or string</span>
-<span class="sd">        expression that will be passed to eval(). Can use the variable name &#39;data&#39; to</span>
-<span class="sd">        refer to curried data</span>
-<span class="sd">        if_true (None, any, optional): None, object, or callable. Defaults to None.</span>
-<span class="sd">        if_false (None, any, optional): None, object, or callable. Defaults to None.</span>
-<span class="sd">        data (any): thing to check if not curried and conditional is not a boolean</span>
-<span class="sd">        expression or if_true/if_false are callable</span>
+<span class="sd">        conditional (callable): callable function on which data will be evaluated.</span>
+<span class="sd">        Should return a boolean value</span>
+<span class="sd">        if_true (any, callable, optional): Value or function to call if predicate_func</span>
+<span class="sd">        is True</span>
+<span class="sd">        data (any): previous pipe output</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        Any: return from if_true or if_false</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">predicate_func</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;ifelse requires a function that returns a boolean value&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">conditional</span><span class="p">):</span>
-            <span class="n">conditional</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">conditional</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">if_true</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">if_true</span><span class="p">)</span> <span class="k">else</span> <span class="n">if_true</span>
+    <span class="k">if</span> <span class="n">predicate_func</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">if_true</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">if_true</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">if_false</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">if_false</span><span class="p">)</span> <span class="k">else</span> <span class="n">if_false</span>
-    <span class="k">else</span><span class="p">:</span>
-
-        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">conditional</span><span class="p">):</span>
-            <span class="n">conditional</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conditional</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">conditional</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">conditional</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">conditional</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">if_true</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">if_true</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">if_true</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">args</span>
             <span class="k">return</span> <span class="n">if_true</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">if_false</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">if_false</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">if_false</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">args</span>
-            <span class="k">return</span> <span class="n">if_false</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1651,27 +1476,54 @@ makes it easy to run shorthands like "do something only if this is true"</p>
 
 
 
-<h4 id="utilz.ops.keep" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">keep</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h4 id="utilz.ops.many" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">many</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></code>
 
 </h4>
 
 
   <div class="doc doc-contents ">
   
-      <p>Alias for filtercat with invert=False</p>
+      <p>Apply many functions separately to a single input. Operates like the inverse of
+map(). Whereas map takes applies 1 func to multiple elements, many applies multiple funcs to 1 element. Returns a tuple the same length as args containing the output of each function</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">380</span>
-<span class="normal">381</span>
-<span class="normal">382</span>
-<span class="normal">383</span>
-<span class="normal">384</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
-<span class="k">def</span> <span class="nf">keep</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Alias for filtercat with invert=False&quot;&quot;&quot;</span>
-    <span class="n">invert</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;invert&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">filtercat</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="n">invert</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">many</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Apply many functions separately to a single input. Operates like the inverse of</span>
+<span class="sd">    map(). Whereas map takes applies 1 func to multiple elements, many applies multiple funcs to 1 element. Returns a tuple the same length as args containing the output of each function&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Expected a single input but receive </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">. Use mapmany() to operate on an iterable&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;many applies *multiple* function calls separately but only received </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="si">}</span><span class="s2"> function. Use map() to apply a single function.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">f</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">args</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">call</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1682,22 +1534,32 @@ makes it easy to run shorthands like "do something only if this is true"</p>
 
 
 
-<h4 id="utilz.ops.mapcat" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">mapcat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h4 id="utilz.ops.pipe" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">pipe</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">funcs</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">load_existing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">flatten</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 </h4>
 
 
   <div class="doc doc-contents ">
   
-      <p>Super-power your <code>for</code> loops with a progress-bar and optional <em>reproducible</em>
-parallelization!</p>
-<p><strong>map</strong>s <code>func</code> to <code>iterme</code> and con<strong>cat</strong>enates the result into a single, list,
-DataFrame or array. Includes a progress-bar powered by <code>tqdm</code>.</p>
-<p>Supports parallelization with <code>jobllib.Parallel</code> multi-processing by setting <code>n_jobs &gt; 1</code>. Progress-bar <em>accurately</em> tracks parallel jobs!</p>
-<p><code>iterme</code> can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single
-list.</p>
-<p>See the examples below for interesting use cases beyond standard looping!</p>
+      <p>A "smart" pipe function designed to pass data through a series of transformation.
+Accepts an initial object "data" and then inumerable additional <code>args</code> which are
+functions run in sequence: <code>data -&gt; f1(data) -&gt; f2(f1_output) -&gt; f3(f2_output)...</code>.</p>
+<p>By default <code>pipe</code> always <em>displays</em> the last function evaluation, even when
+assigning to a variable, making it useful when working in an interactive environment
+or logging from a script. You can set <code>show=False</code> to disable this. <code>pipe</code> also
+<strong>never returns plots</strong>. Instead, <code>pipe</code> recognizes if the last function evaluation
+returns <code>None</code> or a matplotlib/seaborn figure/axis and returns last
+non-None/non-plot evaluation in the pipe.</p>
+<p>Passing <code>output = False</code> will return nothing from the pipe, which is if you just
+want to run a pipe for its side-effects, e.g. saving a figure, looking at something.
+Using <code>load_existing</code> with <code>save</code> can fully bypass the evaluation of a pipe if a
+file already exists on disk.</p>
+<p>Lastly <code>pipe</code> treat the <code>Ellipses</code> operator specially, i.e. <code>...</code>. It can be use to
+demarcate where you want a pipe to "freeze" its return value, even if there are more
+functions left to execute. For example in <code>out = pipe(data, f1, f2, ..., f3, f4)</code>
+only the output up until <code>...</code> will be stored in <code>out</code>, so <code>f2(f1(data))</code>. <code>f3</code> and
+<code>f4</code> will still run, but never return their outputs.</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1711,155 +1573,132 @@ list.</p>
     </thead>
     <tbody>
         <tr>
-          <td><code>func</code></td>
+          <td><code>data</code></td>
           <td>
-                <code>callable</code>
+                <code><span title="typing.Any">Any</span></code>
           </td>
-          <td><p>function to map</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>iterme</code></td>
-          <td>
-                <code>iterable</code>
-          </td>
-          <td><p>an iterable for which each element will be passed to func</p></td>
+          <td><p>input data</p></td>
           <td>
               <em>required</em>
           </td>
         </tr>
         <tr>
-          <td><code>concat</code></td>
+          <td><code>output</code></td>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>if <code>func</code> returns an interable, will try to flatten iterables</p></td>
+          <td><p>whether to return a result. Defaults to True.</p></td>
           <td>
-              <em>required</em>
+                <code>True</code>
           </td>
         </tr>
         <tr>
-          <td><code>enum</code></td>
+          <td><code>show</code></td>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>whether the value of the current iteration should be passed to <code>func</code> as the special kwarg <code>idx</code>. Make sure <code>func</code> can handle a kwarg named <code>idx</code>. Default False</p></td>
+          <td><p>whether to display the result. Defaults to True.</p></td>
           <td>
-              <em>required</em>
+                <code>False</code>
           </td>
         </tr>
         <tr>
-          <td><code>random_state</code></td>
-          <td>
-                <code>bool/int</code>
-          </td>
-          <td><p>whether a randomly initialized seed should be</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>n_jobs</code></td>
-          <td>
-                <code>int</code>
-          </td>
-          <td><p>number of cpus/threads; Default 1 (no parallel)</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>backend</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td><p>Only applies if <code>n_jobs &gt; 1</code>. See <code>joblib.Parallel</code> for</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>concat_axis</code></td>
-          <td>
-                <code>int; optional</code>
-          </td>
-          <td><p>what axis to concatenate over; Default 0 (first)</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>ignore_index</code></td>
-          <td>
-                <code>bool; optional</code>
-          </td>
-          <td><p>ignore the index when combining DataFrames;</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>pbar</code></td>
+          <td><code>debug</code></td>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>whether to use tqdm to sfunc a progressbar; Default</p></td>
+          <td><p>whether to return a list of all function evaluations. Defaults to False.</p></td>
           <td>
-              <em>required</em>
+                <code>False</code>
           </td>
         </tr>
         <tr>
-          <td><code>verbose</code></td>
+          <td><code>keep</code></td>
           <td>
-                <code>int</code>
+                <code><span title="typing.Union">Union</span>[int, None]</code>
           </td>
-          <td><p><code>joblib.Parallel</code> verbosity. Default 0</p></td>
+          <td><p>indices to slices in the input if the last</p></td>
           <td>
-              <em>required</em>
+                <code>None</code>
           </td>
         </tr>
         <tr>
-          <td><code>**kwargs</code></td>
+          <td><code>load_existing</code></td>
           <td>
-                <code>dict</code>
+                <code>bool</code>
           </td>
-          <td><p>optional keyword arguments to pass to func</p></td>
+          <td><p>is <code>save</code> is not <code>False</code>, will try to load the</p></td>
           <td>
-                <code>{}</code>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>save</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[list, <span title="pathlib.Path">Path</span>, str, bool, None]</code>
+          </td>
+          <td><p>one or more file paths to</p></td>
+          <td>
+                <code>False</code>
           </td>
         </tr>
     </tbody>
   </table>
 
-<p><strong>Examples:</strong></p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Just like map</span>
-<span class="gp">&gt;&gt;&gt; </span> <span class="n">out</span> <span class="o">=</span> <span class="n">mapcat</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
-</code></pre></div>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Concatenating nested lists</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">mapcat</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load multiple files into a single dataframe</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">mapcat</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;file1.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;file2.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;file3.txt&quot;</span><span class="p">])</span>
-</code></pre></div>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Parallelization with randomness</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f_random</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">random_state</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="c1"># Use the random state&#39;s number generator rather than np.random</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">random_state</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
-<span class="go">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Now set a random_state in mapcat to reproduce the parallel runs</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># It doesn&#39;t pass the value, but rather generates a reproducible list</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># of seeds that are passed to each function execution</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">mapcat</span><span class="p">(</span><span class="n">f_random</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</code></pre></div>
-
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">234</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
 <span class="normal">235</span>
 <span class="normal">236</span>
 <span class="normal">237</span>
@@ -1973,459 +1812,16 @@ list.</p>
 <span class="normal">345</span>
 <span class="normal">346</span>
 <span class="normal">347</span>
-<span class="normal">348</span>
-<span class="normal">349</span>
-<span class="normal">350</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
-<span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span>
-    <span class="n">func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
-    <span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Super-power your `for` loops with a progress-bar and optional *reproducible*</span>
-<span class="sd">    parallelization!</span>
-
-<span class="sd">    **map**s `func` to `iterme` and con**cat**enates the result into a single, list,</span>
-<span class="sd">    DataFrame or array. Includes a progress-bar powered by `tqdm`.</span>
-
-<span class="sd">    Supports parallelization with `jobllib.Parallel` multi-processing by setting `n_jobs &gt; 1`. Progress-bar *accurately* tracks parallel jobs!</span>
-
-<span class="sd">    `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single</span>
-<span class="sd">    list.</span>
-
-<span class="sd">    See the examples below for interesting use cases beyond standard looping!</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        func (callable): function to map</span>
-<span class="sd">        iterme (iterable): an iterable for which each element will be passed to func</span>
-<span class="sd">        concat (bool): if `func` returns an interable, will try to flatten iterables</span>
-<span class="sd">        into a single list, array, or dataframe based on `axis`; Default True</span>
-<span class="sd">        enum (bool, optional): whether the value of the current iteration should be passed to `func` as the special kwarg `idx`. Make sure `func` can handle a kwarg named `idx`. Default False</span>
-<span class="sd">        random_state (bool/int, optional): whether a randomly initialized seed should be</span>
-<span class="sd">        passed to `func` as the special kwarg `random_state`. The function should pass</span>
-<span class="sd">        this seed to the `utilz.check_random_state` helper to generate a random number</span>
-<span class="sd">        generator for all computations rather than relying on `np.random`</span>
-<span class="sd">        n_jobs (int, optional): number of cpus/threads; Default 1 (no parallel)</span>
-<span class="sd">        backend (str, optional): Only applies if `n_jobs &gt; 1`. See `joblib.Parallel` for</span>
-<span class="sd">        options; Default None which uses `loky`</span>
-<span class="sd">        concat_axis (int; optional): what axis to concatenate over; Default 0 (first)</span>
-<span class="sd">        ignore_index (bool; optional): ignore the index when combining DataFrames;</span>
-<span class="sd">        Default True</span>
-<span class="sd">        pbar (bool, optional): whether to use tqdm to sfunc a progressbar; Default</span>
-<span class="sd">        False</span>
-<span class="sd">        verbose (int): `joblib.Parallel` verbosity. Default 0</span>
-<span class="sd">        **kwargs (dict, optional): optional keyword arguments to pass to func</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; # Just like map</span>
-<span class="sd">        &gt;&gt;&gt;  out = mapcat(lambda x: x * 2, [1, 2, 3, 4])</span>
-
-<span class="sd">        &gt;&gt;&gt; # Concatenating nested lists</span>
-<span class="sd">        &gt;&gt;&gt; data = [[1, 2], [3, 4]]</span>
-<span class="sd">        &gt;&gt;&gt; out = mapcat(None, data)</span>
-
-<span class="sd">        &gt;&gt;&gt; # Load multiple files into a single dataframe</span>
-<span class="sd">        &gt;&gt;&gt; out = mapcat(pd.read_csv, [&quot;file1.txt&quot;, &quot;file2.txt&quot;, &quot;file3.txt&quot;])</span>
-
-<span class="sd">        &gt;&gt;&gt; # Parallelization with randomness</span>
-<span class="sd">        &gt;&gt;&gt; def f_random(x, random_state=None):</span>
-<span class="sd">        &gt;&gt;&gt;     random_state = check_random_state(random_state)</span>
-<span class="sd">        &gt;&gt;&gt;     sleep(0.5)</span>
-<span class="sd">        &gt;&gt;&gt;     # Use the random state&#39;s number generator rather than np.random</span>
-<span class="sd">        &gt;&gt;&gt;     return x + random_state.rand()</span>
-<span class="sd">        &gt;&gt;&gt;</span>
-<span class="sd">        &gt;&gt;&gt; # Now set a random_state in mapcat to reproduce the parallel runs</span>
-<span class="sd">        &gt;&gt;&gt; # It doesn&#39;t pass the value, but rather generates a reproducible list</span>
-<span class="sd">        &gt;&gt;&gt; # of seeds that are passed to each function execution</span>
-<span class="sd">        &gt;&gt;&gt; out = mapcat(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">concat</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;concat&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="n">enum</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;enum&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-    <span class="n">random_state</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;random_state&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-    <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;n_jobs&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">backend</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;backend&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="n">concat_axis</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;concat_axis&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="n">ignore_index</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;ignore_index&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="n">pbar</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;pbar&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-    <span class="n">verbose</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;verbose&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># No-op if no function</span>
-        <span class="n">op</span> <span class="o">=</span> <span class="n">iterme</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
-            <span class="n">func_args</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">func_args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-                <span class="k">if</span> <span class="n">enum</span> <span class="ow">and</span> <span class="s2">&quot;idx&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="s2">&quot;Function must accept a keyword argument named &#39;idx&#39; that accepts an integer if enum is True&quot;</span>
-                    <span class="p">)</span>
-
-                <span class="k">if</span> <span class="n">random_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="s2">&quot;random_state&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                            <span class="s2">&quot;Function must have a keyword argument called &#39;random_state&#39; if random_state is not False&quot;</span>
-                        <span class="p">)</span>
-            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
-                <span class="c1"># some funcs like numpy c funcs are not inspectable so we have to ksip</span>
-                <span class="c1"># these checks</span>
-                <span class="n">func_args</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="k">if</span> <span class="n">random_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="c1"># User can pass True instead of a number for non-reproducible</span>
-            <span class="c1"># parallelization</span>
-            <span class="n">random_state</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">random_state</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="n">random_state</span>
-
-            <span class="c1"># Generate a list of random ints, that themselves are seeded by random_state</span>
-            <span class="c1"># and passed to func</span>
-            <span class="n">seeds</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">MAX_INT</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">iterme</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">seeds</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="c1"># Loop; parallel in n_jobs &lt; 1 or &gt; 1</span>
-        <span class="n">op</span> <span class="o">=</span> <span class="n">_pmap</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">enum</span><span class="p">,</span> <span class="n">seeds</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">pbar</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">concat</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">_concat</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">concat_axis</span><span class="p">,</span> <span class="n">ignore_index</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">op</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h4 id="utilz.ops.mapmany" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">mapmany</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></code>
-
-</h4>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Apply one or more functions to multiple inputs separately (many-to-one/many). If
-only one function is provided then this is equivalent to using <code>map</code> over the
-inputs. If more than one function is provided it's equivalent to using
-<code>map(compose(..))</code> over the inputs, i.e. a mini-pipe per input. Unlike <code>mapcat</code> this
-has no additional bells or whistles (e.g. parallelization, progressbar, etc)</p>
-
-      <details class="quote">
-        <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">732</span>
-<span class="normal">733</span>
-<span class="normal">734</span>
-<span class="normal">735</span>
-<span class="normal">736</span>
-<span class="normal">737</span>
-<span class="normal">738</span>
-<span class="normal">739</span>
-<span class="normal">740</span>
-<span class="normal">741</span>
-<span class="normal">742</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
-<span class="k">def</span> <span class="nf">mapmany</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Apply one or more functions to multiple inputs separately (many-to-one/many). If</span>
-<span class="sd">    only one function is provided then this is equivalent to using `map` over the</span>
-<span class="sd">    inputs. If more than one function is provided it&#39;s equivalent to using</span>
-<span class="sd">    `map(compose(..))` over the inputs, i.e. a mini-pipe per input. Unlike `mapcat` this</span>
-<span class="sd">    has no additional bells or whistles (e.g. parallelization, progressbar, etc)</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">return</span> <span class="n">separate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h4 id="utilz.ops.pipe" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">pipe</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">funcs</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">load_existing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
-
-</h4>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>A "smart" pipe function designed to pass data through a series of transformation.
-Accepts an initial object "data" and then inumerable additional <code>args</code> which are
-functions run in sequence: <code>data -&gt; f1(data) -&gt; f2(f1_output) -&gt; f3(f2_output)...</code>.</p>
-<p>By default <code>pipe</code> always <em>displays</em> the last function evaluation, even when
-assigning to a variable, making it useful when working in an interactive environment
-or logging from a script. You can set <code>show=False</code> to disable this. <code>pipe</code> also
-<strong>never returns plots</strong>. Instead, <code>pipe</code> recognizes if the last function evaluation
-returns <code>None</code> or a matplotlib/seaborn figure/axis and returns last
-non-None/non-plot evaluation in the pipe.</p>
-<p>Passing <code>output = False</code> will return nothing from the pipe, which is if you just
-want to run a pipe for its side-effects, e.g. saving a figure, looking at something.
-Using <code>load_existing</code> with <code>save</code> can fully bypass the evaluation of a pipe if a
-file already exists on disk.</p>
-<p>Lastly <code>pipe</code> treat the <code>Ellipses</code> operator specially, i.e. <code>...</code>. It can be use to
-demarcate where you want a pipe to "freeze" its return value, even if there are more
-functions left to execute. For example in <code>out = pipe(data, f1, f2, ..., f3, f4)</code>
-only the output up until <code>...</code> will be stored in <code>out</code>, so <code>f2(f1(data))</code>. <code>f3</code> and
-<code>f4</code> will still run, but never return their outputs.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>data</code></td>
-          <td>
-                <code><span title="typing.Any">Any</span></code>
-          </td>
-          <td><p>input data</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>output</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>whether to return a result. Defaults to True.</p></td>
-          <td>
-                <code>True</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>show</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>whether to display the result. Defaults to True.</p></td>
-          <td>
-                <code>True</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>debug</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>whether to return a list of all function evaluations. Defaults to False.</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>keep</code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[int, None]</code>
-          </td>
-          <td><p>indices to slices in the input if the last</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>load_existing</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>is <code>save</code> is not <code>False</code>, will try to load the</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>save</code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[list, <span title="pathlib.Path">Path</span>, str, bool, None]</code>
-          </td>
-          <td><p>one or more file paths to</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">477</span>
-<span class="normal">478</span>
-<span class="normal">479</span>
-<span class="normal">480</span>
-<span class="normal">481</span>
-<span class="normal">482</span>
-<span class="normal">483</span>
-<span class="normal">484</span>
-<span class="normal">485</span>
-<span class="normal">486</span>
-<span class="normal">487</span>
-<span class="normal">488</span>
-<span class="normal">489</span>
-<span class="normal">490</span>
-<span class="normal">491</span>
-<span class="normal">492</span>
-<span class="normal">493</span>
-<span class="normal">494</span>
-<span class="normal">495</span>
-<span class="normal">496</span>
-<span class="normal">497</span>
-<span class="normal">498</span>
-<span class="normal">499</span>
-<span class="normal">500</span>
-<span class="normal">501</span>
-<span class="normal">502</span>
-<span class="normal">503</span>
-<span class="normal">504</span>
-<span class="normal">505</span>
-<span class="normal">506</span>
-<span class="normal">507</span>
-<span class="normal">508</span>
-<span class="normal">509</span>
-<span class="normal">510</span>
-<span class="normal">511</span>
-<span class="normal">512</span>
-<span class="normal">513</span>
-<span class="normal">514</span>
-<span class="normal">515</span>
-<span class="normal">516</span>
-<span class="normal">517</span>
-<span class="normal">518</span>
-<span class="normal">519</span>
-<span class="normal">520</span>
-<span class="normal">521</span>
-<span class="normal">522</span>
-<span class="normal">523</span>
-<span class="normal">524</span>
-<span class="normal">525</span>
-<span class="normal">526</span>
-<span class="normal">527</span>
-<span class="normal">528</span>
-<span class="normal">529</span>
-<span class="normal">530</span>
-<span class="normal">531</span>
-<span class="normal">532</span>
-<span class="normal">533</span>
-<span class="normal">534</span>
-<span class="normal">535</span>
-<span class="normal">536</span>
-<span class="normal">537</span>
-<span class="normal">538</span>
-<span class="normal">539</span>
-<span class="normal">540</span>
-<span class="normal">541</span>
-<span class="normal">542</span>
-<span class="normal">543</span>
-<span class="normal">544</span>
-<span class="normal">545</span>
-<span class="normal">546</span>
-<span class="normal">547</span>
-<span class="normal">548</span>
-<span class="normal">549</span>
-<span class="normal">550</span>
-<span class="normal">551</span>
-<span class="normal">552</span>
-<span class="normal">553</span>
-<span class="normal">554</span>
-<span class="normal">555</span>
-<span class="normal">556</span>
-<span class="normal">557</span>
-<span class="normal">558</span>
-<span class="normal">559</span>
-<span class="normal">560</span>
-<span class="normal">561</span>
-<span class="normal">562</span>
-<span class="normal">563</span>
-<span class="normal">564</span>
-<span class="normal">565</span>
-<span class="normal">566</span>
-<span class="normal">567</span>
-<span class="normal">568</span>
-<span class="normal">569</span>
-<span class="normal">570</span>
-<span class="normal">571</span>
-<span class="normal">572</span>
-<span class="normal">573</span>
-<span class="normal">574</span>
-<span class="normal">575</span>
-<span class="normal">576</span>
-<span class="normal">577</span>
-<span class="normal">578</span>
-<span class="normal">579</span>
-<span class="normal">580</span>
-<span class="normal">581</span>
-<span class="normal">582</span>
-<span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span>
-<span class="normal">586</span>
-<span class="normal">587</span>
-<span class="normal">588</span>
-<span class="normal">589</span>
-<span class="normal">590</span>
-<span class="normal">591</span>
-<span class="normal">592</span>
-<span class="normal">593</span>
-<span class="normal">594</span>
-<span class="normal">595</span>
-<span class="normal">596</span>
-<span class="normal">597</span>
-<span class="normal">598</span>
-<span class="normal">599</span>
-<span class="normal">600</span>
-<span class="normal">601</span>
-<span class="normal">602</span>
-<span class="normal">603</span>
-<span class="normal">604</span>
-<span class="normal">605</span>
-<span class="normal">606</span>
-<span class="normal">607</span>
-<span class="normal">608</span>
-<span class="normal">609</span>
-<span class="normal">610</span>
-<span class="normal">611</span>
-<span class="normal">612</span>
-<span class="normal">613</span>
-<span class="normal">614</span>
-<span class="normal">615</span>
-<span class="normal">616</span>
-<span class="normal">617</span>
-<span class="normal">618</span>
-<span class="normal">619</span>
-<span class="normal">620</span>
-<span class="normal">621</span>
-<span class="normal">622</span>
-<span class="normal">623</span>
-<span class="normal">624</span>
-<span class="normal">625</span>
-<span class="normal">626</span>
-<span class="normal">627</span>
-<span class="normal">628</span>
-<span class="normal">629</span>
-<span class="normal">630</span>
-<span class="normal">631</span>
-<span class="normal">632</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span>
+<span class="normal">348</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="o">*</span><span class="n">funcs</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
     <span class="n">output</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">show</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">show</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">keep</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">load_existing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">save</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">flatten</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A &quot;smart&quot; pipe function designed to pass data through a series of transformation.</span>
@@ -2512,36 +1908,37 @@ only the output up until <code>...</code> will be stored in <code>out</code>, so
 
     <span class="c1"># If the pipe was passed an ..., then we don&#39;t need to run this block</span>
     <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># Now loop over results in reverse order to figure out what to return</span>
-        <span class="c1"># We never return plots or None so we search until we find the first non-plot,</span>
-        <span class="c1"># non-None evaluation. For each evaluation that&#39;s a tuple we return if none of it&#39;s</span>
-        <span class="c1"># elements is a plot or None, otherwise we search through its elements and return</span>
-        <span class="c1"># the first non-plot non-None.</span>
-        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">evals</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="c1"># if the return is None or is a plot keep looking</span>
-            <span class="k">if</span> <span class="n">bad_return</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
-                <span class="k">continue</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
-                <span class="c1"># If tuple contains all Nones, Plots, or any mixcture keep looking</span>
-                <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">bad_return</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">e</span><span class="p">):</span>
-                    <span class="k">continue</span>
-                <span class="c1"># If tuple contains no Nones or plots return it</span>
-                <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="ow">not</span> <span class="n">bad_return</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">e</span><span class="p">):</span>
-                    <span class="n">out</span> <span class="o">=</span> <span class="n">e</span>
-                    <span class="k">break</span>
-                <span class="c1"># The tuple is mixed so we have to loop over it</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">e</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="n">bad_return</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
-                            <span class="k">continue</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="n">out</span> <span class="o">=</span> <span class="n">e</span>
-                            <span class="k">break</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">continue</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">out</span> <span class="o">=</span> <span class="n">e</span>
-                <span class="k">break</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="c1"># # Now loop over results in reverse order to figure out what to return</span>
+        <span class="c1"># # We never return plots or None so we search until we find the first non-plot,</span>
+        <span class="c1"># # non-None evaluation. For each evaluation that&#39;s a tuple we return if none of it&#39;s</span>
+        <span class="c1"># # elements is a plot or None, otherwise we search through its elements and return</span>
+        <span class="c1"># # the first non-plot non-None.</span>
+        <span class="c1"># for e in evals[::-1]:</span>
+        <span class="c1">#     # if the return is None or is a plot keep looking</span>
+        <span class="c1">#     if bad_return(e):</span>
+        <span class="c1">#         continue</span>
+        <span class="c1">#     elif isinstance(e, (tuple, list)):</span>
+        <span class="c1">#         # If tuple contains all Nones, Plots, or any mixcture keep looking</span>
+        <span class="c1">#         if all(bad_return(elem) for elem in e):</span>
+        <span class="c1">#             continue</span>
+        <span class="c1">#         # If tuple contains no Nones or plots return it</span>
+        <span class="c1">#         elif all(not bad_return(elem) for elem in e):</span>
+        <span class="c1">#             out = e</span>
+        <span class="c1">#             break</span>
+        <span class="c1">#         # The tuple is mixed so we have to loop over it</span>
+        <span class="c1">#         else:</span>
+        <span class="c1">#             for elem in e:</span>
+        <span class="c1">#                 if bad_return(elem):</span>
+        <span class="c1">#                     continue</span>
+        <span class="c1">#                 else:</span>
+        <span class="c1">#                     out = e</span>
+        <span class="c1">#                     break</span>
+        <span class="c1">#             else:</span>
+        <span class="c1">#                 continue</span>
+        <span class="c1">#     else:</span>
+        <span class="c1">#         out = e</span>
+        <span class="c1">#         break</span>
 
     <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
@@ -2572,6 +1969,14 @@ only the output up until <code>...</code> will be stored in <code>out</code>, so
                 <span class="k">for</span> <span class="n">o</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">save</span><span class="p">):</span>
                     <span class="n">o</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="n">flatten</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">_out</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">out</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                    <span class="n">_out</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">o</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_out</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">out</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -2596,28 +2001,28 @@ call to append or spread.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">828</span>
-<span class="normal">829</span>
-<span class="normal">830</span>
-<span class="normal">831</span>
-<span class="normal">832</span>
-<span class="normal">833</span>
-<span class="normal">834</span>
-<span class="normal">835</span>
-<span class="normal">836</span>
-<span class="normal">837</span>
-<span class="normal">838</span>
-<span class="normal">839</span>
-<span class="normal">840</span>
-<span class="normal">841</span>
-<span class="normal">842</span>
-<span class="normal">843</span>
-<span class="normal">844</span>
-<span class="normal">845</span>
-<span class="normal">846</span>
-<span class="normal">847</span>
-<span class="normal">848</span>
-<span class="normal">849</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">536</span>
+<span class="normal">537</span>
+<span class="normal">538</span>
+<span class="normal">539</span>
+<span class="normal">540</span>
+<span class="normal">541</span>
+<span class="normal">542</span>
+<span class="normal">543</span>
+<span class="normal">544</span>
+<span class="normal">545</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span>
+<span class="normal">549</span>
+<span class="normal">550</span>
+<span class="normal">551</span>
+<span class="normal">552</span>
+<span class="normal">553</span>
+<span class="normal">554</span>
+<span class="normal">555</span>
+<span class="normal">556</span>
+<span class="normal">557</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a tuple, removes an element located at an index. Useful for pruning down a</span>
 <span class="sd">    call to append or spread.&quot;&quot;&quot;</span>
@@ -2657,43 +2062,38 @@ call to append or spread.</p>
 
   <div class="doc doc-contents ">
   
-      <p><strong>Spread/Fork</strong> data out by either duplicating it or running it through multiple
-functions. Pass an integer to just make copies.</p>
+      <p>Generalization of fork OR many</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">635</span>
-<span class="normal">636</span>
-<span class="normal">637</span>
-<span class="normal">638</span>
-<span class="normal">639</span>
-<span class="normal">640</span>
-<span class="normal">641</span>
-<span class="normal">642</span>
-<span class="normal">643</span>
-<span class="normal">644</span>
-<span class="normal">645</span>
-<span class="normal">646</span>
-<span class="normal">647</span>
-<span class="normal">648</span>
-<span class="normal">649</span>
-<span class="normal">650</span>
-<span class="normal">651</span>
-<span class="normal">652</span>
-<span class="normal">653</span>
-<span class="normal">654</span>
-<span class="normal">655</span>
-<span class="normal">656</span>
-<span class="normal">657</span>
-<span class="normal">658</span>
-<span class="normal">659</span>
-<span class="normal">660</span>
-<span class="normal">661</span>
-<span class="normal">662</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">spread</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    **Spread/Fork** data out by either duplicating it or running it through multiple</span>
-<span class="sd">    functions. Pass an integer to just make copies.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Generalization of fork OR many&quot;&quot;&quot;</span>
 
     <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 
@@ -2742,16 +2142,16 @@ function with multiple outputs easier to work with. Useful after a call to <code
 
       <details class="quote">
         <summary>Source code in <code>utilz/ops.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">702</span>
-<span class="normal">703</span>
-<span class="normal">704</span>
-<span class="normal">705</span>
-<span class="normal">706</span>
-<span class="normal">707</span>
-<span class="normal">708</span>
-<span class="normal">709</span>
-<span class="normal">710</span>
-<span class="normal">711</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span>
+<span class="normal">494</span>
+<span class="normal">495</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">unpack</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Wraps a function that takes multiple inputs to make the output of a previous</span>
 <span class="sd">    function with multiple outputs easier to work with. Useful after a call to `append`,</span>
@@ -2810,13 +2210,13 @@ function with multiple outputs easier to work with. Useful after a call to <code
       
       
         
-        <a href="../df/" class="md-footer__link md-footer__link--next" aria-label="Next: Dataframe verbs and tools" rel="next">
+        <a href="../maps/" class="md-footer__link md-footer__link--next" aria-label="Next: Maps" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Dataframe verbs and tools
+              Maps
             </div>
           </div>
           <div class="md-footer__button md-icon">
