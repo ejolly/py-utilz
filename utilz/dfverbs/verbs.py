@@ -30,11 +30,18 @@ __all__ = [
     "merge",
     "join",
     "ngroups",
+    "squeeze",
+    "to_numpy",
+    "to_list",
+    "ngroups",
+    "get_group",
+    "reset_index",
 ]
 
 import pandas as pd
 from toolz import curry
-from ..ops import do, filtercat
+from ..ops import do
+from ..maps import filter
 
 
 def _reset_index_helper(out, reset_index):
@@ -43,6 +50,36 @@ def _reset_index_helper(out, reset_index):
     if reset_index == "reset":
         return out.reset_index()
     return out
+
+
+@curry
+def squeeze(*args, **kwargs):
+    """Call a dataframe's `.squeeze` method"""
+
+    def call(df):
+        return df.squeeze(*args, **kwargs)
+
+    return call
+
+
+@curry
+def to_numpy(*args, **kwargs):
+    """Call a dataframe's `.to_numpy` method"""
+
+    def call(df):
+        return df.to_numpy(*args, **kwargs)
+
+    return call
+
+
+@curry
+def to_list(*args, **kwargs):
+    """Call a dataframe's `.to_list` method"""
+
+    def call(df):
+        return df.to_list(*args, **kwargs)
+
+    return call
 
 
 @curry
@@ -298,7 +335,7 @@ def transmute(dfg, **kwargs):
     else:
         orig = dfg
     out = mutate(dfg, **kwargs)
-    cols = filtercat(list(orig.columns), list(out.columns), substr_match=False)
+    cols = filter(list(orig.columns), list(out.columns), substr_match=False)
     out = out.drop(columns=cols)
 
     if out.shape[1] < 1:
@@ -309,8 +346,9 @@ def transmute(dfg, **kwargs):
         return out
 
 
+# TODO: make this like mutate where the callable can use column names args
 @curry
-def query(*queries, **kwargs):
+def query(q, **kwargs):
     """
     Call a dataframe object's `.query` method. Resets and drops index by
     default. Change this with `reset_index='drop'|'reset'|'none'`
@@ -318,11 +356,17 @@ def query(*queries, **kwargs):
     reset_index = kwargs.pop("reset_index", "drop")
 
     def call(df):
-        for q in queries:
-            if isinstance(q, str):
-                df = df.query(q, **kwargs)
-            elif callable(query):
-                df = df.loc[q]
+        if isinstance(q, str):
+            df = df.query(q, **kwargs)
+        elif callable(q):
+            name = q.__code__.co_varnames
+            if len(name) == 1:
+                if name[0] == "df":
+                    df = df.loc[q]
+                else:
+                    df = df[q(df[name[0]])]
+            else:
+                df = df[q(*[df[e] for e in name])]
 
         return _reset_index_helper(df, reset_index)
 
@@ -340,7 +384,7 @@ def apply(*args, **kwargs):
     def call(df):
         out = df.apply(*args, **kwargs)
         if isinstance(df, pd.core.groupby.generic.DataFrameGroupBy):
-            out = (_reset_index_helper(out, reset_index),)
+            out = _reset_index_helper(out, reset_index)
         return out
 
     return call
@@ -392,18 +436,18 @@ def select(*args):
 @curry
 def pivot_wider(*args, **kwargs):
     """
-    Convert a pair of columns to multiple columns, e.g. `_.to_wide('condition', using='response')`
+    Convert a pair of columns to multiple columns, e.g. `_.pivot_wider('condition', using='response')`
 
     Args:
         column (str): string name of column to "explode"
         using (str): string name of column who's values should be placed into the new columns
         drop_index (bool; optional): if a 'prev_index' col exists (usually created by
-        make_index=True in to_long) will drop it; Default True
+        make_index=True in pivot_longer) will drop it; Default True
 
     """
 
     def call(df):
-        return df.to_wide(*args, **kwargs)
+        return df.pivot_wider(*args, **kwargs)
 
     return call
 
@@ -412,8 +456,8 @@ def pivot_wider(*args, **kwargs):
 def pivot_longer(*args, **kwargs):
     """
     Convert a list of columns into 2 columns. Can pass a list of columsn to melt-down or
-    `id_vars` to select everything else: e.g. `_.to_long(['male', 'female'],
-    into=('gender', 'response'))` or `_.to_long(id_vars='SID', into=('gender','response'))`
+    `id_vars` to select everything else: e.g. `_.pivot_longer(['male', 'female'],
+    into=('gender', 'response'))` or `_.pivot_longer(id_vars='SID', into=('gender','response'))`
 
     Args:
         columns (list or None): columns to melt; Defaults to None
@@ -425,29 +469,43 @@ def pivot_longer(*args, **kwargs):
     """
 
     def call(df):
-        return df.to_long(*args, **kwargs)
+        return df.pivot_longer(*args, **kwargs)
 
     return call
 
 
 @curry
-def split(col, into, df, sep=" "):
-    """Split values in single df column into multiple columns by separator, e.g.
+def split(*args, sep=" "):
+    """
+    Split values in single df column into multiple columns by separator, e.g.
     First-Last -> [First], [Last]. To split list elements use [] as the sep, e.g.
-    [1,2,3] -> [1], [2], [3]"""
+    [1,2,3] -> [1], [2], [3]
 
-    if isinstance(sep, str):
-        out = df[col].str.split(sep, expand=True)
-    elif isinstance(sep, list):
-        out = pd.DataFrame(df[col].to_list())
-    if len(into) != out.shape[1]:
-        raise ValueError(
-            f"into has {len(into)} elements, but splitting creates a dataframe with {out.shape[1]} columns"
-        )
-    else:
-        out.columns = list(into)
+    Args:
+        column (str): column to split
+        into (list): new columns names to create
+        sep (str, list): separator to split on. Use [] for list
 
-    return pd.concat([df.drop(columns=col), out], axis=1)
+    """
+
+    col, into = args
+
+    def call(df):
+
+        if isinstance(sep, str):
+            out = df[col].str.split(sep, expand=True)
+        elif isinstance(sep, list):
+            out = pd.DataFrame(df[col].to_list())
+        if len(into) != out.shape[1]:
+            raise ValueError(
+                f"into has {len(into)} elements, but splitting creates a dataframe with {out.shape[1]} columns"
+            )
+        else:
+            out.columns = list(into)
+
+        return pd.concat([df.drop(columns=col), out], axis=1)
+
+    return call
 
 
 @curry
@@ -528,6 +586,16 @@ def replace(*args, **kwargs):
 
     def call(df):
         return df.replace(*args, **kwargs)
+
+    return call
+
+
+@curry
+def reset_index(*args, **kwargs):
+    """Call a dataframe's reset_index method"""
+
+    def call(df):
+        return df.reset_index(*args, **kwargs)
 
     return call
 

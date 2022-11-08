@@ -8,9 +8,9 @@ import pandas as pd
 import numpy as np
 import pickle
 import json
-from toolz.functoolz import memoize
 from warnings import warn
-from .ops import mapcat, filtercat, sort
+from .ops import sort
+from .maps import mapcat, filter
 from toolz import pipe
 from fnmatch import fnmatchcase
 
@@ -136,7 +136,7 @@ def crawl(
 
     ignore_list += ignore
     # Split glob patterns and regular file/folder name matches
-    globs, nonglobs = filtercat("*", ignore_list, invert="split")
+    globs, nonglobs = filter("*", ignore_list, invert="split")
 
     # Generator for all files
     out = Path(where)
@@ -146,7 +146,7 @@ def crawl(
     # Filter out glob patters from gitignore
     return pipe(
         files,
-        filtercat(nonglobs, invert=True),
-        filtercat(lambda f: any(fnmatchcase(str(f), g) for g in globs), invert=True),
+        filter(nonglobs, invert=True),
+        filter(lambda f: any(fnmatchcase(str(f), g) for g in globs), invert=True),
         sort,
     )

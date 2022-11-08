@@ -106,24 +106,24 @@ def test_select(df):
         dfg.unique()
 
 
-def test_to_long(df):
+def test_pivot_longer(df):
 
     # No need to specify id_vars as the rest of the cols will be used by default
-    long = df.to_long(
+    long = df.pivot_longer(
         columns=["sepal_width", "sepal_length"], into=("sepal_dim", "inches")
     )
     assert long.shape[0] == df.shape[0] * 2
     assert long.sepal_dim.nunique() == 2
 
     # Test pass single col without list
-    long = df.to_long("sepal_width")
+    long = df.pivot_longer("sepal_width")
     assert long.shape == (df.shape[0], df.shape[1] + 1)
     assert "sepal_width" not in long.columns
     assert "sepal_width" in long["variable"].unique()
 
     # When remaining columns don't have a unique row id between them we can create one
     # for the user and add it as a 'unique_id' column
-    long = df.to_long(
+    long = df.pivot_longer(
         ["sepal_length", "sepal_width", "petal_length", "petal_width"],
         into=("dimension", "inches"),
     )
@@ -132,21 +132,21 @@ def test_to_long(df):
 def test_to_wide(df):
 
     # Generate long form data with no unique id column
-    long = df.to_long(
+    long = df.pivot_longer(
         ["sepal_length", "sepal_width", "petal_length", "petal_width"],
         into=("dimension", "inches"),
     )
     # Because we can't infer uniques there are duplicate possibilities so this fails
     with pytest.raises(ValueError):
-        wide = long.to_wide("dimension", "inches")
+        wide = long.pivot_wider("dimension", "inches")
 
     # But if we have a unique identifier
-    long = df.to_long(
+    long = df.pivot_longer(
         ["sepal_length", "sepal_width", "petal_length", "petal_width"],
         into=("dimension", "inches"),
         make_index=True,
     )
 
     # Then this works just fine
-    wide = long.to_wide("dimension", "inches")
+    wide = long.pivot_wider("dimension", "inches")
     assert wide.shape == df.shape

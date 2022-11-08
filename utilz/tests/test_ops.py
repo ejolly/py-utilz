@@ -1,21 +1,29 @@
-from utilz.ops import (
+from utilz import (
     check_random_state,
+    map,
     mapcat,
-    filtercat,
+    mapmany,
+    mapcompose,
+    mapacross,
+    mapif,
+    mapwith,
+    filter,
     pipe,
     spread,
     gather,
     unpack,
     across,
-    mapmany,
     do,
-    ifelse,
+    iffy,
     append,
     compose,
     curry,
     pop,
     keep,
     discard,
+    seq,
+    equal,
+    fork,
 )
 from utilz.plot import tweak
 from utilz.boilerplate import randdf
@@ -38,12 +46,13 @@ def test_random_state():
 def test_mapcat():
 
     # Just like map
-    out = mapcat(lambda x: x * 2, [1, 2, 3, 4])
-    assert out == list(map(lambda x: x * 2, [1, 2, 3, 4]))
+    out = map(lambda x: x * 2, [1, 2, 3, 4])
+    correct = [x * 2 for x in [1, 2, 3, 4]]
+    assert out == correct
 
     # Currying
-    out = pipe([1, 2, 3, 4], mapcat(lambda x: x * 2))
-    assert out == list(map(lambda x: x * 2, [1, 2, 3, 4]))
+    out = pipe([1, 2, 3, 4], map(lambda x: x * 2))
+    assert out == correct
 
     # Concatenating nested lists
     data = [[1, 2], [3, 4]]
@@ -73,8 +82,8 @@ def test_mapcat():
     out = mapcat(lambda x: np.power(x, 2), data, concat_axis=0)
     assert out.ndim == 1
 
-    # But when concat is false just return a list of numpy arrays
-    out = mapcat(lambda x: np.power(x, 2), data, concat=False)
+    # But when using regular map just return a list of numpy arrays
+    out = map(lambda x: np.power(x, 2), data)
     assert isinstance(out, list)
     assert len(out) == 2
     assert isinstance(out[0], np.ndarray)
@@ -139,36 +148,104 @@ def test_parallel_mapcat():
         out = mapcat(f, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
 
 
-def test_filtercat():
+def test_mapalts():
+    """Just easier shorthands for things we can do with default mapcat"""
+
+    # Map a sequence of functions on after another
+    out = pipe(seq(10), mapcompose(lambda x: x**2, np.sqrt))
+    correct = pipe(seq(10), map(lambda x: x**2), map(np.sqrt))
+
+    assert np.allclose(out, correct)
+    assert np.allclose(out, seq(10))
+
+    # Map multiple functions separately
+    out = pipe(seq(10), mapmany(lambda x: x**2, np.sqrt))
+    assert len(out) == 10
+    assert all([len(e) == 2 for e in out])
+
+    correct = pipe(seq(10), map(lambda e: pipe(e, spread(lambda x: x**2, np.sqrt))))
+    assert all(np.allclose(o, c) for o, c in zip(out, correct))
+
+    # Map multiple functions as matched pairs
+    out = pipe([2, 4], mapacross(lambda x: x**2, lambda x: x * 2))
+    correct = pipe(
+        [2, 4],
+        lambda tup: (lambda x: x**2, tup[0], lambda x: x * 2, tup[1]),
+    )
+    assert len(out) == 2
+    assert np.allclose(out, [4, 8])
+
+    # Doesnt work if lengths don't match
+    with pytest.raises(ValueError):
+        pipe([2], mapacross(lambda x: x**2, lambda x: x * 2))
+
+    with pytest.raises(ValueError):
+        pipe([2, 4], mapacross(lambda x: x**2))
+
+    # Map a function if a predicate is true
+    bigger_5 = lambda x: x > 5
+    out = pipe(seq(10), mapif(lambda x: x * 2, bigger_5))
+    assert equal(out, [0, 1, 2, 3, 4, 5, 12, 14, 16, 18])
+
+    # Pass a single fixed extra arg
+    out = mapwith(lambda fixed, elem: elem + fixed, 5, [1, 2, 3, 4])
+    outc = pipe([1, 2, 3, 4], mapwith(lambda x, y: x + y, 5))
+    correct = [x + 5 for x in [1, 2, 3, 4]]
+    assert out == correct
+    assert outc == correct
+
+    # Multiple iterables
+    iterme = [1, 2, 3]
+    iterwith = [2, 2, 2]
+    out = mapwith(lambda x, y: x / y, iterwith, iterme)
+    outc = pipe(
+        iterme, mapwith(lambda frompipe, iterwith: frompipe / iterwith, iterwith)
+    )
+    correct = [x / 2 for x in [1, 2, 3]]
+    assert out == correct
+    assert outc == correct
+
+    # Map around a fixed input
+    out = pipe([5, 10, 20], mapwith(lambda e, df: df.shape[0] > e, randdf()))
+    assert equal([True, False, False], out)
+
+    df = randdf((20, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5)
+
+    out = pipe(["A", "C"], mapwith(lambda label, df: df.query("Group == @label"), df))
+    assert len(out) == 2
+    assert out[0].shape[0] == int(df.shape[0] / 4)
+
+
+def test_filter():
 
     # Length 9
     arr = ["aa", "ab", "ac", "ba", "bb", "bc", "ca", "cb", "cc"]
     # Keep anything containing "a"
-    assert len(filtercat("a", arr)) == 5
+    assert len(filter("a", arr)) == 5
     # Alias
     assert len(keep("a", arr)) == 5
     # Drop anything containing "a"
-    assert len(filtercat("a", arr, invert=True)) == 4
+    assert len(filter("a", arr, invert=True)) == 4
     # Alias
     assert len(discard("a", arr)) == 4
 
-    matches, filtered = filtercat("a", arr, invert="split")
+    matches, filtered = filter("a", arr, invert="split")
     assert len(matches) == 5
     assert len(filtered) == 4
 
     # Remove multiple
-    assert len(filtercat(["aa", "bb", "cc"], arr, invert=True)) == 6
+    assert len(filter(["aa", "bb", "cc"], arr, invert=True)) == 6
 
     # Just like filter() if comparison is all False return empty list
     with pytest.raises(AssertionError):
-        filtercat(1, arr)
-    assert len(filtercat(1, arr, assert_notempty=False)) == 0
+        filter(1, arr)
+    assert len(filter(1, arr, assert_notempty=False)) == 0
 
     # Currying
-    assert len(pipe(arr, filtercat("a"))) == 5
+    assert len(pipe(arr, filter("a"))) == 5
 
     # Normal filtering
-    assert all(filtercat(lambda x: isinstance(x, str), arr))
+    assert all(filter(lambda x: isinstance(x, str), arr))
 
 
 def test_pipes_basic():
@@ -227,11 +304,9 @@ def test_pipes_basic():
     # SEPARATE (many2many)
     # (input1, input2) -> (output1, output2)
 
-    # 1 func same as map
-    out = pipe([df, df], mapmany(lambda df: df.head(5)))
-    assert isinstance(out, tuple) and len(out) == 2  # 2x1
-    assert out[0].equals(out[1])
-    assert out[0].equals(df.head(5))
+    # Use map instead for 1 func
+    with pytest.raises(ValueError):
+        out = pipe([df, df], mapmany(lambda df: df.head(5)))
 
     # 2 func-input pairs
     out = pipe([df, df], across(lambda df: df.head(5), lambda df: df.tail(10)))
@@ -240,8 +315,8 @@ def test_pipes_basic():
     assert out[1].equals(df.tail(10))
 
     # 2 funcs, i.e. mini-pipe
-    out = pipe([df, df], mapmany(lambda df: df.head(10), lambda df: df.tail(5)))
-    assert isinstance(out, tuple) and len(out) == 2
+    out = pipe([df, df], mapcompose(lambda df: df.head(10), lambda df: df.tail(5)))
+    assert isinstance(out, list) and len(out) == 2
     assert out[0].equals(out[1])
     assert out[0].equals(df.iloc[5:10, :])
 
@@ -250,8 +325,8 @@ def test_pipes_basic():
         out = pipe([df, df], across(lambda df: df.head(5)))
 
     # not enough data
-    with pytest.raises(TypeError):
-        out = pipe(df, mapmany(lambda df: df.head(5)))
+    with pytest.raises(ValueError):
+        out = pipe([df], across(lambda df: df.head(5), lambda df: df.tail(2)))
 
     # SPREAD (one2many)
     # input -> (input, input, input)
@@ -320,24 +395,21 @@ def test_do():
     assert out.equals(df.head(10))
 
 
-def test_ifelse():
+def test_iffy():
 
-    x = 10
+    bigger_5 = lambda x: x > 5
 
-    # Can call with boolean expressions
-    y = ifelse(x > 10, x + 1, x - 1)
-    assert y < x
+    # Pass in predicate func and return value
+    out = pipe(10, iffy(bigger_5, 2))
+    assert out == 2
 
-    y = ifelse(x > 1, x + 1, x)
-    assert y > x
+    # Without if_false returns input by default
+    out = pipe(1, iffy(bigger_5, 2))
+    assert out == 1
 
-    # Can call as func and then use whatever name
-    out = ifelse(lambda e: e * 2 > 20, "yes", "no", x)
-    assert out == "no"
-
-    # Can return them too
-    out = ifelse(lambda e: e * 2 > 10, lambda e: e + 10, "no", x)
-    assert out == 20
+    # Useful to conditionally apply func over iterable when combined with map
+    out = pipe(seq(10), mapcat(iffy(bigger_5, lambda x: x * 2)))
+    assert equal(out, [0, 1, 2, 3, 4, 5, 12, 14, 16, 18])
 
 
 def test_pop():
@@ -376,6 +448,7 @@ def test_pipes_advanced():
     out = pipe(
         df,
         append(lambda df: df["group"].unique()[::-1]),
+        ...,
         spread(
             lambda tup: sns.barplot(
                 x="group",
@@ -395,6 +468,7 @@ def test_pipes_advanced():
     out = pipe(
         df,
         append(lambda df: df["group"].unique()[::-1]),
+        ...,
         spread(
             gather(
                 lambda data, order: sns.barplot(
@@ -443,6 +517,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
+        ...,
         across(
             lambda means: sns.histplot(means),
             lambda means: sns.boxplot(means),
@@ -463,6 +538,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
+        ...,
         across(
             compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
@@ -479,6 +555,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
+        ...,
         across(
             compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
@@ -487,10 +564,7 @@ def test_pipes_advanced():
     )
     assert isinstance(a1_mean, pd.Series)
 
-    # NOTE: THIS DOESN"T WORK BY DESIGN
-    # Pop can only shrink outputs from the previous step
-    # in this case thats a tuple of plots which are discarded anyway
-    # so the real output (from spread) is unaffected
+    # Same thing with pop
     a1_mean_with_pop = pipe(
         df,
         lambda df: df.groupby("group"),
@@ -498,12 +572,9 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
-        across(
-            compose(lambda means: sns.histplot(means), tweak(title="histplot")),
-            compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
-        ),
         pop(0),
+        ...,
+        compose(lambda means: sns.histplot(means), tweak(title="histplot")),
     )
-    assert isinstance(a1_mean_with_pop, tuple)
-    assert len(a1_mean_with_pop) == 2
-    assert a1_mean_with_pop[0].equals(a1_mean)
+
+    assert isinstance(a1_mean_with_pop, pd.Series)

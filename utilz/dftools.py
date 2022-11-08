@@ -11,20 +11,16 @@ __all__ = [
     "assert_balanced_groups",
     "assert_same_nunique",
     "select",
-    "to_long",
-    "to_wide",
+    "pivot_longer",
+    "pivot_wider",
 ]
 
 import numpy as np
-import pandas as pd
 from functools import wraps
 from typing import Union, List
 from pandas.api.extensions import register_dataframe_accessor
 from pandas.core.groupby.groupby import GroupBy
-from utilz import filtercat, mapcat
-from itertools import permutations
-from math import factorial
-from toolz import curry
+from utilz import filter, mapcat
 
 
 # Register a function as a method attached to the Pandas DataFrame. Note: credit for
@@ -160,7 +156,7 @@ def select(df, *args, **kwargs):
     # Get col via name or exclude -name
     col_list = [*args]
     # Split columns to keep and drop based on '-' prefix
-    drop, keep = filtercat("-", col_list, invert="split", assert_notempty=False)
+    drop, keep = filter("-", col_list, invert="split", assert_notempty=False)
     # Remove the prefix
     if len(drop):
         drop = mapcat(lambda col: col[1:], drop)
@@ -177,7 +173,7 @@ def _select(dfg, *args):
         col = args[0]
         if not col.startswith("-"):
             return dfg[args[0]]
-        cols = filtercat(col[1:], dfg.obj.columns, invert=True)
+        cols = filter(col[1:], dfg.obj.columns, invert=True)
         # Incase we only have 2 cols and filter out 1 ensure series return type
         cols = cols[0] if len(cols) == 1 else cols
         return dfg[cols]
@@ -186,7 +182,7 @@ def _select(dfg, *args):
     col_list = [*args]
 
     # Split columns to keep and drop based on '-' prefix
-    drop, keep = filtercat("-", col_list, invert="split", assert_notempty=False)
+    drop, keep = filter("-", col_list, invert="split", assert_notempty=False)
 
     # Remove the prefix
     if len(drop):
@@ -194,10 +190,10 @@ def _select(dfg, *args):
 
     # Add the grouping cols to the drop list
     drop += dfg.grouper.names
-    cols = filtercat(drop, dfg.obj.columns, invert=True, assert_notempty=False)
+    cols = filter(drop, dfg.obj.columns, invert=True, assert_notempty=False)
 
     if len(keep):
-        cols = filtercat(keep, cols)
+        cols = filter(keep, cols)
 
     # Incase we filter down to 1 col ensure series return type
     cols = cols[0] if len(cols) == 1 else cols
@@ -209,7 +205,7 @@ GroupBy.select = _select
 
 
 @_register_dataframe_method
-def to_long(
+def pivot_longer(
     df, columns=None, id_vars=None, into=("variable", "value"), make_index=False
 ):
     """
@@ -252,7 +248,7 @@ def to_long(
 
 
 @_register_dataframe_method
-def to_wide(df, column, using, drop_index=True):
+def pivot_wider(df, column, using, drop_index=True):
     """
     Cast a column of long-form tidy data to a set of wide columns based on the values in
     a another column ('using')
@@ -263,7 +259,7 @@ def to_wide(df, column, using, drop_index=True):
         using (str): string name of column who's values should be placed into the new
         columns
         drop_index (bool; optional): if a 'prev_index' col exists (usually created by
-        make_index=True in to_long) will drop it; Default True
+        make_index=True in pivot_longer) will drop it; Default True
 
     """
     index = [col for col in df.columns if col not in [column, using]]
@@ -279,6 +275,6 @@ def to_wide(df, column, using, drop_index=True):
     except ValueError as e:
         if "duplicate" in str(e):
             print(
-                f"ERROR: It's not possible to infer what rows are unique from columns that make up the index: {index}. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise .to_long() can create a unique index for with make_index = True"
+                f"ERROR: It's not possible to infer what rows are unique from columns that make up the index: {index}. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise .pivot_longer() can create a unique index for with make_index = True"
             )
         raise e

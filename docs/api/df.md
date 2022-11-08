@@ -19,13 +19,13 @@ df = pd.DataFrame({
 out = pipe(
     df,
     _.rename({"weight (male, lbs)": "male", "weight (female, lbs)": "female"}),
-    _.to_long(columns=["male", "female"], into=("sex", "weight")),
+    _.pivot_longer(columns=["male", "female"], into=("sex", "weight")),
     _.split("weight", ("min", "max"), sep="-"),
-    _.to_long(columns=["min", "max"], into=("stat", "weight")),
+    _.pivot_longer(columns=["min", "max"], into=("stat", "weight")),
     _.astype({"weight": float}),
     _.groupby("genus", "sex"),
-    _.assign(weight="weight.mean()"),
-    _.to_wide(column="sex", using="weight"),
+    _.summarize(weight="weight.mean()"),
+    _.pivot_wider(column="sex", using="weight"),
     _.mutate(dimorphism="male / female"),  # no rounding possible
     _.mutate(dimorphism=lambda male, female: np.round(male / female, 2)) # instead use a func
 )

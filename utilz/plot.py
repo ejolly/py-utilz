@@ -30,7 +30,6 @@ def mpinit(figsize: tuple = (8, 6), subplots: tuple = (1, 1)):
     return f, ax
 
 
-@curry
 def stripbarplot(
     data,
     pointcolor="black",
@@ -74,7 +73,15 @@ def stripbarplot(
     alpha = kwargs.pop("alpha", 1)
 
     ax = sns.barplot(*args, **kwargs, data=data, ax=ax, estimator=estimator)
-    ax = sns.stripplot(*args, **kwargs, color=pointcolor, data=data, ax=ax, alpha=alpha)
+    # stripplot doesn't have these kwargs
+    _ = kwargs.pop("units", None)
+    _ = kwargs.pop("n_boot", None)
+    if pointcolor == "hue":
+        ax = sns.stripplot(*args, **kwargs, data=data, ax=ax, alpha=alpha)
+    else:
+        ax = sns.stripplot(
+            *args, **kwargs, color=pointcolor, data=data, ax=ax, alpha=alpha
+        )
 
     if legend is False:
         _ = ax.get_legend().remove()
@@ -170,7 +177,6 @@ def savefig(
     if raster:
         if (raster_path.exists() and overwrite) or (not raster_path.exists()):
             f.savefig(raster_path, bbox_inches=bbox_inches, **kwargs)
-    return f
 
 
 @curry
@@ -222,7 +228,8 @@ def tweak(plot: Union[Figure, Axes], **kwargs) -> Union[Figure, Axes]:
     # Set main params
     plot.set(**kwargs)
     # Set legend params
-    plot.legend(handles, labels, **legend_params)
+    if plot.get_legend() is not None:
+        plot.legend(handles, labels, **legend_params)
     # Set title params
     plot.set_title(**title_params)
     # Set other params
