@@ -184,7 +184,7 @@ def pipe(
     data: Any,
     *funcs: Iterable,
     output: bool = True,
-    show: bool = True,
+    show: bool = False,
     debug: bool = False,
     keep: Union[int, None] = None,
     load_existing: bool = False,
@@ -276,36 +276,37 @@ def pipe(
 
     # If the pipe was passed an ..., then we don't need to run this block
     if out is None:
-        # Now loop over results in reverse order to figure out what to return
-        # We never return plots or None so we search until we find the first non-plot,
-        # non-None evaluation. For each evaluation that's a tuple we return if none of it's
-        # elements is a plot or None, otherwise we search through its elements and return
-        # the first non-plot non-None.
-        for e in evals[::-1]:
-            # if the return is None or is a plot keep looking
-            if bad_return(e):
-                continue
-            elif isinstance(e, (tuple, list)):
-                # If tuple contains all Nones, Plots, or any mixcture keep looking
-                if all(bad_return(elem) for elem in e):
-                    continue
-                # If tuple contains no Nones or plots return it
-                elif all(not bad_return(elem) for elem in e):
-                    out = e
-                    break
-                # The tuple is mixed so we have to loop over it
-                else:
-                    for elem in e:
-                        if bad_return(elem):
-                            continue
-                        else:
-                            out = e
-                            break
-                    else:
-                        continue
-            else:
-                out = e
-                break
+        out = data
+        # # Now loop over results in reverse order to figure out what to return
+        # # We never return plots or None so we search until we find the first non-plot,
+        # # non-None evaluation. For each evaluation that's a tuple we return if none of it's
+        # # elements is a plot or None, otherwise we search through its elements and return
+        # # the first non-plot non-None.
+        # for e in evals[::-1]:
+        #     # if the return is None or is a plot keep looking
+        #     if bad_return(e):
+        #         continue
+        #     elif isinstance(e, (tuple, list)):
+        #         # If tuple contains all Nones, Plots, or any mixcture keep looking
+        #         if all(bad_return(elem) for elem in e):
+        #             continue
+        #         # If tuple contains no Nones or plots return it
+        #         elif all(not bad_return(elem) for elem in e):
+        #             out = e
+        #             break
+        #         # The tuple is mixed so we have to loop over it
+        #         else:
+        #             for elem in e:
+        #                 if bad_return(elem):
+        #                     continue
+        #                 else:
+        #                     out = e
+        #                     break
+        #             else:
+        #                 continue
+        #     else:
+        #         out = e
+        #         break
 
     if show:
         if isinstance(out, tuple):

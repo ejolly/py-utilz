@@ -6,7 +6,7 @@ from utilz import (
     mapcompose,
     mapacross,
     mapif,
-    maparound,
+    mapwith,
     filter,
     pipe,
     spread,
@@ -46,12 +46,13 @@ def test_random_state():
 def test_mapcat():
 
     # Just like map
-    out = mapcat(lambda x: x * 2, [1, 2, 3, 4])
-    assert out == list(map(lambda x: x * 2, [1, 2, 3, 4]))
+    out = map(lambda x: x * 2, [1, 2, 3, 4])
+    correct = [x * 2 for x in [1, 2, 3, 4]]
+    assert out == correct
 
     # Currying
-    out = pipe([1, 2, 3, 4], mapcat(lambda x: x * 2))
-    assert out == list(map(lambda x: x * 2, [1, 2, 3, 4]))
+    out = pipe([1, 2, 3, 4], map(lambda x: x * 2))
+    assert out == correct
 
     # Concatenating nested lists
     data = [[1, 2], [3, 4]]
@@ -186,13 +187,31 @@ def test_mapalts():
     out = pipe(seq(10), mapif(lambda x: x * 2, bigger_5))
     assert equal(out, [0, 1, 2, 3, 4, 5, 12, 14, 16, 18])
 
+    # Pass a single fixed extra arg
+    out = mapwith(lambda fixed, elem: elem + fixed, 5, [1, 2, 3, 4])
+    outc = pipe([1, 2, 3, 4], mapwith(lambda x, y: x + y, 5))
+    correct = [x + 5 for x in [1, 2, 3, 4]]
+    assert out == correct
+    assert outc == correct
+
+    # Multiple iterables
+    iterme = [1, 2, 3]
+    iterwith = [2, 2, 2]
+    out = mapwith(lambda x, y: x / y, iterwith, iterme)
+    outc = pipe(
+        iterme, mapwith(lambda frompipe, iterwith: frompipe / iterwith, iterwith)
+    )
+    correct = [x / 2 for x in [1, 2, 3]]
+    assert out == correct
+    assert outc == correct
+
     # Map around a fixed input
-    out = pipe(randdf(), maparound(lambda e, df: df.shape[0] > e, [5, 10, 20]))
+    out = pipe([5, 10, 20], mapwith(lambda e, df: df.shape[0] > e, randdf()))
     assert equal([True, False, False], out)
 
     df = randdf((20, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5)
 
-    out = pipe(df, maparound(lambda label, df: df.query("Group == @label"), ["A", "C"]))
+    out = pipe(["A", "C"], mapwith(lambda label, df: df.query("Group == @label"), df))
     assert len(out) == 2
     assert out[0].shape[0] == int(df.shape[0] / 4)
 
@@ -429,6 +448,7 @@ def test_pipes_advanced():
     out = pipe(
         df,
         append(lambda df: df["group"].unique()[::-1]),
+        ...,
         spread(
             lambda tup: sns.barplot(
                 x="group",
@@ -448,6 +468,7 @@ def test_pipes_advanced():
     out = pipe(
         df,
         append(lambda df: df["group"].unique()[::-1]),
+        ...,
         spread(
             gather(
                 lambda data, order: sns.barplot(
@@ -496,6 +517,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
+        ...,
         across(
             lambda means: sns.histplot(means),
             lambda means: sns.boxplot(means),
@@ -516,6 +538,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
+        ...,
         across(
             compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
@@ -532,6 +555,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
+        ...,
         across(
             compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
@@ -540,10 +564,7 @@ def test_pipes_advanced():
     )
     assert isinstance(a1_mean, pd.Series)
 
-    # NOTE: THIS DOESN"T WORK BY DESIGN
-    # Pop can only shrink outputs from the previous step
-    # in this case thats a tuple of plots which are discarded anyway
-    # so the real output (from spread) is unaffected
+    # Same thing with pop
     a1_mean_with_pop = pipe(
         df,
         lambda df: df.groupby("group"),
@@ -551,12 +572,9 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("A1").mean(),
             lambda dfg: dfg.select("B1").mean(),
         ),
-        across(
-            compose(lambda means: sns.histplot(means), tweak(title="histplot")),
-            compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
-        ),
         pop(0),
+        ...,
+        compose(lambda means: sns.histplot(means), tweak(title="histplot")),
     )
-    assert isinstance(a1_mean_with_pop, tuple)
-    assert len(a1_mean_with_pop) == 2
-    assert a1_mean_with_pop[0].equals(a1_mean)
+
+    assert isinstance(a1_mean_with_pop, pd.Series)

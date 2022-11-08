@@ -73,8 +73,9 @@ def stripbarplot(
     alpha = kwargs.pop("alpha", 1)
 
     ax = sns.barplot(*args, **kwargs, data=data, ax=ax, estimator=estimator)
-    # stripplot doesn't have units
+    # stripplot doesn't have these kwargs
     _ = kwargs.pop("units", None)
+    _ = kwargs.pop("n_boot", None)
     if pointcolor == "hue":
         ax = sns.stripplot(*args, **kwargs, data=data, ax=ax, alpha=alpha)
     else:
@@ -176,7 +177,6 @@ def savefig(
     if raster:
         if (raster_path.exists() and overwrite) or (not raster_path.exists()):
             f.savefig(raster_path, bbox_inches=bbox_inches, **kwargs)
-    return f
 
 
 @curry

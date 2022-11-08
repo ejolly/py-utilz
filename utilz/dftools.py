@@ -11,8 +11,8 @@ __all__ = [
     "assert_balanced_groups",
     "assert_same_nunique",
     "select",
-    "to_long",
-    "to_wide",
+    "pivot_longer",
+    "pivot_wider",
 ]
 
 import numpy as np
@@ -205,7 +205,7 @@ GroupBy.select = _select
 
 
 @_register_dataframe_method
-def to_long(
+def pivot_longer(
     df, columns=None, id_vars=None, into=("variable", "value"), make_index=False
 ):
     """
@@ -248,7 +248,7 @@ def to_long(
 
 
 @_register_dataframe_method
-def to_wide(df, column, using, drop_index=True):
+def pivot_wider(df, column, using, drop_index=True):
     """
     Cast a column of long-form tidy data to a set of wide columns based on the values in
     a another column ('using')
@@ -259,7 +259,7 @@ def to_wide(df, column, using, drop_index=True):
         using (str): string name of column who's values should be placed into the new
         columns
         drop_index (bool; optional): if a 'prev_index' col exists (usually created by
-        make_index=True in to_long) will drop it; Default True
+        make_index=True in pivot_longer) will drop it; Default True
 
     """
     index = [col for col in df.columns if col not in [column, using]]
@@ -275,6 +275,6 @@ def to_wide(df, column, using, drop_index=True):
     except ValueError as e:
         if "duplicate" in str(e):
             print(
-                f"ERROR: It's not possible to infer what rows are unique from columns that make up the index: {index}. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise .to_long() can create a unique index for with make_index = True"
+                f"ERROR: It's not possible to infer what rows are unique from columns that make up the index: {index}. If you have multiple observations per index, then you should use .pivot_table and decide how to *aggregate* these observations. Otherwise .pivot_longer() can create a unique index for with make_index = True"
             )
         raise e

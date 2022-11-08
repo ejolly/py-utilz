@@ -10,12 +10,12 @@ on **iterables**. Here are the parallels:
 | `mapacross`  | `None`  | apply **multiple functions** to **multiple inputs** in pairs
 | `mapif`  | `iffy`  | apply **one function** if a *predicate function* otherwise noop |
 | `mapcat`  | `None`/`concat`  | apply **one multi-output function** and flatten the results |
-| `maparound`  | `None`  | really one useful in pipes; create iterable from **one
-  input** and a secondary iterable |
+| `mapwith`  | `None`  | map a two argument function to an iterable and a fixed arg or two iterables |
 
 
-All members of the `map` family, *except* `mapcat`,
-return a sequence the same length as the input they receive.
+All members of the `map` family, expect an iterable as their **last** argument, each
+element of which is passed to functions as their **first** argument. Except for
+`mapcat`, all `map*` functions return a sequence the same length as the input they received.
 """
 
 __all__ = [
@@ -26,7 +26,7 @@ __all__ = [
     "mapmany",
     "mapacross",
     "mapif",
-    "maparound",
+    "mapwith",
 ]
 
 from joblib import delayed, Parallel
@@ -38,6 +38,7 @@ from tqdm import tqdm
 from inspect import signature
 import numpy as np
 from itertools import filterfalse
+from copy import deepcopy
 
 
 MAX_INT = np.iinfo(np.int32).max
@@ -49,7 +50,7 @@ def _pmap(
     iterme: Iterable,
     enum: bool = False,
     seeds: Union[None, list] = None,
-    n_jobs: int = 2,
+    n_jobs: int = 1,
     backend: Union[None, str] = None,
     progressbar: bool = True,
     verbose: int = 0,
@@ -141,13 +142,12 @@ def map(
     Super-power your `for` loops with a progress-bar and optional *reproducible*
     parallelization!
 
-    **map**s `func` to `iterme` and con**cat**enates the result into a single, list,
-    DataFrame or array. Includes a progress-bar powered by `tqdm`.
+    **map**s `func` to `iterme`. Includes a progress-bar powered by `tqdm`.
 
     Supports parallelization with `jobllib.Parallel` multi-processing by setting `n_jobs > 1`. Progress-bar *accurately* tracks parallel jobs!
 
-    `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of lists. List of lists up to 2 deep will be flattened to single
-    list.
+    `iterme` can be a list of elements, list of DataFrames, list of arrays, or list of
+    lists. List of lists up to 2 deep will be flattened to single list when `func = None`
 
     See the examples below for interesting use cases beyond standard looping!
 
@@ -403,18 +403,27 @@ def filter(
 
 
 @curry
-def maparound(func, iterme, around, **kwargs):
-    """Apply a function to each element of iterme with a fixed second arg set to
-    `around`. Primarily useful in `pipe`s when the previous input is a singleton (e.g.
-    dataframe) and you need to create a sequence using another iterable. In this case
-    we're mapping *around* the dataframe."""
+def mapwith(func, iterwith, iterme, **kwargs):
+    """Just like map but accepts a second arg that can also be an iterator. In a pipe
+    iterme is always the *last* input to mapwith, but the *first* input func. If
+    `copy=True` is passed and iterwith is not an iterator, an iterator is built with
+    guaranteed copies of iterwith."""
 
-    if isinstance(around, (list, tuple)):
+    copy = kwargs.pop("copy", False)
+
+    if not isinstance(iterwith, (list, tuple)):
+        if copy:
+            hascopy = getattr(iterwith, "copy", None)
+            if callable(hascopy):
+                iterwith = [iterwith.copy()] * len(iterme)
+            else:
+                iterwith = [deepcopy(iterwith)] * len(iterme)
+        else:
+            iterwith = [iterwith] * len(iterme)
+
+    if len(iterme) != len(iterwith):
         raise TypeError(
-            f"maparound expects a single input to be curried but received {type(around)}: {len(around)}."
+            f"mapwith received an iterable but its length ({len(iterwith)} doesn't match the length of the input iterable ({len(iterme)}"
         )
 
-    out = []
-    for e in iterme:
-        out.append(func(e, around, **kwargs))
-    return out
+    return map(lambda tup: func(*tup), zip(iterme, iterwith), **kwargs)

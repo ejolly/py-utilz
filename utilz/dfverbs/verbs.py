@@ -33,6 +33,9 @@ __all__ = [
     "squeeze",
     "to_numpy",
     "to_list",
+    "ngroups",
+    "get_group",
+    "reset_index",
 ]
 
 import pandas as pd
@@ -433,18 +436,18 @@ def select(*args):
 @curry
 def pivot_wider(*args, **kwargs):
     """
-    Convert a pair of columns to multiple columns, e.g. `_.to_wide('condition', using='response')`
+    Convert a pair of columns to multiple columns, e.g. `_.pivot_wider('condition', using='response')`
 
     Args:
         column (str): string name of column to "explode"
         using (str): string name of column who's values should be placed into the new columns
         drop_index (bool; optional): if a 'prev_index' col exists (usually created by
-        make_index=True in to_long) will drop it; Default True
+        make_index=True in pivot_longer) will drop it; Default True
 
     """
 
     def call(df):
-        return df.to_wide(*args, **kwargs)
+        return df.pivot_wider(*args, **kwargs)
 
     return call
 
@@ -453,8 +456,8 @@ def pivot_wider(*args, **kwargs):
 def pivot_longer(*args, **kwargs):
     """
     Convert a list of columns into 2 columns. Can pass a list of columsn to melt-down or
-    `id_vars` to select everything else: e.g. `_.to_long(['male', 'female'],
-    into=('gender', 'response'))` or `_.to_long(id_vars='SID', into=('gender','response'))`
+    `id_vars` to select everything else: e.g. `_.pivot_longer(['male', 'female'],
+    into=('gender', 'response'))` or `_.pivot_longer(id_vars='SID', into=('gender','response'))`
 
     Args:
         columns (list or None): columns to melt; Defaults to None
@@ -466,29 +469,43 @@ def pivot_longer(*args, **kwargs):
     """
 
     def call(df):
-        return df.to_long(*args, **kwargs)
+        return df.pivot_longer(*args, **kwargs)
 
     return call
 
 
 @curry
-def split(col, into, df, sep=" "):
-    """Split values in single df column into multiple columns by separator, e.g.
+def split(*args, sep=" "):
+    """
+    Split values in single df column into multiple columns by separator, e.g.
     First-Last -> [First], [Last]. To split list elements use [] as the sep, e.g.
-    [1,2,3] -> [1], [2], [3]"""
+    [1,2,3] -> [1], [2], [3]
 
-    if isinstance(sep, str):
-        out = df[col].str.split(sep, expand=True)
-    elif isinstance(sep, list):
-        out = pd.DataFrame(df[col].to_list())
-    if len(into) != out.shape[1]:
-        raise ValueError(
-            f"into has {len(into)} elements, but splitting creates a dataframe with {out.shape[1]} columns"
-        )
-    else:
-        out.columns = list(into)
+    Args:
+        column (str): column to split
+        into (list): new columns names to create
+        sep (str, list): separator to split on. Use [] for list
 
-    return pd.concat([df.drop(columns=col), out], axis=1)
+    """
+
+    col, into = args
+
+    def call(df):
+
+        if isinstance(sep, str):
+            out = df[col].str.split(sep, expand=True)
+        elif isinstance(sep, list):
+            out = pd.DataFrame(df[col].to_list())
+        if len(into) != out.shape[1]:
+            raise ValueError(
+                f"into has {len(into)} elements, but splitting creates a dataframe with {out.shape[1]} columns"
+            )
+        else:
+            out.columns = list(into)
+
+        return pd.concat([df.drop(columns=col), out], axis=1)
+
+    return call
 
 
 @curry
@@ -569,6 +586,16 @@ def replace(*args, **kwargs):
 
     def call(df):
         return df.replace(*args, **kwargs)
+
+    return call
+
+
+@curry
+def reset_index(*args, **kwargs):
+    """Call a dataframe's reset_index method"""
+
+    def call(df):
+        return df.reset_index(*args, **kwargs)
 
     return call
 
