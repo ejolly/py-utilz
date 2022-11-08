@@ -417,3 +417,28 @@ def test_rf_pipeline():
     )
     assert out.shape == (16, 6)
     assert all(out.columns == ["bear", "genus", "stat", "female", "male", "dimorphism"])
+
+    # Test bootstrap ci
+    boots = pipe(
+        out,
+        _.drop("stat"),
+        _.pivot_longer(["male", "female"], into=("sex", "weight")),
+        _.call("drop_duplicates"),
+        _.groupby("bear"),
+        _.bootci("weight", n_boot=100, seed=0),
+    )
+    assert equal(boots.columns, ["bear", "weight_mean", "weight_ci_l", "weight_ci_u"])
+    assert all(boots["weight_ci_l"] < boots["weight_mean"])
+    assert all(boots["weight_ci_u"] > boots["weight_mean"])
+
+    # As deviations for plotting libs, e.g. matplotlib or plotly
+    boots2 = pipe(
+        out,
+        _.drop("stat"),
+        _.pivot_longer(["male", "female"], into=("sex", "weight")),
+        _.call("drop_duplicates"),
+        _.groupby("bear"),
+        _.bootci("weight", as_deviation=True, n_boot=100, seed=0),
+    )
+    assert all(boots2["weight_ci_l"] == boots["weight_mean"] - boots["weight_ci_l"])
+    assert all(boots2["weight_ci_u"] == boots["weight_ci_u"] - boots["weight_mean"])

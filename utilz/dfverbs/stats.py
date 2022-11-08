@@ -26,12 +26,16 @@ __all__ = [
     "value_counts",  # dplyr count
     "rank",
     "size",
+    "bootci",
 ]
 
 import numpy as np
 import pandas as pd
 from toolz import curry
-from .verbs import _reset_index_helper
+from .verbs import _reset_index_helper, apply, split, summarize, merge, mutate
+import seaborn as sns
+from ..ops import pipe
+from ..maps import filter
 
 
 @curry
@@ -273,5 +277,56 @@ def size(*args, **kwargs):
 
     def call(df):
         return df.size(*args, **kwargs)
+
+    return call
+
+
+@curry
+def bootci(col, **kwargs):
+    """Calculate 95% bootstrapped confidence intervals on the mean of a column. Unlike
+    summarize, bootci expects a string column name and will return a summary frame with
+    columns for the mean, 2.5% and 97.% confidence limits. Use `as_devation=True` to
+    convert the CIs to deviations from the mean. Accepts all the same args as
+    `seaborn.algorithms.bootstrap`, e.g. `units`."""
+
+    deviation = kwargs.pop("as_deviation", False)
+
+    def call(df):
+        if isinstance(df, pd.core.groupby.generic.DataFrameGroupBy):
+            units = kwargs.pop("units", None)
+
+            cis = pipe(
+                df,
+                apply(
+                    lambda g: sns.utils.ci(
+                        sns.algorithms.bootstrap(
+                            g[col],
+                            units=g[units] if units is not None else None,
+                            **kwargs,
+                        )
+                    ),
+                    reset_index="reset",
+                ),
+                split(0, [f"{col}_ci_l", f"{col}_ci_u"], sep=[]),
+            )
+            summary = pipe(df, summarize(**{f"{col}_mean": f"{col}.mean()"}))
+            matching_cols = filter(summary.columns, cis.columns)
+            cis = pipe(cis, merge(summary, on=matching_cols))
+            if deviation:
+                cis = pipe(
+                    cis,
+                    mutate(
+                        **{
+                            f"{col}_ci_l": f"{col}_mean - {col}_ci_l",
+                            f"{col}_ci_u": f"{col}_ci_u - {col}_mean",
+                        },
+                    ),
+                )
+
+            return cis
+        else:
+            raise TypeError(
+                "bootci only works on grouped dataframes, trying call _.groupby before"
+            )
 
     return call
