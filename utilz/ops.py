@@ -38,6 +38,7 @@ __all__ = [
     "nth",
     "check_random_state",
     "datatable",
+    "pairs",
 ]
 
 from ._utils import get_resource_path
@@ -46,6 +47,7 @@ import pandas as pd
 from typing import Union, Any
 from collections.abc import Callable, Iterable
 from itertools import chain as it_chain
+import itertools as it
 from inspect import signature
 from toolz import curry, juxt
 from toolz.curried import compose_left as compose, nth
@@ -178,6 +180,11 @@ def concat(op, iterme, axis, ignore_index):
 @curry
 def sort(iterme: Iterable, **kwargs):
     return sorted(iterme, **kwargs)
+
+
+@curry
+def pairs(iterme: Iterable):
+    return list(it.combinations(iterme, 2))
 
 
 def pipe(
