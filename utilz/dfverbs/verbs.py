@@ -36,6 +36,7 @@ __all__ = [
     "ngroups",
     "get_group",
     "reset_index",
+    "split_groups",
 ]
 
 import pandas as pd
@@ -619,5 +620,15 @@ def get_group(group):
             elif isinstance(group, int):
                 return dfg.get_group(list(dfg.groups.keys())[group])
         raise TypeError("get_group only works on grouped dataframes")
+
+    return call
+
+
+@curry
+def split_groups():
+    def call(dfg):
+        if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
+            return dfg.split_groups()
+        raise TypeError("split_groups only works on grouped dataframes")
 
     return call

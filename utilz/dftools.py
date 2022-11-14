@@ -200,8 +200,14 @@ def _select(dfg, *args):
     return dfg[cols]
 
 
+def _split_groups(dfg):
+    """Split a grouped dataframe into a list of its sub dataframes"""
+    return list(map(lambda tup: tup[1], dfg))
+
+
 # Monkeypatch groupby object with a .select method
 GroupBy.select = _select
+GroupBy.split_groups = _split_groups
 
 
 @_register_dataframe_method
