@@ -255,9 +255,10 @@ def pipe(
         if not isinstance(save, list):
             save = [save]
         if load_existing:
-            # Only support csvs for now
-            print("Existing csv(s) found. Bypassing pipe and loading from disk...")
-            out = tuple([pd.read_csv(s) for s in save])
+            if all(map(lambda f: Path(f).exists(), save)):
+                # Only support csvs for now
+                print("Existing csv(s) found. Bypassing pipe and loading from disk...")
+                out = tuple([pd.read_csv(s) for s in save])
 
     # Actually run pipe
     if out is None:
