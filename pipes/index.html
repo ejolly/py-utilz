@@ -299,8 +299,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#passing-previous-outputs-forward-with-append" class="md-nav__link">
-    Passing previous outputs forward with append
+  <a href="#passing-previous-outputs-forward-with-alongwith" class="md-nav__link">
+    Passing previous outputs forward with alongwith
   </a>
   
 </li>
@@ -313,8 +313,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#append-vs-spread" class="md-nav__link">
-    append vs spread
+  <a href="#alongwith-vs-spread" class="md-nav__link">
+    alongwith vs spread
   </a>
   
 </li>
@@ -325,19 +325,12 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#handling-multiple-outputs" class="md-nav__link">
-    Handling multiple outputs
+  <a href="#handling-multiple-outputs-with-the-map-family" class="md-nav__link">
+    Handling multiple outputs with the map family
   </a>
   
-    <nav class="md-nav" aria-label="Handling multiple outputs">
+    <nav class="md-nav" aria-label="Handling multiple outputs with the map family">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#keeping-outputs-separated-with-separate" class="md-nav__link">
-    Keeping outputs separated with separate
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#condensing-pipes-with-gather" class="md-nav__link">
@@ -346,29 +339,8 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#separate-vs-gather" class="md-nav__link">
-    separate vs gather
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#plotting-in-pipes" class="md-nav__link">
-    Plotting in pipes
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
-    Summary
-  </a>
   
 </li>
       
@@ -590,8 +562,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#passing-previous-outputs-forward-with-append" class="md-nav__link">
-    Passing previous outputs forward with append
+  <a href="#passing-previous-outputs-forward-with-alongwith" class="md-nav__link">
+    Passing previous outputs forward with alongwith
   </a>
   
 </li>
@@ -604,8 +576,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#append-vs-spread" class="md-nav__link">
-    append vs spread
+  <a href="#alongwith-vs-spread" class="md-nav__link">
+    alongwith vs spread
   </a>
   
 </li>
@@ -616,19 +588,12 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#handling-multiple-outputs" class="md-nav__link">
-    Handling multiple outputs
+  <a href="#handling-multiple-outputs-with-the-map-family" class="md-nav__link">
+    Handling multiple outputs with the map family
   </a>
   
-    <nav class="md-nav" aria-label="Handling multiple outputs">
+    <nav class="md-nav" aria-label="Handling multiple outputs with the map family">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#keeping-outputs-separated-with-separate" class="md-nav__link">
-    Keeping outputs separated with separate
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#condensing-pipes-with-gather" class="md-nav__link">
@@ -637,29 +602,8 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#separate-vs-gather" class="md-nav__link">
-    separate vs gather
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#plotting-in-pipes" class="md-nav__link">
-    Plotting in pipes
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
-    Summary
-  </a>
   
 </li>
       
@@ -721,56 +665,56 @@
 <p>Every argument to <code>pipe</code> after the first is a function that is executed in sequence. Of course this is a contrived example as we could just chain together pandas operations instead: <code>data.fillna(0).apply(lambda df: df- df.mean().mean()))</code>. However, <code>pipe</code> in can work on any kind of input not just dataframes, making it a more general pattern for chaining operations.</p>
 <h2 id="widening-pipes">Widening pipes</h2>
 <p><code>utilz</code> provides 2 functions to "widen" pipes, i.e. add/change outputs to the output of the previous step.</p>
-<h3 id="passing-previous-outputs-forward-with-append">Passing previous outputs forward with <code>append</code></h3>
-<p>Using <code>append</code> we can "inject" additional data into the pipeline before the next function call. <code>append</code> always takes a <strong>single function</strong> that should accept the output from the previous step. It always <strong>returns a tuple</strong> with the output of that function appended to the end:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">append</span>
+<h3 id="passing-previous-outputs-forward-with-alongwith">Passing previous outputs forward with <code>alongwith</code></h3>
+<p>Using <code>alongwith</code> we can "inject" additional data into the pipeline before the next function call. <code>alongwith</code> always takes a <strong>single function</strong> that should accept the output from the previous step. It always <strong>returns a tuple</strong> with the output of that function appended to the end:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">alongwith</span>
 <span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">it</span>
 
 <span class="n">pipe</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
-    <span class="n">append</span><span class="p">(</span>
+    <span class="n">alongwith</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">2</span><span class="p">)),</span>
     <span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
 <pre class="mermaid"><code>graph TD
-  df[(data)]--&gt;append{append}
+  df[(data)]--&gt;alongwith{alongwith}
   subgraph  
-  append-- data --&gt;df2[("(data, sub-pairs)")]
-  append-- data --&gt;lambda[calc sub-pairs]-- sub-pairs --&gt;df2
+  alongwith-- data --&gt;df2[("(data, sub-pairs)")]
+  alongwith-- data --&gt;lambda[calc sub-pairs]-- sub-pairs --&gt;df2
   end</code></pre>
-<p>We can keep this going to add additional data into the pipelines. <code>append</code> is smart enough to flatten out the tuple in successive calls. This is a very powerful semantic that lets you keep outputs from earlier in a <code>pipe</code> around, without needed to create temporary variables:</p>
+<p>We can keep this going to add additional data into the pipelines. <code>alongwith</code> is smart enough to flatten out the tuple in successive calls. This is a very powerful semantic that lets you keep outputs from earlier in a <code>pipe</code> around, without needed to create temporary variables:</p>
 <div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
-    <span class="n">append</span><span class="p">(</span>
+    <span class="n">alongwith</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">2</span><span class="p">)),</span>
     <span class="p">),</span>
-    <span class="n">append</span><span class="p">(</span>
+    <span class="n">alongwith</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Conditions</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">3</span><span class="p">)),</span>
     <span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
 <pre class="mermaid"><code>graph TD
-  df[(data)]--&gt;append{append}
+  df[(data)]--&gt;alongwith{alongwith}
   subgraph  
-  append-- data --&gt;df2[("(data, sub-pairs)")]
-  append-- data --&gt;lambda[calc sub-pairs]-- sub-pairs --&gt;df2
+  alongwith-- data --&gt;df2[("(data, sub-pairs)")]
+  alongwith-- data --&gt;lambda[calc sub-pairs]-- sub-pairs --&gt;df2
   end
-  df2 --&gt;append2{append}
+  df2 --&gt;alongwith2{alongwith}
   subgraph  
-  append2-- data --&gt;df3[("(data, sub-pairs, condition-triplets)")]
-  append2-- sub-pairs --&gt;df3
-  append2-- data --&gt;lambda2[calc condition-triplets]-- condition-triplets --&gt;df3
-  append2-- sub-pairs --&gt;lambda2
+  alongwith2-- data --&gt;df3[("(data, sub-pairs, condition-triplets)")]
+  alongwith2-- sub-pairs --&gt;df3
+  alongwith2-- data --&gt;lambda2[calc condition-triplets]-- condition-triplets --&gt;df3
+  alongwith2-- sub-pairs --&gt;lambda2
   end</code></pre>
-<p>If the function passed to <code>append</code> only takes 1 argument, then <code>append</code> assumes you wanted the <strong>first</strong> value in the input which is the earliest value prior the first call of <code>append</code> inside a <code>pipe</code>. So although the first <code>append</code> returns a tuple <code>(data, sub_pairs)</code>, the second call to <code>append</code> received a function with only 1 arg leading <code>append</code> to only receive <code>data</code>. </p>
+<p>If the function passed to <code>alongwith</code> only takes 1 argument, then <code>alongwith</code> assumes you wanted the <strong>first</strong> value in the input which is the earliest value prior the first call of <code>alongwith</code> inside a <code>pipe</code>. So although the first <code>alongwith</code> returns a tuple <code>(data, sub_pairs)</code>, the second call to <code>alongwith</code> received a function with only 1 arg leading <code>alongwith</code> to only receive <code>data</code>. </p>
 <p>If you want to access <em>all</em> the previous outputs, simply use a function that can handle that many outputs:</p>
 <div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
-    <span class="n">append</span><span class="p">(</span>
+    <span class="n">alongwith</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">2</span><span class="p">)),</span>
     <span class="p">),</span>
-    <span class="n">append</span><span class="p">(</span>
+    <span class="n">alongwith</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">,</span> <span class="n">pairs</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">pairs</span><span class="o">=</span><span class="n">pairs</span><span class="p">)</span>
     <span class="p">)</span>
 <span class="p">)</span>
@@ -799,7 +743,7 @@
   gamma --&gt;out
   band --&gt;out
   end</code></pre>
-<p>Spreading it useful when you want to run <em>one input through multiple functions</em> or <strong>one-to-many</strong>. You can see how <code>spread</code> is a more general form of <code>append</code> because you can simply pass a no-op/identity functions as one of the arguments to pass previous outputs forward (<code>append</code> offers cleaner usage):</p>
+<p>Spreading it useful when you want to run <em>one input through multiple functions</em> or <strong>one-to-many</strong>. You can see how <code>spread</code> is a more general form of <code>alongwith</code> because you can simply pass a no-op/identity functions as one of the arguments to pass previous outputs forward (<code>alongwith</code> offers cleaner usage):</p>
 <div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">spread</span><span class="p">(</span>
@@ -822,19 +766,26 @@
   gamma --&gt;out
   band --&gt;out
   end</code></pre>
-<h3 id="append-vs-spread"><code>append</code> vs <code>spread</code></h3>
-<p>The primary way to think about the difference between <code>spread</code> and <code>append</code> is the following:</p>
+<h3 id="alongwith-vs-spread"><code>alongwith</code> vs <code>spread</code></h3>
+<p>The primary way to think about the difference between <code>spread</code> and <code>alongwith</code> is the following:</p>
 <ul>
-<li>Use <code>append</code> when the next function in your pipe expects the output from one or more functions ago</li>
+<li>Use <code>alongwith</code> when the next function in your pipe expects the output from one or more functions ago</li>
 <li>this allows you to store "state" in a different way</li>
 <li>Use <code>spread</code> when you need to run two or more independent sub-pipelines</li>
 <li>this allows you to avoid having to create multiple <code>pipe</code>s with the same input data</li>
+<li>if you simply need to create copies you can use <code>fork</code> which takes an integer </li>
 </ul>
-<h2 id="handling-multiple-outputs">Handling multiple outputs</h2>
-<p><code>utilz</code> offers 2 way to handle multiple outputs from any step in a <code>pipe</code> , regardless of whether that's because of how your function works or because you used <code>append</code> or <code>spread</code>.</p>
-<h3 id="keeping-outputs-separated-with-separate">Keeping outputs separated with <code>separate</code></h3>
-<p>To continue processing outputs <strong>independently</strong> of each other use <code>separate</code>. It expects one or more functions that will be applied to each output with no data sharing between function evaluations:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">separate</span><span class="p">,</span> <span class="n">curry</span>
+<h2 id="handling-multiple-outputs-with-the-map-family">Handling multiple outputs with the <code>map</code> family</h2>
+<p><code>utilz</code> offers multiple functions that operate on <em>iterables</em> which all begin with <code>map</code>. Here's a quick rundown:</p>
+<ul>
+<li><code>map</code>: apply a function to each element </li>
+<li><code>mapcat</code>: concatenate the results of a <code>map</code> into a squeezed array or dataframe</li>
+<li><code>mapcompose</code>: apply multiple functions in sequence to each element, passing the previous evaluation into the next function </li>
+<li><code>mapmany</code>: apply multiple functions to each element, but keep their evaluations independent</li>
+<li><code>mapacross</code>: apply one function to each element in matching pairs</li>
+</ul>
+<p>Here are some examples:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">mapcompose</span><span class="p">,</span> <span class="n">curry</span><span class="p">,</span> <span class="n">mapcompose</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
 <span class="n">pipe</span><span class="p">(</span>
@@ -844,10 +795,10 @@
         <span class="n">gamma_filter</span><span class="p">,</span>
         <span class="n">band_filter</span>
         <span class="p">),</span>
-    <span class="n">separate</span><span class="p">(</span>
+    <span class="n">mapcompose</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">),</span>
         <span class="k">lambda</span> <span class="n">dfagg</span><span class="p">:</span> <span class="n">dfagg</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
-    <span class="p">)</span>
+    <span class="p">)</span> <span class="c1"># Like running each transformed copy of data through a mini-pipe</span>
 <span class="p">)</span>
 </code></pre></div>
 <pre class="mermaid"><code>graph TD
@@ -861,11 +812,11 @@
   band --&gt;out
   end
 
-  out --&gt;separate{separate}
+  out --&gt;mapcompose{mapcompose}
   subgraph  
-  separate-- sine-filtered-data --&gt;aggfuncsine[groupby-mean]
-  separate-- gamma-filtered-data --&gt;aggfuncgamma[groupby-mean]
-  separate-- band-filtered-data --&gt;aggfuncband[groupby-mean]
+  mapcompose-- sine-filtered-data --&gt;aggfuncsine[groupby-mean]
+  mapcompose-- gamma-filtered-data --&gt;aggfuncgamma[groupby-mean]
+  mapcompose-- band-filtered-data --&gt;aggfuncband[groupby-mean]
   aggfuncsine--&gt;aggcorrsine[corr]
   aggfuncgamma--&gt;aggcorrgamma[corr]
   aggfuncband--&gt;aggcorrband[corr]
@@ -873,19 +824,21 @@
   aggcorrgamma --&gt;dfout
   aggcorrband --&gt;dfout
   end</code></pre>
-<p>If <code>separate</code> is passed <code>match = True</code> and the number of functions equals the number of outputs from the previous step, each function will be applied to each output as a pair rather than each function executing on each input:</p>
-<div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
+<p>Sometimes you don't want to run each element through a function, but rather run function element pairs. You can accomplish this with <code>mapacross</code>: </p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">mapacross</span>
+
+<span class="n">pipe</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">spread</span><span class="p">(</span>
         <span class="n">sine_filter</span><span class="p">,</span>
         <span class="n">gamma_filter</span><span class="p">,</span>
         <span class="n">band_filter</span>
         <span class="p">),</span>
-    <span class="n">separate</span><span class="p">(</span>
+    <span class="n">mapacross</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;median&#39;</span><span class="p">)</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mode&#39;</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="p">)</span> <span class="c1"># expect 3 functions as there are 3 transformed copies of data</span>
 <span class="p">)</span>
 </code></pre></div>
 <pre class="mermaid"><code>graph TD
@@ -899,18 +852,18 @@
   band --&gt;out
   end
 
-  out --&gt;separate{separate}
+  out --&gt;mapacross{mapacross}
   subgraph  
-  separate-- sine-filtered-data --&gt;aggmean[aggmean]
-  separate-- gamma-filtered-data --&gt;aggmedian[aggmedian]
-  separate-- band-filtered-data --&gt;aggmode[aggmode]
+  mapacross-- sine-filtered-data --&gt;aggmean[aggmean]
+  mapacross-- gamma-filtered-data --&gt;aggmedian[aggmedian]
+  mapacross-- band-filtered-data --&gt;aggmode[aggmode]
   aggmean --&gt; dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
   aggmedian --&gt;dfout
   aggmode --&gt;dfout
   end</code></pre>
 <h3 id="condensing-pipes-with-gather">Condensing pipes with <code>gather</code></h3>
 <p>The other idiom <code>utilz</code> supports is simply <code>gather</code>-ing up all the previous outputs so they're more conveniently accessible by the next step in the <code>pipe</code> which should make use of one ore more of these outputs:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">gather</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">gather</span><span class="p">,</span> <span class="nb">map</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">pipe</span><span class="p">(</span>
@@ -920,7 +873,7 @@
         <span class="n">gamma_filter</span><span class="p">,</span>
         <span class="n">band_filter</span>
         <span class="p">),</span>
-    <span class="n">separate</span><span class="p">(</span>
+    <span class="nb">map</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">),</span>
     <span class="p">),</span>
     <span class="c1"># contrived example</span>
@@ -938,11 +891,11 @@
   band --&gt;out
   end
 
-  out --&gt;separate{separate}
+  out --&gt;map{map}
   subgraph  
-  separate-- sine-filtered-data --&gt;aggfuncsine[groupby-mean]
-  separate-- gamma-filtered-data --&gt;aggfuncgamma[groupby-mean]
-  separate-- band-filtered-data --&gt;aggfuncband[groupby-mean]
+  map-- sine-filtered-data --&gt;aggfuncsine[groupby-mean]
+  map-- gamma-filtered-data --&gt;aggfuncgamma[groupby-mean]
+  map-- band-filtered-data --&gt;aggfuncband[groupby-mean]
   aggfuncsine --&gt; dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
   aggfuncgamma --&gt;dfout
   aggfuncband --&gt;dfout
@@ -962,7 +915,7 @@
         <span class="n">gamma_filter</span><span class="p">,</span>
         <span class="n">band_filter</span>
         <span class="p">),</span>
-    <span class="n">separate</span><span class="p">(</span>
+    <span class="nb">map</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">),</span>
     <span class="p">),</span>
     <span class="c1"># harder to understand going on</span>
@@ -980,11 +933,11 @@
   band --&gt;out
   end
 
-  out --&gt;separate{separate}
+  out --&gt;map{map}
   subgraph  
-  separate-- sine-filtered-data --&gt;aggfuncsine[groupby-mean]
-  separate-- gamma-filtered-data --&gt;aggfuncgamma[groupby-mean]
-  separate-- band-filtered-data --&gt;aggfuncband[groupby-mean]
+  map-- sine-filtered-data --&gt;aggfuncsine[groupby-mean]
+  map-- gamma-filtered-data --&gt;aggfuncgamma[groupby-mean]
+  map-- band-filtered-data --&gt;aggfuncband[groupby-mean]
   aggfuncsine --&gt; dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
   aggfuncgamma --&gt;dfout
   aggfuncband --&gt;dfout
@@ -999,7 +952,7 @@
         <span class="n">gamma_filter</span><span class="p">,</span>
         <span class="n">band_filter</span>
         <span class="p">),</span>
-    <span class="n">separate</span><span class="p">(</span>
+    <span class="n">mapcompose</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">),</span>
     <span class="p">),</span>
     <span class="c1"># Don&#39;t need to gather; concat wants a lists/tuple</span>
@@ -1009,14 +962,14 @@
         <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;std&#39;</span><span class="p">))</span>
 <span class="p">)</span>
 </code></pre></div>
-<p>Of course <code>gather</code> works with any output that's a tuple or list such, as the outputs of <code>append</code> and <code>spread</code>:</p>
+<p>Of course <code>gather</code> works with any output that's a tuple or list such, as the outputs of <code>alongwith</code> and <code>spread</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="n">pipe</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span>
-    <span class="n">append</span><span class="p">(</span>
+    <span class="n">alongwith</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">2</span><span class="p">)),</span>
     <span class="p">),</span>
     <span class="c1"># (data, sub-pairs)</span>
-    <span class="n">append</span><span class="p">(</span>
+    <span class="n">alongwith</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">tup</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Conditions</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="mi">3</span><span class="p">)),</span>
     <span class="p">),</span>
     <span class="c1"># (data, sub-pairs, condition-triplets)</span>
@@ -1028,17 +981,17 @@
 <span class="p">)</span>
 </code></pre></div>
 <pre class="mermaid"><code>graph TD
-  df[(data)]--&gt;append{append}
+  df[(data)]--&gt;alongwith{alongwith}
   subgraph  
-  append-- data --&gt;df2[("(data, sub-pairs)")]
-  append-- data --&gt;lambda[calc sub-pairs]-- sub-pairs --&gt;df2
+  alongwith-- data --&gt;df2[("(data, sub-pairs)")]
+  alongwith-- data --&gt;lambda[calc sub-pairs]-- sub-pairs --&gt;df2
   end
-  df2 --&gt;append2{append}
+  df2 --&gt;alongwith2{alongwith}
   subgraph  
-  append2-- data --&gt;df3[("(data, sub-pairs, condition-triplets)")]
-  append2-- sub-pairs --&gt;df3
-  append2-- data --&gt;lambda2[calc condition-triplets]-- condition-triplets --&gt;df3
-  append2-- sub-pairs --&gt;lambda2
+  alongwith2-- data --&gt;df3[("(data, sub-pairs, condition-triplets)")]
+  alongwith2-- sub-pairs --&gt;df3
+  alongwith2-- data --&gt;lambda2[calc condition-triplets]-- condition-triplets --&gt;df3
+  alongwith2-- sub-pairs --&gt;lambda2
   end
   df3 --&gt; gather{gather}
   subgraph  
@@ -1046,60 +999,6 @@
   gather-- sub-pairs --&gt;aggd
   gather-- condition-triplets --&gt;aggd
   end</code></pre>
-<h3 id="separate-vs-gather"><code>separate</code> vs <code>gather</code></h3>
-<p>The primary way to think about the differences between <code>separate</code> and <code>gather</code>:</p>
-<ul>
-<li>Use <code>gather</code> when the next function in your pipe is going to <strong>combine</strong> the previous inputs</li>
-<li>Use <code>separate</code> when you want to run 1 ore more sub-pipelines separately for each input</li>
-</ul>
-<h2 id="plotting-in-pipes">Plotting in pipes</h2>
-<p>One idiosyncratic feature of <code>pipe</code> is that it <strong>only displays but does not return plots.</strong> In other words, if a function returns a <code>matplotlib</code> <code>Figure</code> or <code>Axes</code>, these will be displayed in an interactive environment (i.e. notebook, qtconsole) and will pass between functions inside of a pipe but will not be returned. Instead pipe will <strong>return the last non-plot output</strong>. Also note when using libraries like <code>matplotlib</code> and <code>seaborn</code> you'll want to wrap their respective functions in <code>curry</code> so they handle partial inputs properly.:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">curry</span>
-
-<span class="n">out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span>
-    <span class="c1"># partial function application of seaborn call</span>
-    <span class="n">curry</span><span class="p">(</span>
-        <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;A1&#39;</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-<span class="c1"># Plots don&#39;t return!</span>
-<span class="n">out</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># True</span>
-</code></pre></div>
-<p>This is a deliberate choice as plots are intended to be <em>saved inside of a pipe</em> using <code>savefig()</code> from <code>utilz.plotting</code>. While strange at first, this as the nice effect of not messying-up the output of interactive runs with <code>matplotlib</code> objects and forces you to <em>do something with your plots</em>. This <strong>also applies to functions that return <code>None</code>.</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Do this instead</span>
-<span class="n">out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span>
-    <span class="c1"># partial function application of seaborn call</span>
-    <span class="n">curry</span><span class="p">(</span>
-        <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;A1&#39;</span>
-    <span class="p">),</span>
-    <span class="n">savefig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;myplot&#39;</span><span class="p">)</span>
-<span class="p">)</span>
-
-<span class="c1"># savefig returns a fig so it also doesn&#39;t return!</span>
-<span class="n">out</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># True</span>
-</code></pre></div>
-<p>You can also manually suppress any outputs by passing <code>output=False</code> as the last step to a <code>pipe</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="n">out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span>
-    <span class="c1"># partial function application of seaborn call</span>
-    <span class="n">curry</span><span class="p">(</span>
-        <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;A1&#39;</span>
-    <span class="p">),</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="p">)</span>
-
-<span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span> <span class="c1"># True</span>
-</code></pre></div>
-<h2 id="summary">Summary</h2>
-<ul>
-<li>for <strong>one-to-many</strong> operation use <code>append</code> or <code>spread</code></li>
-<li>for <strong>many-to-many</strong> operations use <code>separate</code></li>
-<li>for <strong>many-to-one</strong> operations use <code>gather</code> or make sure your function handle tuple/list input</li>
-<li><strong>plots never return</strong> and only display</li>
-</ul>
 
 
 
