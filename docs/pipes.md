@@ -463,3 +463,144 @@ graph TD
   gather-- condition-triplets -->aggd
   end
 ```
+
+## Modifying `pipe`'s behavior
+
+To make life easier `pipe` offers several semantics for controlling what gets displayed and returned. A good rule of thumb is that **everything inside a `pipe` is always evaluated.** So the functionality described here is just manipulating those evaluations in some specific way. There are no supported semantics for "partially" evaluating anything inside a `pipe`. 
+
+### Controlling what `pipe` returns
+
+You can use the following flags to control what `pipe` returns and thus what can be assigned to a variable:
+
+- `output (default True)`: return the final result of the pipe, typically the last function evaluation (but see [ellipses](#ellipses))
+- `flatten (default False)`: assuming output is an iterable, tries to unnest 1 layer of iterable nesting
+- `keep (default None)`: an integer or list of integers that can be used to slice the output of `pipe` assuming the output is iterable. Useful for discarding outputs you don't want or need.
+
+#### Ellipses
+
+`pipe` supports a special semantic using the `...` operator in python. This is a valid and unique token that can be passed in place of a function. When `pipe` sees this it **flags the current output to be the final output of the `pipe` regardless of any values after `...`**. This can be useful for running functions that have side-effects but don't return as the terminal step in a pipe, but still getting back the previous computations. 
+
+Here's an illustrative example where we munge some data and then print some summary information to the screen. Because the `print` function doesn't return anything, if we used it as the last step in our pipe our `results` would be `None`:
+
+```python
+import utilz.dfverbs as _ # dataframe tools
+
+results = pipe(
+    DATA_DIR / "data.csv",
+    _.read_csv(),
+    _.fillna(0),
+    _.replace(" ", 0),
+    _.query(lambda df: ~df.SID.isin(EXCLUDED_SUBS)),
+    _.query("Condition != 'C'"),
+    _.mutate(
+        Rank=lambda df: df.Rank.astype(int), # Ensure numeric int types
+        Was_Recalled=lambda df: df.Rank.apply(lambda x: 1 if x > 0 else x), # binarize based on cut-off
+    ),
+    lambda df: print(
+        f"""
+           Num participants: {df.SID.nunique()}
+            Num cues: {df.groupby('Category').Cue.nunique()}
+            Num chars per participant: {df.groupby('SID').size().unique()}
+            """
+    ), # print() always returns None so thats the last function evaluation in pipe!
+)
+
+results is None # True
+```
+
+Instead we can use `...` to mark where we want our `pipe` to return from, regardless of what comes after:
+
+```python
+
+results = pipe(
+    DATA_DIR / "data.csv",
+    _.read_csv(),
+    _.fillna(0),
+    _.replace(" ", 0),
+    _.query(lambda df: ~df.SID.isin(EXCLUDED_SUBS)),
+    _.query("Condition != 'C'"),
+    _.mutate(
+        Rank=lambda df: df.Rank.astype(int), # Ensure numeric int types
+        Was_Recalled=lambda df: df.Rank.apply(lambda x: 1 if x > 0 else x), # binarze based on cut-off
+    ),
+    ..., # now we return the output of _.mutate() regardless of any funcs after this point!
+    lambda df: print(
+        f"""
+           Num participants: {df.SID.nunique()}
+            Num cues: {df.groupby('Category').Cue.nunique()}
+            Num chars per participant: {df.groupby('SID').size().unique()}
+            """
+    ), # print() always returns None
+)
+
+isinstance(results, pd.DataFrame) # True
+```
+
+This is an extremely powerful way to make several things more convenient in a *single `pipe`*. While it's tempting to test the possibilities, in practice its much more useful to **keep `pipe` simple**.
+
+That being said there are some common data analysis patterns where `...` can be useful:
+
+- preprocessing data and saving it as a variable, but *also* additionally processing that data to make plotting easier, and then generating and saving the plot 
+
+```python
+
+by_sum, by_mean = pipe(
+    data,
+    _.groupby("SID"),
+    _.apply(
+        lambda s: s.pivot(values="Was_Recalled", index="List", columns="Cue"),
+        reset_index="reset",
+    ),
+    # Up to here we've just performed some reshaping to generate vstacked List x Cue dfs per SID 
+    _.groupby("List"),
+    many(
+        lambda df: df.sum()[CUE_ORDER],
+        lambda df: df.mean()[CUE_ORDER],
+    ), # many runs 2 independent copies of our grouped data through each function so we get a tuple with 2 elements back
+    ..., # this tuple is what gets output and unpacked into by_sum and by_mean
+    map(_.heatmap(cmap="Blues")), # but we can keep going and generate a heatmap for the summed and averaged dataframes!
+    mapacross(
+        tweak(title="Number of Participants", xlabel=None, ylabel=None),
+        tweak(title="Proportion of Participants", xlabel=None, ylabel=None),
+    ), # we can operate on each plot in parallel and give them different titles
+    mapacross(
+        savefig(path=FIG_DIR, name="char_by_cue_sum"),
+        savefig(path=FIG_DIR, name="char_by_cue_mean"),
+    ), # and finally save them to different files without affecting the output at all!
+)
+
+```
+
+### Saving and loading `pipe` output
+
+You can use the following flags to control I/O with pipes:
+
+- `save (default False)`: will call the `.to_csv()` method on the output of the pipe or each element of the output if the output is a list/tuple
+- `load_existing default False)`: only works when `save` is being used. Will try to load the results at the path provided to `save` thus **bypassing `pipe` evaluation entirely**. Set to `False` will always overwrite the results at the path provided to `save`.
+
+### Controlling what `pipe` displays
+
+You can use the following flags to control how `pipe` behaves in interactive sessions like IPython consoles or Jupyter notebooks:
+
+- `show (default False)`: print or display the the final result of the pipe. This is useful, because you can assign the result of your pipe to a variable but still see what you're assigning without having to create another line of code/code-cell, e.g.
+
+```python
+# This
+m = pipe([1,2,3], np.mean, show=True)
+
+# is equivalent to this
+m = pipe([1,2,3], np.mean)
+m
+```
+
+## Debugging `pipe`
+
+Sometimes it can be hard to track intermediate values/state when a `pipe` gets long or complicated. In general: **this is a good indication to split up your `pipe`**. Just save a subset of steps as a separate variable. You can always refactor multiple pipes later. 
+
+Set `debug=True` when running a `pipe` to do 2 things:
+
+1. Ignores all other flags such as saving and loading
+2. Saves the evaluation of every step to a list and returns that list
+
+This will consume more memory as each intermediate value will now be assigned to a list item, but this can be extremely helpful in seeing what's going on.
+

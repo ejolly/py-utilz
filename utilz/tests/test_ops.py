@@ -121,16 +121,16 @@ def test_parallel_mapcat():
 
     # Running sequentially takes 5s
     start = time()
-    out = mapcat(f, range(10), n_jobs=1)
+    out = mapcat(f, range(20), n_jobs=1)
     duration = time() - start
-    assert len(out) == 10
+    assert len(out) == 20
 
     # Running 2 jobs takes less time
     start = time()
-    out = mapcat(f, range(10), n_jobs=2)
+    out = mapcat(f, range(20), n_jobs=2)
     par_duration = time() - start
     assert par_duration < duration
-    assert len(out) == 10
+    assert len(out) == 20
 
     # By default if a function to be parallelized handles it's own randomization
     # interally, there should be no issue with repeated values when run in parallel
