@@ -344,6 +344,60 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#modifying-pipes-behavior" class="md-nav__link">
+    Modifying pipe's behavior
+  </a>
+  
+    <nav class="md-nav" aria-label="Modifying pipe's behavior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controlling-what-pipe-returns" class="md-nav__link">
+    Controlling what pipe returns
+  </a>
+  
+    <nav class="md-nav" aria-label="Controlling what pipe returns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ellipses" class="md-nav__link">
+    Ellipses
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saving-and-loading-pipe-output" class="md-nav__link">
+    Saving and loading pipe output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlling-what-pipe-displays" class="md-nav__link">
+    Controlling what pipe displays
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-pipe" class="md-nav__link">
+    Debugging pipe
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -604,6 +658,60 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modifying-pipes-behavior" class="md-nav__link">
+    Modifying pipe's behavior
+  </a>
+  
+    <nav class="md-nav" aria-label="Modifying pipe's behavior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controlling-what-pipe-returns" class="md-nav__link">
+    Controlling what pipe returns
+  </a>
+  
+    <nav class="md-nav" aria-label="Controlling what pipe returns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ellipses" class="md-nav__link">
+    Ellipses
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saving-and-loading-pipe-output" class="md-nav__link">
+    Saving and loading pipe output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlling-what-pipe-displays" class="md-nav__link">
+    Controlling what pipe displays
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-pipe" class="md-nav__link">
+    Debugging pipe
+  </a>
   
 </li>
       
@@ -999,6 +1107,122 @@
   gather-- sub-pairs --&gt;aggd
   gather-- condition-triplets --&gt;aggd
   end</code></pre>
+<h2 id="modifying-pipes-behavior">Modifying <code>pipe</code>'s behavior</h2>
+<p>To make life easier <code>pipe</code> offers several semantics for controlling what gets displayed and returned. A good rule of thumb is that <strong>everything inside a <code>pipe</code> is always evaluated.</strong> So the functionality described here is just manipulating those evaluations in some specific way. There are no supported semantics for "partially" evaluating anything inside a <code>pipe</code>. </p>
+<h3 id="controlling-what-pipe-returns">Controlling what <code>pipe</code> returns</h3>
+<p>You can use the following flags to control what <code>pipe</code> returns and thus what can be assigned to a variable:</p>
+<ul>
+<li><code>output (default True)</code>: return the final result of the pipe, typically the last function evaluation (but see <a href="#ellipses">ellipses</a>)</li>
+<li><code>flatten (default False)</code>: assuming output is an iterable, tries to unnest 1 layer of iterable nesting</li>
+<li><code>keep (default None)</code>: an integer or list of integers that can be used to slice the output of <code>pipe</code> assuming the output is iterable. Useful for discarding outputs you don't want or need.</li>
+</ul>
+<h4 id="ellipses">Ellipses</h4>
+<p><code>pipe</code> supports a special semantic using the <code>...</code> operator in python. This is a valid and unique token that can be passed in place of a function. When <code>pipe</code> sees this it <strong>flags the current output to be the final output of the <code>pipe</code> regardless of any values after <code>...</code></strong>. This can be useful for running functions that have side-effects but don't return as the terminal step in a pipe, but still getting back the previous computations. </p>
+<p>Here's an illustrative example where we munge some data and then print some summary information to the screen. Because the <code>print</code> function doesn't return anything, if we used it as the last step in our pipe our <code>results</code> would be <code>None</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">utilz.dfverbs</span> <span class="k">as</span> <span class="nn">_</span> <span class="c1"># dataframe tools</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
+    <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">&quot;data.csv&quot;</span><span class="p">,</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">SID</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">EXCLUDED_SUBS</span><span class="p">)),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Condition != &#39;C&#39;&quot;</span><span class="p">),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span>
+        <span class="n">Rank</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">Rank</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="c1"># Ensure numeric int types</span>
+        <span class="n">Was_Recalled</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">Rank</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span><span class="p">),</span> <span class="c1"># binarize based on cut-off</span>
+    <span class="p">),</span>
+    <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">           Num participants: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">SID</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">            Num cues: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Cue</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">            Num chars per participant: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;SID&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">            &quot;&quot;&quot;</span>
+    <span class="p">),</span> <span class="c1"># print() always returns None so thats the last function evaluation in pipe!</span>
+<span class="p">)</span>
+
+<span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span> <span class="c1"># True</span>
+</code></pre></div>
+<p>Instead we can use <code>...</code> to mark where we want our <code>pipe</code> to return from, regardless of what comes after:</p>
+<div class="highlight"><pre><span></span><code><span class="n">results</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
+    <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">&quot;data.csv&quot;</span><span class="p">,</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">SID</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">EXCLUDED_SUBS</span><span class="p">)),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Condition != &#39;C&#39;&quot;</span><span class="p">),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span>
+        <span class="n">Rank</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">Rank</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="c1"># Ensure numeric int types</span>
+        <span class="n">Was_Recalled</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">Rank</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span><span class="p">),</span> <span class="c1"># binarze based on cut-off</span>
+    <span class="p">),</span>
+    <span class="o">...</span><span class="p">,</span> <span class="c1"># now we return the output of _.mutate() regardless of any funcs after this point!</span>
+    <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">           Num participants: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">SID</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">            Num cues: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Cue</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">            Num chars per participant: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;SID&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">            &quot;&quot;&quot;</span>
+    <span class="p">),</span> <span class="c1"># print() always returns None</span>
+<span class="p">)</span>
+
+<span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="c1"># True</span>
+</code></pre></div>
+<p>This is an extremely powerful way to make several things more convenient in a <em>single <code>pipe</code></em>. While it's tempting to test the possibilities, in practice its much more useful to <strong>keep <code>pipe</code> simple</strong>.</p>
+<p>That being said there are some common data analysis patterns where <code>...</code> can be useful:</p>
+<ul>
+<li>preprocessing data and saving it as a variable, but <em>also</em> additionally processing that data to make plotting easier, and then generating and saving the plot </li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">by_sum</span><span class="p">,</span> <span class="n">by_mean</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;SID&quot;</span><span class="p">),</span>
+    <span class="n">_</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="s2">&quot;Was_Recalled&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">&quot;List&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Cue&quot;</span><span class="p">),</span>
+        <span class="n">reset_index</span><span class="o">=</span><span class="s2">&quot;reset&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="c1"># Up to here we&#39;ve just performed some reshaping to generate vstacked List x Cue dfs per SID </span>
+    <span class="n">_</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;List&quot;</span><span class="p">),</span>
+    <span class="n">many</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">()[</span><span class="n">CUE_ORDER</span><span class="p">],</span>
+        <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">()[</span><span class="n">CUE_ORDER</span><span class="p">],</span>
+    <span class="p">),</span> <span class="c1"># many runs 2 independent copies of our grouped data through each function so we get a tuple with 2 elements back</span>
+    <span class="o">...</span><span class="p">,</span> <span class="c1"># this tuple is what gets output and unpacked into by_sum and by_mean</span>
+    <span class="nb">map</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">)),</span> <span class="c1"># but we can keep going and generate a heatmap for the summed and averaged dataframes!</span>
+    <span class="n">mapacross</span><span class="p">(</span>
+        <span class="n">tweak</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Number of Participants&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+        <span class="n">tweak</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Proportion of Participants&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="p">),</span> <span class="c1"># we can operate on each plot in parallel and give them different titles</span>
+    <span class="n">mapacross</span><span class="p">(</span>
+        <span class="n">savefig</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">FIG_DIR</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;char_by_cue_sum&quot;</span><span class="p">),</span>
+        <span class="n">savefig</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">FIG_DIR</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;char_by_cue_mean&quot;</span><span class="p">),</span>
+    <span class="p">),</span> <span class="c1"># and finally save them to different files without affecting the output at all!</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="saving-and-loading-pipe-output">Saving and loading <code>pipe</code> output</h3>
+<p>You can use the following flags to control I/O with pipes:</p>
+<ul>
+<li><code>save (default False)</code>: will call the <code>.to_csv()</code> method on the output of the pipe or each element of the output if the output is a list/tuple</li>
+<li><code>load_existing default False)</code>: only works when <code>save</code> is being used. Will try to load the results at the path provided to <code>save</code> thus <strong>bypassing <code>pipe</code> evaluation entirely</strong>. Set to <code>False</code> will always overwrite the results at the path provided to <code>save</code>.</li>
+</ul>
+<h3 id="controlling-what-pipe-displays">Controlling what <code>pipe</code> displays</h3>
+<p>You can use the following flags to control how <code>pipe</code> behaves in interactive sessions like IPython consoles or Jupyter notebooks:</p>
+<ul>
+<li><code>show (default False)</code>: print or display the the final result of the pipe. This is useful, because you can assign the result of your pipe to a variable but still see what you're assigning without having to create another line of code/code-cell, e.g.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># This</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># is equivalent to this</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+<span class="n">m</span>
+</code></pre></div>
+<h2 id="debugging-pipe">Debugging <code>pipe</code></h2>
+<p>Sometimes it can be hard to track intermediate values/state when a <code>pipe</code> gets long or complicated. In general: <strong>this is a good indication to split up your <code>pipe</code></strong>. Just save a subset of steps as a separate variable. You can always refactor multiple pipes later. </p>
+<p>Set <code>debug=True</code> when running a <code>pipe</code> to do 2 things:</p>
+<ol>
+<li>Ignores all other flags such as saving and loading</li>
+<li>Saves the evaluation of every step to a list and returns that list</li>
+</ol>
+<p>This will consume more memory as each intermediate value will now be assigned to a list item, but this can be extremely helpful in seeing what's going on.</p>
 
 
 
