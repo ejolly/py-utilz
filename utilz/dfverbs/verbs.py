@@ -347,7 +347,6 @@ def transmute(dfg, **kwargs):
         return out
 
 
-# TODO: make this like mutate where the callable can use column names args
 @curry
 def query(q, **kwargs):
     """
