@@ -1873,7 +1873,8 @@ For groupbed dataframes, resets and drops index by default. Change this with <co
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">377</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">376</span>
+<span class="normal">377</span>
 <span class="normal">378</span>
 <span class="normal">379</span>
 <span class="normal">380</span>
@@ -1886,8 +1887,7 @@ For groupbed dataframes, resets and drops index by default. Change this with <co
 <span class="normal">387</span>
 <span class="normal">388</span>
 <span class="normal">389</span>
-<span class="normal">390</span>
-<span class="normal">391</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">390</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call a dataframe or groupby object&#39;s `.apply` method</span>
 <span class="sd">    For groupbed dataframes, resets and drops index by default. Change this with `reset_index=&#39;drop&#39;|&#39;reset&#39;|&#39;none&#39;`</span>
@@ -1964,13 +1964,13 @@ column or a dict to cast multiple</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">512</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">511</span>
+<span class="normal">512</span>
 <span class="normal">513</span>
 <span class="normal">514</span>
 <span class="normal">515</span>
 <span class="normal">516</span>
-<span class="normal">517</span>
-<span class="normal">518</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">517</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">astype</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Cast one ore more columns to a type. Like `.rename()` you can either input a single tuple to cast 1</span>
 <span class="sd">    column or a dict to cast multiple&quot;&quot;&quot;</span>
@@ -2000,7 +2000,8 @@ _.call('mean'))</code> would call <code>df.mean()</code></p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">533</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">532</span>
+<span class="normal">533</span>
 <span class="normal">534</span>
 <span class="normal">535</span>
 <span class="normal">536</span>
@@ -2012,8 +2013,7 @@ _.call('mean'))</code> would call <code>df.mean()</code></p>
 <span class="normal">542</span>
 <span class="normal">543</span>
 <span class="normal">544</span>
-<span class="normal">545</span>
-<span class="normal">546</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">545</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call an arbitrary method or function on an object, e.g. `pipe(df,</span>
 <span class="sd">    _.call(&#39;mean&#39;))` would call `df.mean()`&quot;&quot;&quot;</span>
@@ -2079,15 +2079,15 @@ multiple args like <code>.select()</code>, e.g. <code>_.drop('height', 'weight')
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">414</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">413</span>
+<span class="normal">414</span>
 <span class="normal">415</span>
 <span class="normal">416</span>
 <span class="normal">417</span>
 <span class="normal">418</span>
 <span class="normal">419</span>
 <span class="normal">420</span>
-<span class="normal">421</span>
-<span class="normal">422</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">421</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call a dataframe&#39;s `.drop(axis=1)` method. Column names should be passed as</span>
 <span class="sd">    multiple args like `.select()`, e.g. `_.drop(&#39;height&#39;, &#39;weight&#39;)`&quot;&quot;&quot;</span>
@@ -2118,14 +2118,14 @@ multiple args like <code>.select()</code>, e.g. <code>_.drop('height', 'weight')
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">574</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">573</span>
+<span class="normal">574</span>
 <span class="normal">575</span>
 <span class="normal">576</span>
 <span class="normal">577</span>
 <span class="normal">578</span>
 <span class="normal">579</span>
-<span class="normal">580</span>
-<span class="normal">581</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">580</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">fillna</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call a dataframe&#39;s fillna method&quot;&quot;&quot;</span>
 
@@ -2192,14 +2192,14 @@ multiple args like <code>.select()</code>, e.g. <code>_.drop('height', 'weight')
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">394</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">393</span>
+<span class="normal">394</span>
 <span class="normal">395</span>
 <span class="normal">396</span>
 <span class="normal">397</span>
 <span class="normal">398</span>
 <span class="normal">399</span>
-<span class="normal">400</span>
-<span class="normal">401</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">400</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">head</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call dataframe&#39;s `.head()` method&quot;&quot;&quot;</span>
 
@@ -2570,7 +2570,8 @@ into=('gender', 'response'))</code> or <code>_.pivot_longer(id_vars='SID', into=
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">456</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">455</span>
+<span class="normal">456</span>
 <span class="normal">457</span>
 <span class="normal">458</span>
 <span class="normal">459</span>
@@ -2588,8 +2589,7 @@ into=('gender', 'response'))</code> or <code>_.pivot_longer(id_vars='SID', into=
 <span class="normal">471</span>
 <span class="normal">472</span>
 <span class="normal">473</span>
-<span class="normal">474</span>
-<span class="normal">475</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">474</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">pivot_longer</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a list of columns into 2 columns. Can pass a list of columsn to melt-down or</span>
@@ -2675,7 +2675,8 @@ into=('gender', 'response'))</code> or <code>_.pivot_longer(id_vars='SID', into=
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">437</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">436</span>
+<span class="normal">437</span>
 <span class="normal">438</span>
 <span class="normal">439</span>
 <span class="normal">440</span>
@@ -2690,8 +2691,7 @@ into=('gender', 'response'))</code> or <code>_.pivot_longer(id_vars='SID', into=
 <span class="normal">449</span>
 <span class="normal">450</span>
 <span class="normal">451</span>
-<span class="normal">452</span>
-<span class="normal">453</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">452</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">pivot_wider</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a pair of columns to multiple columns, e.g. `_.pivot_wider(&#39;condition&#39;, using=&#39;response&#39;)`</span>
@@ -2731,7 +2731,8 @@ default. Change this with <code>reset_index='drop'|'reset'|'none'</code></p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">351</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">350</span>
+<span class="normal">351</span>
 <span class="normal">352</span>
 <span class="normal">353</span>
 <span class="normal">354</span>
@@ -2753,8 +2754,7 @@ default. Change this with <code>reset_index='drop'|'reset'|'none'</code></p>
 <span class="normal">370</span>
 <span class="normal">371</span>
 <span class="normal">372</span>
-<span class="normal">373</span>
-<span class="normal">374</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">373</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Call a dataframe object&#39;s `.query` method. Resets and drops index by</span>
@@ -2865,14 +2865,14 @@ or a dict to rename multiple</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">584</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">583</span>
+<span class="normal">584</span>
 <span class="normal">585</span>
 <span class="normal">586</span>
 <span class="normal">587</span>
 <span class="normal">588</span>
 <span class="normal">589</span>
-<span class="normal">590</span>
-<span class="normal">591</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">590</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">replace</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call a dataframe&#39;s replace method&quot;&quot;&quot;</span>
 
@@ -2902,14 +2902,14 @@ or a dict to rename multiple</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">594</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">593</span>
+<span class="normal">594</span>
 <span class="normal">595</span>
 <span class="normal">596</span>
 <span class="normal">597</span>
 <span class="normal">598</span>
 <span class="normal">599</span>
-<span class="normal">600</span>
-<span class="normal">601</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">600</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">reset_index</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call a dataframe&#39;s reset_index method&quot;&quot;&quot;</span>
 
@@ -2940,7 +2940,8 @@ the name. <strong>Always returns a dataframe</strong> even if there is just 1 co
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">425</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">424</span>
+<span class="normal">425</span>
 <span class="normal">426</span>
 <span class="normal">427</span>
 <span class="normal">428</span>
@@ -2948,8 +2949,7 @@ the name. <strong>Always returns a dataframe</strong> even if there is just 1 co
 <span class="normal">430</span>
 <span class="normal">431</span>
 <span class="normal">432</span>
-<span class="normal">433</span>
-<span class="normal">434</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">433</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Select one or more columns by name. Drop one or more columns by prepending &#39;-&#39; to</span>
@@ -2982,7 +2982,8 @@ can change that with <code>ignore_index=False</code>.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">521</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">520</span>
+<span class="normal">521</span>
 <span class="normal">522</span>
 <span class="normal">523</span>
 <span class="normal">524</span>
@@ -2990,8 +2991,7 @@ can change that with <code>ignore_index=False</code>.</p>
 <span class="normal">526</span>
 <span class="normal">527</span>
 <span class="normal">528</span>
-<span class="normal">529</span>
-<span class="normal">530</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">529</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Sort df by one or more columns passed as args. Ignores index by default by you</span>
 <span class="sd">    can change that with `ignore_index=False`.&quot;&quot;&quot;</span>
@@ -3069,7 +3069,8 @@ First-Last -&gt; [First], [Last]. To split list elements use [] as the sep, e.g.
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">478</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">477</span>
+<span class="normal">478</span>
 <span class="normal">479</span>
 <span class="normal">480</span>
 <span class="normal">481</span>
@@ -3099,8 +3100,7 @@ First-Last -&gt; [First], [Last]. To split list elements use [] as the sep, e.g.
 <span class="normal">505</span>
 <span class="normal">506</span>
 <span class="normal">507</span>
-<span class="normal">508</span>
-<span class="normal">509</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">508</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Split values in single df column into multiple columns by separator, e.g.</span>
@@ -3156,7 +3156,8 @@ Resets and drops index by default. Change this with <code>reset_index='drop'|'re
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">549</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">548</span>
+<span class="normal">549</span>
 <span class="normal">550</span>
 <span class="normal">551</span>
 <span class="normal">552</span>
@@ -3177,8 +3178,7 @@ Resets and drops index by default. Change this with <code>reset_index='drop'|'re
 <span class="normal">567</span>
 <span class="normal">568</span>
 <span class="normal">569</span>
-<span class="normal">570</span>
-<span class="normal">571</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">570</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">splitquery</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Call a dataframe or groupby object&#39;s `.query` method and return 2 dataframes one</span>
@@ -3431,14 +3431,14 @@ either will <em>broadcast</em> values to the right size.</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/dfverbs/verbs.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">404</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">403</span>
+<span class="normal">404</span>
 <span class="normal">405</span>
 <span class="normal">406</span>
 <span class="normal">407</span>
 <span class="normal">408</span>
 <span class="normal">409</span>
-<span class="normal">410</span>
-<span class="normal">411</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="normal">410</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">tail</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Call dataframe&#39;s `.tail()` method&quot;&quot;&quot;</span>
 
