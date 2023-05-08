@@ -44,6 +44,7 @@ from copy import deepcopy
 MAX_INT = np.iinfo(np.int32).max
 _filter = filter  # we're overwriting the base func
 
+
 # Helper used by map
 def _pmap(
     func: Callable,
@@ -56,7 +57,6 @@ def _pmap(
     verbose: int = 0,
     func_kwargs: Union[None, dict] = None,
 ) -> Any:
-
     # Setup progress bars and parallelization
     if n_jobs < 1 or n_jobs > 1:
         # Initialize joblib parallelizer
@@ -78,7 +78,6 @@ def _pmap(
 
     # Without enumeration
     if not enum:
-
         # Without random seeds
         if seeds is None:
             iterator = iterme

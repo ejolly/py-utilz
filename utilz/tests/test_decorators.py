@@ -178,7 +178,6 @@ def test_maybe(tmp_path, capsys):
 
 
 def test_expensive(df, capsys):
-
     memory = Memory("./cachedir")
     memory.clear()
 

@@ -25,7 +25,6 @@ def test_stripbarplot():
 
 
 def test_savefig(tmp_path: Path):
-
     # Save to cwd
     f, _ = mpinit(subplots=(2, 2))
     save_raster = Path.cwd() / "raster" / "test.jpg"

@@ -281,7 +281,8 @@ def stripbarplot(**kwargs):
     """Call to combined stripplot and barplot. See utilz.plot.stripbarplot"""
 
     def plot(data):
-        return _stripbarplot(data=data, ax="newax", **kwargs)
+        ax = kwargs.pop("ax", "newax")
+        return _stripbarplot(data=data, ax=ax, **kwargs)
 
     return plot
 

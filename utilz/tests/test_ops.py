@@ -44,7 +44,6 @@ def test_random_state():
 
 
 def test_mapcat():
-
     # Just like map
     out = map(lambda x: x * 2, [1, 2, 3, 4])
     correct = [x * 2 for x in [1, 2, 3, 4]]
@@ -217,7 +216,6 @@ def test_mapalts():
 
 
 def test_filter():
-
     # Length 9
     arr = ["aa", "ab", "ac", "ba", "bb", "bc", "ca", "cb", "cc"]
     # Keep anything containing "a"
@@ -249,7 +247,6 @@ def test_filter():
 
 
 def test_pipes_basic():
-
     df = randdf((20, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5)
 
     # input -> output
@@ -396,7 +393,6 @@ def test_do():
 
 
 def test_iffy():
-
     bigger_5 = lambda x: x > 5
 
     # Pass in predicate func and return value

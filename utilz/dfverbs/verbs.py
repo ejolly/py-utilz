@@ -37,6 +37,7 @@ __all__ = [
     "get_group",
     "reset_index",
     "split_groups",
+    "assign",
 ]
 
 import pandas as pd
@@ -425,7 +426,8 @@ def drop(*args):
 def select(*args):
     """
     Select one or more columns by name. Drop one or more columns by prepending '-' to
-    the name. **Always returns a dataframe** even if there is just 1 column. Does not support renaming"""
+    the name. **Always returns a dataframe** even if there is just 1 column. Does not support renaming
+    """
 
     def call(df):
         return do("select", df, *args)
@@ -491,7 +493,6 @@ def split(*args, sep=" "):
     col, into = args
 
     def call(df):
-
         if isinstance(sep, str):
             out = df[col].str.split(sep, expand=True)
         elif isinstance(sep, list):

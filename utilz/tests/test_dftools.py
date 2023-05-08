@@ -32,7 +32,6 @@ def test_norm_by_group(df):
 
 
 def test_assert_balanced_groups(df):
-
     assert df.assert_balanced_groups("species")
 
     assert df.assert_balanced_groups("species", 50)
@@ -42,7 +41,6 @@ def test_assert_balanced_groups(df):
 
 
 def test_assert_same_nunique(df):
-
     with pytest.raises(AssertionError):
         assert df.assert_same_nunique("species", "sepal_length")
 
@@ -107,7 +105,6 @@ def test_select(df):
 
 
 def test_pivot_longer(df):
-
     # No need to specify id_vars as the rest of the cols will be used by default
     long = df.pivot_longer(
         columns=["sepal_width", "sepal_length"], into=("sepal_dim", "inches")
@@ -130,7 +127,6 @@ def test_pivot_longer(df):
 
 
 def test_to_wide(df):
-
     # Generate long form data with no unique id column
     long = df.pivot_longer(
         ["sepal_length", "sepal_width", "petal_length", "petal_width"],

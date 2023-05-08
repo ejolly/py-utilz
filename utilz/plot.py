@@ -216,7 +216,7 @@ def tweak(plot: Union[Figure, Axes], **kwargs) -> Union[Figure, Axes]:
     # Legend settings
     legend_params = dict()
     legend_params["loc"] = kwargs.pop("loc", "best")
-    legend_params["ncols"] = kwargs.pop("loc", 1)
+    legend_params["ncols"] = kwargs.pop("ncols", 1)
     legend_params["fontsize"] = kwargs.pop("fontsize", None)
     legend_params["title"] = kwargs.pop("legend_title", None)
     legend_params["title_fontsize"] = kwargs.pop("legend_title_fontsize", None)

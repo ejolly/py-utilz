@@ -336,7 +336,8 @@ def chain(*args, **kwargs):
 @curry
 def many(*args):
     """Apply many functions separately to a single input. Operates like the inverse of
-    map(). Whereas map takes applies 1 func to multiple elements, many applies multiple funcs to 1 element. Returns a tuple the same length as args containing the output of each function"""
+    map(). Whereas map takes applies 1 func to multiple elements, many applies multiple funcs to 1 element. Returns a tuple the same length as args containing the output of each function
+    """
 
     def call(data):
         if isinstance(data, (list, tuple)):
@@ -447,7 +448,6 @@ def across(*args):
 
 @curry
 def gather(func, data):
-
     if not (isinstance(data, (list, tuple)) and len(data) > 1):
         raise TypeError(
             f"gather expects the previous step's output to be a list/tuple of length > 1 but received a {type(data)}"

@@ -39,7 +39,6 @@ def setup_data(tmp_path: Path):
 
 @pytest.mark.usefixtures("setup_data")
 def test_load(tmp_path: Path):
-
     # Load csv
     out = load(tmp_path.joinpath("df.csv"))
     assert isinstance(out, pd.DataFrame)
@@ -103,7 +102,6 @@ def test_load(tmp_path: Path):
 
 
 def test_crawl():
-
     # TODO: test ignore arg more thoroughly
     project_root = Path(__file__).parent.parent.parent
     out = crawl(project_root)

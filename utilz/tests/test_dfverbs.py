@@ -45,7 +45,6 @@ def test_query():
 
 
 def test_mutate():
-
     df = randdf((20, 3))
     # Assign values directly
     out = pipe(df, _.mutate(group=["A"] * 10 + ["B"] * 10))
@@ -183,7 +182,6 @@ def test_select():
 
 
 def test_summarize():
-
     df = pd.read_csv("./utilz/tests/mtcars.csv")
 
     # str
@@ -336,7 +334,6 @@ def test_groupby():
 
 
 def test_sort():
-
     data = randdf((20, 3), groups={"condition": 2, "group": 4})
 
     out = pipe(data, _.sort("group", "condition", ascending=False))
