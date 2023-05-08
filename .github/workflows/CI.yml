@@ -20,7 +20,7 @@ jobs:
         # OSs to test
         os: [ubuntu-latest]
         # Python versions to test
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.8, 3.9]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
