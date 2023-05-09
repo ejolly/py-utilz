@@ -15,6 +15,10 @@ from toolz import pipe
 from fnmatch import fnmatchcase
 
 
+def this_is_a_test():
+    print("this is a test")
+
+
 def load(
     f: Union[Path, str],
     as_arr: bool = False,
