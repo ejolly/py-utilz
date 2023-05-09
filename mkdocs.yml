@@ -1,8 +1,8 @@
-site_name: Utilz
+site_name: Py-utilz
 site_description: "Utility library for faster, easier, and more reliable data analysis"
-site_url: "https://eshinjolly.com/utilz"
-repo_url: "https://github.com/ejolly/utilz"
-repo_name: "ejolly/utilz"
+site_url: "https://eshinjolly.com/py-utilz"
+repo_url: "https://github.com/ejolly/py-utilz"
+repo_name: "ejolly/py-utilz"
 theme:
   name: material
 extra_css:
