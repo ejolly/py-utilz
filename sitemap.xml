@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://eshinjolly.com/utilz/</loc>
+         <loc>https://eshinjolly.com/py-utilz/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/dplyr/</loc>
+         <loc>https://eshinjolly.com/py-utilz/dplyr/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/intro/</loc>
+         <loc>https://eshinjolly.com/py-utilz/intro/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/pipes/</loc>
+         <loc>https://eshinjolly.com/py-utilz/pipes/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/verbs/</loc>
+         <loc>https://eshinjolly.com/py-utilz/verbs/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/api/boilerplate/</loc>
+         <loc>https://eshinjolly.com/py-utilz/api/boilerplate/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/api/decorators/</loc>
+         <loc>https://eshinjolly.com/py-utilz/api/decorators/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/api/df/</loc>
+         <loc>https://eshinjolly.com/py-utilz/api/df/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/api/io/</loc>
+         <loc>https://eshinjolly.com/py-utilz/api/io/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/api/maps/</loc>
+         <loc>https://eshinjolly.com/py-utilz/api/maps/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/api/ops/</loc>
+         <loc>https://eshinjolly.com/py-utilz/api/ops/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/api/plot/</loc>
+         <loc>https://eshinjolly.com/py-utilz/api/plot/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://eshinjolly.com/utilz/api/shorts/</loc>
+         <loc>https://eshinjolly.com/py-utilz/api/shorts/</loc>
          <lastmod>2023-05-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
