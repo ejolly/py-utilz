@@ -35,7 +35,7 @@ jobs:
       - name: Setup Environment
         run: |
           curl -sSL https://install.python-poetry.org | python
-          poetry install
+          poetry install --with dev
 
       # 4. Actually run the tests with coverage
       - name: Run Tests
@@ -62,7 +62,7 @@ jobs:
       - name: Setup Environment
         run: |
           curl -sSL https://install.python-poetry.org | python
-          poetry install
+          poetry install --with dev
 
       - name: Build docs
         run: poetry run mkdocs build
