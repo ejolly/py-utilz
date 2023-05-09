@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "py-utilz"
-version = "0.3.3"
+version = "0.3.4"
 description = "Faster, easier, more robust python data analysis"
 authors = ["ejolly <eshin.jolly@gmail.com>"]
 license = "MIT"
