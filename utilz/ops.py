@@ -37,11 +37,9 @@ __all__ = [
     "pop",
     "nth",
     "check_random_state",
-    "datatable",
     "pairs",
 ]
 
-from ._utils import get_resource_path
 import numpy as np
 import pandas as pd
 from typing import Union, Any
@@ -51,82 +49,8 @@ import itertools as it
 from inspect import signature
 from toolz import curry, juxt
 from toolz.curried import compose_left as compose, nth
-from matplotlib.figure import Figure, Axes
 from inspect import signature
-from seaborn import FacetGrid, PairGrid
-from seaborn.matrix import ClusterGrid
-import uuid
-from warnings import warn
 from pathlib import Path
-
-
-@curry
-def datatable(df):
-    """Prints a pandas.DataFrame using the jQuery DataTable plugin"""
-    if not isinstance(df, pd.DataFrame):
-        warn("Not a pandas dataframe returning input...")
-        return df
-
-    try:
-        shell = get_ipython().__class__.__name__
-        if shell == "ZMQInteractiveShell":
-            from IPython.display import HTML
-
-            table_id = uuid.uuid1()
-            loc = get_resource_path()
-            if df.shape[0] > 500:
-                warn("df has more than 500 rows endering...")
-
-            output = f"""
-
-                <link rel="stylesheet" type="text/css" href="{loc}/jquery.dataTables.min.css">
-                
-                <script type="text/javascript">
-                    console.log('setting up requirejs imports...')
-
-                    require.config({{
-                        paths: {{
-                            jquery: '{loc}/jquery-3.6.1.min.js',
-                            datatables: '{loc}/jquery.datatables.min'
-                        }}
-                    }});
-
-                </script>
-
-                <div id='datatable-{table_id}'>
-
-                    {df.to_html(classes=f"datatable display compact")}
-
-                    <script type="text/javascript">
-                        $(document).ready( function () {{
-                            console.log('rendering interactive datatable...')
-
-                            require(['datatables'], function () {{
-
-                                    $('#datatable-{table_id}').find('table.datatable').dataTable();
-                            }});
-                        }});
-                    </script>
-
-                    <style>
-                        .dataTables_info, 
-                        .dataTables_wrapper label, 
-                        .dataTables_wrapper select,
-                        .dataTables_wrapper .dataTables_filter input,
-                        .dataTables_wrapper .dataTables_paginate .paginate_button {{
-                            color: #CCCAC2 !important;
-                        }}
-                    
-                    </style>
-
-                </div>
-
-            """
-            return HTML(output)
-        else:
-            return df
-    except NameError:
-        return df
 
 
 def check_random_state(seed=None):
