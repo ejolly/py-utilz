@@ -52,7 +52,6 @@ from inspect import signature
 from toolz import curry, juxt
 from toolz.curried import compose_left as compose, nth
 from matplotlib.figure import Figure, Axes
-from matplotlib.axes._subplots import Subplot
 from inspect import signature
 from seaborn import FacetGrid, PairGrid
 from seaborn.matrix import ClusterGrid
