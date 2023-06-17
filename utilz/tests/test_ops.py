@@ -43,8 +43,8 @@ def test_random_state():
     assert three.rand(1) == four.rand(1)
 
 
-def test_mapcat():
-    # Just like map
+def test_map():
+    # Just like list comprehension
     out = map(lambda x: x * 2, [1, 2, 3, 4])
     correct = [x * 2 for x in [1, 2, 3, 4]]
     assert out == correct
@@ -53,39 +53,37 @@ def test_mapcat():
     out = pipe([1, 2, 3, 4], map(lambda x: x * 2))
     assert out == correct
 
-    # Concatenating nested lists
+
+def test_mapcat():
+    # Nested lists are flattened
     data = [[1, 2], [3, 4]]
     out = mapcat(None, data)
     assert len(out) == 4
 
-    # Contrived examples as you'd most often just use np funcs directly:
-
-    # Type inference returns same type
+    # Numpy
     data = np.array(data)
-    out = mapcat(np.mean, data)
-    assert isinstance(out, np.ndarray)
-    assert len(out) == 2
-    assert out.ndim == 1
 
-    # If func returns a 1d iterable then concat will be 2d, just like np.array(list of
-    # lists)
+    # If input and return are both numpy arrays then the default concat_axis = None
+    # casts using np.array(mapresult)
+    # Here 1d func operates on each row of the 2d matrix
     out = mapcat(lambda x: np.power(x, 2), data)
     assert isinstance(out, np.ndarray)
     assert out.ndim == 2
-
-    # This is the same as setting axis to 1
-    out = mapcat(lambda x: np.power(x, 2), data, concat_axis=1)
-    assert out.ndim == 2
-
-    # Axis = 0 will flatten the array to 1d
-    out = mapcat(lambda x: np.power(x, 2), data, concat_axis=0)
-    assert out.ndim == 1
 
     # But when using regular map just return a list of numpy arrays
     out = map(lambda x: np.power(x, 2), data)
     assert isinstance(out, list)
     assert len(out) == 2
     assert isinstance(out[0], np.ndarray)
+
+    # This is the same as setting axis to 1 manually
+    out = mapcat(lambda x: np.power(x, 2), data, concat_axis=1)
+    assert out.ndim == 2
+
+    # Setting it to 0, flattens/hstacks the array into a 1d
+    out = mapcat(lambda x: np.power(x, 2), data, concat_axis=0)
+    assert out.ndim == 1
+    assert len(out) == 4
 
     # Passing kwargs to function works
     out = mapcat(np.std, data, ddof=1)
@@ -108,7 +106,7 @@ def test_mapcat():
     assert out.shape == (10, 9)
 
 
-def test_parallel_mapcat():
+def test_parallel_map():
     def f(x):
         sleep(0.5)
         return x**2
@@ -120,31 +118,31 @@ def test_parallel_mapcat():
 
     # Running sequentially takes 5s
     start = time()
-    out = mapcat(f, range(20), n_jobs=1)
+    out = map(f, range(20), n_jobs=1)
     duration = time() - start
     assert len(out) == 20
 
     # Running 2 jobs takes less time
     start = time()
-    out = mapcat(f, range(20), n_jobs=2)
+    out = map(f, range(20), n_jobs=2)
     par_duration = time() - start
     assert par_duration < duration
     assert len(out) == 20
 
     # By default if a function to be parallelized handles it's own randomization
     # interally, there should be no issue with repeated values when run in parallel
-    out = mapcat(f_random, [1, 1, 1, 1, 1], n_jobs=2)
+    out = map(f_random, [1, 1, 1, 1, 1], n_jobs=2)
     assert len(out) == len(set(out))
 
     # But for reproducibility we can set random_state to a number which will be passed
     # to the func's random_state argument
-    out = mapcat(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
-    out2 = mapcat(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
+    out = map(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
+    out2 = map(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
     assert np.allclose(out, out2)
 
     # But not if it doesn't accept that kwarg
     with pytest.raises(TypeError):
-        out = mapcat(f, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
+        out = map(f, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
 
 
 def test_mapalts():
@@ -404,7 +402,7 @@ def test_iffy():
     assert out == 1
 
     # Useful to conditionally apply func over iterable when combined with map
-    out = pipe(seq(10), mapcat(iffy(bigger_5, lambda x: x * 2)))
+    out = pipe(seq(10), map(iffy(bigger_5, lambda x: x * 2)))
     assert equal(out, [0, 1, 2, 3, 4, 5, 12, 14, 16, 18])
 
 
