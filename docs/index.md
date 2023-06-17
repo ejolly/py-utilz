@@ -32,13 +32,13 @@ out = pipe(
 More convenient (parallel) looping:
 
 ```python
-from utilz import mapcat
+from utilz import map
 
 # Combine function results into a list, array, or dataframe
-mapcat(myfunc, myiterable)
+map(myfunc, myiterable)
 
 # Syntactic sugar for joblib.Parallel
-mapcat(myfunc, myiterable, n_jobs=4)
+map(myfunc, myiterable, n_jobs=4)
 ```
 
 Useful decorators for data analysis:

@@ -29,3 +29,13 @@ def seq(n):
 def equal(*seqs):
     """Lazily checks if two sequences of potentionally different lengths are equal"""
     return not any(diff(*seqs, default=object()))
+
+
+def aslist(e):
+    """Idempotently convert something to a list."""
+    return [e] if not isinstance(e, list) else e
+
+
+def asstr(e):
+    """Idempotently convert something to a str."""
+    return str(e) if not isinstance(e, str) else e
