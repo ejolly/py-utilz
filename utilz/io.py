@@ -60,7 +60,10 @@ def load(
     if f.is_dir():
         out = list(f.glob(glob))
 
-    # TODO: add support for np.save .npz files
+    elif f.suffix == ".npy":
+        if verbose:
+            print("npy file - using numpy")
+        out = np.load(str(f), **kwargs)
 
     elif f.suffix == ".csv":
         if verbose:

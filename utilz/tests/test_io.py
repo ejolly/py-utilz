@@ -17,6 +17,8 @@ def setup_data(tmp_path: Path):
     arr = np.random.randn(10)
     np.savetxt(tmp_path.joinpath("arr.txt"), arr)
     np.savetxt(tmp_path.joinpath("arr.gz"), arr)
+    np.save(tmp_path.joinpath("arr.npy"), arr)
+    np.save(tmp_path.joinpath("arr.npz"), arr)
 
     tmp_path.joinpath("txt.txt").write_text("hello world\nhello world")
 
@@ -45,9 +47,6 @@ def test_load(tmp_path: Path):
     assert out.shape == (10, 3)
 
     # load txt
-    out = load(tmp_path.joinpath("arr.txt"), as_arr=True)
-    assert isinstance(out, np.ndarray)
-    assert len(out) == 10
     out = load(tmp_path.joinpath("txt.txt"))
     assert isinstance(out, list)
     assert len(out) == 2
@@ -77,6 +76,15 @@ def test_load(tmp_path: Path):
     assert isinstance(out, list)
     assert len(out) == 2
     assert "name" in out[0].keys()
+
+    # load numpy
+    out = load(tmp_path.joinpath("arr.txt"), as_arr=True)
+    assert isinstance(out, np.ndarray)
+    assert len(out) == 10
+
+    out = load(tmp_path.joinpath("arr.npy"))
+    assert isinstance(out, np.ndarray)
+    assert len(out) == 10
 
     # Everything else as text
     with pytest.warns(UserWarning, match="not supported"):

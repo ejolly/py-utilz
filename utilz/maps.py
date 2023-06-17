@@ -243,7 +243,8 @@ def map(
 
 @curry
 def mapcat(func: Union[Callable, None], iterme: Iterable, **kwargs):
-    """Call map and concatenate results after"""
+    """Call map and concatenate results after.
+    Particularly useful to ensure results are numpy arrays"""
 
     concat_axis = kwargs.pop("concat_axis", None)
     ignore_index = kwargs.pop("ignore_index", True)
