@@ -42,9 +42,9 @@ def discard(*args, **kwargs):
     return filter(*args, invert=invert, **kwargs)
 
 
-def seq(n):
+def seq(*args):
     """Enumerated `list`"""
-    return list(range(n))
+    return list(range(*args))
 
 
 def equal(*seqs):

@@ -31,6 +31,7 @@ nav:
       - Plotting tools: api/plot.md
       - Boilerplate helpers: api/boilerplate.md
       - Decorators: api/decorators.md
+      - Dataclasses: api/data.md
 plugins:
   - mkdocs-jupyter:
       ignore: ["dev/*"]
