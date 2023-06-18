@@ -14,6 +14,7 @@ from utilz import (
     unpack,
     across,
     do,
+    many,
     iffy,
     append,
     compose,
@@ -388,6 +389,24 @@ def test_do():
     # like this
     out = pipe(df, do("head", n=10))
     assert out.equals(df.head(10))
+
+
+def test_many():
+    df = randdf()
+    out = many(("head", "tail"), df)
+    assert len(out) == 2
+
+    out = many((lambda df: df.mean(), lambda df: df.std(), lambda df: df.var()), df)
+    assert out[0].equals(df.mean())
+    assert out[1].equals(df.std())
+    assert out[2].equals(df.var())
+
+    # Should pass iterable of funcs
+    with pytest.raises(ValueError):
+        out = many("head", df)
+
+    out = many(("head", "head"), df)
+    assert do("head", df).equals(out[0])
 
 
 def test_iffy():

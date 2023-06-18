@@ -32,7 +32,7 @@ __all__ = [
 from joblib import delayed, Parallel
 from collections.abc import Callable, Iterable
 from typing import Union, Any
-from .ops import curry, concat, check_random_state, iffy, compose, many
+from .ops import curry, concat, check_random_state, iffy, compose, _many_for_map
 from ._utils import ProgressParallel
 from tqdm import tqdm
 from inspect import signature
@@ -288,7 +288,7 @@ def mapmany(*args, **kwargs):
                 f"mapmany applies *multiple* function calls separately but only received {len(args)} function. Use mapcat() to apply a single function."
             )
 
-        together = many(*args)
+        together = _many_for_map(*args)
         return map(together, data, **kwargs)
 
     return call

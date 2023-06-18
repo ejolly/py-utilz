@@ -10,7 +10,7 @@ Functional tools intended to be used with `pipe()`. Everything in this module ex
 | `pipe`  | run an input through a sequence of functions  |
 | `append`/`alongwith`  | apply a function and return `(input, result)` as a `tuple` |
 | `fork`  | call `input.copy` if possible otheriwse create `n` duplicate `deepcopy`'s of `input` |
-| `many`  | applies **multiple functions in parallel** to a **single** input and returns an iterable; like an "inverse `map`" |
+| `many`  | applies **multiple functions indepedently** to a **single** input and returns an iterable; like an "inverse `map`" |
 | `spread`  | acts like `fork` if given an `int` otherwise acts like `many` |
 | `across`  | apply **multiple functions** to **multiple inputs** in pairs; alias for `mapacross` |
 | `compose`  | combine **multiple functions** into **one function** sequence (mini-pipe) |
@@ -245,22 +245,24 @@ def pipe(
         return out
 
 
+def many(funcs, data):
+    """Takes an iterable of funcs and applies them each separately to data. Operates like the inverse of map(). Whereas map takes applies 1 func to multiple elements, many applies multiple funcs independently to 1 element. Returns a tuple the same length as funcs, containing the output of each function"""
+
+    if isinstance(data, (list, tuple)):
+        raise TypeError(
+            f"Expected a single input but receive {len(data)}. Use mapmany() to operate on an iterable"
+        )
+    if not isinstance(funcs, (list, tuple)) or len(funcs) <= 1:
+        raise ValueError(
+            f"many applies *multiple* function calls separately but only received a single function. Use do() to apply a single function or method."
+        )
+
+    return tuple([do(f, data) for f in funcs])
+
+
 @curry
-def chain(*args, **kwargs):
-    """Chain a sequence of functions on an input, i.e. a mini-pipe"""
-
-    def call(data):
-        for f in args:
-            data = f(data, **kwargs)
-
-    return call
-
-
-@curry
-def many(*args):
-    """Apply many functions separately to a single input. Operates like the inverse of
-    map(). Whereas map takes applies 1 func to multiple elements, many applies multiple funcs to 1 element. Returns a tuple the same length as args containing the output of each function
-    """
+def _many_for_map(*args):
+    """Not intended for direct use, but used by mapmany."""
 
     def call(data):
         if isinstance(data, (list, tuple)):
@@ -272,7 +274,7 @@ def many(*args):
                 f"many applies *multiple* function calls separately but only received {len(args)} function. Use map() to apply a single function."
             )
 
-        return tuple([f(data) for f in args])
+        return tuple([do(f, data) for f in args])
 
     return call
 
