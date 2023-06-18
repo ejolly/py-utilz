@@ -1,5 +1,5 @@
 from utilz.shorts import checkany, checkall, seq, equal, isempty, equal
-from utilz.ops import pipe
+from utilz.pipes import pipe
 import pandas as pd
 import numpy as np
 from utilz.boilerplate import randdf

@@ -34,7 +34,7 @@ import pandas as pd
 from toolz import curry
 from .verbs import _reset_index_helper, apply, split, summarize, merge, mutate
 import seaborn as sns
-from ..ops import pipe
+from ..pipes import pipe
 from ..maps import filter
 
 

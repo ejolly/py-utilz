@@ -7,3 +7,4 @@ from .plot import *
 from .shorts import *
 from .boilerplate import *
 from .stats import *
+from .pipes import *

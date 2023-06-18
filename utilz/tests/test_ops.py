@@ -12,7 +12,6 @@ from utilz import (
     spread,
     gather,
     unpack,
-    across,
     do,
     many,
     iffy,
@@ -305,7 +304,7 @@ def test_pipes_basic():
         out = pipe([df, df], mapmany(lambda df: df.head(5)))
 
     # 2 func-input pairs
-    out = pipe([df, df], across(lambda df: df.head(5), lambda df: df.tail(10)))
+    out = pipe([df, df], mapacross(lambda df: df.head(5), lambda df: df.tail(10)))
     assert len(out) == 2
     assert out[0].equals(df.head(5))
     assert out[1].equals(df.tail(10))
@@ -318,11 +317,11 @@ def test_pipes_basic():
 
     # not enough funcs
     with pytest.raises(ValueError):
-        out = pipe([df, df], across(lambda df: df.head(5)))
+        out = pipe([df, df], mapacross(lambda df: df.head(5)))
 
     # not enough data
     with pytest.raises(ValueError):
-        out = pipe([df], across(lambda df: df.head(5), lambda df: df.tail(2)))
+        out = pipe([df], mapacross(lambda df: df.head(5), lambda df: df.tail(2)))
 
     # SPREAD (one2many)
     # input -> (input, input, input)
@@ -531,14 +530,14 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         ...,
-        across(
+        mapacross(
             lambda means: sns.histplot(means),
             lambda means: sns.boxplot(means),
         ),
         debug=True,
     )
     assert len(out) == 3  # 3 steps in pipe
-    assert isinstance(out[-1], tuple)  # plots
+    assert isinstance(out[-1], list)  # plots
     assert isinstance(out[-2], tuple)  # series
     assert isinstance(out[-3], pd.core.groupby.generic.DataFrameGroupBy)
 
@@ -552,7 +551,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         ...,
-        across(
+        mapacross(
             compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
         ),
@@ -569,7 +568,7 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         ...,
-        across(
+        mapacross(
             compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
         ),

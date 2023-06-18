@@ -9,7 +9,7 @@ import numpy as np
 import pickle
 import json
 from warnings import warn
-from .ops import sort
+from .shorts import sort
 from .maps import mapcat, filter
 from toolz import pipe
 from fnmatch import fnmatchcase

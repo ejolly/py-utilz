@@ -1,5 +1,5 @@
-# Ops (piping operations and utility functions)
+# Ops (utilities for working with multiple functions)
 
-## `utilz.ops` 
+## `utilz.ops`
 
 ::: utilz.ops

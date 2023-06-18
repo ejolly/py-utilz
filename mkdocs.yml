@@ -23,9 +23,10 @@ nav:
   - Functional/Verb-based data manipulation: verbs.ipynb
   - API:
       - I/O: api/io.md
-      - Operations and Pipes: api/ops.md
+      - Function ops: api/ops.md
       - Maps: api/maps.md
       - Shorthands: api/shorts.md
+      - Pipes: api/pipes.md
       - Dataframe verbs and tools: api/df.md
       - Plotting tools: api/plot.md
       - Boilerplate helpers: api/boilerplate.md

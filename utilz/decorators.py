@@ -132,17 +132,17 @@ def maybe(function):
     `out_file` exists then it's loaded from disk, otherwise the wrapped function is
     called. If the wrapped function takes a kwarg `overwrite = True` then it always runs. You can also pass `loader_func = callable` to use a custom loading function
 
-    Example:
+        @maybe
+        def expensive_func(data, **kwargs'):
+            b = something_expensive(data)
+            np.save(b, kwargs.get('out_file')
+            return b
 
-    >>> @maybe
-    >>> def mean_brain(subpath, **kwargs):
-    >>> b = Brain_Data(subpath)
-    >>> m = b.mean()
-    >>> out_file = kwargs.get('out_file')
-    >>> m.write(out_file)
-    >>> return m
+        # First run will execute the function
+        expensive_func(data, out_file='result.npy')
 
-    >>> mean_brain(subpath, out_file='mean_brain.h5', loader_func=Brain_Data)
+        # Second run will load from 'result.npy'
+        expensive_func(data, out_file='result.npy')
 
     """
 

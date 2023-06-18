@@ -1,13 +1,31 @@
-"""Shorthands for common operations or ops with specific params set"""
+"""Shorthands for common functions or `ops` and `maps` with specific params set"""
 
-__all__ = ["keep", "discard", "seq", "equal", "isempty", "checkany", "checkall"]
+__all__ = [
+    "sort",
+    "keep",
+    "discard",
+    "seq",
+    "equal",
+    "isempty",
+    "checkany",
+    "checkall",
+    "nth",
+    "pairs",
+]
 
 from collections.abc import Iterable
 from .maps import filter, map
 from .ops import curry
-from toolz import diff
+from toolz import diff, nth
+import itertools as it
 import pandas as pd
 import numpy as np
+
+
+@curry
+def sort(iterme: Iterable, **kwargs):
+    """Alias for `sorted()`"""
+    return sorted(iterme, **kwargs)
 
 
 @curry
@@ -67,7 +85,7 @@ def isempty(iterme: Iterable):
 @curry
 def checkany(func, iterme, transparent=False):
     """
-    Check if any elements are func(elem) == True
+    Check if any elements are `func(elem) == True`
 
     Args:
         func (callable): function that returns True or False
@@ -75,7 +93,7 @@ def checkany(func, iterme, transparent=False):
         transparent (bool, optional): return iterme instead of result if check passes, useful in pipes; Default False
 
     Returns:
-        True or False
+        bool: True or False
     """
 
     result = any(map(func, iterme))
@@ -89,7 +107,7 @@ def checkany(func, iterme, transparent=False):
 @curry
 def checkall(func, iterme, transparent=False):
     """
-    Check if all elements are func(elem) == True
+    Check if all elements are `func(elem) == True`
 
     Args:
         func (callable): function that returns True or False
@@ -97,7 +115,7 @@ def checkall(func, iterme, transparent=False):
         transparent (bool, optional): return iterme instead of result if check passes, useful in pipes; Default False
 
     Returns:
-        True or False
+        bool: True or False
     """
 
     result = all(map(func, iterme))
@@ -106,3 +124,8 @@ def checkall(func, iterme, transparent=False):
     if transparent and not result:
         raise ValueError("Check failed")
     return result
+
+
+@curry
+def pairs(iterme: Iterable):
+    return list(it.combinations(iterme, 2))

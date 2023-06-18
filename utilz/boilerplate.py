@@ -8,7 +8,7 @@ import pandas as pd
 from typing import Union
 import string
 from itertools import cycle
-from .ops import check_random_state
+from .maps import check_random_state
 
 
 def randdf(

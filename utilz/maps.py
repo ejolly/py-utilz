@@ -1,15 +1,14 @@
 """
-The maps module is a generalization of many of the functions in `utilz.ops` that operate
-on **iterables**. Here are the parallels:
+The maps module is designed to be used with sequences and has several generalizations of functions in `utilz.ops` that work with sequences. Here are the parallels:
 
 | map function (s)   | op function(s)  | description |
 |---|---|---|
 | `map`  | `do`  | apply **one function** |
 | `mapcompose`  | `pipe`/`do(compose())`  | apply **multiple functions in sequence** |
 | `mapmany`  | `many`  | apply **multiple functions in parallel** |
-| `mapacross`  | `None`  | apply **multiple functions** to **multiple inputs** in pairs
 | `mapif`  | `iffy`  | apply **one function** if a *predicate function* otherwise noop |
-| `mapcat`  | `None`/`concat`  | apply **one multi-output function** and flatten the results |
+| `mapacross`  | `None`  | apply **multiple functions** to **multiple inputs** in pairs
+| `mapcat`  | `None`  | apply **one multi-output function** and flatten the results |
 | `mapwith`  | `None`  | map a two argument function to an iterable and a fixed arg or two iterables |
 
 
@@ -27,17 +26,21 @@ __all__ = [
     "mapacross",
     "mapif",
     "mapwith",
+    "check_random_state",
 ]
 
+import numpy as np
+import pandas as pd
 from joblib import delayed, Parallel
 from collections.abc import Callable, Iterable
 from typing import Union, Any
-from .ops import curry, concat, check_random_state, iffy, compose, _many_for_map
+from .ops import iffy, compose, do
+from toolz import curry
 from ._utils import ProgressParallel
 from tqdm import tqdm
 from inspect import signature
 import numpy as np
-from itertools import filterfalse
+from itertools import filterfalse, chain
 from copy import deepcopy
 
 
@@ -45,7 +48,6 @@ MAX_INT = np.iinfo(np.int32).max
 _filter = filter  # we're overwriting the base func
 
 
-# Helper used by map
 def _pmap(
     func: Callable,
     iterme: Iterable,
@@ -57,6 +59,7 @@ def _pmap(
     verbose: int = 0,
     func_kwargs: Union[None, dict] = None,
 ) -> Any:
+    """Helper used by map"""
     # Setup progress bars and parallelization
     if n_jobs < 1 or n_jobs > 1:
         # Initialize joblib parallelizer
@@ -129,6 +132,72 @@ def _pmap(
         return parfor(call_list)
     else:
         return call_list
+
+
+@curry
+def _many(*args):
+    """Helper used by mapmany"""
+
+    def call(data):
+        if isinstance(data, (list, tuple)):
+            raise TypeError(
+                f"Expected a single input but receive {len(data)}. Use mapmany() to operate on an iterable"
+            )
+        if len(args) <= 1:
+            raise ValueError(
+                f"many applies *multiple* function calls separately but only received {len(args)} function. Use map() to apply a single function."
+            )
+
+        return tuple([do(f, data) for f in args])
+
+    return call
+
+
+def _concat(op, iterme, axis, ignore_index):
+    """Intelligently try to concatenate an iterable. Supports dataframe, arrays, and lists"""
+
+    try:
+        if isinstance(op[0], (pd.DataFrame, pd.Series)):
+            return pd.concat(
+                op, axis=0 if axis is None else axis, ignore_index=ignore_index
+            )
+
+        if isinstance(op[0], np.ndarray) or isinstance(iterme, np.ndarray):
+            try:
+                if axis is None:
+                    return np.array(op)
+                return np.concatenate(op, axis=axis)
+            except np.AxisError as _:
+                return np.stack(op, axis=axis - 1)
+            except ValueError as _:
+                return np.array(op)
+        if isinstance(op[0], list):
+            return list(chain.from_iterable(op))
+        return op
+
+    except Exception as e:
+        print(e)
+        return op
+
+
+def check_random_state(seed=None):
+    """Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.
+
+    Args:
+        seed (None, int, np.RandomState): if seed is None, return the RandomState singleton used by np.random. If seed is an int, return a new RandomState instance seeded with seed. If seed is already a RandomState instance, return it. Otherwise raise ValueError.
+    """
+
+    import numbers
+
+    if seed is None or seed is np.random:
+        return np.random.mtrand._rand
+    if isinstance(seed, (numbers.Integral, np.integer)):
+        return np.random.RandomState(seed)
+    if isinstance(seed, np.random.RandomState):
+        return seed
+    raise ValueError(
+        "%r cannot be used to seed a numpy.random.RandomState" " instance" % seed
+    )
 
 
 @curry
@@ -250,7 +319,7 @@ def mapcat(func: Union[Callable, None], iterme: Iterable, **kwargs):
     ignore_index = kwargs.pop("ignore_index", True)
     out = map(func, iterme, **kwargs)
 
-    return concat(out, iterme, concat_axis, ignore_index)
+    return _concat(out, iterme, concat_axis, ignore_index)
 
 
 @curry
@@ -288,7 +357,7 @@ def mapmany(*args, **kwargs):
                 f"mapmany applies *multiple* function calls separately but only received {len(args)} function. Use mapcat() to apply a single function."
             )
 
-        together = _many_for_map(*args)
+        together = _many(*args)
         return map(together, data, **kwargs)
 
     return call
