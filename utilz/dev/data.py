@@ -4,7 +4,7 @@ import pandas as pd
 from pathlib import Path
 from dataclasses import dataclass
 from functools import cached_property
-from utilz import randdf
+from utilz import randdf, equal
 from shutil import rmtree
 
 
@@ -24,6 +24,9 @@ class Subject:
         print("Loading data")
         return pd.read_csv(self.data_dir / "data.csv")
 
+    def clear_cache(self):
+        del self.data
+
 
 # %%
 def test_subject():
@@ -35,15 +38,26 @@ def test_subject():
     FNAME = "data.csv"
 
     # Make data
-    randdf().to_csv(SUB_PATH / FNAME, index=False)
+    data = randdf()
+    data.to_csv(SUB_PATH / FNAME, index=False)
 
     # Create subject
     s = Subject(SID, DATA_DIR)
 
-    print(s.data)
+    assert equal(s.data, data)
+
+    # Change data on disk
+    data = randdf()
+    data.to_csv(SUB_PATH / FNAME, index=False)
 
     # Second time it's cached
-    print(s.data)
+    assert not equal(s.data, data)
+
+    # Clear cache
+    s.clear_cache()
+
+    # Third time it's not cached
+    assert equal(s.data, data)
 
     # Remove data
     rmtree(SUB_PATH)

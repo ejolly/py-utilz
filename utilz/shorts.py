@@ -51,14 +51,14 @@ def equal(*seqs):
     """
     Checks if N args of potentionally different lengths are equal.
     Non-iterable args are directly compared with `==`
-    Dataframes and arrays use `.equals()` and `np.allclose()` respectively
+    Dataframes and arrays both use `np.allclose()` for comparison
     """
 
     if not isinstance(seqs[0], Iterable):
         return checkall(lambda e: e == seqs[0], seqs)
 
     if isinstance(seqs[0], pd.DataFrame):
-        return checkall(lambda e: e.equals(seqs[0]), seqs)
+        return checkall(lambda e: np.allclose(e.to_numpy(), seqs[0].to_numpy()), seqs)
 
     if isinstance(seqs[0], np.ndarray):
         return checkall(lambda e: np.allclose(e, seqs[0]), seqs)
