@@ -798,80 +798,31 @@ them will simply load the last results from disk.</p>
 
 
 <h4 id="utilz.decorators.maybe" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">maybe</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">loadfunc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_arr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">maybe</span><span class="p">(</span><span class="n">function</span><span class="p">)</span></code>
 
 </h4>
 
 
   <div class="doc doc-contents ">
   
-      <p>Run the decorated <code>func</code> only if <code>fpath</code> doesn't exist or if it isn't an empty
-directory. If <code>fpath</code> exists will load the file from disk or if <code>fpath</code> is a directory,
-will return the results of globbing the directory for all files</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>fpath</code></td>
-          <td>
-                <code>Path/str</code>
-          </td>
-          <td><p>filename or dirname to check existence for</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>force</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>always run the function even if filepath exists,</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>as_arr</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>treat a .txt file as a numpy array;</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>as_str</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>open txt/json as a single string instead of</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>verbose</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td><p>whether to print messages during load. Default False</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
+      <p>A decorator that wraps a function which should take a kwarg called <code>out_file</code>. If
+<code>out_file</code> exists then it's loaded from disk, otherwise the wrapped function is
+called. If the wrapped function takes a kwarg <code>overwrite = True</code> then it always runs. You can also pass <code>loader_func = callable</code> to use a custom loading function</p>
+<p>Example:</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>@maybe
+def mean_brain(subpath, **kwargs):
+b = Brain_Data(subpath)
+m = b.mean()
+out_file = kwargs.get('out_file')
+m.write(out_file)
+return m</p>
+<p>mean_brain(subpath, out_file='mean_brain.h5', loader_func=Brain_Data)</p>
+</blockquote>
+</blockquote>
+</blockquote>
 
       <details class="quote">
         <summary>Source code in <code>utilz/decorators.py</code></summary>
@@ -919,51 +870,51 @@ will return the results of globbing the directory for all files</p>
 <span class="normal">170</span>
 <span class="normal">171</span>
 <span class="normal">172</span>
-<span class="normal">173</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">maybe</span><span class="p">(</span>
-    <span class="n">fpath</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
-    <span class="n">loadfunc</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">as_arr</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">as_str</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="normal">173</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">maybe</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Run the decorated `func` only if `fpath` doesn&#39;t exist or if it isn&#39;t an empty</span>
-<span class="sd">    directory. If `fpath` exists will load the file from disk or if `fpath` is a directory,</span>
-<span class="sd">    will return the results of globbing the directory for all files</span>
+<span class="sd">    A decorator that wraps a function which should take a kwarg called `out_file`. If</span>
+<span class="sd">    `out_file` exists then it&#39;s loaded from disk, otherwise the wrapped function is</span>
+<span class="sd">    called. If the wrapped function takes a kwarg `overwrite = True` then it always runs. You can also pass `loader_func = callable` to use a custom loading function</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        fpath (Path/str): filename or dirname to check existence for</span>
-<span class="sd">        force (bool, optional): always run the function even if filepath exists,</span>
-<span class="sd">        possibly overwriting filepath (based on whatever func does internally). Defaults</span>
-<span class="sd">        to False.</span>
-<span class="sd">        as_arr (bool, optional): treat a .txt file as a numpy array;</span>
-<span class="sd">        Default False</span>
-<span class="sd">        as_str (bool, optional): open txt/json as a single string instead of</span>
-<span class="sd">        splitting on newlines; Default False</span>
-<span class="sd">        verbose (bool, optional): whether to print messages during load. Default False</span>
+<span class="sd">    Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; @maybe</span>
+<span class="sd">    &gt;&gt;&gt; def mean_brain(subpath, **kwargs):</span>
+<span class="sd">    &gt;&gt;&gt; b = Brain_Data(subpath)</span>
+<span class="sd">    &gt;&gt;&gt; m = b.mean()</span>
+<span class="sd">    &gt;&gt;&gt; out_file = kwargs.get(&#39;out_file&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; m.write(out_file)</span>
+<span class="sd">    &gt;&gt;&gt; return m</span>
+
+<span class="sd">    &gt;&gt;&gt; mean_brain(subpath, out_file=&#39;mean_brain.h5&#39;, loader_func=Brain_Data)</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="n">fpath</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-                <span class="k">if</span> <span class="n">fpath</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="n">fpath</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">fpath</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())):</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exists: loading previously saved file: </span><span class="si">{</span><span class="n">fpath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">loadfunc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="k">return</span> <span class="n">loadfunc</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="n">load</span><span class="p">(</span>
-                        <span class="n">fpath</span><span class="p">,</span>
-                        <span class="n">as_str</span><span class="o">=</span><span class="n">as_str</span><span class="p">,</span>
-                        <span class="n">as_arr</span><span class="o">=</span><span class="n">as_arr</span><span class="p">,</span>
-                        <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
-                    <span class="p">)</span>
-            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># get out_file from the wrapped function</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;out_file&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">wrapper</span>
+        <span class="c1"># get out_file from the wrapped function</span>
+        <span class="n">overwrite</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;overwrite&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">decorator</span>
+        <span class="k">if</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;out_file must be provided as a kwarg to the decorated function!&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">out_file</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading precomputed result from: </span><span class="si">{</span><span class="n">out_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">load_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;out_file&quot;</span><span class="p">,</span> <span class="s2">&quot;overwrite&quot;</span><span class="p">]</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">load</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="o">**</span><span class="n">load_kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
