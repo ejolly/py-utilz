@@ -1573,7 +1573,7 @@ iterme</p>
                 <span class="sa">f</span><span class="s2">&quot;mapmany applies *multiple* function calls separately but only received </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="si">}</span><span class="s2"> function. Use mapcat() to apply a single function.&quot;</span>
             <span class="p">)</span>
 
-        <span class="n">together</span> <span class="o">=</span> <span class="n">many</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">together</span> <span class="o">=</span> <span class="n">_many_for_map</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">together</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">call</span>
