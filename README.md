@@ -48,9 +48,11 @@ def myfunc(args):
     return out
 
 # Only run myfunc if results.csv doesn't eist
-@maybe('results.csv')
-def myfunc(args):
+@maybe
+def myfunc(args, out_file=None):
     return out
+
+myfunc(args, out_file='results.csv')
 ```
 
 ## Development
