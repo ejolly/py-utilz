@@ -86,7 +86,15 @@ def test_load(tmp_path: Path):
     assert isinstance(out, np.ndarray)
     assert len(out) == 10
 
-    # Everything else as text
+    # Custom loader function
+    def custom_loader(file):
+        with Path(file).open() as file_handle:
+            out = file_handle.readlines()
+        return out
+
+    out = load(".gitignore", verbose=True, loader_func=custom_loader)
+
+    # Attemp everything else as text, but with no custom loader issue warning
     with pytest.warns(UserWarning, match="not supported"):
         out = load(".gitignore", verbose=True)
 

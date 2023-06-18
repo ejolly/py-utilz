@@ -126,51 +126,51 @@ def timeit(func):
     return wrapper
 
 
-def maybe(
-    fpath: Union[str, Path],
-    loadfunc: Union[Callable, None] = None,
-    force: bool = False,
-    as_arr: bool = False,
-    as_str: bool = False,
-    verbose: bool = False,
-    **kwargs,
-) -> Any:
+def maybe(function):
     """
-    Run the decorated `func` only if `fpath` doesn't exist or if it isn't an empty
-    directory. If `fpath` exists will load the file from disk or if `fpath` is a directory,
-    will return the results of globbing the directory for all files
+    A decorator that wraps a function which should take a kwarg called `out_file`. If
+    `out_file` exists then it's loaded from disk, otherwise the wrapped function is
+    called. If the wrapped function takes a kwarg `overwrite = True` then it always runs. You can also pass `loader_func = callable` to use a custom loading function
 
-    Args:
-        fpath (Path/str): filename or dirname to check existence for
-        force (bool, optional): always run the function even if filepath exists,
-        possibly overwriting filepath (based on whatever func does internally). Defaults
-        to False.
-        as_arr (bool, optional): treat a .txt file as a numpy array;
-        Default False
-        as_str (bool, optional): open txt/json as a single string instead of
-        splitting on newlines; Default False
-        verbose (bool, optional): whether to print messages during load. Default False
+    Example:
+
+    >>> @maybe
+    >>> def mean_brain(subpath, **kwargs):
+    >>> b = Brain_Data(subpath)
+    >>> m = b.mean()
+    >>> out_file = kwargs.get('out_file')
+    >>> m.write(out_file)
+    >>> return m
+
+    >>> mean_brain(subpath, out_file='mean_brain.h5', loader_func=Brain_Data)
+
     """
 
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            if not force and fpath.exists():
-                if fpath.is_file() or (fpath.is_dir() and any(fpath.iterdir())):
-                    print(f"Exists: loading previously saved file: {fpath}")
-                    if loadfunc is not None:
-                        return loadfunc(fpath, **kwargs)
-                    return load(
-                        fpath,
-                        as_str=as_str,
-                        as_arr=as_arr,
-                        verbose=verbose,
-                    )
-            return func(*args, **kwargs)
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        # get out_file from the wrapped function
+        out_file = kwargs.get("out_file", None)
 
-        return wrapper
+        # get out_file from the wrapped function
+        overwrite = kwargs.get("overwrite", False)
 
-    return decorator
+        if out_file is None:
+            raise ValueError(
+                "out_file must be provided as a kwarg to the decorated function!"
+            )
+
+        out_file = Path(out_file)
+
+        if out_file.exists() and not overwrite:
+            print(f"Loading precomputed result from: {out_file}")
+            load_kwargs = {
+                k: v for k, v in kwargs.items() if k not in ["out_file", "overwrite"]
+            }
+            return load(out_file, **load_kwargs)
+
+        return function(*args, **kwargs)
+
+    return wrapper
 
 
 def expensive(

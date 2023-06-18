@@ -5,7 +5,9 @@ from time import sleep, time
 from pathlib import Path
 from shutil import rmtree
 from joblib import Memory
-import pickle
+import pytest
+from utilz.io import load
+from utilz.shorts import equal
 
 
 def test_show(capsys, df):
@@ -74,107 +76,96 @@ def test_timeit(df, capsys):
 
 
 def test_maybe(tmp_path, capsys):
-    p = Path(f"{tmp_path}/test.csv")
-    if p.exists():
-        p.unlink()
+    temp_file = Path(f"{tmp_path}/test.csv")
+    if temp_file.exists():
+        temp_file.unlink()
 
     # Decorate a function that simulates running a computation that saves and returns a
     # dataframe
-    @maybe(p)
-    def f(save_to):
+    @maybe
+    def f(shape, **kwargs):
         print("I'm running")
-        df = pd.DataFrame(np.random.randn(5, 3))
-        df.to_csv(tmp_path.joinpath(save_to), index=False)
+        df = pd.DataFrame(np.random.randn(*shape))
+        save_path = kwargs.get("out_file")
+        df.to_csv(save_path, index=False)
         return df
 
     # First run: func executes and saves file
-    out = f("test.csv")
+    out = f((5, 3), out_file=temp_file)
     captured = capsys.readouterr()
     assert "I'm running" in captured.out
     assert isinstance(out, pd.DataFrame)
-    assert p.exists()
+    assert temp_file.exists()
 
     # Second run: just loads file
-    out_loaded = f("test.csv")
+    out_loaded = f((5, 3), out_file=temp_file)
     captured = capsys.readouterr()
     assert "I'm running" not in captured.out
-    assert "Exists: loading previously saved file" in captured.out
+    assert f"Loading precomputed result from: {temp_file}" in captured.out
     assert isinstance(out_loaded, pd.DataFrame)
-    assert p.exists()
+    assert temp_file.exists()
     assert np.allclose(out.to_numpy(), out_loaded.to_numpy())
 
-    # Force reruns by adding kwargs to the decorator
-    @maybe(p, force=True)
-    def f(save_to):
-        print("I'm running")
-        df = pd.DataFrame(np.random.randn(5, 3))
-        df.to_csv(tmp_path.joinpath(save_to), index=False)
-        return df
-
-    # Third run: func reruns and overwrites files
-    out_rerun = f("test.csv")
+    # Force a rerun with overwrite=True
+    out_rerun = f((5, 3), out_file=temp_file, overwrite=True)
     captured = capsys.readouterr()
     assert "I'm running" in captured.out
     assert isinstance(out_rerun, pd.DataFrame)
-    assert p.exists()
-    assert not np.allclose(out.to_numpy(), out_rerun.to_numpy())
+    assert temp_file.exists()
+    assert not np.allclose(out_loaded.to_numpy(), out_rerun.to_numpy())
+
+    # Missing out_file as a kwarg to decorated function raises error
+    with pytest.raises(ValueError):
+        f((5, 3))
 
     # Clean up
-    p.unlink()
+    temp_file.unlink()
 
     # Test with list of files
-    p = Path(f"{tmp_path}/myfiles")
-    p.mkdir()
+    temp_dir = Path(f"{tmp_path}/myfiles")
 
-    @maybe(p)
-    def f(p):
+    @maybe
+    def f(shape, **kwargs):
+        save_folder = kwargs.get("out_file")
+        save_folder.mkdir()
         print("I'm running")
-        out_files = []
+        out = []
         for i in range(3):
-            df = pd.DataFrame(np.random.randn(5, 3))
-            df.to_csv(p / f"{i}.csv", index=False)
-            out_files.append(df)
-        return out_files
+            df = pd.DataFrame(np.random.randn(*shape))
+            df.to_csv(save_folder / f"{i}.csv", index=False)
+            out.append(df)
+        return out
 
-    out_files = f(p)
+    # First run: func executes and saves multiple files to dir
+    out = f((5, 3), out_file=temp_dir)
     captured = capsys.readouterr()
     assert "I'm running" in captured.out
-    assert isinstance(out_files, list)
-    assert isinstance(out_files[0], pd.DataFrame)
+    assert isinstance(out, list)
+    assert isinstance(out[0], pd.DataFrame)
+    assert any(temp_dir.iterdir())
 
-    out_files = f(p)
+    # Second run: just loads files
+    out_loaded = f((5, 3), out_file=temp_dir)
     captured = capsys.readouterr()
     assert "I'm running" not in captured.out
-    assert "Exists: loading previously saved file" in captured.out
-    assert isinstance(out_files, list)
-    assert isinstance(out_files[0], Path)
+    assert f"Loading precomputed result from: {temp_dir}" in captured.out
+    assert isinstance(out_loaded, list)
+    assert len(list(temp_dir.iterdir()))
+    assert all(
+        np.allclose(one.to_numpy(), two.to_numpy()) for one, two in zip(out, out_loaded)
+    )
 
-    # Test custom load
-    p = Path(f"{tmp_path}/test.p")
+    # Passing custom loader works, in this case no-op to just get file names
+    custom_loader = lambda x: x
 
-    def myload(f):
-        print("custom load running!")
-        return pickle.load(open(f, "rb"))
+    maybe_out_files = f((5, 3), out_file=temp_dir, loader_func=custom_loader)
 
-    @maybe(p, loadfunc=myload)
-    def f(p):
-        print("I'm running")
-        pickle.dump(["hi"], open(p, "wb"))
+    # Equivalent to loading file names directly
+    out_files = load(temp_dir, loader_func=custom_loader)
 
-    # First run: func executes and saves file
-    out = f(p)
-    captured = capsys.readouterr()
-    assert "I'm running" in captured.out
-    assert p.exists()
+    assert equal(maybe_out_files, out_files)
 
-    # Second run: just loads file
-    out_loaded = f(p)
-    captured = capsys.readouterr()
-    # assert "I'm running" not in captured.out
-    assert "Exists: loading previously saved file" in captured.out
-    assert "custom load running!" in captured.out
-
-    p.unlink()
+    rmtree(temp_dir)
 
 
 def test_expensive(df, capsys):

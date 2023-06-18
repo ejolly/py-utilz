@@ -3,7 +3,7 @@ I/O Module
 """
 __all__ = ["load", "crawl"]
 from pathlib import Path
-from typing import Union, Any, List
+from typing import Union, Any, List, Callable
 import pandas as pd
 import numpy as np
 import pickle
@@ -21,18 +21,21 @@ def load(
     as_str: bool = False,
     verbose: bool = False,
     glob: str = "*",
+    glob_sort: bool = True,
     assert_notempty: bool = True,
+    loader_func: Union[Callable, None] = None,
     **kwargs,
 ) -> Any:
     """
-    A handy dandy all-in-one loading function. Simply pass a Path object to a file (or a
-    string) and you'll back a python object based on the file-extension:
+    A handy dandy all-in-one loading function. Simply pass a Path object to a file or directory and you'll back a python object or list of objects based on the file-extension:
 
     - `.csv`: `pd.Dataframe`
     - `.p/.pickle`: output of `pickle.load`
     - `.json`: `str` or `dict`
+    - `.npy`: `np.ndarray`
     - `.txt`: `np.ndarray`, `list[str]` (lines a file), or `str` (all file contents)
     - other file-extensions are attempted to be loaded like `.txt` files
+    - if give a directory all files matching `glob` in that directory will be loaded
 
     Args:
         f (Path/str): name or path object to load
@@ -45,11 +48,13 @@ def load(
         verbose (bool, optional): whether to print messages during load. Default False
         **kwargs: keyword arguments to `pd.read_csv` or `np.loadtxt`
         glob (string, optional): globbing pattern if f is a directory. Defaults to all files
+        glob_sort (bool, optional): sort the globa before loadin. Defaults to True
         assert_notempty (bool, optional): raise an error if the returned output is
         empty; Default True
+        loader_func (callable, optional): a custom function to use for loading; Default None, uses file extension
 
     Returns:
-        the loaded object
+        the loaded object or list of objects
     """
 
     if isinstance(f, str):
@@ -59,6 +64,25 @@ def load(
 
     if f.is_dir():
         out = list(f.glob(glob))
+        out = sorted(out) if glob_sort else out
+        # Recursively call load on each file in dir and forward args
+        out = [
+            load(
+                o,
+                as_arr=as_arr,
+                as_str=as_str,
+                verbose=verbose,
+                loader_func=loader_func,
+                assert_notempty=assert_notempty,
+                **kwargs,
+            )
+            for o in out
+        ]
+
+    elif loader_func is not None:
+        if verbose:
+            print("Using provided custom load function")
+        out = loader_func(str(f))
 
     elif f.suffix == ".npy":
         if verbose:
