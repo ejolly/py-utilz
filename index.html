@@ -515,9 +515,11 @@
     <span class="k">return</span> <span class="n">out</span>
 
 <span class="c1"># Only run myfunc if results.csv doesn&#39;t eist</span>
-<span class="nd">@maybe</span><span class="p">(</span><span class="s1">&#39;results.csv&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="nd">@maybe</span>
+<span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">out</span>
+
+<span class="n">myfunc</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="s1">&#39;results.csv&#39;</span><span class="p">)</span>
 </code></pre></div>
 <p>Checkout the <a href="intro/">overview</a> page for more!</p>
 
