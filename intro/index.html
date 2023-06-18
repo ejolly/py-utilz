@@ -270,8 +270,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#mapcat-easy-concatenation-of-optionally-parallel-loop-results" class="md-nav__link">
-    mapcat: easy concatenation of (optionally parallel) loop results
+  <a href="#operating-on-single-objects" class="md-nav__link">
+    Operating on single objects
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-on-iterables" class="md-nav__link">
+    Operating on iterables
   </a>
   
 </li>
@@ -395,7 +402,7 @@
   
     <li class="md-nav__item">
       <a href="../api/ops/" class="md-nav__link">
-        Operations and Pipes
+        Function ops
       </a>
     </li>
   
@@ -424,6 +431,20 @@
     <li class="md-nav__item">
       <a href="../api/shorts/" class="md-nav__link">
         Shorthands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/pipes/" class="md-nav__link">
+        Pipes
       </a>
     </li>
   
@@ -527,8 +548,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#mapcat-easy-concatenation-of-optionally-parallel-loop-results" class="md-nav__link">
-    mapcat: easy concatenation of (optionally parallel) loop results
+  <a href="#operating-on-single-objects" class="md-nav__link">
+    Operating on single objects
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-on-iterables" class="md-nav__link">
+    Operating on iterables
   </a>
   
 </li>
@@ -1644,7 +1672,7 @@ Licensed under the Apache License, Version 2.0.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="mapcat-easy-concatenation-of-optionally-parallel-loop-results"><code>mapcat</code>: easy concatenation of (optionally parallel) loop results<a class="anchor-link" href="#mapcat-easy-concatenation-of-optionally-parallel-loop-results">&#182;</a></h3>
+<h3 id="operating-on-single-objects">Operating on single objects<a class="anchor-link" href="#operating-on-single-objects">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -1654,7 +1682,7 @@ Licensed under the Apache License, Version 2.0.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1669,9 +1697,9 @@ Licensed under the Apache License, Version 2.0.
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">mapcat</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">do</span><span class="p">,</span> <span class="n">many</span><span class="p">,</span> <span class="n">randdf</span>
 </pre></div>
-<div id="cell-1" class="clipboard-copy-txt">from utilz import mapcat</div>
+<div id="cell-1" class="clipboard-copy-txt">from utilz import do, many, randdf</div>
     
         </div>
     </div>
@@ -1687,7 +1715,7 @@ Licensed under the Apache License, Version 2.0.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Just like <code>map</code> but no need to call <code>list</code> after:</p>
+<p>You can use <code>do</code> to apply a single function or method to an object</p>
 
 </div>
 </div>
@@ -1698,7 +1726,7 @@ Licensed under the Apache License, Version 2.0.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -1713,14 +1741,1179 @@ Licensed under the Apache License, Version 2.0.
                 </div>
             </clipboard-copy>
         </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">randdf</span><span class="p">()</span>
+
+<span class="n">do</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">do</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span> <span class="c1"># sytactic sugar</span>
+</pre></div>
+<div id="cell-2" class="clipboard-copy-txt">df = randdf()
+
+do(lambda df: df.head(), df)
+do('head', df) # sytactic sugar</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A1</th>
+      <th>B1</th>
+      <th>C1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.076077</td>
+      <td>0.990881</td>
+      <td>0.021679</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.914026</td>
+      <td>0.688789</td>
+      <td>0.698269</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.635191</td>
+      <td>0.337502</td>
+      <td>0.327470</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.942193</td>
+      <td>0.767003</td>
+      <td>0.852347</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.178692</td>
+      <td>0.494257</td>
+      <td>0.507263</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A1</th>
+      <th>B1</th>
+      <th>C1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.076077</td>
+      <td>0.990881</td>
+      <td>0.021679</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.914026</td>
+      <td>0.688789</td>
+      <td>0.698269</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.635191</td>
+      <td>0.337502</td>
+      <td>0.327470</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.942193</td>
+      <td>0.767003</td>
+      <td>0.852347</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.178692</td>
+      <td>0.494257</td>
+      <td>0.507263</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Use can pass function or method arguments as well</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-3">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">do</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+<div id="cell-3" class="clipboard-copy-txt">do('head', df, 10)</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[19]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A1</th>
+      <th>B1</th>
+      <th>C1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.076077</td>
+      <td>0.990881</td>
+      <td>0.021679</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.914026</td>
+      <td>0.688789</td>
+      <td>0.698269</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.635191</td>
+      <td>0.337502</td>
+      <td>0.327470</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.942193</td>
+      <td>0.767003</td>
+      <td>0.852347</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.178692</td>
+      <td>0.494257</td>
+      <td>0.507263</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.999359</td>
+      <td>0.056832</td>
+      <td>0.254085</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.802454</td>
+      <td>0.160224</td>
+      <td>0.843747</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.602545</td>
+      <td>0.840196</td>
+      <td>0.007152</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.801355</td>
+      <td>0.937513</td>
+      <td>0.052925</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.218896</td>
+      <td>0.757961</td>
+      <td>0.057891</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Use <code>many</code> to apply a sequence of functions independently to an object</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-4">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">many</span><span class="p">([</span><span class="s1">&#39;head&#39;</span><span class="p">,</span> <span class="s1">&#39;tail&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+<div id="cell-4" class="clipboard-copy-txt">results = many(['head', 'tail'], df)
+results[0]
+results[1]</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[21]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A1</th>
+      <th>B1</th>
+      <th>C1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.076077</td>
+      <td>0.990881</td>
+      <td>0.021679</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.914026</td>
+      <td>0.688789</td>
+      <td>0.698269</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.635191</td>
+      <td>0.337502</td>
+      <td>0.327470</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.942193</td>
+      <td>0.767003</td>
+      <td>0.852347</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.178692</td>
+      <td>0.494257</td>
+      <td>0.507263</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[21]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A1</th>
+      <th>B1</th>
+      <th>C1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>0.999359</td>
+      <td>0.056832</td>
+      <td>0.254085</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.802454</td>
+      <td>0.160224</td>
+      <td>0.843747</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.602545</td>
+      <td>0.840196</td>
+      <td>0.007152</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.801355</td>
+      <td>0.937513</td>
+      <td>0.052925</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.218896</td>
+      <td>0.757961</td>
+      <td>0.057891</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Use <code>compose</code> or a <code>pipe</code> to apply a sequence of functions in a row</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-5">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">compose</span><span class="p">,</span> <span class="n">pipe</span>
+</pre></div>
+<div id="cell-5" class="clipboard-copy-txt">from utilz import compose, pipe</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-6">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">bottom_head</span> <span class="o">=</span> <span class="n">compose</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">bottom_head</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+<div id="cell-6" class="clipboard-copy-txt">bottom_head = compose(lambda df: df.head(10), lambda df: df.tail(3))
+bottom_head(df)</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[24]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A1</th>
+      <th>B1</th>
+      <th>C1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7</th>
+      <td>0.602545</td>
+      <td>0.840196</td>
+      <td>0.007152</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.801355</td>
+      <td>0.937513</td>
+      <td>0.052925</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.218896</td>
+      <td>0.757961</td>
+      <td>0.057891</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-7">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pipe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+     <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> 
+     <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+     <span class="p">)</span>
+</pre></div>
+<div id="cell-7" class="clipboard-copy-txt">pipe(df, 
+     lambda df: df.head(10), 
+     lambda df: df.tail(3)
+     )</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A1</th>
+      <th>B1</th>
+      <th>C1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7</th>
+      <td>0.602545</td>
+      <td>0.840196</td>
+      <td>0.007152</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.801355</td>
+      <td>0.937513</td>
+      <td>0.052925</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.218896</td>
+      <td>0.757961</td>
+      <td>0.057891</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Use <code>iffy</code> to apply a function if a predicate function is true. It takes a checking function and then a function or value to return if that checking function is true</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-8">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="n">iffy</span>
+
+<span class="c1"># Apply function</span>
+<span class="n">iffy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Return arbitrary object</span>
+<span class="n">iffy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;big df&#39;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># If check fails just returns the original object</span>
+<span class="n">iffy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">df</span><span class="p">)</span>
+</pre></div>
+<div id="cell-8" class="clipboard-copy-txt">from utilz import iffy
+
+# Apply function
+iffy(lambda df: len(df) > 3, lambda df: df.head(3), df)
+
+# Return arbitrary object
+iffy(lambda df: len(df) > 3, 'big df', df)
+
+# If check fails just returns the original object
+iffy(lambda df: len(df) < 3, lambda df: df.head(3), df)</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A1</th>
+      <th>B1</th>
+      <th>C1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.076077</td>
+      <td>0.990881</td>
+      <td>0.021679</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.914026</td>
+      <td>0.688789</td>
+      <td>0.698269</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.635191</td>
+      <td>0.337502</td>
+      <td>0.327470</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>&#39;big df&#39;</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A1</th>
+      <th>B1</th>
+      <th>C1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.076077</td>
+      <td>0.990881</td>
+      <td>0.021679</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.914026</td>
+      <td>0.688789</td>
+      <td>0.698269</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.635191</td>
+      <td>0.337502</td>
+      <td>0.327470</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.942193</td>
+      <td>0.767003</td>
+      <td>0.852347</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.178692</td>
+      <td>0.494257</td>
+      <td>0.507263</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.999359</td>
+      <td>0.056832</td>
+      <td>0.254085</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.802454</td>
+      <td>0.160224</td>
+      <td>0.843747</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.602545</td>
+      <td>0.840196</td>
+      <td>0.007152</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.801355</td>
+      <td>0.937513</td>
+      <td>0.052925</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.218896</td>
+      <td>0.757961</td>
+      <td>0.057891</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="operating-on-iterables">Operating on iterables<a class="anchor-link" href="#operating-on-iterables">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-9">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">utilz</span> <span class="kn">import</span> <span class="nb">map</span><span class="p">,</span> <span class="n">mapcat</span>
+</pre></div>
+<div id="cell-9" class="clipboard-copy-txt">from utilz import map, mapcat</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><code>map</code> is just sugar for <code>list(map())</code></p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-10">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
 
-<span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="nb">map</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 </pre></div>
-<div id="cell-2" class="clipboard-copy-txt">def myfunc(x):
+<div id="cell-10" class="clipboard-copy-txt">def myfunc(x):
     return x * 2
 
+map(myfunc, range(10))</div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>[0, 2, 4, 6, 8, 10, 12, 14, 16, 18]</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><code>mapcat</code> will concatenate/flattest results:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+        
+        
+        <div class="CodeMirror cm-s-jupyter">
+        <div class="zeroclipboard-container">
+            <clipboard-copy for="cell-11">
+            <div>
+                <span class="notice" hidden>Copied!</span>
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
+                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                </svg>
+                </div>
+            </clipboard-copy>
+        </div>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="nb">map</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+<div id="cell-11" class="clipboard-copy-txt">def myfunc(x):
+    return [x * 2]
+
+map(myfunc, range(10))
 mapcat(myfunc, range(10))</div>
     
         </div>
@@ -1739,7 +2932,21 @@ mapcat(myfunc, range(10))</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>[[0], [2], [4], [6], [8], [10], [12], [14], [16], [18]]</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
 
 
 
@@ -1773,12 +2980,12 @@ mapcat(myfunc, range(10))</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-3">
+            <clipboard-copy for="cell-12">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -1790,7 +2997,7 @@ mapcat(myfunc, range(10))</div>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">mapcat</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">]])</span>
 </pre></div>
-<div id="cell-3" class="clipboard-copy-txt">mapcat(None, [[1,2,3], [4,5,6], [7]])</div>
+<div id="cell-12" class="clipboard-copy-txt">mapcat(None, [[1,2,3], [4,5,6], [7]])</div>
     
         </div>
     </div>
@@ -1808,7 +3015,7 @@ mapcat(myfunc, range(10))</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
 
 
 
@@ -1831,7 +3038,7 @@ mapcat(myfunc, range(10))</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If <code>myfunc</code> returns a dataframe, will try to concat the results by default:</p>
+<p>If <code>myfunc</code> returns a dataframe, will try to concat the results by row:</p>
 
 </div>
 </div>
@@ -1842,12 +3049,12 @@ mapcat(myfunc, range(10))</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-4">
+            <clipboard-copy for="cell-13">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -1865,7 +3072,7 @@ mapcat(myfunc, range(10))</div>
 
 <span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
 </pre></div>
-<div id="cell-4" class="clipboard-copy-txt">from utilz import randdf
+<div id="cell-13" class="clipboard-copy-txt">from utilz import randdf
 
 def myfunc(f):
     """simulate loading a 2x3 dataframe from file"""
@@ -1889,7 +3096,7 @@ mapcat(myfunc, range(4))</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
 
 
 
@@ -1920,51 +3127,51 @@ mapcat(myfunc, range(4))</div>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.664831</td>
-      <td>0.409047</td>
-      <td>0.060466</td>
+      <td>0.723497</td>
+      <td>0.397081</td>
+      <td>0.477959</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.216938</td>
-      <td>0.146351</td>
-      <td>0.520507</td>
+      <td>0.981362</td>
+      <td>0.465690</td>
+      <td>0.505523</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.547319</td>
-      <td>0.736637</td>
-      <td>0.759382</td>
+      <td>0.254038</td>
+      <td>0.692296</td>
+      <td>0.589320</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.108149</td>
-      <td>0.594109</td>
-      <td>0.307358</td>
+      <td>0.076432</td>
+      <td>0.229396</td>
+      <td>0.183292</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.274695</td>
-      <td>0.293220</td>
-      <td>0.722972</td>
+      <td>0.317140</td>
+      <td>0.187555</td>
+      <td>0.451125</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.605139</td>
-      <td>0.386713</td>
-      <td>0.113809</td>
+      <td>0.613190</td>
+      <td>0.191327</td>
+      <td>0.634255</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.224161</td>
-      <td>0.643390</td>
-      <td>0.088492</td>
+      <td>0.678660</td>
+      <td>0.456217</td>
+      <td>0.492318</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.566388</td>
-      <td>0.829144</td>
-      <td>0.020709</td>
+      <td>0.217005</td>
+      <td>0.730834</td>
+      <td>0.310409</td>
     </tr>
   </tbody>
 </table>
@@ -1996,12 +3203,12 @@ mapcat(myfunc, range(4))</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-5">
+            <clipboard-copy for="cell-14">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2019,7 +3226,7 @@ mapcat(myfunc, range(4))</div>
 
 <span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
 </pre></div>
-<div id="cell-5" class="clipboard-copy-txt">import numpy as np
+<div id="cell-14" class="clipboard-copy-txt">import numpy as np
 
 def myfunc(f):
     """Function that returns 1d array"""
@@ -2043,7 +3250,7 @@ mapcat(myfunc, range(4))</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
 
 
 
@@ -2085,7 +3292,7 @@ mapcat(myfunc, range(4))</div>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-6">
+            <clipboard-copy for="cell-15">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2097,7 +3304,7 @@ mapcat(myfunc, range(4))</div>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">concat_axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
-<div id="cell-6" class="clipboard-copy-txt">mapcat(myfunc, range(4), concat_axis=1)</div>
+<div id="cell-15" class="clipboard-copy-txt">mapcat(myfunc, range(4), concat_axis=1)</div>
     
         </div>
     </div>
@@ -2157,7 +3364,7 @@ mapcat(myfunc, range(4))</div>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-7">
+            <clipboard-copy for="cell-16">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2169,7 +3376,7 @@ mapcat(myfunc, range(4))</div>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">concat_axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
-<div id="cell-7" class="clipboard-copy-txt">mapcat(myfunc, range(4), concat_axis=0)</div>
+<div id="cell-16" class="clipboard-copy-txt">mapcat(myfunc, range(4), concat_axis=0)</div>
     
         </div>
     </div>
@@ -2226,7 +3433,7 @@ mapcat(myfunc, range(4))</div>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-8">
+            <clipboard-copy for="cell-17">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2238,7 +3445,7 @@ mapcat(myfunc, range(4))</div>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">concat_axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
-<div id="cell-8" class="clipboard-copy-txt">mapcat(myfunc, range(4), concat_axis=2)</div>
+<div id="cell-17" class="clipboard-copy-txt">mapcat(myfunc, range(4), concat_axis=2)</div>
     
         </div>
     </div>
@@ -2281,7 +3488,7 @@ mapcat(myfunc, range(4))</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><code>mapcat</code> as supports easy parallel looping just be changing the <code>n_jobs</code> argument:</p>
+<p>both <code>map</code> and <code>mapcat</code> support easy parallel looping just be changing the <code>n_jobs</code> argument:</p>
 
 </div>
 </div>
@@ -2292,12 +3499,12 @@ mapcat(myfunc, range(4))</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-9">
+            <clipboard-copy for="cell-18">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2314,16 +3521,16 @@ mapcat(myfunc, range(4))</div>
     <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
 
-<span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">map</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
-<div id="cell-9" class="clipboard-copy-txt">from time import sleep
+<div id="cell-18" class="clipboard-copy-txt">from time import sleep
 
 def myfunc(x):
     """Simulate expensive function"""
     sleep(1)
     return x * 2
 
-mapcat(myfunc, range(10), n_jobs=2)</div>
+map(myfunc, range(10), n_jobs=2)</div>
     
         </div>
     </div>
@@ -2341,7 +3548,7 @@ mapcat(myfunc, range(10), n_jobs=2)</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
 
 
 
@@ -2380,7 +3587,7 @@ mapcat(myfunc, range(10), n_jobs=2)</div>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-10">
+            <clipboard-copy for="cell-19">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2398,7 +3605,7 @@ mapcat(myfunc, range(10), n_jobs=2)</div>
 
 <span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">enum</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
-<div id="cell-10" class="clipboard-copy-txt"># myfunc needs to accept an 'idx' argument
+<div id="cell-19" class="clipboard-copy-txt"># myfunc needs to accept an 'idx' argument
 def myfunc(x, idx):
     """Simulate expensive function"""
     sleep(1)
@@ -2461,7 +3668,7 @@ mapcat(myfunc, range(10), n_jobs=2, enum=True)</div>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-11">
+            <clipboard-copy for="cell-20">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2481,9 +3688,9 @@ mapcat(myfunc, range(10), n_jobs=2, enum=True)</div>
     <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
 
 
-<span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">map</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
-<div id="cell-11" class="clipboard-copy-txt"># myfunc needs to accept an 'random_seed' argument
+<div id="cell-20" class="clipboard-copy-txt"># myfunc needs to accept an 'random_seed' argument
 def myfunc(x, random_state=None):
     """Simulate expensive function"""
     from utilz import check_random_state
@@ -2493,7 +3700,7 @@ def myfunc(x, random_state=None):
     return x * rng.random()
 
 
-mapcat(myfunc, range(10), n_jobs=2, random_state=1)</div>
+map(myfunc, range(10), n_jobs=2, random_state=1)</div>
     
         </div>
     </div>
@@ -2559,7 +3766,7 @@ mapcat(myfunc, range(10), n_jobs=2, random_state=1)</div>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-12">
+            <clipboard-copy for="cell-21">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2569,9 +3776,9 @@ mapcat(myfunc, range(10), n_jobs=2, random_state=1)</div>
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">mapcat</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="nb">map</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
-<div id="cell-12" class="clipboard-copy-txt">mapcat(myfunc, range(10), n_jobs=2, random_state=1)</div>
+<div id="cell-21" class="clipboard-copy-txt">map(myfunc, range(10), n_jobs=2, random_state=1)</div>
     
         </div>
     </div>
@@ -2672,7 +3879,7 @@ mapcat(myfunc, range(10), n_jobs=2, random_state=1)</div>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-13">
+            <clipboard-copy for="cell-22">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2692,7 +3899,7 @@ mapcat(myfunc, range(10), n_jobs=2, random_state=1)</div>
 <span class="n">new_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">norm_by_group</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">)</span>
 <span class="n">new_df</span>
 </pre></div>
-<div id="cell-13" class="clipboard-copy-txt"># No need to import anything!
+<div id="cell-22" class="clipboard-copy-txt"># No need to import anything!
 
 # Add a group col
 df = randdf()
@@ -2864,7 +4071,7 @@ new_df</div>
         
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-14">
+            <clipboard-copy for="cell-23">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -2876,7 +4083,7 @@ new_df</div>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">new_df</span><span class="o">.</span><span class="n">norm_by_group</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
-<div id="cell-14" class="clipboard-copy-txt">new_df.norm_by_group('group', 'A1', scale=False)</div>
+<div id="cell-23" class="clipboard-copy-txt">new_df.norm_by_group('group', 'A1', scale=False)</div>
     
         </div>
     </div>

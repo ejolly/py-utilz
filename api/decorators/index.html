@@ -316,7 +316,7 @@
   
     <li class="md-nav__item">
       <a href="../ops/" class="md-nav__link">
-        Operations and Pipes
+        Function ops
       </a>
     </li>
   
@@ -345,6 +345,20 @@
     <li class="md-nav__item">
       <a href="../shorts/" class="md-nav__link">
         Shorthands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipes/" class="md-nav__link">
+        Pipes
       </a>
     </li>
   
@@ -808,21 +822,18 @@ them will simply load the last results from disk.</p>
       <p>A decorator that wraps a function which should take a kwarg called <code>out_file</code>. If
 <code>out_file</code> exists then it's loaded from disk, otherwise the wrapped function is
 called. If the wrapped function takes a kwarg <code>overwrite = True</code> then it always runs. You can also pass <code>loader_func = callable</code> to use a custom loading function</p>
-<p>Example:</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>@maybe
-def mean_brain(subpath, **kwargs):
-b = Brain_Data(subpath)
-m = b.mean()
-out_file = kwargs.get('out_file')
-m.write(out_file)
-return m</p>
-<p>mean_brain(subpath, out_file='mean_brain.h5', loader_func=Brain_Data)</p>
-</blockquote>
-</blockquote>
-</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="err">@</span><span class="n">maybe</span><span class="w"></span>
+<span class="n">def</span><span class="w"> </span><span class="n">expensive_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">kwargs</span><span class="s1">&#39;):</span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">something_expensive</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;out_file&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">b</span><span class="w"></span>
+
+<span class="c1"># First run will execute the function</span><span class="w"></span>
+<span class="n">expensive_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">out_file</span><span class="o">=</span><span class="s1">&#39;result.npy&#39;</span><span class="p">)</span><span class="w"></span>
+
+<span class="c1"># Second run will load from &#39;result.npy&#39;</span><span class="w"></span>
+<span class="n">expensive_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">out_file</span><span class="o">=</span><span class="s1">&#39;result.npy&#39;</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
 
       <details class="quote">
         <summary>Source code in <code>utilz/decorators.py</code></summary>
@@ -876,17 +887,17 @@ return m</p>
 <span class="sd">    `out_file` exists then it&#39;s loaded from disk, otherwise the wrapped function is</span>
 <span class="sd">    called. If the wrapped function takes a kwarg `overwrite = True` then it always runs. You can also pass `loader_func = callable` to use a custom loading function</span>
 
-<span class="sd">    Example:</span>
+<span class="sd">        @maybe</span>
+<span class="sd">        def expensive_func(data, **kwargs&#39;):</span>
+<span class="sd">            b = something_expensive(data)</span>
+<span class="sd">            np.save(b, kwargs.get(&#39;out_file&#39;)</span>
+<span class="sd">            return b</span>
 
-<span class="sd">    &gt;&gt;&gt; @maybe</span>
-<span class="sd">    &gt;&gt;&gt; def mean_brain(subpath, **kwargs):</span>
-<span class="sd">    &gt;&gt;&gt; b = Brain_Data(subpath)</span>
-<span class="sd">    &gt;&gt;&gt; m = b.mean()</span>
-<span class="sd">    &gt;&gt;&gt; out_file = kwargs.get(&#39;out_file&#39;)</span>
-<span class="sd">    &gt;&gt;&gt; m.write(out_file)</span>
-<span class="sd">    &gt;&gt;&gt; return m</span>
+<span class="sd">        # First run will execute the function</span>
+<span class="sd">        expensive_func(data, out_file=&#39;result.npy&#39;)</span>
 
-<span class="sd">    &gt;&gt;&gt; mean_brain(subpath, out_file=&#39;mean_brain.h5&#39;, loader_func=Brain_Data)</span>
+<span class="sd">        # Second run will load from &#39;result.npy&#39;</span>
+<span class="sd">        expensive_func(data, out_file=&#39;result.npy&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
