@@ -399,6 +399,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#utilz.shorts.checkall" class="md-nav__link">
+    checkall()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.shorts.checkany" class="md-nav__link">
+    checkany()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.shorts.discard" class="md-nav__link">
     discard()
   </a>
@@ -408,6 +422,13 @@
           <li class="md-nav__item">
   <a href="#utilz.shorts.equal" class="md-nav__link">
     equal()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.shorts.isempty" class="md-nav__link">
+    isempty()
   </a>
   
 </li>
@@ -551,6 +572,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#utilz.shorts.checkall" class="md-nav__link">
+    checkall()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.shorts.checkany" class="md-nav__link">
+    checkany()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#utilz.shorts.discard" class="md-nav__link">
     discard()
   </a>
@@ -560,6 +595,13 @@
           <li class="md-nav__item">
   <a href="#utilz.shorts.equal" class="md-nav__link">
     equal()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.shorts.isempty" class="md-nav__link">
+    isempty()
   </a>
   
 </li>
@@ -643,9 +685,9 @@
 
       <details class="quote">
         <summary>Source code in <code>utilz/shorts.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">aslist</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">aslist</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Idempotently convert something to a list.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">e</span>
 </code></pre></div></td></tr></table></div>
@@ -670,11 +712,255 @@
 
       <details class="quote">
         <summary>Source code in <code>utilz/shorts.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">asstr</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">asstr</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Idempotently convert something to a str.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">e</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.shorts.checkall" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">checkall</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Check if all elements are func(elem) == True</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>func</code></td>
+          <td>
+                <code>callable</code>
+          </td>
+          <td><p>function that returns True or False</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>iterme</code></td>
+          <td>
+                <code>iterable</code>
+          </td>
+          <td><p>iterable</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>transparent</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>return iterme instead of result if check passes, useful in pipes; Default False</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>True or False</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/shorts.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">checkall</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if all elements are func(elem) == True</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): function that returns True or False</span>
+<span class="sd">        iterme (iterable): iterable</span>
+<span class="sd">        transparent (bool, optional): return iterme instead of result if check passes, useful in pipes; Default False</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True or False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">transparent</span> <span class="ow">and</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">iterme</span>
+    <span class="k">if</span> <span class="n">transparent</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Check failed&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.shorts.checkany" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">checkany</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Check if any elements are func(elem) == True</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>func</code></td>
+          <td>
+                <code>callable</code>
+          </td>
+          <td><p>function that returns True or False</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>iterme</code></td>
+          <td>
+                <code>iterable</code>
+          </td>
+          <td><p>iterable</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>transparent</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>return iterme instead of result if check passes, useful in pipes; Default False</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+          </td>
+          <td><p>True or False</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/shorts.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">checkany</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if any elements are func(elem) == True</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): function that returns True or False</span>
+<span class="sd">        iterme (iterable): iterable</span>
+<span class="sd">        transparent (bool, optional): return iterme instead of result if check passes, useful in pipes; Default False</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True or False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterme</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">transparent</span> <span class="ow">and</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">iterme</span>
+    <span class="k">if</span> <span class="n">transparent</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Check failed&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -697,11 +983,11 @@
 
       <details class="quote">
         <summary>Source code in <code>utilz/shorts.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">discard</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Alias for `filter` with `invert=True`&quot;&quot;&quot;</span>
     <span class="n">invert</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;invert&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
@@ -724,15 +1010,74 @@
 
   <div class="doc doc-contents ">
   
-      <p>Lazily checks if two sequences of potentionally different lengths are equal</p>
+      <p>Checks if N args of potentionally different lengths are equal.
+Non-iterable args are directly compared with <code>==</code>
+Dataframes and arrays use <code>.equals()</code> and <code>np.allclose()</code> respectively</p>
 
       <details class="quote">
         <summary>Source code in <code>utilz/shorts.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Lazily checks if two sequences of potentionally different lengths are equal&quot;&quot;&quot;</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks if N args of potentionally different lengths are equal.</span>
+<span class="sd">    Non-iterable args are directly compared with `==`</span>
+<span class="sd">    Dataframes and arrays use `.equals()` and `np.allclose()` respectively</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seqs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">checkall</span><span class="p">(</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span> <span class="o">==</span> <span class="n">seqs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">seqs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seqs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">checkall</span><span class="p">(</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">seqs</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">seqs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seqs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">checkall</span><span class="p">(</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">seqs</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">seqs</span><span class="p">)</span>
+
+    <span class="c1"># For other sequence types we can be lazy</span>
     <span class="k">return</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">diff</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">object</span><span class="p">()))</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.shorts.isempty" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">isempty</span><span class="p">(</span><span class="n">iterme</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Check if iterable is empty</p>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/shorts.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">isempty</span><span class="p">(</span><span class="n">iterme</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check if iterable is empty&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterme</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -755,11 +1100,11 @@
 
       <details class="quote">
         <summary>Source code in <code>utilz/shorts.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@curry</span>
 <span class="k">def</span> <span class="nf">keep</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Alias for `filter` with `invert=False`&quot;&quot;&quot;</span>
     <span class="n">invert</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;invert&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
@@ -786,9 +1131,9 @@
 
       <details class="quote">
         <summary>Source code in <code>utilz/shorts.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">seq</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">seq</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Enumerated `list`&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
