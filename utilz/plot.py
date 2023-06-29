@@ -133,6 +133,7 @@ def savefig(
     vector: bool = True,
     use_subdirs: bool = True,
     raster_extension: str = "jpg",
+    vector_extension: str = "svg",
     bbox_inches: str = "tight",
     overwrite: bool = True,
     **kwargs,
@@ -164,10 +165,10 @@ def savefig(
         path = Path.cwd()
     if use_subdirs:
         raster_path = path / "raster" / f"{name}.{raster_extension}"
-        vector_path = path / "vector" / f"{name}.pdf"
+        vector_path = path / "vector" / f"{name}.{vector_extension}"
     else:
         raster_path = path / f"{name}.{raster_extension}"
-        vector_path = path / f"{name}.pdf"
+        vector_path = path / f"{name}.{vector_extension}"
     if not raster_path.parent.exists():
         raster_path.parent.mkdir()
     if not vector_path.parent.exists():
