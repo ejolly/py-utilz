@@ -79,6 +79,7 @@ def stripbarplot(
     if pointcolor == "hue":
         ax = sns.stripplot(*args, **kwargs, data=data, ax=ax, alpha=alpha)
     else:
+        _ = kwargs.pop("palette", None)
         ax = sns.stripplot(
             *args, **kwargs, color=pointcolor, data=data, ax=ax, alpha=alpha
         )
