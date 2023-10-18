@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="https://eshinjolly.com/py-utilz/api/boilerplate/">
+        <link rel="canonical" href="https://eshinjolly.com/py-utilz/api/generators/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.7">
     
     
       
-        <title>Boilerplate helpers - Py-utilz</title>
+        <title>Generators - Py-utilz</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#boilerplate-code-helpers" class="md-skip">
+        <a href="#generator-tools" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Boilerplate helpers
+              Generators
             
           </span>
         </div>
@@ -341,11 +341,72 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../generators/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Generators
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Generators
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#utilzgenz" class="md-nav__link">
+    utilz.genz
+  </a>
+  
+    <nav class="md-nav" aria-label="utilz.genz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilz.genz.combine_gens" class="md-nav__link">
+    combine_gens()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.genz.make_gen" class="md-nav__link">
+    make_gen()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -411,65 +472,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Boilerplate helpers
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../boilerplate/" class="md-nav__link">
         Boilerplate helpers
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#utilzboilerplate" class="md-nav__link">
-    utilz.boilerplate
-  </a>
-  
-    <nav class="md-nav" aria-label="utilz.boilerplate">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#utilz.boilerplate.randdf" class="md-nav__link">
-    randdf()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -536,16 +543,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#utilzboilerplate" class="md-nav__link">
-    utilz.boilerplate
+  <a href="#utilzgenz" class="md-nav__link">
+    utilz.genz
   </a>
   
-    <nav class="md-nav" aria-label="utilz.boilerplate">
+    <nav class="md-nav" aria-label="utilz.genz">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#utilz.boilerplate.randdf" class="md-nav__link">
-    randdf()
+  <a href="#utilz.genz.combine_gens" class="md-nav__link">
+    combine_gens()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilz.genz.make_gen" class="md-nav__link">
+    make_gen()
   </a>
   
 </li>
@@ -569,14 +583,14 @@
                 
                   
 
-  <a href="https://github.com/ejolly/py-utilz/edit/master/docs/api/boilerplate.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/ejolly/py-utilz/edit/master/docs/api/generators.md" title="Edit this page" class="md-content__button md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
-<h1 id="boilerplate-code-helpers">Boilerplate code helpers</h1>
-<h2 id="utilzboilerplate"><code>utilz.boilerplate</code></h2>
+<h1 id="generator-tools">Generator tools</h1>
+<h2 id="utilzgenz"><code>utilz.genz</code></h2>
 
 
 <div class="doc doc-object doc-module">
@@ -585,7 +599,7 @@
 
   <div class="doc doc-contents first">
   
-      <p>Functions that exist purely to save boilerplate.</p>
+      <p>Tools for working with generators. Also see the <code>toolz</code> library!</p>
 
   
 
@@ -603,93 +617,54 @@
 
 
 
-<h4 id="utilz.boilerplate.randdf" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">randdf</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h4 id="utilz.genz.combine_gens" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">combine_gens</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">)</span></code>
 
 </h4>
 
 
   <div class="doc doc-contents ">
   
-      <p>Generate a dataframe with random data and alphabetic columns, Default to np.random.randn. Specify another function and size will be passed in as a kwarg.</p>
+      <p>Combine multiple generators into a single generator based on every
+unique combination of their elements. This is equivalent to a series of
+nested for loops just like itertools.product(). But unlike itertools.product
+doesn't exhaust each generator before combining them.</p>
 
-  <p><strong>Parameters:</strong></p>
+<p><strong>Examples:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="k">for</span> <span class="n">bb</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>      <span class="n">func</span><span class="p">(</span><span class="n">aa</span><span class="p">,</span> <span class="n">bb</span><span class="p">,</span> <span class="n">cc</span><span class="p">)</span>
+</code></pre></div>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Becomes this</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">aa</span><span class="p">,</span> <span class="n">bb</span><span class="p">,</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">combine_gens</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">func</span><span class="p">(</span><span class="n">aa</span><span class="p">,</span> <span class="n">bb</span><span class="p">,</span> <span class="n">cc</span><span class="p">)</span>
+</code></pre></div>
+
+  <p><strong>Yields:</strong></p>
   <table>
     <thead>
       <tr>
-        <th>Name</th>
         <th>Type</th>
         <th>Description</th>
-        <th>Default</th>
       </tr>
     </thead>
     <tbody>
         <tr>
-          <td><code>size</code></td>
           <td>
-                <code>tuple</code>
           </td>
-          <td><p>Defaults to (10,3).</p></td>
-          <td>
-                <code>(10, 3)</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>columns</code></td>
-          <td>
-                <code>list</code>
-          </td>
-          <td><p>Defaults numbered capital letters like an excel spreadsheet</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>func</code></td>
-          <td>
-                <code>callable</code>
-          </td>
-          <td><p>function to generate data. Must take a kwarg "size"</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>random_state</code></td>
-          <td>
-                <code>None, int, np.<span title="np.RandomState">RandomState</span></code>
-          </td>
-          <td><p>if None, return the RandomState</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>*args</code></td>
-          <td>
-                <code>any</code>
-          </td>
-          <td><p>positional arguments to func</p></td>
-          <td>
-                <code>()</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>**kwargs</code></td>
-          <td>
-                <code>any</code>
-          </td>
-          <td><p>keyword arguments to func</p></td>
-          <td>
-                <code>{}</code>
-          </td>
+          <td><p>generator</p></td>
         </tr>
     </tbody>
   </table>
 
       <details class="quote">
-        <summary>Source code in <code>utilz/boilerplate.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
+        <summary>Source code in <code>utilz/genz.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
 <span class="normal">17</span>
@@ -715,93 +690,63 @@
 <span class="normal">37</span>
 <span class="normal">38</span>
 <span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">randdf</span><span class="p">(</span>
-    <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-    <span class="n">columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">groups</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">any</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">any</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">combine_gens</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate a dataframe with random data and alphabetic columns, Default to np.random.randn. Specify another function and size will be passed in as a kwarg.</span>
+<span class="sd">    Combine multiple generators into a single generator based on every</span>
+<span class="sd">    unique combination of their elements. This is equivalent to a series of</span>
+<span class="sd">    nested for loops just like itertools.product(). But unlike itertools.product</span>
+<span class="sd">    doesn&#39;t exhaust each generator before combining them.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        size (tuple, optional): Defaults to (10,3).</span>
-<span class="sd">        columns (list, optional): Defaults numbered capital letters like an excel spreadsheet</span>
-<span class="sd">        func (callable, optional): function to generate data. Must take a kwarg &quot;size&quot;</span>
-<span class="sd">        that accepts a tuple; Default np.random.randn</span>
-<span class="sd">        random_state (None, int, np.RandomState): if None, return the RandomState</span>
-<span class="sd">        singleton used by np.random. If int, return a new RandomState instance seeded</span>
-<span class="sd">        with seed. If seed is already a RandomState instance, return it. Otherwise raise</span>
-<span class="sd">        ValueError.</span>
-<span class="sd">        *args: positional arguments to func</span>
-<span class="sd">        **kwargs: keyword arguments to func</span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; # This</span>
+<span class="sd">        &gt;&gt;&gt; for aa in a:</span>
+<span class="sd">        &gt;&gt;&gt;   for bb in b:</span>
+<span class="sd">        &gt;&gt;&gt;     for cc in c:</span>
+<span class="sd">        &gt;&gt;&gt;       func(aa, bb, cc)</span>
+
+<span class="sd">        &gt;&gt;&gt; # Becomes this</span>
+<span class="sd">        &gt;&gt;&gt; for aa, bb, cc in combine_gens(a, b, c):</span>
+<span class="sd">        &gt;&gt;&gt;   func(aa, bb, cc)</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        generator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span> <span class="o">!=</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Length of column names must match number of columns&quot;</span><span class="p">)</span>
-
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="o">*</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">iterables</span><span class="p">:</span>
+        <span class="c1"># Base case: If no generators are provided, yield an empty tuple.</span>
+        <span class="k">yield</span> <span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># Recursive case: Combine the first generator with combinations from the rest.</span>
+        <span class="n">first_gen</span><span class="p">,</span> <span class="o">*</span><span class="n">remaining_gens</span> <span class="o">=</span> <span class="n">iterables</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">first_gen</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">sub_combination</span> <span class="ow">in</span> <span class="n">combine_gens</span><span class="p">(</span><span class="o">*</span><span class="n">remaining_gens</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="n">item</span><span class="p">,)</span> <span class="o">+</span> <span class="n">sub_combination</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
 
-    <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">letters</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">)</span>
-        <span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">columns</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">26</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">next</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span><span class="si">}{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</div>
 
-    <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">groups</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">num_groups</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="n">num_groups</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_groups</span><span class="si">}</span><span class="s2"> for column </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> is not divisible by the shape of the data </span><span class="si">{</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
-            <span class="n">letters</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">)</span>
-            <span class="n">grps</span> <span class="o">=</span> <span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_groups</span><span class="p">)]</span>
-            <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grps</span><span class="p">:</span>
-                <span class="n">values</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">g</span><span class="p">]</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">num_groups</span><span class="p">))</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="n">values</span><span class="p">})</span>
-    <span class="k">return</span> <span class="n">out</span>
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="utilz.genz.make_gen" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">make_gen</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span></code>
+
+</h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Turn any iterable into a generator</p>
+
+      <details class="quote">
+        <summary>Source code in <code>utilz/genz.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">make_gen</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Turn any iterable into a generator&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -835,7 +780,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../plot/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Plotting tools" rel="prev">
+        <a href="../maps/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Maps" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -844,20 +789,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Plotting tools
+              Maps
             </div>
           </div>
         </a>
       
       
         
-        <a href="../decorators/" class="md-footer__link md-footer__link--next" aria-label="Next: Decorators" rel="next">
+        <a href="../shorts/" class="md-footer__link md-footer__link--next" aria-label="Next: Shorthands" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Decorators
+              Shorthands
             </div>
           </div>
           <div class="md-footer__button md-icon">
