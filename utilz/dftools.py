@@ -79,9 +79,10 @@ def norm_by_group(df, grpcol, valcols, center=True, scale=True, addcol=True):
         elif center and scale:
             idx = "normed"
 
+        out = out.to_dict()
         assign_dict = {}
-        for valcol, col in zip(valcols, out):
-            assign_dict[f"{valcol}_{idx}_by_{grpcol}"] = col
+        for key in out.keys():
+            assign_dict[f"{key}_{idx}_by_{grpcol}"] = out[key]
         out = df.assign(**assign_dict)
     return out.squeeze()
 

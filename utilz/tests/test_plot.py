@@ -28,7 +28,7 @@ def test_savefig(tmp_path: Path):
     # Save to cwd
     f, _ = mpinit(subplots=(2, 2))
     save_raster = Path.cwd() / "raster" / "test.jpg"
-    save_vector = Path.cwd() / "vector" / "test.pdf"
+    save_vector = Path.cwd() / "vector" / "test.svg"
     savefig(f, "test")
     plt.close(f)
     assert save_raster.exists()
@@ -41,7 +41,7 @@ def test_savefig(tmp_path: Path):
     # Save to custom path
     tmp_path = Path(tmp_path)
     dir_save_raster = tmp_path / "test.jpg"
-    dir_save_vector = tmp_path / "test.pdf"
+    dir_save_vector = tmp_path / "test.svg"
 
     f, _ = mpinit(subplots=(2, 2))
     savefig(f, "test", path=tmp_path, use_subdirs=False)

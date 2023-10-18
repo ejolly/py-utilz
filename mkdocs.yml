@@ -25,12 +25,14 @@ nav:
       - I/O: api/io.md
       - Function ops: api/ops.md
       - Maps: api/maps.md
+      - Generators: api/generators.md
       - Shorthands: api/shorts.md
       - Pipes: api/pipes.md
       - Dataframe verbs and tools: api/df.md
       - Plotting tools: api/plot.md
       - Boilerplate helpers: api/boilerplate.md
       - Decorators: api/decorators.md
+      - Dataclasses: api/data.md
 plugins:
   - mkdocs-jupyter:
       ignore: ["dev/*"]
