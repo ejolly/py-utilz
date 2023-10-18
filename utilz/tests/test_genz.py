@@ -7,7 +7,6 @@ def test_make_gen():
     l = list(range(10))
     g = make_gen(l)
     assert isinstance(g, GeneratorType)
-    breakpoint()
 
 
 def test_combine_gens():
