@@ -1142,7 +1142,7 @@ lists. List of lists up to 2 deep will be flattened to single list when <code>fu
           </td>
         </tr>
         <tr>
-          <td><code>enum</code></td>
+          <td><code>enum/enumerate</code></td>
           <td>
                 <code>bool</code>
           </td>
@@ -1370,7 +1370,7 @@ lists. List of lists up to 2 deep will be flattened to single list when <code>fu
 <span class="sd">        func (callable): function to map</span>
 <span class="sd">        iterme (iterable): an iterable for which each element will be passed to func</span>
 <span class="sd">        into a single list, array, or dataframe based on `axis`; Default True</span>
-<span class="sd">        enum (bool, optional): whether the value of the current iteration should be passed to `func` as the special kwarg `idx`. Make sure `func` can handle a kwarg named `idx`. Default False</span>
+<span class="sd">        enum/enumerate (bool, optional): whether the value of the current iteration should be passed to `func` as the special kwarg `idx`. Make sure `func` can handle a kwarg named `idx`. Default False</span>
 <span class="sd">        random_state (bool/int, optional): whether a randomly initialized seed should be</span>
 <span class="sd">        passed to `func` as the special kwarg `random_state`. The function should pass</span>
 <span class="sd">        this seed to the `utilz.check_random_state` helper to generate a random number</span>
@@ -1409,7 +1409,7 @@ lists. List of lists up to 2 deep will be flattened to single list when <code>fu
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">enum</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;enum&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">enum</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;enum&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">or</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;enumerate&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
     <span class="n">random_state</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;random_state&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
     <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;n_jobs&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">backend</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;backend&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
