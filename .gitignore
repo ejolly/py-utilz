@@ -16,3 +16,4 @@ cachedir
 .venv
 dist
 !**/mtcars.csv
+tricks.ipynb

@@ -223,7 +223,7 @@ def map(
         func (callable): function to map
         iterme (iterable): an iterable for which each element will be passed to func
         into a single list, array, or dataframe based on `axis`; Default True
-        enum (bool, optional): whether the value of the current iteration should be passed to `func` as the special kwarg `idx`. Make sure `func` can handle a kwarg named `idx`. Default False
+        enum/enumerate (bool, optional): whether the value of the current iteration should be passed to `func` as the special kwarg `idx`. Make sure `func` can handle a kwarg named `idx`. Default False
         random_state (bool/int, optional): whether a randomly initialized seed should be
         passed to `func` as the special kwarg `random_state`. The function should pass
         this seed to the `utilz.check_random_state` helper to generate a random number
@@ -262,7 +262,7 @@ def map(
 
     """
 
-    enum = kwargs.pop("enum", False)
+    enum = kwargs.pop("enum", False) or kwargs.pop("enumerate", False)
     random_state = kwargs.pop("random_state", False)
     n_jobs = kwargs.pop("n_jobs", 1)
     backend = kwargs.pop("backend", None)
