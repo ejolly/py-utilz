@@ -3,6 +3,8 @@ import pandas as pd
 from utilz.data import Box
 from utilz import randdf, equal, map, seq
 import pytest
+from timeit import timeit
+from time import sleep
 
 
 def test_box():
@@ -100,3 +102,18 @@ def test_box():
     box = Box(data, transparent=False)
     box.map(lambda x: x + 1, inplace=True)
     assert equal(box.contents(), correct)
+
+
+def test_parallel_box():
+    df_data = [randdf((20, 3), groups={"condition": 2, "group": 4}) for i in range(4)]
+
+    def sleepy_mean(df):
+        sleep(1)
+        return df.mean()
+
+    box = Box(df_data)
+
+    single = timeit(lambda: box.map(sleepy_mean), number=1)
+    par = timeit(lambda: box.map(sleepy_mean, n_jobs=2), number=1)
+
+    assert single > par

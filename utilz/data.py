@@ -88,9 +88,10 @@ class Box(list):
     def __repr__(self):
         return f"Box(len={len(self)}, transparent={self._transparent_box}, type={self[0].__class__.__module__}.{self[0].__class__.__name__})"
 
-    def map(self, fn, inplace=False):
+    def map(self, fn, **kwargs):
         """
-        Apply a function to each element in the box
+        Apply a function to each element in the box. Accepts all kwargs that map does,
+        including parallelization!
 
         Args:
             fn (callable): function to apply to each element
@@ -102,7 +103,8 @@ class Box(list):
             Box: new box with the results of applying `fn` to each element
         """
 
-        out = map(fn, self)
+        inplace = kwargs.pop("inplace", False)
+        out = map(fn, self, **kwargs)
         if inplace:
             self.__init__(out, transparent=self._transparent_box)
         else:
