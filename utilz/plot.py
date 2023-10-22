@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from toolz import curry
 from typing import Union
+from contextlib import contextmanager
 
 
 def mpinit(figsize: tuple = (8, 6), subplots: tuple = (1, 1)):
@@ -269,3 +270,42 @@ def newax(*args, **kwargs):
     """Short hand for a new axis on a new figure. Usueful for calling multiple plotting
     routines in a pipe() but wanting separate figures."""
     return plt.subplots()[1]
+
+
+@contextmanager
+def makefig(figorax, **kwargs):
+    """
+    A context manager to handling a figure and optionally saving it.
+    Handles all kwargs to plt.subplots() as well as a save kwarg that
+    should point to a file to auto-saving
+
+    Args:
+        figorax (str): 'fig' or 'ax'
+
+
+    Yields:
+        figure or axis handle
+
+    Examples:
+        >>> x = np.random.randn(10)
+        >>> with makefig('ax', figsize=(3,3)) as ax:
+        >>>    ax.plot(x)
+
+        >>> with makefig('ax', save='myfig.jpg') as ax:
+        >>>    ax.plot(x)
+        >>>    # figure is saved to 'myfig.jpg'
+    """
+
+    save = kwargs.pop("save", None)
+    bbox_inches = kwargs.pop("bbox_inches", "tight")
+
+    f, ax = plt.subplots(**kwargs)
+    if figorax == "fig":
+        yield f
+    elif figorax == "ax":
+        yield ax
+    else:
+        raise ValueError("Fist arg to makefig() must be 'fig' or 'ax'")
+
+    if save is not None:
+        f.savefig(save, bbox_inches=bbox_inches)

@@ -1,4 +1,4 @@
-from utilz.plot import mpinit, stripbarplot, savefig
+from utilz.plot import mpinit, stripbarplot, savefig, makefig
 from utilz.boilerplate import randdf
 import matplotlib.pyplot as plt
 from pathlib import Path
@@ -51,3 +51,23 @@ def test_savefig(tmp_path: Path):
 
     dir_save_raster.unlink()
     dir_save_vector.unlink()
+
+
+def test_makefig(tmp_path: Path):
+    x = np.random.randn(10)
+
+    # Smoke test axis
+    with makefig("ax") as ax:
+        ax.plot(x)
+
+    # Smoke test figure
+    with makefig("fig") as f:
+        f.get_axes()[0].plot(x)
+
+    # Saving
+    with makefig("ax", save=tmp_path / "myfig.jpg") as ax:
+        ax.plot(x)
+
+    fpath = tmp_path / "myfig.jpg"
+    assert fpath.exists()
+    fpath.unlink()
