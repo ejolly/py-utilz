@@ -842,7 +842,9 @@
 <span class="normal">129</span>
 <span class="normal">130</span>
 <span class="normal">131</span>
-<span class="normal">132</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Box</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Box</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Box is a flexible list-like container that allows for dot-notation access to attributes of its elements and methods. This makes it easy for example to perform a `.groupby()` operation on a list of dataframes.</span>
@@ -925,9 +927,10 @@
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Box(len=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">, transparent=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_transparent_box</span><span class="si">}</span><span class="s2">, type=</span><span class="si">{</span><span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Apply a function to each element in the box</span>
+<span class="sd">        Apply a function to each element in the box. Accepts all kwargs that map does,</span>
+<span class="sd">        including parallelization!</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            fn (callable): function to apply to each element</span>
@@ -939,7 +942,8 @@
 <span class="sd">            Box: new box with the results of applying `fn` to each element</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">out</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">inplace</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;inplace&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_transparent_box</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1090,14 +1094,14 @@
 
       <details class="quote">
         <summary>Source code in <code>utilz/data.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">118</span>
 <span class="normal">119</span>
 <span class="normal">120</span>
 <span class="normal">121</span>
 <span class="normal">122</span>
-<span class="normal">123</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert box to list</span>
 
@@ -1116,14 +1120,15 @@
 
 
 <h5 id="utilz.data.Box.map" class="doc doc-heading">
-<code class="highlight language-python"><span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h5>
 
 
   <div class="doc doc-contents ">
   
-      <p>Apply a function to each element in the box</p>
+      <p>Apply a function to each element in the box. Accepts all kwargs that map does,
+including parallelization!</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1153,7 +1158,7 @@
           </td>
           <td><p>whether to modify the box in place or return a new box. Defaults to False.</p></td>
           <td>
-                <code>False</code>
+              <em>required</em>
           </td>
         </tr>
         <tr>
@@ -1171,7 +1176,7 @@
           </td>
           <td><p>keyword arguments to pass to <code>fn</code></p></td>
           <td>
-              <em>required</em>
+                <code>{}</code>
           </td>
         </tr>
     </tbody>
@@ -1219,9 +1224,12 @@
 <span class="normal">111</span>
 <span class="normal">112</span>
 <span class="normal">113</span>
-<span class="normal">114</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Apply a function to each element in the box</span>
+<span class="sd">    Apply a function to each element in the box. Accepts all kwargs that map does,</span>
+<span class="sd">    including parallelization!</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        fn (callable): function to apply to each element</span>
@@ -1233,7 +1241,8 @@
 <span class="sd">        Box: new box with the results of applying `fn` to each element</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">out</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+    <span class="n">inplace</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;inplace&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_transparent_box</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1289,14 +1298,14 @@
 
       <details class="quote">
         <summary>Source code in <code>utilz/data.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">127</span>
 <span class="normal">128</span>
 <span class="normal">129</span>
 <span class="normal">130</span>
 <span class="normal">131</span>
-<span class="normal">132</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_transparent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transparent</span><span class="p">):</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_transparent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transparent</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set the transparency of the box</span>
 
