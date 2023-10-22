@@ -11,6 +11,7 @@ __all__ = [
     "checkall",
     "nth",
     "pairs",
+    "transpose",
 ]
 
 from collections.abc import Iterable
@@ -129,3 +130,26 @@ def checkall(func, iterme, transparent=False):
 @curry
 def pairs(iterme: Iterable):
     return list(it.combinations(iterme, 2))
+
+
+@curry
+def transpose(nested_iterable: Iterable):
+    """
+    Flips the nesting on a nested iterable, e.g. a 3 item iterable
+    containing 2 item iterables becomes a 2 item iterable containing
+    3 item iterables. Tries to preserve the class of the input otherwise
+    returns a list.
+
+    Args:
+        nested_iterable (Iterable): an iterable of iterables
+
+    Returns:
+        iterable: transposed nsted iterable
+    """
+    out = []
+    for i in range(len(nested_iterable[0])):
+        out.append([elem[i] for elem in nested_iterable])
+    try:
+        return nested_iterable.__class__(out)
+    except Exception:
+        return out

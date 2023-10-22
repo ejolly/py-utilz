@@ -1,5 +1,6 @@
-from utilz.shorts import checkany, checkall, seq, equal, isempty, equal
+from utilz.shorts import checkany, checkall, seq, equal, isempty, equal, transpose
 from utilz.pipes import pipe
+from utilz.data import Box
 import pandas as pd
 import numpy as np
 from utilz.boilerplate import randdf
@@ -62,3 +63,23 @@ def test_equal():
     # numpy comparisons are made using np.allclose
     data[0] += 0.00001
     assert not equal(*data)
+
+
+def test_transpose():
+    test = [["a", "b", "c"], ["a", "b", "c"]]
+    correct = [["a", "a"], ["b", "b"], ["c", "c"]]
+    out = transpose(test)
+    assert out == correct
+    assert transpose(out) == test
+
+    # Preserve input iterable class
+    # 2 item box containing 3 item boxes
+    test = Box(
+        [Box([randdf(), randdf(), randdf()]), Box([randdf(), randdf(), randdf()])]
+    )
+    # a 3 item box containing 2 item boxes
+    out = transpose(test)
+    assert isinstance(out, Box)
+    assert len(out) == 3
+    assert len(out[0]) == 2
+    assert len(transpose(out)) == len(test)

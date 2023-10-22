@@ -1,7 +1,6 @@
 from types import GeneratorType
 from utilz.genz import make_gen, combine_gens
 from utilz.maps import map
-from timeit import timeit
 from time import sleep, time
 
 
