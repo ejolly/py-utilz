@@ -207,14 +207,13 @@ The primary way to think about the difference between `spread` and `alongwith` i
 `utilz` offers multiple functions that operate on *iterables* which all begin with `map`. Here's a quick rundown:
 
 - `map`: apply a function to each element 
-- `mapcompose`: apply multiple functions in sequence to each element, passing the previous evaluation into the next function 
 - `mapmany`: apply multiple functions to each element, but keep their evaluations independent
 - `mapacross`: apply one function to each element in matching pairs
 
 Here are some examples:
 
 ```python
-from utilz import mapcompose, curry, mapcompose
+from utilz import map, compose, curry
 import seaborn as sns
 
 pipe(
@@ -224,10 +223,10 @@ pipe(
         gamma_filter,
         band_filter
         ),
-    mapcompose(
+    map(compose(
         lambda df: df.groupby('group').agg('mean'),
         lambda dfagg: dfagg.corr()
-    ) # Like running each transformed copy of data through a mini-pipe
+    )) # Like running each transformed copy of data through a mini-pipe
 )
 ```
 
@@ -243,11 +242,11 @@ graph TD
   band -->out
   end
 
-  out -->mapcompose{mapcompose}
+  out -->mapfunc{map compose}
   subgraph  
-  mapcompose-- sine-filtered-data -->aggfuncsine[groupby-mean]
-  mapcompose-- gamma-filtered-data -->aggfuncgamma[groupby-mean]
-  mapcompose-- band-filtered-data -->aggfuncband[groupby-mean]
+  mapfunc-- sine-filtered-data -->aggfuncsine[groupby-mean]
+  mapfunc-- gamma-filtered-data -->aggfuncgamma[groupby-mean]
+  mapfunc-- band-filtered-data -->aggfuncband[groupby-mean]
   aggfuncsine-->aggcorrsine[corr]
   aggfuncgamma-->aggcorrgamma[corr]
   aggfuncband-->aggcorrband[corr]
@@ -255,6 +254,20 @@ graph TD
   aggcorrgamma -->dfout
   aggcorrband -->dfout
   end
+```
+
+### Migration Note: mapcompose
+
+The `mapcompose` function has been removed to simplify the API. To apply multiple functions in sequence to each element, use `map` with `compose`:
+
+```python
+# Old way with mapcompose
+result = mapcompose(func1, func2, func3, items)
+
+# New way with map and compose
+result = map(compose(func1, func2, func3), items)
+
+# Note: utilz uses compose_left, so functions are applied left-to-right
 ```
 
 Sometimes you don't want to run each element through a function, but rather run function element pairs. You can accomplish this with `mapacross`: 
@@ -408,9 +421,7 @@ pipe(
         gamma_filter,
         band_filter
         ),
-    mapcompose(
-        lambda df: df.groupby('group').agg('mean'),
-    ),
+    map(lambda df: df.groupby('group').agg('mean')),
     # Don't need to gather; concat wants a lists/tuple
     lambda tup: pd.concat(tup)
         .assign(filter=lambda df: np.repeat(['sine', 'gamma', 'band'] * df.shape[0] / 3)

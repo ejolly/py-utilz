@@ -4,7 +4,6 @@ The maps module is designed to be used with sequences and has several generaliza
 | map function (s)   | op function(s)  | description |
 |---|---|---|
 | `map`  | `do`  | apply **one function** |
-| `mapcompose`  | `pipe`/`do(compose())`  | apply **multiple functions in sequence** |
 | `mapmany`  | `many`  | apply **multiple functions in parallel** |
 | `mapif`  | `iffy`  | apply **one function** if a *predicate function* otherwise noop |
 | `mapacross`  | `None`  | apply **multiple functions** to **multiple inputs** in pairs
@@ -18,7 +17,6 @@ element of which is passed to functions as their **first** argument. All `map*` 
 __all__ = [
     "filter",
     "map",
-    "mapcompose",
     "mapmany",
     "mapacross",
     "mapif",
@@ -30,7 +28,7 @@ import numpy as np
 from joblib import delayed, Parallel
 from collections.abc import Callable, Iterable
 from typing import Union, Any
-from .ops import iffy, compose, do
+from .ops import iffy, do
 from toolz import curry
 from ._utils import ProgressParallel
 from tqdm import tqdm
@@ -312,26 +310,6 @@ def mapmany(*args, **kwargs):
     return call
 
 
-@curry
-def mapcompose(*args, **kwargs):
-    """Compose multiple functions together and map them over a sequences, i.e. a
-    mini-pipe per element. Returns a list the same length as the input iterable
-    containing the final function evaluation for each element."""
-
-    def call(data):
-        if not isinstance(data, (list, tuple)):
-            raise TypeError(
-                f"All map* funcs expect a list/tuple of input, but received a single {type(data)}."
-            )
-        if len(args) <= 1:
-            raise ValueError(
-                f"mapcompose applies *multiple* function calls in sequence but only received {len(args)} function. Use mapcat() to apply a single function."
-            )
-
-        composed = compose(*args)
-        return map(composed, data, **kwargs)
-
-    return call
 
 
 @curry
