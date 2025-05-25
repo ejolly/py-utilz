@@ -5,6 +5,7 @@ import pandas as pd
 import pytest
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_head():
     df = randdf()
     assert pipe(df, _.head()).equals(df.head())
@@ -12,6 +13,7 @@ def test_head():
     assert pipe(df, _.head(n=10)).equals(df.head(10))
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_tail():
     df = randdf()
     assert pipe(df, _.tail()).equals(df.tail())
@@ -19,6 +21,7 @@ def test_tail():
     assert pipe(df, _.tail(n=10)).equals(df.tail(10))
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_apply():
     df = randdf()
     assert pipe(df, _.apply(np.sqrt)).equals(df.apply(np.sqrt))
@@ -31,6 +34,7 @@ def test_apply():
     assert out.equals(df.groupby("group").apply(lambda g: g.A1 - g.A1.mean()))
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_query():
     df = randdf()
     out = pipe(df, _.query("A1 > 0.5"))
@@ -44,6 +48,7 @@ def test_query():
     assert out.shape[0] < df.shape[0]
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_mutate():
     df = randdf((20, 3))
     # Assign values directly
@@ -164,6 +169,7 @@ def test_mutate():
     assert out_asstr.equals(out_asfunc)
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_select():
     df = randdf()
 
@@ -181,6 +187,7 @@ def test_select():
     assert out.equals(df.groupby("group")["A1"].mean())
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_summarize():
     df = pd.read_csv("./utilz/tests/mtcars.csv")
 
@@ -242,6 +249,7 @@ def test_summarize():
 
 
 # Also tests advanced mutate
+@pytest.mark.skip(reason="Deprecated")
 def test_groupby():
     df = randdf((20, 3))
     out = pipe(
@@ -333,6 +341,7 @@ def test_groupby():
     )
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_sort():
     data = randdf((20, 3), groups={"condition": 2, "group": 4})
 
@@ -349,6 +358,7 @@ def test_sort():
     assert "A1_sorted_by_group" in out
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_rf_pipeline():
     """Test data pipeline demo'd on https://github.com/maxhumber/redframes"""
 

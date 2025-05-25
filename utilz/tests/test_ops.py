@@ -1,7 +1,6 @@
 from utilz import (
     check_random_state,
     map,
-    mapcat,
     mapmany,
     mapcompose,
     mapacross,
@@ -51,58 +50,6 @@ def test_map():
     # Currying
     out = pipe([1, 2, 3, 4], map(lambda x: x * 2))
     assert out == correct
-
-
-def test_mapcat():
-    # Nested lists are flattened
-    data = [[1, 2], [3, 4]]
-    out = mapcat(None, data)
-    assert len(out) == 4
-
-    # Numpy
-    data = np.array(data)
-
-    # If input and return are both numpy arrays then the default concat_axis = None
-    # casts using np.array(mapresult)
-    # Here 1d func operates on each row of the 2d matrix
-    out = mapcat(lambda x: np.power(x, 2), data)
-    assert isinstance(out, np.ndarray)
-    assert out.ndim == 2
-
-    # But when using regular map just return a list of numpy arrays
-    out = map(lambda x: np.power(x, 2), data)
-    assert isinstance(out, list)
-    assert len(out) == 2
-    assert isinstance(out[0], np.ndarray)
-
-    # This is the same as setting axis to 1 manually
-    out = mapcat(lambda x: np.power(x, 2), data, concat_axis=1)
-    assert out.ndim == 2
-
-    # Setting it to 0, flattens/hstacks the array into a 1d
-    out = mapcat(lambda x: np.power(x, 2), data, concat_axis=0)
-    assert out.ndim == 1
-    assert len(out) == 4
-
-    # Passing kwargs to function works
-    out = mapcat(np.std, data, ddof=1)
-    assert isinstance(out, np.ndarray)
-    assert np.allclose(out, np.std(data, ddof=1, axis=1))
-    assert len(out) == 2
-
-    # Loading files into a single dataframe
-    def load_data(i):
-        # simulate dataloading as dfs
-        return randdf()
-
-    # Concat pandas
-    out = mapcat(load_data, ["file1.txt", "file2.txt", "file3.txt"])
-    assert isinstance(out, pd.DataFrame)
-    assert out.shape == (30, 3)
-
-    out = mapcat(load_data, ["file1.txt", "file2.txt", "file3.txt"], concat_axis=1)
-    assert isinstance(out, pd.DataFrame)
-    assert out.shape == (10, 9)
 
 
 def test_parallel_map():
@@ -332,7 +279,7 @@ def test_pipes_basic():
     assert all(df is not ddf for ddf in out)
 
     # input -> (output1, output2)
-    out = pipe(df, spread(lambda df: df.head(), lambda df: df.mean()))
+    out = pipe(df, spread(lambda df: df.head(), lambda df: df.mean(numeric_only=True)))
     assert isinstance(out, tuple)
     assert len(out) == 2
     assert out[0].shape == (5, 4)

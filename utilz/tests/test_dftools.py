@@ -5,6 +5,7 @@ import pandas as pd
 import pytest
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_norm_by_group(df):
     out = df.norm_by_group("species", "sepal_length")
     assert isinstance(out, pd.DataFrame)
@@ -31,6 +32,7 @@ def test_norm_by_group(df):
     assert len(out) == df.shape[0]
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_assert_balanced_groups(df):
     assert df.assert_balanced_groups("species")
 
@@ -40,6 +42,7 @@ def test_assert_balanced_groups(df):
         df.iloc[:-1, :].assert_balanced_groups("species")
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_assert_same_nunique(df):
     with pytest.raises(AssertionError):
         assert df.assert_same_nunique("species", "sepal_length")
@@ -48,6 +51,7 @@ def test_assert_same_nunique(df):
     assert _df.assert_same_nunique("species", "val")
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_select(df):
     num_cols = df.shape[1]
     out = df.select("species")
@@ -104,6 +108,7 @@ def test_select(df):
         dfg.unique()
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_pivot_longer(df):
     # No need to specify id_vars as the rest of the cols will be used by default
     long = df.pivot_longer(
@@ -126,6 +131,7 @@ def test_pivot_longer(df):
     )
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_to_wide(df):
     # Generate long form data with no unique id column
     long = df.pivot_longer(

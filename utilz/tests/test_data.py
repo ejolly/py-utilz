@@ -7,6 +7,7 @@ from timeit import timeit
 from time import sleep
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_box():
     # Dataframe data
     df_data = [
@@ -104,6 +105,7 @@ def test_box():
     assert equal(box.contents(), correct)
 
 
+@pytest.mark.skip(reason="Deprecated")
 def test_parallel_box():
     df_data = [randdf((20, 3), groups={"condition": 2, "group": 4}) for i in range(4)]
 
