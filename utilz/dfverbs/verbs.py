@@ -41,9 +41,11 @@ __all__ = [
 ]
 
 import pandas as pd
+import polars as pl
 from toolz import curry
 from ..ops import do
 from ..maps import filter
+from .polars_utils import is_polars_object, ensure_polars_expr, polars_curry
 
 
 def _reset_index_helper(out, reset_index):
@@ -97,10 +99,14 @@ def groupby(*args):
 @curry
 def rename(cols, df):
     """Rename one ore more columns. Can either input a single tuple to rename 1 column
-    or a dict to rename multiple"""
+    or a dict to rename multiple. Works with both pandas and polars DataFrames."""
     if isinstance(cols, tuple):
         cols = {cols[0]: cols[1]}
-    return df.rename(columns=cols)
+    
+    if is_polars_object(df):
+        return df.rename(cols)
+    else:
+        return df.rename(columns=cols)
 
 
 @curry
@@ -221,7 +227,7 @@ def assign(**kwargs):
     return call
 
 
-@curry
+@curry  
 def mutate(dfg, **kwargs):
     """
     Creates a new column(s) in a DataFrame based on a function of existing columns in
@@ -232,9 +238,16 @@ def mutate(dfg, **kwargs):
     function`. Such as: `_.mutate(weight_centered ='weight - weight.mean()')`
      or `_.mutate(weight_centered = lambda weight: weight - weight.mean())` or `_.mutate(weight_centered = lambda df: df['weight].apply(lambda x: x -
      x.mean())`. To return output *smaller* than the input dataframe use `.summarize()` instead.
+    
+    Works with both pandas and polars DataFrames.
     """
-
-    if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
+    
+    # Handle polars DataFrames
+    if is_polars_object(dfg):
+        return _mutate_polars(dfg, **kwargs)
+    
+    # Handle pandas grouped DataFrames
+    elif isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
         prev = dfg.obj.copy()
         for _, (k, v) in enumerate(kwargs.items()):
             if isinstance(v, str):
@@ -296,6 +309,8 @@ def mutate(dfg, **kwargs):
                 else:
                     prev = prev.merge(res, on=res.columns[:-1].to_list())
         return prev
+    
+    # Handle regular pandas DataFrames
     else:
         out = dfg.copy()
         for k, v in kwargs.items():
@@ -323,9 +338,45 @@ def mutate(dfg, **kwargs):
         return out
 
 
+def _mutate_polars(df, **kwargs):
+    """
+    Helper function to handle mutate operations on polars DataFrames.
+    """
+    # Convert to list of expressions for with_columns
+    expressions = []
+    
+    for k, v in kwargs.items():
+        if isinstance(v, str):
+            # Handle string expressions using pl.sql_expr for SQL-like syntax
+            try:
+                expr = pl.sql_expr(v).alias(k)
+            except:
+                # Fall back to treating as column name
+                expr = pl.col(v).alias(k)
+        elif isinstance(v, pl.Expr):
+            # Already a polars expression
+            expr = v.alias(k)
+        elif callable(v):
+            # For now, raise an error - lambda support needs more work
+            raise NotImplementedError("Lambda expressions not yet supported for polars DataFrames")
+        else:
+            # Literal value
+            expr = pl.lit(v).alias(k)
+            
+        expressions.append(expr)
+    
+    return df.with_columns(expressions)
+
+
 @curry
 def transmute(dfg, **kwargs):
-    """Just like `.mutate()`, but only returns the newly created columns."""
+    """Just like `.mutate()`, but only returns the newly created columns. Works with both pandas and polars DataFrames."""
+    
+    # Handle polars DataFrames
+    if is_polars_object(dfg):
+        return _transmute_polars(dfg, **kwargs)
+    
+    # Handle pandas DataFrames (original logic)
     if isinstance(
         dfg,
         (
@@ -348,28 +399,76 @@ def transmute(dfg, **kwargs):
         return out
 
 
+def _transmute_polars(df, **kwargs):
+    """
+    Helper function to handle transmute operations on polars DataFrames.
+    Returns only the newly created columns.
+    """
+    # Convert to list of expressions for select
+    expressions = []
+    
+    for k, v in kwargs.items():
+        if isinstance(v, str):
+            # Handle string expressions using pl.sql_expr for SQL-like syntax
+            try:
+                expr = pl.sql_expr(v).alias(k)
+            except:
+                # Fall back to treating as column name
+                expr = pl.col(v).alias(k)
+        elif isinstance(v, pl.Expr):
+            # Already a polars expression
+            expr = v.alias(k)
+        elif callable(v):
+            # For now, raise an error - lambda support needs more work
+            raise NotImplementedError("Lambda expressions not yet supported for polars DataFrames")
+        else:
+            # Literal value
+            expr = pl.lit(v).alias(k)
+            
+        expressions.append(expr)
+    
+    return df.select(expressions)
+
+
 @curry
 def query(q, **kwargs):
     """
     Call a dataframe object's `.query` method. Resets and drops index by
-    default. Change this with `reset_index='drop'|'reset'|'none'`
+    default. Change this with `reset_index='drop'|'reset'|'none'`. 
+    Works with both pandas and polars DataFrames.
     """
     reset_index = kwargs.pop("reset_index", "drop")
 
     def call(df):
-        if isinstance(q, str):
-            df = df.query(q, **kwargs)
-        elif callable(q):
-            name = q.__code__.co_varnames
-            if len(name) == 1:
-                if name[0] == "df":
-                    df = df.loc[q]
+        if is_polars_object(df):
+            # Handle polars DataFrames
+            if isinstance(q, str):
+                # Use sql_expr for string expressions
+                try:
+                    filter_expr = pl.sql_expr(q)
+                except:
+                    # Fall back to simple column comparison if sql_expr fails
+                    filter_expr = pl.col(q)
+                df = df.filter(filter_expr)
+            elif callable(q):
+                # For now, raise an error - lambda support needs more work
+                raise NotImplementedError("Lambda expressions not yet supported for polars DataFrames in query")
+            return df
+        else:
+            # Handle pandas DataFrames (original logic)
+            if isinstance(q, str):
+                df = df.query(q, **kwargs)
+            elif callable(q):
+                name = q.__code__.co_varnames
+                if len(name) == 1:
+                    if name[0] == "df":
+                        df = df.loc[q]
+                    else:
+                        df = df[q(df[name[0]])]
                 else:
-                    df = df[q(df[name[0]])]
-            else:
-                df = df[q(*[df[e] for e in name])]
+                    df = df[q(*[df[e] for e in name])]
 
-        return _reset_index_helper(df, reset_index)
+            return _reset_index_helper(df, reset_index)
 
     return call
 
@@ -426,13 +525,47 @@ def drop(*args):
 def select(*args):
     """
     Select one or more columns by name. Drop one or more columns by prepending '-' to
-    the name. **Always returns a dataframe** even if there is just 1 column. Does not support renaming
+    the name. **Always returns a dataframe** even if there is just 1 column. Does not support renaming.
+    Works with both pandas and polars DataFrames.
     """
 
     def call(df):
-        return do("select", df, *args)
+        if is_polars_object(df):
+            return _select_polars(df, *args)
+        else:
+            return do("select", df, *args)
 
     return call
+
+
+def _select_polars(df, *args):
+    """
+    Helper function to handle select operations on polars DataFrames.
+    """
+    columns_to_select = []
+    columns_to_drop = []
+    
+    for arg in args:
+        if isinstance(arg, str):
+            if arg.startswith('-'):
+                # Drop column (remove the '-' prefix)
+                columns_to_drop.append(arg[1:])
+            else:
+                # Select column
+                columns_to_select.append(arg)
+        else:
+            # Assume it's a column name
+            columns_to_select.append(str(arg))
+    
+    # If we have columns to drop, drop them first
+    if columns_to_drop:
+        df = df.drop(columns_to_drop)
+    
+    # If we have columns to select, select only those
+    if columns_to_select:
+        df = df.select(columns_to_select)
+    
+    return df
 
 
 @curry

@@ -1,8 +1,10 @@
-# Refactoring Plan: Simplifying Maps and Pipes Modules
+# Refactoring Plan
 
 ## Overview
 
-This document outlines the refactoring plan for simplifying the `utilz.maps` and `utilz.pipes` modules to remove over-engineering and reduce the API surface while maintaining core functionality.
+This document outlines the refactoring plans for py-utilz 0.5.0 release, including:
+1. Simplifying the `utilz.maps` and `utilz.pipes` modules (partially complete)
+2. Migrating `utilz.dfverbs` from pandas to polars while maintaining dplyr-like functionality
 
 ## Current State Analysis
 
@@ -96,12 +98,14 @@ Each step follows this pattern:
 - Added migration documentation in pipes.md
 - All tests pass (30 passed, 18 skipped)
 
-#### Step 6: Remove mapwith
-- Remove function from maps.py
-- Update __all__ export
-- Mark/update tests
-- Add migration example to docstring  
-- Migration: Use standard zip + map pattern
+#### ~~Step 6: Remove mapwith~~ ✓
+- Completely removed mapwith function from maps.py
+- Updated __all__ exports to exclude mapwith
+- Updated module docstring to remove mapwith reference
+- Removed unused deepcopy import from maps.py
+- Updated test cases to use standard Python patterns (closures and zip)
+- Added migration documentation in pipes.md
+- All tests pass (30 passed, 18 skipped)
 
 #### Step 7: Simplify map()
 - Remove `enum` parameter (use enumerate())
@@ -216,3 +220,113 @@ Track progress using the TodoRead/TodoWrite tools. Each numbered step above corr
 - Updated test cases to use map(compose(...)) pattern
 - Added migration documentation in pipes.md with correct compose_left order
 - All tests pass (11 passed in test_ops.py)
+
+## Pandas to Polars Migration Plan for dfverbs
+
+### Overview
+
+Migrate `utilz.dfverbs` from pandas to polars while maintaining dplyr-like functionality and leveraging polars' performance benefits.
+
+### Migration Steps
+
+#### Step 1: Infrastructure and Core Verbs Migration
+**Components:**
+- Add polars dependency to pyproject.toml
+- Create `utilz/dfverbs/polars_utils.py` with helper functions for polars operations
+- Update curry decorators to work with polars DataFrames and LazyFrames
+- Implement type checking utilities for polars objects
+
+**Core verb migrations:**
+- `mutate` → `with_columns()` with polars expressions
+- `transmute` → `select()` with new column expressions
+- `select` → `select()` with enhanced column selection patterns
+- `filter`/`query` → `filter()` with polars expressions (support string expressions via pl.sql_expr)
+- `rename` → `rename()` mapping
+- `astype` → `cast()` with polars dtypes
+- `fillna`/`replace` → `fill_null()`/`replace()`
+
+**Expression support:**
+- Enable string expressions using `pl.sql_expr()` or custom parser
+- Support lambda functions with automatic column detection
+- Create expression builders for common patterns
+
+#### Step 2: Aggregation and Grouping Operations
+**Grouping migrations:**
+- `groupby` → `group_by()` with support for maintaining grouped state
+- `summarize` → `group_by().agg()` with polars aggregation expressions
+- `ngroups`, `get_group`, `split_groups` → Polars equivalents
+- Implement grouped operations pattern for other verbs
+
+**Statistical functions (stats.py):**
+- Basic stats: `mean`, `median`, `min`, `max`, `sum`, `std`, `var`, `count`
+- Advanced stats: `mode` (custom implementation), `sem`, `quantile`
+- Special functions: `bootci` (implement using polars sampling), `corr`, `cov`
+- Aggregation helpers: `nunique`, `unique`, `value_counts`, `rank`, `size`
+- Math operations: `round`, `abs`, `sqrt`, `all`, `any`
+
+#### Step 3: Reshaping and Joining Operations
+**Reshaping verbs:**
+- `pivot_longer` → `melt()`/`unpivot()` with column selection
+- `pivot_wider` → `pivot()` with value aggregation options
+- `split` → Custom implementation using `str.split()` and `with_columns()`
+
+**Joining and combining:**
+- `merge`/`join` → `join()` with various join strategies
+- `concat` → `concat()` for combining DataFrames
+- Add support for `join_asof()` for time-based joins
+
+**Ordering and selection:**
+- `sort`/`arrange` → `sort()` with multiple columns
+- `head`/`tail` → Native polars methods
+- `slice` → `slice()` or filter with row indices
+
+#### Step 4: Plotting and Integration
+**Plotting compatibility:**
+- Create `to_pandas()` wrapper for automatic conversion before plotting
+- Implement caching strategy for repeated conversions
+- Update all plot functions in plot.py to handle polars DataFrames
+- Maintain existing seaborn integration
+
+**I/O operations:**
+- `read_csv` → `pl.read_csv()` with similar parameters
+- `to_csv` → `write_csv()` method
+- Add support for other formats (parquet, json) if needed
+
+**Utility functions:**
+- `apply` → Use polars expressions or `map_elements()` for custom functions
+- `call` → Generic method caller for polars DataFrames
+- Type conversions: `squeeze`, `to_numpy`, `to_list` → Polars equivalents
+
+#### Step 5: Testing and Documentation
+**Testing updates:**
+- Create polars-specific test fixtures
+- Update all tests in test_dfverbs.py for polars
+- Add comparison tests to ensure pandas/polars parity where expected
+- Performance benchmarks comparing pandas vs polars implementations
+
+**Documentation updates:**
+- Update all docstrings with polars examples
+- Revise notebooks: verbs.ipynb, intro.ipynb
+- Create migration guide showing pandas → polars verb mappings
+- Update api/df.md with polars-specific notes
+
+**Additional features:**
+- Add `lazy` parameter to verbs for lazy evaluation support
+- Implement `collect` verb for materializing lazy frames
+- Create compatibility layer for gradual migration (optional)
+
+### Key Polars Advantages to Leverage
+
+1. **Expression API**: Use polars expressions for complex transformations
+2. **Lazy Evaluation**: Enable query optimization and reduced memory usage
+3. **Parallel Operations**: Automatic parallelization of operations
+4. **Memory Efficiency**: Columnar storage and zero-copy operations
+5. **Type Safety**: Stronger type system than pandas
+
+### Migration Priority
+
+1. Core verbs (highest usage): mutate, select, filter, summarize, groupby
+2. Reshaping operations: pivot_longer, pivot_wider
+3. Statistical functions
+4. Plotting integration
+5. Advanced features and optimizations

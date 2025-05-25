@@ -7,8 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 These are the broad refactoring goals of the current git branch `uv-polars`:
 
 - [x] Switch from `poetry` to `uv` for dependency management
-- [ ] Simplify maps and pipes to remove superfluous functionality (e.g. retain `map` but not `mapcat`) and simplify over-engineering
 - [ ] Refactor to remove `pandas` and switch to `polars`, while leveraging strengths of `polars` (e.g custom expressions?) to achieve feature parity with the `dplyr` library in R as demonstrated in this tutorial: https://jhudatascience.org/tidyversecourse/wrangle-data.html#data-wrangling
+- [ ] DEFERRED Simplify maps and pipes to remove superfluous functionality (e.g. retain `map` but not `mapcat`) and simplify over-engineering
 
 For more details you should refer to [REFACTOR.md](./REFACTOR.md) which acts as a live-log of the plan's progress.
 
