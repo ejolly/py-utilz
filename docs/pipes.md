@@ -207,7 +207,6 @@ The primary way to think about the difference between `spread` and `alongwith` i
 `utilz` offers multiple functions that operate on *iterables* which all begin with `map`. Here's a quick rundown:
 
 - `map`: apply a function to each element 
-- `mapcat`: concatenate the results of a `map` into a squeezed array or dataframe
 - `mapcompose`: apply multiple functions in sequence to each element, passing the previous evaluation into the next function 
 - `mapmany`: apply multiple functions to each element, but keep their evaluations independent
 - `mapacross`: apply one function to each element in matching pairs

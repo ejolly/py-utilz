@@ -8,19 +8,16 @@ The maps module is designed to be used with sequences and has several generaliza
 | `mapmany`  | `many`  | apply **multiple functions in parallel** |
 | `mapif`  | `iffy`  | apply **one function** if a *predicate function* otherwise noop |
 | `mapacross`  | `None`  | apply **multiple functions** to **multiple inputs** in pairs
-| `mapcat`  | `None`  | apply **one multi-output function** and flatten the results |
 | `mapwith`  | `None`  | map a two argument function to an iterable and a fixed arg or two iterables |
 
 
 All members of the `map` family, expect an iterable as their **last** argument, each
-element of which is passed to functions as their **first** argument. Except for
-`mapcat`, all `map*` functions return a sequence the same length as the input they received.
+element of which is passed to functions as their **first** argument. All `map*` functions return a sequence the same length as the input they received.
 """
 
 __all__ = [
     "filter",
     "map",
-    "mapcat",
     "mapcompose",
     "mapmany",
     "mapacross",
@@ -30,7 +27,6 @@ __all__ = [
 ]
 
 import numpy as np
-import pandas as pd
 from joblib import delayed, Parallel
 from collections.abc import Callable, Iterable
 from typing import Union, Any
@@ -39,8 +35,7 @@ from toolz import curry
 from ._utils import ProgressParallel
 from tqdm import tqdm
 from inspect import signature
-import numpy as np
-from itertools import filterfalse, chain
+from itertools import filterfalse
 from copy import deepcopy
 
 
@@ -153,33 +148,6 @@ def _many(*args):
     return call
 
 
-def _concat(op, iterme, axis, ignore_index):
-    """Intelligently try to concatenate an iterable. Supports dataframe, arrays, and lists"""
-
-    try:
-        if isinstance(op[0], (pd.DataFrame, pd.Series)):
-            return pd.concat(
-                op, axis=0 if axis is None else axis, ignore_index=ignore_index
-            )
-
-        if isinstance(op[0], np.ndarray) or isinstance(iterme, np.ndarray):
-            try:
-                if axis is None:
-                    return np.array(op)
-                return np.concatenate(op, axis=axis)
-            except np.AxisError as _:
-                return np.stack(op, axis=axis - 1)
-            except ValueError as _:
-                return np.array(op)
-        if isinstance(op[0], list):
-            return list(chain.from_iterable(op))
-        return op
-
-    except Exception as e:
-        print(e)
-        return op
-
-
 def check_random_state(seed=None):
     """Turn seed into a np.random.RandomState instance. Note: credit for this code goes entirely to `sklearn.utils.check_random_state`. Using the source here simply avoids an unecessary dependency.
 
@@ -241,13 +209,6 @@ def map(
         >>> # Just like map
         >>>  out = map(lambda x: x * 2, [1, 2, 3, 4])
 
-        >>> # Concatenating nested lists
-        >>> data = [[1, 2], [3, 4]]
-        >>> out = mapcat(None, data)
-
-        >>> # Load multiple files into a single dataframe
-        >>> out = mapcat(pd.read_csv, ["file1.txt", "file2.txt", "file3.txt"])
-
         >>> # Parallelization with randomness
         >>> def f_random(x, random_state=None):
         >>>     random_state = check_random_state(random_state)
@@ -255,10 +216,10 @@ def map(
         >>>     # Use the random state's number generator rather than np.random
         >>>     return x + random_state.rand()
         >>>
-        >>> # Now set a random_state in mapcat to reproduce the parallel runs
+        >>> # Now set a random_state in map to reproduce the parallel runs
         >>> # It doesn't pass the value, but rather generates a reproducible list
         >>> # of seeds that are passed to each function execution
-        >>> out = mapcat(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
+        >>> out = map(f_random, [1, 1, 1, 1, 1], n_jobs=2, random_state=1)
 
     """
 
@@ -308,18 +269,6 @@ def map(
         op = _pmap(func, iterme, enum, seeds, n_jobs, backend, pbar, verbose, kwargs)
 
     return op
-
-
-@curry
-def mapcat(func: Union[Callable, None], iterme: Iterable, **kwargs):
-    """Call map and concatenate results after.
-    Particularly useful to ensure results are numpy arrays"""
-
-    concat_axis = kwargs.pop("concat_axis", None)
-    ignore_index = kwargs.pop("ignore_index", True)
-    out = map(func, iterme, **kwargs)
-
-    return _concat(out, iterme, concat_axis, ignore_index)
 
 
 @curry
