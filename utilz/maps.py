@@ -4,7 +4,6 @@ The maps module is designed to be used with sequences and has several generaliza
 | map function (s)   | op function(s)  | description |
 |---|---|---|
 | `map`  | `do`  | apply **one function** |
-| `mapwith`  | `None`  | map a two argument function to an iterable and a fixed arg or two iterables |
 
 
 All members of the `map` family, expect an iterable as their **last** argument, each
@@ -14,7 +13,6 @@ element of which is passed to functions as their **first** argument. All `map*` 
 __all__ = [
     "filter",
     "map",
-    "mapwith",
     "check_random_state",
 ]
 
@@ -27,7 +25,6 @@ from ._utils import ProgressParallel
 from tqdm import tqdm
 from inspect import signature
 from itertools import filterfalse
-from copy import deepcopy
 
 
 MAX_INT = np.iinfo(np.int32).max
@@ -329,28 +326,3 @@ def filter(
         raise TypeError("invert must be True, False, or 'split'")
 
 
-@curry
-def mapwith(func, iterwith, iterme, **kwargs):
-    """Just like map but accepts a second arg that can also be an iterator. In a pipe
-    iterme is always the *last* input to mapwith, but the *first* input func. If
-    `copy=True` is passed and iterwith is not an iterator, an iterator is built with
-    guaranteed copies of iterwith."""
-
-    copy = kwargs.pop("copy", False)
-
-    if not isinstance(iterwith, (list, tuple)):
-        if copy:
-            hascopy = getattr(iterwith, "copy", None)
-            if callable(hascopy):
-                iterwith = [iterwith.copy()] * len(iterme)
-            else:
-                iterwith = [deepcopy(iterwith)] * len(iterme)
-        else:
-            iterwith = [iterwith] * len(iterme)
-
-    if len(iterme) != len(iterwith):
-        raise TypeError(
-            f"mapwith received an iterable but its length ({len(iterwith)} doesn't match the length of the input iterable ({len(iterme)}"
-        )
-
-    return map(lambda tup: func(*tup), zip(iterme, iterwith), **kwargs)

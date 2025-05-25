@@ -23,9 +23,9 @@ For more details you should refer to [REFACTOR.md](./REFACTOR.md) which acts as 
 - Prefer running tests one-at-a-time during development to iterate quickly. Then run the entire test suite when you're done implementing to ensure nothing else was negatively affected by your changes.
 - Never "hack tests" just to make them pass. They should always test genuine intended functionality
 - Never git commit if tests are broken
-- If there exists a TODOS.md file, you should read it and use that to seed your current todo list
-- At reasonable check-points while completing tasks (e.g. after a series of todos have been completed) snapshot your current todo list to TODOS.md, creating one if it doesn't exist, or updating one if it does
-- Always re-read this CLAUDE.md file after writing to TODOS.md or at reasonable check-points in your work. Verify you have done this by printing the statement: "I've reminded myself of CLAUDE.md"
+- If there exists a TODOS.md file, you should read it and use that to seed your current todo list if you dont already have one
+- At committing your work, you should also take a snapshot of your current todo list to TODOS.md, creating one if it doesn't exist, or updating one if it does
+- Always re-read this CLAUDE.md file after writing to TODOS.md. Verify you have done this by printing the statement: "I'VE REMINDED MYSELF OF THE OBJECTIVES OF MY WORK"
 
 ## Project Overview
 

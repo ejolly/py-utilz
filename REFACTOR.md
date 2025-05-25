@@ -87,12 +87,14 @@ Each step follows this pattern:
 - Updated documentation in pipes.md with migration examples
 - All tests pass (30 passed, 18 skipped)
 
-#### Step 5: Remove mapif
-- Remove function from maps.py
-- Update __all__ export
-- Mark/update tests  
-- Add migration example to docstring
-- Migration: `mapif(func, pred, items)` → `map(iffy(pred, func), items)`
+#### ~~Step 5: Remove mapif~~ ✓
+- Completely removed mapif function from maps.py
+- Updated __all__ exports to exclude mapif
+- Updated module docstring to remove mapif reference
+- Removed unused iffy import from maps.py
+- Updated test cases to use map(iffy(...)) pattern
+- Added migration documentation in pipes.md
+- All tests pass (30 passed, 18 skipped)
 
 #### Step 6: Remove mapwith
 - Remove function from maps.py

@@ -1,7 +1,6 @@
 from utilz import (
     check_random_state,
     map,
-    mapwith,
     filter,
     pipe,
     spread,
@@ -127,30 +126,36 @@ def test_mapalts():
     assert equal(out, [0, 1, 2, 3, 4, 5, 12, 14, 16, 18])
 
     # Pass a single fixed extra arg
-    out = mapwith(lambda fixed, elem: elem + fixed, 5, [1, 2, 3, 4])
-    outc = pipe([1, 2, 3, 4], mapwith(lambda x, y: x + y, 5))
+    # Migration: mapwith(func, fixed, items) → map(lambda x: func(fixed, x), items)
+    fixed = 5
+    out = list(map(lambda elem: elem + fixed, [1, 2, 3, 4]))
+    outc = pipe([1, 2, 3, 4], map(lambda x: x + fixed))
     correct = [x + 5 for x in [1, 2, 3, 4]]
     assert out == correct
     assert outc == correct
 
     # Multiple iterables
+    # Migration: Use zip + map pattern
     iterme = [1, 2, 3]
     iterwith = [2, 2, 2]
-    out = mapwith(lambda x, y: x / y, iterwith, iterme)
+    out = list(map(lambda tup: tup[0] / tup[1], zip(iterme, iterwith)))
     outc = pipe(
-        iterme, mapwith(lambda frompipe, iterwith: frompipe / iterwith, iterwith)
+        iterme, lambda items: list(map(lambda tup: tup[0] / tup[1], zip(items, iterwith)))
     )
     correct = [x / 2 for x in [1, 2, 3]]
     assert out == correct
     assert outc == correct
 
     # Map around a fixed input
-    out = pipe([5, 10, 20], mapwith(lambda e, df: df.shape[0] > e, randdf()))
+    # Migration: Use lambda with closure
+    df_fixed = randdf()
+    out = pipe([5, 10, 20], map(lambda e: df_fixed.shape[0] > e))
     assert equal([True, False, False], out)
 
     df = randdf((20, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5)
 
-    out = pipe(["A", "C"], mapwith(lambda label, df: df.query("Group == @label"), df))
+    # Migration: Use lambda with closure
+    out = pipe(["A", "C"], map(lambda label: df.query("Group == @label")))
     assert len(out) == 2
     assert out[0].shape[0] == int(df.shape[0] / 4)
 

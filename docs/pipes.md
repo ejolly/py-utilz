@@ -316,6 +316,27 @@ result = map(iffy(is_positive, double), numbers)
 # The iffy function returns a function that applies the transformation only when the predicate is true
 ```
 
+#### mapwith
+
+The `mapwith` function has been removed to simplify the API. To map a two-argument function over an iterable with a fixed argument or two iterables, use standard Python patterns:
+
+```python
+# Old way with mapwith - fixed argument
+result = mapwith(add, 5, [1, 2, 3, 4])
+
+# New way - using closure
+fixed = 5
+result = map(lambda x: add(fixed, x), [1, 2, 3, 4])
+
+# Old way with mapwith - two iterables
+result = mapwith(divide, [2, 2, 2], [1, 2, 3])
+
+# New way - using zip
+result = list(map(lambda pair: divide(pair[0], pair[1]), zip([1, 2, 3], [2, 2, 2])))
+# Or more concisely
+result = [divide(x, y) for x, y in zip([1, 2, 3], [2, 2, 2])]
+```
+
 Sometimes you don't want to run each element through a function, but rather run function element pairs: 
 
 ```python
