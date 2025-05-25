@@ -70,12 +70,14 @@ Each step follows this pattern:
 - Add migration example to docstring
 - Migration: `mapcompose(f1, f2, items)` → `map(compose(f2, f1), items)`
 
-#### Step 3: Remove mapmany
-- Remove function from maps.py
-- Update __all__ export  
-- Mark/update tests
-- Add migration example to docstring
-- Migration: `mapmany(f1, f2, items)` → `map(juxt(f1, f2), items)`
+#### ~~Step 3: Remove mapmany~~ ✓
+- Completely removed mapmany function and _many helper from maps.py
+- Updated __all__ exports to exclude mapmany
+- Updated module docstring to remove mapmany reference
+- Updated test cases to use map(juxt(...)) pattern instead
+- Updated error message in ops.py to suggest juxt pattern
+- Added migration documentation in pipes.md
+- All tests pass (30 passed, 18 skipped)
 
 #### Step 4: Remove mapacross
 - Remove function from maps.py

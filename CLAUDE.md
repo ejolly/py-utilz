@@ -14,14 +14,18 @@ For more details you should refer to [REFACTOR.md](./REFACTOR.md) which acts as 
 
 ## Coding Rules to Follow
 
+- When you are unsure about an implementation detail and cannot determine it yourself, check the relevant library's API documentation using your WebFetch tool
+- If you are ever uncertain about how to proceed and cannot figure something out yourself, you should stop and ask the user for feedback
 - Make sure to adhere to coding conventions as expected by `ruff`
 - Use google-style docstrings
 - Use modern Python type annotations
 - Make to sure to use `uv` to run commands and manage the project
 - Prefer running tests one-at-a-time during development to iterate quickly. Then run the entire test suite when you're done implementing to ensure nothing else was negatively affected by your changes.
-- When you are unsure check the relevant library's API documentation using your WebFetch tool
+- Never "hack tests" just to make them pass. They should always test genuine intended functionality
+- Never git commit if tests are broken
 - If there exists a TODOS.md file, you should read it and use that to seed your current todo list
 - At reasonable check-points while completing tasks (e.g. after a series of todos have been completed) snapshot your current todo list to TODOS.md, creating one if it doesn't exist, or updating one if it does
+- Always re-read this CLAUDE.md file after writing to TODOS.md or at reasonable check-points in your work
 
 ## Project Overview
 

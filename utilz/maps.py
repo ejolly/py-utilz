@@ -5,7 +5,6 @@ The maps module is designed to be used with sequences and has several generaliza
 |---|---|---|
 | `map`  | `do`  | apply **one function** |
 | `mapif`  | `iffy`  | apply **one function** if a *predicate function* otherwise noop |
-| `mapacross`  | `None`  | apply **multiple functions** to **multiple inputs** in pairs
 | `mapwith`  | `None`  | map a two argument function to an iterable and a fixed arg or two iterables |
 
 
@@ -16,7 +15,6 @@ element of which is passed to functions as their **first** argument. All `map*` 
 __all__ = [
     "filter",
     "map",
-    "mapacross",
     "mapif",
     "mapwith",
     "check_random_state",
@@ -250,23 +248,6 @@ def map(
     return op
 
 
-@curry
-def mapacross(*args):
-    """Map multiple functions to an iterable in a matched-pair fasion. The
-    number of funcions needs to equal the length of the iterable."""
-
-    def call(data):
-        if not isinstance(data, (list, tuple)):
-            raise TypeError(
-                f"Expected a list/tuple of input, but received a single {type(data)}. If you want to apply a function to a single input either use a lambda or do()"
-            )
-        if len(data) != len(args):
-            raise ValueError(
-                f"Te number of functions passed must equal the length of the previous output, but {len(data)} data and {len(args)} functions don't match. To run the same set of functions over the previous inputs see separate()"
-            )
-        return [f(a) for f, a in zip(args, data)]
-
-    return call
 
 
 

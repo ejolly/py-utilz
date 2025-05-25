@@ -1,7 +1,6 @@
 from utilz import (
     check_random_state,
     map,
-    mapacross,
     mapif,
     mapwith,
     filter,
@@ -110,20 +109,17 @@ def test_mapalts():
     assert all(np.allclose(o, c) for o, c in zip(out, correct))
 
     # Map multiple functions as matched pairs
-    out = pipe([2, 4], mapacross(lambda x: x**2, lambda x: x * 2))
-    correct = pipe(
-        [2, 4],
-        lambda tup: (lambda x: x**2, tup[0], lambda x: x * 2, tup[1]),
+    # Migration: mapacross(f1, f2, items) → map(lambda tup: tup[1](tup[0]), zip(items, [f1, f2]))
+    funcs = [lambda x: x**2, lambda x: x * 2]
+    out = pipe(
+        [2, 4], lambda items: list(map(lambda tup: tup[1](tup[0]), zip(items, funcs)))
     )
     assert len(out) == 2
     assert np.allclose(out, [4, 8])
 
-    # Doesnt work if lengths don't match
-    with pytest.raises(ValueError):
-        pipe([2], mapacross(lambda x: x**2, lambda x: x * 2))
-
-    with pytest.raises(ValueError):
-        pipe([2, 4], mapacross(lambda x: x**2))
+    # Alternative migration using list comprehension
+    out2 = pipe([2, 4], lambda items: [f(x) for x, f in zip(items, funcs)])
+    assert np.allclose(out2, [4, 8])
 
     # Map a function if a predicate is true
     bigger_5 = lambda x: x > 5
@@ -252,7 +248,9 @@ def test_pipes_basic():
     assert all(o.equals(df.head(5)) for o in out)
 
     # 2 func-input pairs
-    out = pipe([df, df], mapacross(lambda df: df.head(5), lambda df: df.tail(10)))
+    # Migration: Use explicit zip + map pattern
+    funcs = [lambda df: df.head(5), lambda df: df.tail(10)]
+    out = pipe([df, df], lambda dfs: [f(d) for d, f in zip(dfs, funcs)])
     assert len(out) == 2
     assert out[0].equals(df.head(5))
     assert out[1].equals(df.tail(10))
@@ -263,13 +261,8 @@ def test_pipes_basic():
     assert out[0].equals(out[1])
     assert out[0].equals(df.iloc[5:10, :])
 
-    # not enough funcs
-    with pytest.raises(ValueError):
-        out = pipe([df, df], mapacross(lambda df: df.head(5)))
-
-    # not enough data
-    with pytest.raises(ValueError):
-        out = pipe([df], mapacross(lambda df: df.head(5), lambda df: df.tail(2)))
+    # Error cases no longer apply with explicit zip pattern
+    # Zip will just stop at the shortest sequence
 
     # SPREAD (one2many)
     # input -> (input, input, input)
@@ -478,10 +471,10 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         ...,
-        mapacross(
+        lambda tup: [f(x) for x, f in zip(tup, [
             lambda means: sns.histplot(means),
             lambda means: sns.boxplot(means),
-        ),
+        ])],
         debug=True,
     )
     assert len(out) == 3  # 3 steps in pipe
@@ -499,10 +492,10 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         ...,
-        mapacross(
+        lambda tup: [f(x) for x, f in zip(tup, [
             compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
-        ),
+        ])],
     )
     assert isinstance(out1, pd.Series)
     assert isinstance(out2, pd.Series)
@@ -516,10 +509,10 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         ...,
-        mapacross(
+        lambda tup: [f(x) for x, f in zip(tup, [
             compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
-        ),
+        ])],
         keep=0,
     )
     assert isinstance(a1_mean, pd.Series)

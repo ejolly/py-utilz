@@ -206,8 +206,7 @@ The primary way to think about the difference between `spread` and `alongwith` i
 
 `utilz` offers multiple functions that operate on *iterables* which all begin with `map`. Here's a quick rundown:
 
-- `map`: apply a function to each element 
-- `mapacross`: apply one function to each element in matching pairs
+- `map`: apply a function to each element
 
 Here are some examples:
 
@@ -286,11 +285,25 @@ result = map(juxt(func1, func2, func3), items)
 # Both return a list of tuples where each tuple contains the results of all functions
 ```
 
-Sometimes you don't want to run each element through a function, but rather run function element pairs. You can accomplish this with `mapacross`: 
+#### mapacross
+
+The `mapacross` function has been removed to simplify the API. To apply multiple functions to multiple inputs in matched pairs, use explicit zip + map pattern:
 
 ```python
-from utilz import mapacross
+# Old way with mapacross
+result = mapacross(func1, func2, func3, [item1, item2, item3])
 
+# New way with zip and list comprehension
+funcs = [func1, func2, func3]
+result = [f(x) for x, f in zip([item1, item2, item3], funcs)]
+
+# Or using map
+result = list(map(lambda pair: pair[1](pair[0]), zip([item1, item2, item3], funcs)))
+```
+
+Sometimes you don't want to run each element through a function, but rather run function element pairs: 
+
+```python
 pipe(
     data,
     spread(
@@ -298,11 +311,12 @@ pipe(
         gamma_filter,
         band_filter
         ),
-    mapacross(
-        lambda df: df.groupby('group').agg('mean')
-        lambda df: df.groupby('group').agg('median')
+    # Apply different aggregation to each filtered dataset
+    lambda dfs: [f(df) for df, f in zip(dfs, [
+        lambda df: df.groupby('group').agg('mean'),
+        lambda df: df.groupby('group').agg('median'),
         lambda df: df.groupby('group').agg('mode')
-    ) # expect 3 functions as there are 3 transformed copies of data
+    ])]
 )
 ```
 
@@ -319,11 +333,11 @@ graph TD
   band -->out
   end
 
-  out -->mapacross{mapacross}
+  out -->zip{zip + map}
   subgraph  
-  mapacross-- sine-filtered-data -->aggmean[aggmean]
-  mapacross-- gamma-filtered-data -->aggmedian[aggmedian]
-  mapacross-- band-filtered-data -->aggmode[aggmode]
+  zip-- sine-filtered-data -->aggmean[aggmean]
+  zip-- gamma-filtered-data -->aggmedian[aggmedian]
+  zip-- band-filtered-data -->aggmode[aggmode]
   aggmean --> dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
   aggmedian -->dfout
   aggmode -->dfout
@@ -585,14 +599,14 @@ by_sum, by_mean = pipe(
     ), # many runs 2 independent copies of our grouped data through each function so we get a tuple with 2 elements back
     ..., # this tuple is what gets output and unpacked into by_sum and by_mean
     map(_.heatmap(cmap="Blues")), # but we can keep going and generate a heatmap for the summed and averaged dataframes!
-    mapacross(
+    lambda plots: [f(p) for p, f in zip(plots, [
         tweak(title="Number of Participants", xlabel=None, ylabel=None),
         tweak(title="Proportion of Participants", xlabel=None, ylabel=None),
-    ), # we can operate on each plot in parallel and give them different titles
-    mapacross(
+    ])], # we can operate on each plot in parallel and give them different titles
+    lambda plots: [f(p) for p, f in zip(plots, [
         savefig(path=FIG_DIR, name="char_by_cue_sum"),
         savefig(path=FIG_DIR, name="char_by_cue_mean"),
-    ), # and finally save them to different files without affecting the output at all!
+    ])], # and finally save them to different files without affecting the output at all!
 )
 
 ```
