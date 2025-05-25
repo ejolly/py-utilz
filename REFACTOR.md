@@ -79,12 +79,13 @@ Each step follows this pattern:
 - Added migration documentation in pipes.md
 - All tests pass (30 passed, 18 skipped)
 
-#### Step 4: Remove mapacross
-- Remove function from maps.py
-- Update __all__ export
-- Mark/update tests
-- Add migration example to docstring
-- Migration: Use explicit zip + map pattern
+#### ~~Step 4: Remove mapacross~~ ✓
+- Completely removed mapacross function from maps.py
+- Updated __all__ exports to exclude mapacross
+- Updated module docstring to remove mapacross reference
+- Updated test cases to use explicit zip + list comprehension pattern
+- Updated documentation in pipes.md with migration examples
+- All tests pass (30 passed, 18 skipped)
 
 #### Step 5: Remove mapif
 - Remove function from maps.py

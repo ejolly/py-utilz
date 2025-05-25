@@ -25,7 +25,7 @@ For more details you should refer to [REFACTOR.md](./REFACTOR.md) which acts as 
 - Never git commit if tests are broken
 - If there exists a TODOS.md file, you should read it and use that to seed your current todo list
 - At reasonable check-points while completing tasks (e.g. after a series of todos have been completed) snapshot your current todo list to TODOS.md, creating one if it doesn't exist, or updating one if it does
-- Always re-read this CLAUDE.md file after writing to TODOS.md or at reasonable check-points in your work
+- Always re-read this CLAUDE.md file after writing to TODOS.md or at reasonable check-points in your work. Verify you have done this by printing the statement: "I've reminded myself of CLAUDE.md"
 
 ## Project Overview
 

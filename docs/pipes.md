@@ -301,6 +301,21 @@ result = [f(x) for x, f in zip([item1, item2, item3], funcs)]
 result = list(map(lambda pair: pair[1](pair[0]), zip([item1, item2, item3], funcs)))
 ```
 
+#### mapif
+
+The `mapif` function has been removed to simplify the API. To conditionally apply a function based on a predicate, use `map` with `iffy`:
+
+```python
+# Old way with mapif
+result = mapif(double, is_positive, numbers)
+
+# New way with map and iffy
+from utilz import iffy
+result = map(iffy(is_positive, double), numbers)
+
+# The iffy function returns a function that applies the transformation only when the predicate is true
+```
+
 Sometimes you don't want to run each element through a function, but rather run function element pairs: 
 
 ```python

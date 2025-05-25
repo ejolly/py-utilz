@@ -1,7 +1,6 @@
 from utilz import (
     check_random_state,
     map,
-    mapif,
     mapwith,
     filter,
     pipe,
@@ -122,8 +121,9 @@ def test_mapalts():
     assert np.allclose(out2, [4, 8])
 
     # Map a function if a predicate is true
+    # Migration: mapif(func, pred, items) → map(iffy(pred, func), items)
     bigger_5 = lambda x: x > 5
-    out = pipe(seq(10), mapif(lambda x: x * 2, bigger_5))
+    out = pipe(seq(10), map(iffy(bigger_5, lambda x: x * 2)))
     assert equal(out, [0, 1, 2, 3, 4, 5, 12, 14, 16, 18])
 
     # Pass a single fixed extra arg

@@ -4,7 +4,6 @@ The maps module is designed to be used with sequences and has several generaliza
 | map function (s)   | op function(s)  | description |
 |---|---|---|
 | `map`  | `do`  | apply **one function** |
-| `mapif`  | `iffy`  | apply **one function** if a *predicate function* otherwise noop |
 | `mapwith`  | `None`  | map a two argument function to an iterable and a fixed arg or two iterables |
 
 
@@ -15,7 +14,6 @@ element of which is passed to functions as their **first** argument. All `map*` 
 __all__ = [
     "filter",
     "map",
-    "mapif",
     "mapwith",
     "check_random_state",
 ]
@@ -24,7 +22,6 @@ import numpy as np
 from joblib import delayed, Parallel
 from collections.abc import Callable, Iterable
 from typing import Union, Any
-from .ops import iffy
 from toolz import curry
 from ._utils import ProgressParallel
 from tqdm import tqdm
@@ -252,12 +249,6 @@ def map(
 
 
 
-@curry
-def mapif(func, predicate_func, iterme, **kwargs):
-    """Apply func to each element of iterme if predicate_func is True for that element
-    otherwise return the element"""
-
-    return map(iffy(predicate_func, func), iterme, **kwargs)
 
 
 @curry

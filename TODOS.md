@@ -4,21 +4,15 @@ This file tracks the progress of the refactoring work on the `uv-polars` branch.
 
 ## Completed Tasks ✓
 
-### Phase 1: Maps Module - Steps 1-3
+### Phase 1: Maps Module - Steps 1-4
 - [x] Step 1: Remove mapcat function from maps.py
 - [x] Step 2: Remove mapcompose function from maps.py  
 - [x] Step 3: Remove mapmany function from maps.py
+- [x] Step 4: Remove mapacross function from maps.py
 
 ## Pending Tasks
 
-### Phase 1: Maps Module - Steps 4-7
-- [ ] Step 4: Remove mapacross function from maps.py
-  - Remove function from maps.py
-  - Update __all__ exports to exclude mapacross
-  - Update module docstring to remove mapacross reference
-  - Update test_ops.py to remove or modify mapacross tests
-  - Update documentation with mapacross migration example
-  - Commit changes
+### Phase 1: Maps Module - Steps 5-7
 
 - [ ] Step 5: Remove mapif function from maps.py
   - Remove function from maps.py
