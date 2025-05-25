@@ -202,3 +202,12 @@ Track progress using the TodoRead/TodoWrite tools. Each numbered step above corr
 - Updated documentation in pipes.md
 - Fixed unused pandas import
 - All tests pass (11 passed in test_ops.py)
+
+#### ~~Step 2: Remove mapcompose~~ ✓
+- Completely removed mapcompose function from maps.py
+- Updated __all__ exports to exclude mapcompose
+- Updated module docstring to remove mapcompose reference
+- Removed unused compose import from maps.py
+- Updated test cases to use map(compose(...)) pattern
+- Added migration documentation in pipes.md with correct compose_left order
+- All tests pass (11 passed in test_ops.py)

@@ -4,7 +4,6 @@ The maps module is designed to be used with sequences and has several generaliza
 | map function (s)   | op function(s)  | description |
 |---|---|---|
 | `map`  | `do`  | apply **one function** |
-| `mapmany`  | `many`  | apply **multiple functions in parallel** |
 | `mapif`  | `iffy`  | apply **one function** if a *predicate function* otherwise noop |
 | `mapacross`  | `None`  | apply **multiple functions** to **multiple inputs** in pairs
 | `mapwith`  | `None`  | map a two argument function to an iterable and a fixed arg or two iterables |
@@ -17,7 +16,6 @@ element of which is passed to functions as their **first** argument. All `map*` 
 __all__ = [
     "filter",
     "map",
-    "mapmany",
     "mapacross",
     "mapif",
     "mapwith",
@@ -28,7 +26,7 @@ import numpy as np
 from joblib import delayed, Parallel
 from collections.abc import Callable, Iterable
 from typing import Union, Any
-from .ops import iffy, do
+from .ops import iffy
 from toolz import curry
 from ._utils import ProgressParallel
 from tqdm import tqdm
@@ -127,23 +125,6 @@ def _pmap(
         return call_list
 
 
-@curry
-def _many(*args):
-    """Helper used by mapmany"""
-
-    def call(data):
-        if isinstance(data, (list, tuple)):
-            raise TypeError(
-                f"Expected a single input but receive {len(data)}. Use mapmany() to operate on an iterable"
-            )
-        if len(args) <= 1:
-            raise ValueError(
-                f"many applies *multiple* function calls separately but only received {len(args)} function. Use map() to apply a single function."
-            )
-
-        return tuple([do(f, data) for f in args])
-
-    return call
 
 
 def check_random_state(seed=None):
@@ -284,28 +265,6 @@ def mapacross(*args):
                 f"Te number of functions passed must equal the length of the previous output, but {len(data)} data and {len(args)} functions don't match. To run the same set of functions over the previous inputs see separate()"
             )
         return [f(a) for f, a in zip(args, data)]
-
-    return call
-
-
-@curry
-def mapmany(*args, **kwargs):
-    """Map multiple functions separately to each element in an iterable. Returns a list
-     of nested lists containing the output of each function evaluation on each element in
-    iterme"""
-
-    def call(data):
-        if not isinstance(data, (list, tuple)):
-            raise TypeError(
-                f"All map* funcs expect a list/tuple of input, but received a single {type(data)}."
-            )
-        if len(args) <= 1:
-            raise ValueError(
-                f"mapmany applies *multiple* function calls separately but only received {len(args)} function. Use mapcat() to apply a single function."
-            )
-
-        together = _many(*args)
-        return map(together, data, **kwargs)
 
     return call
 

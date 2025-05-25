@@ -1,7 +1,6 @@
 from utilz import (
     check_random_state,
     map,
-    mapmany,
     mapacross,
     mapif,
     mapwith,
@@ -22,6 +21,7 @@ from utilz import (
     seq,
     equal,
 )
+from toolz import juxt
 from utilz.plot import tweak
 from utilz.boilerplate import randdf
 import numpy as np
@@ -101,7 +101,8 @@ def test_mapalts():
     assert np.allclose(out, seq(10))
 
     # Map multiple functions separately
-    out = pipe(seq(10), mapmany(lambda x: x**2, np.sqrt))
+    # Migration: mapmany(f1, f2, items) → map(juxt(f1, f2), items)
+    out = pipe(seq(10), map(juxt(lambda x: x**2, np.sqrt)))
     assert len(out) == 10
     assert all([len(e) == 2 for e in out])
 
@@ -245,8 +246,10 @@ def test_pipes_basic():
     # (input1, input2) -> (output1, output2)
 
     # Use map instead for 1 func
-    with pytest.raises(ValueError):
-        out = pipe([df, df], mapmany(lambda df: df.head(5)))
+    # Migration: For a single function, use map instead of the deprecated mapmany
+    out = pipe([df, df], map(lambda df: df.head(5)))
+    assert len(out) == 2
+    assert all(o.equals(df.head(5)) for o in out)
 
     # 2 func-input pairs
     out = pipe([df, df], mapacross(lambda df: df.head(5), lambda df: df.tail(10)))

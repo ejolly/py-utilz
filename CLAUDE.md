@@ -2,21 +2,26 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Current Refactoring Goals
+## Current Refactoring Goals for 0.5.0 Release
 
-These are the broad refactoring goals of the current git branch `uv-polars`. Below this list you'll find a broad overview of the project structure and development guidelines.
+These are the broad refactoring goals of the current git branch `uv-polars`:
 
 - [x] Switch from `poetry` to `uv` for dependency management
 - [ ] Simplify maps and pipes to remove superfluous functionality (e.g. retain `map` but not `mapcat`) and simplify over-engineering
 - [ ] Refactor to remove `pandas` and switch to `polars`, while leveraging strengths of `polars` (e.g custom expressions?) to achieve feature parity with the `dplyr` library in R as demonstrated in this tutorial: https://jhudatascience.org/tidyversecourse/wrangle-data.html#data-wrangling
 
-## Code style
+For more details you should refer to [REFACTOR.md](./REFACTOR.md) which acts as a live-log of the plan's progress.
+
+## Coding Rules to Follow
 
 - Make sure to adhere to coding conventions as expected by `ruff`
-- Make to sure to use `uv` to run commands and manage the project
-- Using google-style docstrings
+- Use google-style docstrings
 - Use modern Python type annotations
+- Make to sure to use `uv` to run commands and manage the project
 - Prefer running tests one-at-a-time during development to iterate quickly. Then run the entire test suite when you're done implementing to ensure nothing else was negatively affected by your changes.
+- When you are unsure check the relevant library's API documentation using your WebFetch tool
+- If there exists a TODOS.md file, you should read it and use that to seed your current todo list
+- At reasonable check-points while completing tasks (e.g. after a series of todos have been completed) snapshot your current todo list to TODOS.md, creating one if it doesn't exist, or updating one if it does
 
 ## Project Overview
 

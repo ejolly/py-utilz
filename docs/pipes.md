@@ -207,7 +207,6 @@ The primary way to think about the difference between `spread` and `alongwith` i
 `utilz` offers multiple functions that operate on *iterables* which all begin with `map`. Here's a quick rundown:
 
 - `map`: apply a function to each element 
-- `mapmany`: apply multiple functions to each element, but keep their evaluations independent
 - `mapacross`: apply one function to each element in matching pairs
 
 Here are some examples:
@@ -256,7 +255,9 @@ graph TD
   end
 ```
 
-### Migration Note: mapcompose
+### Migration Notes
+
+#### mapcompose
 
 The `mapcompose` function has been removed to simplify the API. To apply multiple functions in sequence to each element, use `map` with `compose`:
 
@@ -268,6 +269,21 @@ result = mapcompose(func1, func2, func3, items)
 result = map(compose(func1, func2, func3), items)
 
 # Note: utilz uses compose_left, so functions are applied left-to-right
+```
+
+#### mapmany
+
+The `mapmany` function has been removed to simplify the API. To apply multiple functions to each element and get independent results, use `map` with `juxt`:
+
+```python
+# Old way with mapmany
+result = mapmany(func1, func2, func3, items)
+
+# New way with map and juxt
+from toolz import juxt
+result = map(juxt(func1, func2, func3), items)
+
+# Both return a list of tuples where each tuple contains the results of all functions
 ```
 
 Sometimes you don't want to run each element through a function, but rather run function element pairs. You can accomplish this with `mapacross`: 
