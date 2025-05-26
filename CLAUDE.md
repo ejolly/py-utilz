@@ -14,6 +14,7 @@ For more details you should refer to [REFACTOR.md](./REFACTOR.md) which acts as 
 
 ## Coding Rules to Follow
 
+- For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially.
 - When you are unsure about an implementation detail and cannot determine it yourself, check the relevant library's API documentation using your WebFetch tool
 - If you are ever uncertain about how to proceed and cannot figure something out yourself, you should stop and ask the user for feedback
 - Make sure to adhere to coding conventions as expected by `ruff`

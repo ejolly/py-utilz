@@ -32,14 +32,27 @@ __all__ = [
 ]
 
 from toolz import curry
+from functools import wraps
 from ..plot import newax, stripbarplot as _stripbarplot
+from .polars_utils import ensure_pandas_for_plotting
 import seaborn as sns
+
+
+def polars_plotting_wrapper(plot_func):
+    """Decorator to automatically convert polars DataFrames to pandas for plotting."""
+    @wraps(plot_func)
+    def wrapper(data):
+        # Convert polars to pandas if needed
+        data = ensure_pandas_for_plotting(data)
+        return plot_func(data)
+    return wrapper
 
 
 @curry
 def jointplot(**kwargs):
-    """Call to seaborn jointplot"""
+    """Call to seaborn jointplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.jointplot(data=data, ax=newax(), **kwargs)
 
@@ -48,8 +61,9 @@ def jointplot(**kwargs):
 
 @curry
 def pairplot(**kwargs):
-    """Call to seaborn pairplot"""
+    """Call to seaborn pairplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.pairplot(data=data, **kwargs)
 
@@ -58,8 +72,9 @@ def pairplot(**kwargs):
 
 @curry
 def clustermap(**kwargs):
-    """Call to seaborn clustermap"""
+    """Call to seaborn clustermap. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.clustermap(data=data, **kwargs)
 
@@ -68,8 +83,9 @@ def clustermap(**kwargs):
 
 @curry
 def residplot(**kwargs):
-    """Call to seaborn residplot"""
+    """Call to seaborn residplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.residplot(data=data, ax=newax(), **kwargs)
 
@@ -78,8 +94,9 @@ def residplot(**kwargs):
 
 @curry
 def regplot(**kwargs):
-    """Call to seaborn regplot"""
+    """Call to seaborn regplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.regplot(data=data, ax=newax(), **kwargs)
 
@@ -88,8 +105,9 @@ def regplot(**kwargs):
 
 @curry
 def lmplot(**kwargs):
-    """Call to seaborn lmplot"""
+    """Call to seaborn lmplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.lmplot(data=data, **kwargs)
 
@@ -98,8 +116,9 @@ def lmplot(**kwargs):
 
 @curry
 def countplot(**kwargs):
-    """Call to seaborn countplot"""
+    """Call to seaborn countplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.countplot(data=data, ax=newax(), **kwargs)
 
@@ -108,8 +127,9 @@ def countplot(**kwargs):
 
 @curry
 def pointplot(**kwargs):
-    """Call to seaborn pointplot"""
+    """Call to seaborn pointplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.pointplot(data=data, ax=newax(), **kwargs)
 
@@ -118,8 +138,9 @@ def pointplot(**kwargs):
 
 @curry
 def boxenplot(**kwargs):
-    """Call to seaborn boxenplot"""
+    """Call to seaborn boxenplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.boxenplot(data=data, ax=newax(), **kwargs)
 
@@ -128,8 +149,9 @@ def boxenplot(**kwargs):
 
 @curry
 def violinplot(**kwargs):
-    """Call to seaborn violinplot"""
+    """Call to seaborn violinplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.violinplot(data=data, ax=newax(), **kwargs)
 
@@ -138,8 +160,9 @@ def violinplot(**kwargs):
 
 @curry
 def boxplot(**kwargs):
-    """Call to seaborn boxplot"""
+    """Call to seaborn boxplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.boxplot(data=data, ax=newax(), **kwargs)
 
@@ -148,8 +171,9 @@ def boxplot(**kwargs):
 
 @curry
 def swarmplot(**kwargs):
-    """Call to seaborn swarmplot"""
+    """Call to seaborn swarmplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.swarmplot(data=data, ax=newax(), **kwargs)
 
@@ -158,8 +182,9 @@ def swarmplot(**kwargs):
 
 @curry
 def stripplot(**kwargs):
-    """Call to seaborn stripplot"""
+    """Call to seaborn stripplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.stripplot(data=data, ax=newax(), **kwargs)
 
@@ -168,8 +193,9 @@ def stripplot(**kwargs):
 
 @curry
 def rugplot(**kwargs):
-    """Call to seaborn rugplot"""
+    """Call to seaborn rugplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.rugplot(data=data, ax=newax(), **kwargs)
 
@@ -178,8 +204,9 @@ def rugplot(**kwargs):
 
 @curry
 def ecdfplot(**kwargs):
-    """Call to seaborn ecdfplot"""
+    """Call to seaborn ecdfplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.ecdfplot(data=data, ax=newax(), **kwargs)
 
@@ -188,8 +215,9 @@ def ecdfplot(**kwargs):
 
 @curry
 def kdeplot(**kwargs):
-    """Call to seaborn kdeplot"""
+    """Call to seaborn kdeplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.kdeplot(data=data, ax=newax(), **kwargs)
 
@@ -198,8 +226,9 @@ def kdeplot(**kwargs):
 
 @curry
 def histplot(**kwargs):
-    """Call to seaborn histplot"""
+    """Call to seaborn histplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.histplot(data=data, ax=newax(), **kwargs)
 
@@ -208,8 +237,9 @@ def histplot(**kwargs):
 
 @curry
 def displot(**kwargs):
-    """Call to seaborn displot"""
+    """Call to seaborn displot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.displot(data=data, **kwargs)
 
@@ -218,8 +248,9 @@ def displot(**kwargs):
 
 @curry
 def scatterplot(**kwargs):
-    """Call to seaborn scatterplot"""
+    """Call to seaborn scatterplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.scatterplot(data=data, ax=newax(), **kwargs)
 
@@ -228,8 +259,9 @@ def scatterplot(**kwargs):
 
 @curry
 def relplot(**kwargs):
-    """Call to seaborn relplot"""
+    """Call to seaborn relplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.relplot(data=data, **kwargs)
 
@@ -238,8 +270,9 @@ def relplot(**kwargs):
 
 @curry
 def heatmap(**kwargs):
-    """Call to seaborn heatmap"""
+    """Call to seaborn heatmap. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.heatmap(data=data, ax=newax(), **kwargs)
 
@@ -248,8 +281,9 @@ def heatmap(**kwargs):
 
 @curry
 def lineplot(**kwargs):
-    """Call to seaborn lineplot"""
+    """Call to seaborn lineplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.lineplot(data=data, ax=newax(), **kwargs)
 
@@ -258,8 +292,9 @@ def lineplot(**kwargs):
 
 @curry
 def catplot(**kwargs):
-    """Call to seaborn catplot"""
+    """Call to seaborn catplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.catplot(data=data, **kwargs)
 
@@ -268,8 +303,9 @@ def catplot(**kwargs):
 
 @curry
 def barplot(**kwargs):
-    """Call to seaborn barplot"""
+    """Call to seaborn barplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         return sns.barplot(data=data, ax=newax(), **kwargs)
 
@@ -278,8 +314,9 @@ def barplot(**kwargs):
 
 @curry
 def stripbarplot(**kwargs):
-    """Call to combined stripplot and barplot. See utilz.plot.stripbarplot"""
+    """Call to combined stripplot and barplot. See utilz.plot.stripbarplot. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def plot(data):
         ax = kwargs.pop("ax", "newax")
         return _stripbarplot(data=data, ax=ax, **kwargs)
@@ -289,8 +326,9 @@ def stripbarplot(**kwargs):
 
 @curry
 def plot(*args, **kwargs):
-    """Call a dataframe's .plot method"""
+    """Call a dataframe's .plot method. Works with both pandas and polars DataFrames."""
 
+    @polars_plotting_wrapper
     def call(df):
         return df.plot(*args, **kwargs)
 

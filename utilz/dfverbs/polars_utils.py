@@ -17,6 +17,7 @@ __all__ = [
     "polars_curry",
     "handle_string_expr",
     "convert_pandas_dtype",
+    "ensure_pandas_for_plotting",
 ]
 
 # Type checking utilities
@@ -130,3 +131,26 @@ def convert_pandas_dtype(pandas_dtype: str) -> pl.DataType:
     }
     
     return dtype_mapping.get(pandas_dtype, pl.Utf8)  # Default to string
+
+
+# Plotting compatibility utilities
+def ensure_pandas_for_plotting(data):
+    """
+    Ensure data is a pandas DataFrame for plotting compatibility.
+    
+    Parameters
+    ----------
+    data : pl.DataFrame, pd.DataFrame, or other
+        Data to potentially convert
+        
+    Returns
+    -------
+    pd.DataFrame or original data
+        Pandas DataFrame if input was polars, otherwise original data
+    """
+    if is_polars_object(data):
+        # Convert polars to pandas for plotting
+        return data.to_pandas()
+    else:
+        # Return as-is (already pandas or other type)
+        return data

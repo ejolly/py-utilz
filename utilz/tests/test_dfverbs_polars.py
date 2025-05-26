@@ -365,6 +365,43 @@ def test_pandas_polars_consistency():
     assert list(result_pd.columns) == result_pl.columns
 
 
+def test_plotting_with_polars():
+    """Test that plotting functions work with polars DataFrames."""
+    import utilz.dfverbs as _
+    import matplotlib
+    matplotlib.use('Agg')  # Use non-interactive backend for testing
+    import matplotlib.pyplot as plt
+    
+    # Create test data
+    df = pl.DataFrame({
+        'x': [1, 2, 3, 4, 5],
+        'y': [2, 4, 6, 8, 10],
+        'group': ['A', 'A', 'B', 'B', 'A']
+    })
+    
+    # Test scatterplot
+    try:
+        plot = pipe(df, _.scatterplot(x='x', y='y'))
+        assert plot is not None
+        plt.close('all')
+    except Exception as e:
+        pytest.fail(f"Scatterplot failed with polars DataFrame: {e}")
+    
+    # Test barplot  
+    try:
+        plot = pipe(df, _.barplot(x='group', y='y'))
+        assert plot is not None
+        plt.close('all')
+    except Exception as e:
+        pytest.fail(f"Barplot failed with polars DataFrame: {e}")
+    
+    # Test that conversion happens
+    from utilz.dfverbs.polars_utils import ensure_pandas_for_plotting
+    converted = ensure_pandas_for_plotting(df)
+    assert isinstance(converted, pd.DataFrame)
+    assert converted.shape == df.shape
+
+
 def test_read_csv_polars():
     """Test read_csv with use_polars parameter."""
     # Create a temporary CSV file
