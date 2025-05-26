@@ -115,26 +115,66 @@ def rename(cols, df):
 
 @curry
 def read_csv(*args, **kwargs):
-    """Call pd.read_csv"""
+    """Call pd.read_csv or pl.read_csv based on use_polars parameter"""
+    use_polars = kwargs.pop('use_polars', False)
+    if use_polars:
+        return pl.read_csv(*args, **kwargs)
     return pd.read_csv(*args, **kwargs)
 
 
 @curry
 def concat(*args, **kwargs):
-    """Call pd.concat"""
+    """Call pd.concat or pl.concat. Works with both pandas and polars DataFrames."""
+    # Check if first dataframe is polars
+    dfs = args[0] if args else kwargs.get('objs', [])
+    if dfs and is_polars_object(dfs[0]):
+        # Polars concat
+        how = kwargs.pop('how', 'vertical')
+        return pl.concat(dfs, how=how, **kwargs)
     return pd.concat(*args, **kwargs)
 
 
 @curry
 def merge(*args, **kwargs):
-    """Call pd.concat"""
+    """Call pd.merge or polars join. Works with both pandas and polars DataFrames."""
+    # For merge, we need at least one dataframe
+    if args:
+        left = args[0]
+        right = args[1] if len(args) > 1 else kwargs.get('right')
+        
+        if is_polars_object(left):
+            # Extract merge parameters
+            on = kwargs.get('on', None)
+            how = kwargs.get('how', 'inner')
+            left_on = kwargs.get('left_on', None)
+            right_on = kwargs.get('right_on', None)
+            
+            # Polars join - use either 'on' or 'left_on'/'right_on'
+            if on is not None:
+                return left.join(right, on=on, how=how)
+            elif left_on is not None or right_on is not None:
+                return left.join(right, left_on=left_on, right_on=right_on, how=how)
+            else:
+                # Try to join on common columns
+                return left.join(right, how=how)
+    
     return pd.merge(*args, **kwargs)
 
 
 @curry
 def join(*args, **kwargs):
-    """Call pd.concat"""
-    return pd.join(*args, **kwargs)
+    """Call dataframe join method. Works with both pandas and polars DataFrames."""
+    def call(df):
+        if is_polars_object(df):
+            # For polars, join is a method on the dataframe
+            other = args[0] if args else kwargs.get('other')
+            on = kwargs.get('on', None)
+            how = kwargs.get('how', 'left')
+            return df.join(other, on=on, how=how)
+        else:
+            return df.join(*args, **kwargs)
+    
+    return call
 
 
 @curry
@@ -643,7 +683,8 @@ def _select_polars(df, *args):
 @curry
 def pivot_wider(*args, **kwargs):
     """
-    Convert a pair of columns to multiple columns, e.g. `_.pivot_wider('condition', using='response')`
+    Convert a pair of columns to multiple columns, e.g. `_.pivot_wider('condition', using='response')`.
+    Works with both pandas and polars DataFrames.
 
     Args:
         column (str): string name of column to "explode"
@@ -654,7 +695,26 @@ def pivot_wider(*args, **kwargs):
     """
 
     def call(df):
-        return df.pivot_wider(*args, **kwargs)
+        if is_polars_object(df):
+            # Extract args
+            if len(args) >= 2:
+                column, using = args[0], kwargs.get('using', args[1])
+            else:
+                column = args[0] if args else kwargs.get('column')
+                using = kwargs.get('using')
+            
+            # Get index columns (all columns except the two being pivoted)
+            index_cols = [col for col in df.columns if col not in [column, using]]
+            
+            # Use polars pivot
+            return df.pivot(
+                values=using,
+                index=index_cols,
+                columns=column,
+                aggregate_function="first"  # Use first value if duplicates
+            )
+        else:
+            return df.pivot_wider(*args, **kwargs)
 
     return call
 
@@ -664,7 +724,8 @@ def pivot_longer(*args, **kwargs):
     """
     Convert a list of columns into 2 columns. Can pass a list of columsn to melt-down or
     `id_vars` to select everything else: e.g. `_.pivot_longer(['male', 'female'],
-    into=('gender', 'response'))` or `_.pivot_longer(id_vars='SID', into=('gender','response'))`
+    into=('gender', 'response'))` or `_.pivot_longer(id_vars='SID', into=('gender','response'))`.
+    Works with both pandas and polars DataFrames.
 
     Args:
         columns (list or None): columns to melt; Defaults to None
@@ -676,7 +737,34 @@ def pivot_longer(*args, **kwargs):
     """
 
     def call(df):
-        return df.pivot_longer(*args, **kwargs)
+        if is_polars_object(df):
+            # Extract arguments
+            columns = args[0] if args else kwargs.get('columns', None)
+            id_vars = kwargs.get('id_vars', None)
+            into = kwargs.get('into', ('variable', 'value'))
+            
+            # If columns is provided, infer id_vars
+            if columns is not None:
+                if id_vars is None:
+                    id_vars = [col for col in df.columns if col not in columns]
+                value_vars = columns
+            # If id_vars is provided, infer columns
+            elif id_vars is not None:
+                value_vars = [col for col in df.columns if col not in id_vars]
+            else:
+                # Neither provided, melt all columns
+                id_vars = []
+                value_vars = df.columns
+            
+            # Use polars melt (equivalent to pivot_longer)
+            return df.melt(
+                id_vars=id_vars,
+                value_vars=value_vars,
+                variable_name=into[0],
+                value_name=into[1]
+            )
+        else:
+            return df.pivot_longer(*args, **kwargs)
 
     return call
 

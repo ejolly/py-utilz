@@ -52,17 +52,17 @@ This file tracks the progress of the refactoring work on the `uv-polars` branch.
   - [ ] Implement grouped operations patterns for mutate
   - [ ] Add lazy evaluation support
 
-- [ ] Step 3: Reshaping and Joining Operations
-  - Migrate pivot_longer/pivot_wider to melt/pivot
-  - Implement split verb with polars
-  - Update all joining operations
-  - Port sorting and selection verbs
+- [x] Step 3: Reshaping and Joining Operations
+  - [x] Migrate pivot_longer/pivot_wider to melt/pivot
+  - [x] Update concat/merge/join operations for polars
+  - [x] Add read_csv support with use_polars parameter
+  - [ ] Implement split verb with polars
 
 - [ ] Step 4: Plotting and Integration
-  - Create polars→pandas conversion layer for plotting
-  - Update all plot functions to handle polars
-  - Implement I/O operations (read_csv, to_csv)
-  - Port utility functions (apply, call, type conversions)
+  - [ ] Create polars→pandas conversion layer for plotting
+  - [ ] Update all plot functions to handle polars
+  - [ ] Port utility functions (apply, call, type conversions)
+  - [ ] Add support for LazyFrame operations
 
 - [ ] Step 5: Testing and Documentation
   - Migrate all dfverbs tests to polars

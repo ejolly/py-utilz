@@ -38,12 +38,5 @@ plugins:
       ignore: ["dev/*"]
   - search
   - mkdocstrings:
-      handlers:
-        python:
-          rendering:
-            show_root_toc_entry: false
-            show_source: true
-            show_if_no_docstring: false
-            heading_level: 4
       watch:
         - utilz
