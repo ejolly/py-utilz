@@ -88,10 +88,14 @@ def to_list(*args, **kwargs):
 
 @curry
 def groupby(*args):
-    """Call a dataframe's `.groupby` method"""
+    """Call a dataframe's `.groupby` method. Works with both pandas and polars DataFrames."""
 
     def call(df):
-        return do("groupby", df, [*args])
+        if is_polars_object(df):
+            # Polars uses group_by instead of groupby
+            return df.group_by(*args)
+        else:
+            return do("groupby", df, [*args])
 
     return call
 
@@ -153,9 +157,16 @@ def summarize(dfg, **kwargs):
     or `_.summarize(weight_mean = lambda weight: weight.mean())` or `_.summarize(weight_mean = lambda df: df['weight].mean())`. To return output the
     same size as the input dataframe use `.mutate()` or `.transmute()` instead as
     either will *broadcast* values to the right size.
+    
+    Works with both pandas and polars DataFrames.
     """
+    
+    # Handle polars DataFrames and GroupBy objects
+    if is_polars_object(dfg) or (hasattr(dfg, '__class__') and 'polars' in str(dfg.__class__.__module__)):
+        return _summarize_polars(dfg, **kwargs)
 
-    if isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
+    # Handle pandas grouped DataFrames
+    elif isinstance(dfg, pd.core.groupby.generic.DataFrameGroupBy):
         out = None
         for k, v in kwargs.items():
             if isinstance(v, str):
@@ -214,6 +225,67 @@ def summarize(dfg, **kwargs):
         raise TypeError(
             f"summarize expected previous step to be a DataFrame or GroupBy, but received a {type(dfg)}. If you used select(), you should instead select the column in the expression or function passed to summarize(new_col='old_col.mean()'). If you intended to run an expression summarize takes kwargs organized like: new_colname = str | func. This differs from agg in pandas which expects a column name and expression!"
         )
+
+
+def _summarize_polars(dfg, **kwargs):
+    """
+    Helper function to handle summarize operations on polars DataFrames.
+    """
+    # Convert to list of expressions for aggregation
+    expressions = []
+    
+    for k, v in kwargs.items():
+        if isinstance(v, str):
+            # Handle string expressions
+            # Common aggregations: mean(), sum(), min(), max(), count()
+            try:
+                # Try to parse as aggregation expression
+                if '.' in v:
+                    col_name, agg_func = v.rsplit('.', 1)
+                    agg_func = agg_func.rstrip('()')
+                    
+                    if agg_func == 'mean':
+                        expr = pl.col(col_name).mean().alias(k)
+                    elif agg_func == 'sum':
+                        expr = pl.col(col_name).sum().alias(k)
+                    elif agg_func == 'min':
+                        expr = pl.col(col_name).min().alias(k)
+                    elif agg_func == 'max':
+                        expr = pl.col(col_name).max().alias(k)
+                    elif agg_func == 'count':
+                        expr = pl.col(col_name).count().alias(k)
+                    elif agg_func == 'std':
+                        expr = pl.col(col_name).std().alias(k)
+                    elif agg_func == 'var':
+                        expr = pl.col(col_name).var().alias(k)
+                    else:
+                        # Try generic sql expression
+                        expr = pl.sql_expr(v).alias(k)
+                else:
+                    # Try as SQL expression
+                    expr = pl.sql_expr(v).alias(k)
+            except:
+                # Fall back to treating as column name
+                expr = pl.col(v).alias(k)
+        elif isinstance(v, pl.Expr):
+            # Already a polars expression
+            expr = v.alias(k)
+        elif callable(v):
+            # For now, raise an error - lambda support needs more work
+            raise NotImplementedError("Lambda expressions not yet supported for polars DataFrames in summarize")
+        else:
+            # Literal value
+            expr = pl.lit(v).alias(k)
+            
+        expressions.append(expr)
+    
+    # Check if dfg is a GroupBy object
+    if hasattr(dfg, 'agg') and hasattr(dfg, '__class__') and 'GroupBy' in str(dfg.__class__.__name__):
+        # It's a grouped dataframe, use agg
+        return dfg.agg(expressions)
+    else:
+        # It's a regular dataframe, use select to create single-row output
+        return dfg.select(expressions).head(1)
 
 
 @curry
@@ -645,20 +717,58 @@ def split(*args, sep=" "):
 @curry
 def astype(cols, df):
     """Cast one ore more columns to a type. Like `.rename()` you can either input a single tuple to cast 1
-    column or a dict to cast multiple"""
+    column or a dict to cast multiple. Works with both pandas and polars DataFrames."""
     if isinstance(cols, tuple):
         cols = {cols[0]: cols[1]}
-    return df.astype(cols)
+    
+    if is_polars_object(df):
+        # Polars uses cast() instead of astype()
+        # Convert pandas dtype strings to polars dtypes
+        cast_exprs = []
+        for col_name, dtype in cols.items():
+            if isinstance(dtype, str):
+                # Convert common pandas dtype strings to polars
+                dtype_map = {
+                    'int64': pl.Int64,
+                    'int32': pl.Int32,
+                    'float64': pl.Float64,
+                    'float32': pl.Float32,
+                    'object': pl.Utf8,
+                    'string': pl.Utf8,
+                    'str': pl.Utf8,
+                    'bool': pl.Boolean,
+                    'datetime64[ns]': pl.Datetime,
+                    'category': pl.Categorical,
+                }
+                pl_dtype = dtype_map.get(dtype, pl.Utf8)
+            else:
+                pl_dtype = dtype
+            cast_exprs.append(pl.col(col_name).cast(pl_dtype))
+        
+        return df.with_columns(cast_exprs)
+    else:
+        return df.astype(cols)
 
 
 @curry
 def sort(*args, **kwargs):
-    """Sort df by one or more columns passed as args. Ignores index by default by you
-    can change that with `ignore_index=False`."""
+    """Sort df by one or more columns passed as args. Ignores index by default but you
+    can change that with `ignore_index=False`. Works with both pandas and polars DataFrames."""
     ignore_index = kwargs.pop("ignore_index", True)
+    ascending = kwargs.pop("ascending", True)
 
     def call(df):
-        return df.sort_values(by=list(args), ignore_index=ignore_index, **kwargs)
+        if is_polars_object(df):
+            # Polars uses sort() instead of sort_values()
+            # Handle descending parameter (polars uses descending instead of ascending)
+            if isinstance(ascending, bool):
+                descending = not ascending
+            else:
+                # If ascending is a list, convert to descending list
+                descending = [not asc for asc in ascending]
+            return df.sort(list(args), descending=descending, **kwargs)
+        else:
+            return df.sort_values(by=list(args), ignore_index=ignore_index, ascending=ascending, **kwargs)
 
     return call
 
@@ -706,20 +816,46 @@ def splitquery(query, **kwargs):
 
 @curry
 def fillna(*args, **kwargs):
-    """Call a dataframe's fillna method"""
+    """Call a dataframe's fillna method. Works with both pandas and polars DataFrames."""
 
     def call(df):
-        return df.fillna(*args, **kwargs)
+        if is_polars_object(df):
+            # Polars uses fill_null() instead of fillna()
+            value = args[0] if args else kwargs.get('value', None)
+            return df.fill_null(value)
+        else:
+            return df.fillna(*args, **kwargs)
 
     return call
 
 
 @curry
 def replace(*args, **kwargs):
-    """Call a dataframe's replace method"""
+    """Call a dataframe's replace method. Works with both pandas and polars DataFrames."""
 
     def call(df):
-        return df.replace(*args, **kwargs)
+        if is_polars_object(df):
+            # Polars replace works differently - it requires old and new values
+            if len(args) >= 2:
+                old, new = args[0], args[1]
+            else:
+                old = kwargs.get('to_replace', kwargs.get('old', None))
+                new = kwargs.get('value', kwargs.get('new', None))
+            
+            if old is not None and new is not None:
+                # Need to handle column-specific replacements
+                # For now, apply to all string columns
+                expr_list = []
+                for col in df.columns:
+                    if df[col].dtype == pl.Utf8:
+                        expr_list.append(pl.col(col).replace(old, new))
+                    else:
+                        expr_list.append(pl.col(col))
+                return df.select(expr_list)
+            else:
+                raise ValueError("replace requires both old and new values for polars DataFrames")
+        else:
+            return df.replace(*args, **kwargs)
 
     return call
 

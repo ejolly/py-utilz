@@ -44,11 +44,13 @@ This file tracks the progress of the refactoring work on the `uv-polars` branch.
   - [x] Update curry decorators for polars compatibility
   - [x] Basic testing of migrated verbs
 
-- [ ] Step 2: Aggregation and Grouping Operations
-  - Migrate summarize and groupby to polars
-  - Port all statistical functions from stats.py
-  - Implement grouped operations patterns
-  - Add lazy evaluation support
+- [x] Step 2: Aggregation and Grouping Operations
+  - [x] Migrate summarize and groupby to polars
+  - [x] Migrate sort, astype, fillna, replace verbs
+  - [x] Basic aggregation functions (mean, sum, count, min, max, std, var)
+  - [ ] Port all statistical functions from stats.py
+  - [ ] Implement grouped operations patterns for mutate
+  - [ ] Add lazy evaluation support
 
 - [ ] Step 3: Reshaping and Joining Operations
   - Migrate pivot_longer/pivot_wider to melt/pivot
