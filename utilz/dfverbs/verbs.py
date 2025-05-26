@@ -706,11 +706,11 @@ def pivot_wider(*args, **kwargs):
             # Get index columns (all columns except the two being pivoted)
             index_cols = [col for col in df.columns if col not in [column, using]]
             
-            # Use polars pivot
+            # Use polars pivot with new parameter names
             return df.pivot(
                 values=using,
                 index=index_cols,
-                columns=column,
+                on=column,  # Changed from 'columns' to 'on'
                 aggregate_function="first"  # Use first value if duplicates
             )
         else:
@@ -756,10 +756,10 @@ def pivot_longer(*args, **kwargs):
                 id_vars = []
                 value_vars = df.columns
             
-            # Use polars melt (equivalent to pivot_longer)
-            return df.melt(
-                id_vars=id_vars,
-                value_vars=value_vars,
+            # Use polars unpivot (new name for melt)
+            return df.unpivot(
+                index=id_vars,  # Changed from 'id_vars' to 'index'
+                on=value_vars,  # Changed from 'value_vars' to 'on'
                 variable_name=into[0],
                 value_name=into[1]
             )
@@ -774,7 +774,7 @@ def split(*args, sep=" "):
     """
     Split values in single df column into multiple columns by separator, e.g.
     First-Last -> [First], [Last]. To split list elements use [] as the sep, e.g.
-    [1,2,3] -> [1], [2], [3]
+    [1,2,3] -> [1], [2], [3]. Works with both pandas and polars DataFrames.
 
     Args:
         column (str): column to split
@@ -786,18 +786,41 @@ def split(*args, sep=" "):
     col, into = args
 
     def call(df):
-        if isinstance(sep, str):
-            out = df[col].str.split(sep, expand=True)
-        elif isinstance(sep, list):
-            out = pd.DataFrame(df[col].to_list())
-        if len(into) != out.shape[1]:
-            raise ValueError(
-                f"into has {len(into)} elements, but splitting creates a dataframe with {out.shape[1]} columns"
-            )
+        if is_polars_object(df):
+            if isinstance(sep, str):
+                # Use polars string split
+                split_expr = pl.col(col).str.split(sep)
+                # Create individual columns from the split
+                new_cols = []
+                for i, new_col in enumerate(into):
+                    new_cols.append(
+                        split_expr.list.get(i).alias(new_col)
+                    )
+                # Drop original column and add new ones
+                return df.with_columns(new_cols).drop(col)
+            elif isinstance(sep, list):
+                # Handle list splitting
+                # Extract list elements into separate columns
+                new_cols = []
+                for i, new_col in enumerate(into):
+                    new_cols.append(
+                        pl.col(col).list.get(i).alias(new_col)
+                    )
+                return df.with_columns(new_cols).drop(col)
         else:
-            out.columns = list(into)
+            # Original pandas implementation
+            if isinstance(sep, str):
+                out = df[col].str.split(sep, expand=True)
+            elif isinstance(sep, list):
+                out = pd.DataFrame(df[col].to_list())
+            if len(into) != out.shape[1]:
+                raise ValueError(
+                    f"into has {len(into)} elements, but splitting creates a dataframe with {out.shape[1]} columns"
+                )
+            else:
+                out.columns = list(into)
 
-        return pd.concat([df.drop(columns=col), out], axis=1)
+            return pd.concat([df.drop(columns=col), out], axis=1)
 
     return call
 

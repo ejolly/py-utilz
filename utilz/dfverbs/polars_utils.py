@@ -6,7 +6,7 @@ including type checking, expression handling, and compatibility layers.
 """
 
 import polars as pl
-from typing import Union, Any, Callable, List, Dict
+from typing import Union, Callable
 from functools import wraps
 
 __all__ = [

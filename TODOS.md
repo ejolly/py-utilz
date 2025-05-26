@@ -56,7 +56,8 @@ This file tracks the progress of the refactoring work on the `uv-polars` branch.
   - [x] Migrate pivot_longer/pivot_wider to melt/pivot
   - [x] Update concat/merge/join operations for polars
   - [x] Add read_csv support with use_polars parameter
-  - [ ] Implement split verb with polars
+  - [x] Implement split verb with polars
+  - [x] Create comprehensive test suite for polars verbs (17 tests)
 
 - [ ] Step 4: Plotting and Integration
   - [ ] Create polars→pandas conversion layer for plotting
