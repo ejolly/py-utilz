@@ -46,7 +46,7 @@ __all__ = [
 
 import numpy as np
 import pandas as pd
-from functools import update_wrapper
+from functools import update_wrapper, wraps
 from typing import Union, Any, Callable
 from collections.abc import Iterable
 from inspect import signature
@@ -239,6 +239,34 @@ class Pipe:
     def __repr__(self) -> str:
         name = getattr(self.func, "__name__", repr(self.func))
         return f"Pipe({name})"
+
+
+def _pipeify(verb: Callable) -> Callable:
+    """Make a *verb factory* `|`-able by wrapping the transform it returns in a `Pipe`.
+
+    Verbs in `utilz.dfverbs` are factories: calling `mutate(c="a + b")` returns a
+    one-argument function `call(df)` that does the work. This wrapper turns that
+    returned function into a `Pipe`, so `df | mutate(...)` works while
+    `pipe(df, mutate(...))` keeps working unchanged.
+
+    Verbs that return data directly (e.g. `read_csv`, `concat`) return a
+    non-callable, which is passed through untouched.
+
+    Args:
+        verb (Callable): a verb factory to make pipe-operator aware.
+
+    Returns:
+        Callable: a wrapper that returns a `Pipe` when the verb returns a transform.
+    """
+
+    @wraps(verb)
+    def wrapper(*args, **kwargs):
+        result = verb(*args, **kwargs)
+        if callable(result) and not isinstance(result, Pipe):
+            return Pipe(result)
+        return result
+
+    return wrapper
 
 
 def pipeable(func: Callable) -> Pipe:

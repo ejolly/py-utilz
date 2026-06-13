@@ -333,3 +333,10 @@ def plot(*args, **kwargs):
         return df.plot(*args, **kwargs)
 
     return call
+
+
+# Make every plot verb usable with the unix-style `|` pipe operator.
+from ..pipes import _pipeify  # noqa: E402
+
+for _name in dict.fromkeys(__all__):
+    globals()[_name] = _pipeify(globals()[_name])

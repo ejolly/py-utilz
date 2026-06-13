@@ -428,3 +428,21 @@ def test_read_csv_polars():
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+
+def test_pipe_operator_with_verbs():
+    """Verbs are usable with the unix-style `|` operator, matching pipe()."""
+    df = pl.DataFrame({'a': [1, 2, 3, 4], 'b': [10, 20, 30, 40]})
+
+    # Multi-step | chain with no pipe() call
+    out = df | _.mutate(c='a + b') | _.select('a', 'c') | _.sort('c', ascending=False)
+    assert out.columns == ['a', 'c']
+    assert out['c'].to_list() == [44, 33, 22, 11]
+
+    # `df | verb` is equivalent to pipe(df, verb)
+    assert (df | _.mutate(c='a + b')).equals(pipe(df, _.mutate(c='a + b')))
+
+    # Curried-with-df verb (rename) works too
+    assert (df | _.rename(('a', 'x'))).columns == ['x', 'b']
+
+    # Stats verb
+    assert (df | stats.mean()).equals(pipe(df, stats.mean()))

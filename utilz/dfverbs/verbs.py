@@ -1012,3 +1012,11 @@ def split_groups():
         raise TypeError("split_groups only works on grouped dataframes")
 
     return call
+
+
+# Make every verb usable with the unix-style `|` pipe operator, e.g.
+# `df | mutate(c="a + b") | summarize(...)`, in addition to `pipe(df, ...)`.
+from ..pipes import _pipeify  # noqa: E402
+
+for _name in dict.fromkeys(__all__):
+    globals()[_name] = _pipeify(globals()[_name])

@@ -360,3 +360,10 @@ def bootci(col, **kwargs):
             )
 
     return call
+
+
+# Make every stats verb usable with the unix-style `|` pipe operator.
+from ..pipes import _pipeify  # noqa: E402
+
+for _name in dict.fromkeys(__all__):
+    globals()[_name] = _pipeify(globals()[_name])
