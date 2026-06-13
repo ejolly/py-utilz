@@ -33,10 +33,11 @@ nav:
       - Boilerplate helpers: api/boilerplate.md
       - Decorators: api/decorators.md
       - Dataclasses: api/data.md
+watch:
+  - utilz
+
 plugins:
   - mkdocs-jupyter:
       ignore: ["dev/*"]
   - search
-  - mkdocstrings:
-      watch:
-        - utilz
+  - mkdocstrings
