@@ -1,11 +1,18 @@
 # Dataframe verbs and tools
 
 
-The `dfverbs` module is intended to be imported as an alias and used inside `pipe` for [dplyr](https://dplyr.tidyverse.org/) like data manipulation grammar. Using the sample on the [redframes](https://github.com/maxhumber/redframes) README: 
+The `dfverbs` module is intended to be imported as an alias and used inside `pipe` for [dplyr](https://dplyr.tidyverse.org/) like data manipulation grammar. **Now with seamless Polars support!** 🎉
+
+## Works with both Pandas and Polars
+
+The same code works with both pandas and polars DataFrames:
+
+### Pandas Example
 
 ```python
 import pandas as pd
-from utilz import pipe, randdf
+import numpy as np
+from utilz import pipe
 import utilz.dfverbs as _
 
 # Define demo df
@@ -28,6 +35,38 @@ out = pipe(
     _.pivot_wider(column="sex", using="weight"),
     _.mutate(dimorphism="male / female"),  # no rounding possible
     _.mutate(dimorphism=lambda male, female: np.round(male / female, 2)) # instead use a func
+)
+```
+
+### Polars Example (Identical Code!)
+
+```python
+import polars as pl
+import numpy as np
+from utilz import pipe
+import utilz.dfverbs as _
+
+# Define demo df - exact same structure
+df = pl.DataFrame({
+    'bear': ['Brown bear', 'Polar bear', 'Asian black bear', 'American black bear', 'Sun bear', 'Sloth bear', 'Spectacled bear', 'Giant panda'],
+    'genus': ['Ursus', 'Ursus', 'Ursus', 'Ursus', 'Helarctos', 'Melursus', 'Tremarctos', 'Ailuropoda'],
+    'weight (male, lbs)': ['300-860', '880-1320', '220-440', '125-500', '60-150', '175-310', '220-340', '190-275'],
+    'weight (female, lbs)': ['205-455', '330-550', '110-275', '90-300', '45-90', '120-210', '140-180', '155-220']
+})
+
+# Exact same pipeline works!
+out = pipe(
+    df,
+    _.rename({"weight (male, lbs)": "male", "weight (female, lbs)": "female"}),
+    _.pivot_longer(columns=["male", "female"], into=("sex", "weight")),
+    _.split("weight", ("min", "max"), sep="-"),
+    _.pivot_longer(columns=["min", "max"], into=("stat", "weight")),
+    _.astype({"weight": float}),
+    _.groupby("genus", "sex"),
+    _.summarize(weight="weight.mean()"),
+    _.pivot_wider(column="sex", using="weight"),
+    _.mutate(dimorphism="male / female"),
+    _.mutate(dimorphism=lambda male, female: np.round(male / female, 2))
 )
 ```
 

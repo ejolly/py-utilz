@@ -9,12 +9,23 @@ Convenient helper functions, decorators, and data analysis tools to make life ea
 
 `pip install py-utilz`
 
-[dplyr](https://dplyr.tidyverse.org/) like data grammar:
+## 🎉 Now with Polars Support!
+
+[dplyr](https://dplyr.tidyverse.org/) like data grammar that works with both **pandas** and **polars**:
 
 ```python
 from utilz import pipe
 import utilz.dfverbs as _
 
+# Works with pandas
+import pandas as pd
+df = pd.DataFrame(...)
+
+# OR with polars - same exact code!
+import polars as pl  
+df = pl.DataFrame(...)
+
+# This pipeline works with either!
 out = pipe(
     df,
     _.rename({"weight (male, lbs)": "male", "weight (female, lbs)": "female"}),
