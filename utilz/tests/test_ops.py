@@ -1,12 +1,6 @@
 from utilz import (
     check_random_state,
     map,
-    mapcat,
-    mapmany,
-    mapcompose,
-    mapacross,
-    mapif,
-    mapwith,
     filter,
     pipe,
     spread,
@@ -24,6 +18,7 @@ from utilz import (
     seq,
     equal,
 )
+from toolz import juxt
 from utilz.plot import tweak
 from utilz.boilerplate import randdf
 import numpy as np
@@ -51,58 +46,6 @@ def test_map():
     # Currying
     out = pipe([1, 2, 3, 4], map(lambda x: x * 2))
     assert out == correct
-
-
-def test_mapcat():
-    # Nested lists are flattened
-    data = [[1, 2], [3, 4]]
-    out = mapcat(None, data)
-    assert len(out) == 4
-
-    # Numpy
-    data = np.array(data)
-
-    # If input and return are both numpy arrays then the default concat_axis = None
-    # casts using np.array(mapresult)
-    # Here 1d func operates on each row of the 2d matrix
-    out = mapcat(lambda x: np.power(x, 2), data)
-    assert isinstance(out, np.ndarray)
-    assert out.ndim == 2
-
-    # But when using regular map just return a list of numpy arrays
-    out = map(lambda x: np.power(x, 2), data)
-    assert isinstance(out, list)
-    assert len(out) == 2
-    assert isinstance(out[0], np.ndarray)
-
-    # This is the same as setting axis to 1 manually
-    out = mapcat(lambda x: np.power(x, 2), data, concat_axis=1)
-    assert out.ndim == 2
-
-    # Setting it to 0, flattens/hstacks the array into a 1d
-    out = mapcat(lambda x: np.power(x, 2), data, concat_axis=0)
-    assert out.ndim == 1
-    assert len(out) == 4
-
-    # Passing kwargs to function works
-    out = mapcat(np.std, data, ddof=1)
-    assert isinstance(out, np.ndarray)
-    assert np.allclose(out, np.std(data, ddof=1, axis=1))
-    assert len(out) == 2
-
-    # Loading files into a single dataframe
-    def load_data(i):
-        # simulate dataloading as dfs
-        return randdf()
-
-    # Concat pandas
-    out = mapcat(load_data, ["file1.txt", "file2.txt", "file3.txt"])
-    assert isinstance(out, pd.DataFrame)
-    assert out.shape == (30, 3)
-
-    out = mapcat(load_data, ["file1.txt", "file2.txt", "file3.txt"], concat_axis=1)
-    assert isinstance(out, pd.DataFrame)
-    assert out.shape == (10, 9)
 
 
 def test_parallel_map():
@@ -148,14 +91,15 @@ def test_mapalts():
     """Just easier shorthands for things we can do with default mapcat"""
 
     # Map a sequence of functions on after another
-    out = pipe(seq(10), mapcompose(lambda x: x**2, np.sqrt))
+    out = pipe(seq(10), map(compose(lambda x: x**2, np.sqrt)))
     correct = pipe(seq(10), map(lambda x: x**2), map(np.sqrt))
 
     assert np.allclose(out, correct)
     assert np.allclose(out, seq(10))
 
     # Map multiple functions separately
-    out = pipe(seq(10), mapmany(lambda x: x**2, np.sqrt))
+    # Migration: mapmany(f1, f2, items) → map(juxt(f1, f2), items)
+    out = pipe(seq(10), map(juxt(lambda x: x**2, np.sqrt)))
     assert len(out) == 10
     assert all([len(e) == 2 for e in out])
 
@@ -163,51 +107,55 @@ def test_mapalts():
     assert all(np.allclose(o, c) for o, c in zip(out, correct))
 
     # Map multiple functions as matched pairs
-    out = pipe([2, 4], mapacross(lambda x: x**2, lambda x: x * 2))
-    correct = pipe(
-        [2, 4],
-        lambda tup: (lambda x: x**2, tup[0], lambda x: x * 2, tup[1]),
+    # Migration: mapacross(f1, f2, items) → map(lambda tup: tup[1](tup[0]), zip(items, [f1, f2]))
+    funcs = [lambda x: x**2, lambda x: x * 2]
+    out = pipe(
+        [2, 4], lambda items: list(map(lambda tup: tup[1](tup[0]), zip(items, funcs)))
     )
     assert len(out) == 2
     assert np.allclose(out, [4, 8])
 
-    # Doesnt work if lengths don't match
-    with pytest.raises(ValueError):
-        pipe([2], mapacross(lambda x: x**2, lambda x: x * 2))
-
-    with pytest.raises(ValueError):
-        pipe([2, 4], mapacross(lambda x: x**2))
+    # Alternative migration using list comprehension
+    out2 = pipe([2, 4], lambda items: [f(x) for x, f in zip(items, funcs)])
+    assert np.allclose(out2, [4, 8])
 
     # Map a function if a predicate is true
+    # Migration: mapif(func, pred, items) → map(iffy(pred, func), items)
     bigger_5 = lambda x: x > 5
-    out = pipe(seq(10), mapif(lambda x: x * 2, bigger_5))
+    out = pipe(seq(10), map(iffy(bigger_5, lambda x: x * 2)))
     assert equal(out, [0, 1, 2, 3, 4, 5, 12, 14, 16, 18])
 
     # Pass a single fixed extra arg
-    out = mapwith(lambda fixed, elem: elem + fixed, 5, [1, 2, 3, 4])
-    outc = pipe([1, 2, 3, 4], mapwith(lambda x, y: x + y, 5))
+    # Migration: mapwith(func, fixed, items) → map(lambda x: func(fixed, x), items)
+    fixed = 5
+    out = list(map(lambda elem: elem + fixed, [1, 2, 3, 4]))
+    outc = pipe([1, 2, 3, 4], map(lambda x: x + fixed))
     correct = [x + 5 for x in [1, 2, 3, 4]]
     assert out == correct
     assert outc == correct
 
     # Multiple iterables
+    # Migration: Use zip + map pattern
     iterme = [1, 2, 3]
     iterwith = [2, 2, 2]
-    out = mapwith(lambda x, y: x / y, iterwith, iterme)
+    out = list(map(lambda tup: tup[0] / tup[1], zip(iterme, iterwith)))
     outc = pipe(
-        iterme, mapwith(lambda frompipe, iterwith: frompipe / iterwith, iterwith)
+        iterme, lambda items: list(map(lambda tup: tup[0] / tup[1], zip(items, iterwith)))
     )
     correct = [x / 2 for x in [1, 2, 3]]
     assert out == correct
     assert outc == correct
 
     # Map around a fixed input
-    out = pipe([5, 10, 20], mapwith(lambda e, df: df.shape[0] > e, randdf()))
+    # Migration: Use lambda with closure
+    df_fixed = randdf()
+    out = pipe([5, 10, 20], map(lambda e: df_fixed.shape[0] > e))
     assert equal([True, False, False], out)
 
     df = randdf((20, 3)).assign(Group=["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5)
 
-    out = pipe(["A", "C"], mapwith(lambda label, df: df.query("Group == @label"), df))
+    # Migration: Use lambda with closure
+    out = pipe(["A", "C"], map(lambda label: df.query("Group == @label")))
     assert len(out) == 2
     assert out[0].shape[0] == int(df.shape[0] / 4)
 
@@ -299,28 +247,27 @@ def test_pipes_basic():
     # (input1, input2) -> (output1, output2)
 
     # Use map instead for 1 func
-    with pytest.raises(ValueError):
-        out = pipe([df, df], mapmany(lambda df: df.head(5)))
+    # Migration: For a single function, use map instead of the deprecated mapmany
+    out = pipe([df, df], map(lambda df: df.head(5)))
+    assert len(out) == 2
+    assert all(o.equals(df.head(5)) for o in out)
 
     # 2 func-input pairs
-    out = pipe([df, df], mapacross(lambda df: df.head(5), lambda df: df.tail(10)))
+    # Migration: Use explicit zip + map pattern
+    funcs = [lambda df: df.head(5), lambda df: df.tail(10)]
+    out = pipe([df, df], lambda dfs: [f(d) for d, f in zip(dfs, funcs)])
     assert len(out) == 2
     assert out[0].equals(df.head(5))
     assert out[1].equals(df.tail(10))
 
     # 2 funcs, i.e. mini-pipe
-    out = pipe([df, df], mapcompose(lambda df: df.head(10), lambda df: df.tail(5)))
+    out = pipe([df, df], map(compose(lambda df: df.head(10), lambda df: df.tail(5))))
     assert isinstance(out, list) and len(out) == 2
     assert out[0].equals(out[1])
     assert out[0].equals(df.iloc[5:10, :])
 
-    # not enough funcs
-    with pytest.raises(ValueError):
-        out = pipe([df, df], mapacross(lambda df: df.head(5)))
-
-    # not enough data
-    with pytest.raises(ValueError):
-        out = pipe([df], mapacross(lambda df: df.head(5), lambda df: df.tail(2)))
+    # Error cases no longer apply with explicit zip pattern
+    # Zip will just stop at the shortest sequence
 
     # SPREAD (one2many)
     # input -> (input, input, input)
@@ -332,7 +279,7 @@ def test_pipes_basic():
     assert all(df is not ddf for ddf in out)
 
     # input -> (output1, output2)
-    out = pipe(df, spread(lambda df: df.head(), lambda df: df.mean()))
+    out = pipe(df, spread(lambda df: df.head(), lambda df: df.mean(numeric_only=True)))
     assert isinstance(out, tuple)
     assert len(out) == 2
     assert out[0].shape == (5, 4)
@@ -529,10 +476,10 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         ...,
-        mapacross(
+        lambda tup: [f(x) for x, f in zip(tup, [
             lambda means: sns.histplot(means),
             lambda means: sns.boxplot(means),
-        ),
+        ])],
         debug=True,
     )
     assert len(out) == 3  # 3 steps in pipe
@@ -550,10 +497,10 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         ...,
-        mapacross(
+        lambda tup: [f(x) for x, f in zip(tup, [
             compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
-        ),
+        ])],
     )
     assert isinstance(out1, pd.Series)
     assert isinstance(out2, pd.Series)
@@ -567,10 +514,10 @@ def test_pipes_advanced():
             lambda dfg: dfg.select("B1").mean(),
         ),
         ...,
-        mapacross(
+        lambda tup: [f(x) for x, f in zip(tup, [
             compose(lambda means: sns.histplot(means), tweak(title="histplot")),
             compose(lambda means: sns.boxplot(means), tweak(title="boxplot")),
-        ),
+        ])],
         keep=0,
     )
     assert isinstance(a1_mean, pd.Series)

@@ -1,38 +1,33 @@
-[tool.poetry]
+[project]
 name = "py-utilz"
-version = "0.4.1"
-description = "Faster, easier, more robust python data analysis"
-authors = ["ejolly <eshin.jolly@gmail.com>"]
-license = "MIT"
+version = "0.5.0"
+description = "Add your description here"
 readme = "README.md"
-packages = [{ include = "utilz" }]
+requires-python = ">=3.10"
+dependencies = [
+    "joblib>=1.5.1",
+    "matplotlib>=3.10.3",
+    "numpy>=2.2.6",
+    "pandas>=2.2.3",
+    "polars>=1.30.0",
+    "pyarrow>=20.0.0",
+    "seaborn>=0.13.2",
+    "toolz>=1.0.0",
+    "tqdm>=4.67.1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-numpy = "^1.16"
-pandas = "^1.2.0"
-matplotlib = "^3.1.0"
-seaborn = ">=0.12.0"
-joblib = "^1.1.0"
-toolz = "^0.12.0"
-tqdm = "^4.64.1"
-
-[tool.poetry.group.dev]
-optional = true
-
-[tool.poetry.group.dev.dependencies]
-mkdocs = "^1.4.0"
-mkdocs-material = "^8.5.3"
-mkdocstrings-python = "^0.7.1"
-mkdocs-jupyter = "^0.22.0"
-pytest = "^7.1.3"
-ipykernel = "^6.16.0"
-pycodestyle = "^2.9.1"
-pytest-cov = "^3.0.0"
-pytest-sugar = "^0.9.5"
-black = "^23.3.0"
-ipdb = "^0.13.13"
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.5",
+    "mkdocs>=1.6.1",
+    "mkdocs-jupyter>=0.25.1",
+    "mkdocs-material>=9.6.14",
+    "mkdocstrings-python>=1.16.11",
+    "pytest>=8.3.5",
+    "pytest-sugar>=1.0.0",
+    "ruff>=0.11.11",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"

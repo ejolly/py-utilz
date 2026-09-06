@@ -206,16 +206,12 @@ The primary way to think about the difference between `spread` and `alongwith` i
 
 `utilz` offers multiple functions that operate on *iterables* which all begin with `map`. Here's a quick rundown:
 
-- `map`: apply a function to each element 
-- `mapcat`: concatenate the results of a `map` into a squeezed array or dataframe
-- `mapcompose`: apply multiple functions in sequence to each element, passing the previous evaluation into the next function 
-- `mapmany`: apply multiple functions to each element, but keep their evaluations independent
-- `mapacross`: apply one function to each element in matching pairs
+- `map`: apply a function to each element
 
 Here are some examples:
 
 ```python
-from utilz import mapcompose, curry, mapcompose
+from utilz import map, compose, curry
 import seaborn as sns
 
 pipe(
@@ -225,10 +221,10 @@ pipe(
         gamma_filter,
         band_filter
         ),
-    mapcompose(
+    map(compose(
         lambda df: df.groupby('group').agg('mean'),
         lambda dfagg: dfagg.corr()
-    ) # Like running each transformed copy of data through a mini-pipe
+    )) # Like running each transformed copy of data through a mini-pipe
 )
 ```
 
@@ -244,11 +240,11 @@ graph TD
   band -->out
   end
 
-  out -->mapcompose{mapcompose}
+  out -->mapfunc{map compose}
   subgraph  
-  mapcompose-- sine-filtered-data -->aggfuncsine[groupby-mean]
-  mapcompose-- gamma-filtered-data -->aggfuncgamma[groupby-mean]
-  mapcompose-- band-filtered-data -->aggfuncband[groupby-mean]
+  mapfunc-- sine-filtered-data -->aggfuncsine[groupby-mean]
+  mapfunc-- gamma-filtered-data -->aggfuncgamma[groupby-mean]
+  mapfunc-- band-filtered-data -->aggfuncband[groupby-mean]
   aggfuncsine-->aggcorrsine[corr]
   aggfuncgamma-->aggcorrgamma[corr]
   aggfuncband-->aggcorrband[corr]
@@ -258,11 +254,92 @@ graph TD
   end
 ```
 
-Sometimes you don't want to run each element through a function, but rather run function element pairs. You can accomplish this with `mapacross`: 
+### Migration Notes
+
+#### mapcompose
+
+The `mapcompose` function has been removed to simplify the API. To apply multiple functions in sequence to each element, use `map` with `compose`:
 
 ```python
-from utilz import mapacross
+# Old way with mapcompose
+result = mapcompose(func1, func2, func3, items)
 
+# New way with map and compose
+result = map(compose(func1, func2, func3), items)
+
+# Note: utilz uses compose_left, so functions are applied left-to-right
+```
+
+#### mapmany
+
+The `mapmany` function has been removed to simplify the API. To apply multiple functions to each element and get independent results, use `map` with `juxt`:
+
+```python
+# Old way with mapmany
+result = mapmany(func1, func2, func3, items)
+
+# New way with map and juxt
+from toolz import juxt
+result = map(juxt(func1, func2, func3), items)
+
+# Both return a list of tuples where each tuple contains the results of all functions
+```
+
+#### mapacross
+
+The `mapacross` function has been removed to simplify the API. To apply multiple functions to multiple inputs in matched pairs, use explicit zip + map pattern:
+
+```python
+# Old way with mapacross
+result = mapacross(func1, func2, func3, [item1, item2, item3])
+
+# New way with zip and list comprehension
+funcs = [func1, func2, func3]
+result = [f(x) for x, f in zip([item1, item2, item3], funcs)]
+
+# Or using map
+result = list(map(lambda pair: pair[1](pair[0]), zip([item1, item2, item3], funcs)))
+```
+
+#### mapif
+
+The `mapif` function has been removed to simplify the API. To conditionally apply a function based on a predicate, use `map` with `iffy`:
+
+```python
+# Old way with mapif
+result = mapif(double, is_positive, numbers)
+
+# New way with map and iffy
+from utilz import iffy
+result = map(iffy(is_positive, double), numbers)
+
+# The iffy function returns a function that applies the transformation only when the predicate is true
+```
+
+#### mapwith
+
+The `mapwith` function has been removed to simplify the API. To map a two-argument function over an iterable with a fixed argument or two iterables, use standard Python patterns:
+
+```python
+# Old way with mapwith - fixed argument
+result = mapwith(add, 5, [1, 2, 3, 4])
+
+# New way - using closure
+fixed = 5
+result = map(lambda x: add(fixed, x), [1, 2, 3, 4])
+
+# Old way with mapwith - two iterables
+result = mapwith(divide, [2, 2, 2], [1, 2, 3])
+
+# New way - using zip
+result = list(map(lambda pair: divide(pair[0], pair[1]), zip([1, 2, 3], [2, 2, 2])))
+# Or more concisely
+result = [divide(x, y) for x, y in zip([1, 2, 3], [2, 2, 2])]
+```
+
+Sometimes you don't want to run each element through a function, but rather run function element pairs: 
+
+```python
 pipe(
     data,
     spread(
@@ -270,11 +347,12 @@ pipe(
         gamma_filter,
         band_filter
         ),
-    mapacross(
-        lambda df: df.groupby('group').agg('mean')
-        lambda df: df.groupby('group').agg('median')
+    # Apply different aggregation to each filtered dataset
+    lambda dfs: [f(df) for df, f in zip(dfs, [
+        lambda df: df.groupby('group').agg('mean'),
+        lambda df: df.groupby('group').agg('median'),
         lambda df: df.groupby('group').agg('mode')
-    ) # expect 3 functions as there are 3 transformed copies of data
+    ])]
 )
 ```
 
@@ -291,11 +369,11 @@ graph TD
   band -->out
   end
 
-  out -->mapacross{mapacross}
+  out -->zip{zip + map}
   subgraph  
-  mapacross-- sine-filtered-data -->aggmean[aggmean]
-  mapacross-- gamma-filtered-data -->aggmedian[aggmedian]
-  mapacross-- band-filtered-data -->aggmode[aggmode]
+  zip-- sine-filtered-data -->aggmean[aggmean]
+  zip-- gamma-filtered-data -->aggmedian[aggmedian]
+  zip-- band-filtered-data -->aggmode[aggmode]
   aggmean --> dfout[("(sine agg-mean, gamma agg-median, band agg-mode)")]
   aggmedian -->dfout
   aggmode -->dfout
@@ -409,9 +487,7 @@ pipe(
         gamma_filter,
         band_filter
         ),
-    mapcompose(
-        lambda df: df.groupby('group').agg('mean'),
-    ),
+    map(lambda df: df.groupby('group').agg('mean')),
     # Don't need to gather; concat wants a lists/tuple
     lambda tup: pd.concat(tup)
         .assign(filter=lambda df: np.repeat(['sine', 'gamma', 'band'] * df.shape[0] / 3)
@@ -559,14 +635,14 @@ by_sum, by_mean = pipe(
     ), # many runs 2 independent copies of our grouped data through each function so we get a tuple with 2 elements back
     ..., # this tuple is what gets output and unpacked into by_sum and by_mean
     map(_.heatmap(cmap="Blues")), # but we can keep going and generate a heatmap for the summed and averaged dataframes!
-    mapacross(
+    lambda plots: [f(p) for p, f in zip(plots, [
         tweak(title="Number of Participants", xlabel=None, ylabel=None),
         tweak(title="Proportion of Participants", xlabel=None, ylabel=None),
-    ), # we can operate on each plot in parallel and give them different titles
-    mapacross(
+    ])], # we can operate on each plot in parallel and give them different titles
+    lambda plots: [f(p) for p, f in zip(plots, [
         savefig(path=FIG_DIR, name="char_by_cue_sum"),
         savefig(path=FIG_DIR, name="char_by_cue_mean"),
-    ), # and finally save them to different files without affecting the output at all!
+    ])], # and finally save them to different files without affecting the output at all!
 )
 
 ```

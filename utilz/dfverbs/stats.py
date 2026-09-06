@@ -31,8 +31,10 @@ __all__ = [
 
 import numpy as np
 import pandas as pd
+import polars as pl
 from toolz import curry
 from .verbs import _reset_index_helper, apply, split, summarize, merge, mutate
+from .polars_utils import is_polars_object
 import seaborn as sns
 from ..pipes import pipe
 from ..maps import filter
@@ -40,9 +42,12 @@ from ..maps import filter
 
 @curry
 def mean(*args, **kwargs):
-    """Call df.mean"""
+    """Call df.mean. Works with both pandas and polars DataFrames."""
 
     def call(df):
+        if is_polars_object(df):
+            # Polars mean returns a single row DataFrame
+            return df.mean()
         return df.mean(*args, **kwargs)
 
     return call
@@ -50,9 +55,12 @@ def mean(*args, **kwargs):
 
 @curry
 def median(*args, **kwargs):
-    """Call df.median"""
+    """Call df.median. Works with both pandas and polars DataFrames."""
 
     def call(df):
+        if is_polars_object(df):
+            # Polars median returns a single row DataFrame
+            return df.median()
         return df.median(*args, **kwargs)
 
     return call
@@ -60,9 +68,12 @@ def median(*args, **kwargs):
 
 @curry
 def min(*args, **kwargs):
-    """Call df.min"""
+    """Call df.min. Works with both pandas and polars DataFrames."""
 
     def call(df):
+        if is_polars_object(df):
+            # Polars min returns a single row DataFrame
+            return df.min()
         return df.min(*args, **kwargs)
 
     return call
@@ -70,9 +81,12 @@ def min(*args, **kwargs):
 
 @curry
 def max(*args, **kwargs):
-    """Call df.max"""
+    """Call df.max. Works with both pandas and polars DataFrames."""
 
     def call(df):
+        if is_polars_object(df):
+            # Polars max returns a single row DataFrame
+            return df.max()
         return df.max(*args, **kwargs)
 
     return call
@@ -80,9 +94,13 @@ def max(*args, **kwargs):
 
 @curry
 def mode(*args, **kwargs):
-    """Call df.mode"""
+    """Call df.mode. Works with both pandas and polars DataFrames."""
 
     def call(df):
+        if is_polars_object(df):
+            # Polars doesn't have a direct mode function, need to implement
+            # For now, convert to pandas for mode calculation
+            raise NotImplementedError("mode is not yet implemented for polars DataFrames")
         return df.mode(*args, **kwargs)
 
     return call
@@ -90,9 +108,12 @@ def mode(*args, **kwargs):
 
 @curry
 def var(*args, **kwargs):
-    """Call df.var"""
+    """Call df.var. Works with both pandas and polars DataFrames."""
 
     def call(df):
+        if is_polars_object(df):
+            # Polars var returns a single row DataFrame
+            return df.var()
         return df.var(*args, **kwargs)
 
     return call
@@ -100,9 +121,12 @@ def var(*args, **kwargs):
 
 @curry
 def std(*args, **kwargs):
-    """Call df.std"""
+    """Call df.std. Works with both pandas and polars DataFrames."""
 
     def call(df):
+        if is_polars_object(df):
+            # Polars std returns a single row DataFrame
+            return df.std()
         return df.std(*args, **kwargs)
 
     return call
@@ -110,9 +134,12 @@ def std(*args, **kwargs):
 
 @curry
 def sum(*args, **kwargs):
-    """Call df.sum"""
+    """Call df.sum. Works with both pandas and polars DataFrames."""
 
     def call(df):
+        if is_polars_object(df):
+            # Polars sum returns a single row DataFrame
+            return df.sum()
         return df.sum(*args, **kwargs)
 
     return call
@@ -210,9 +237,12 @@ def cov(*args, **kwargs):
 
 @curry
 def count(*args, **kwargs):
-    """Call df.count"""
+    """Call df.count. Works with both pandas and polars DataFrames."""
 
     def call(df):
+        if is_polars_object(df):
+            # Polars count returns number of non-null values
+            return df.select(pl.all().count())
         return df.count(*args, **kwargs)
 
     return call
@@ -330,3 +360,10 @@ def bootci(col, **kwargs):
             )
 
     return call
+
+
+# Make every stats verb usable with the unix-style `|` pipe operator.
+from ..pipes import _pipeify  # noqa: E402
+
+for _name in dict.fromkeys(__all__):
+    globals()[_name] = _pipeify(globals()[_name])

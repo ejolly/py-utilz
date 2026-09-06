@@ -1,12 +1,28 @@
 """
-Functional tools intended to be used with `pipe()`. Everything in this module except for
-`pipe` itself, is *curried* so can be called without a full set of args.
+Functional tools for building data-transformation pipelines. There are two equivalent
+ways to chain transformations:
+
+```python
+# Explicit pipe() call
+pipe(data, f1, f2, f3)
+
+# Unix-style | operator (pipe() is optional)
+data | f1 | f2 | f3
+```
+
+Every helper in this module returns a `Pipe`: a thin wrapper around a one-argument
+function that is both directly callable (so it works inside `pipe()`) and supports the
+`|` operator via `__ror__` (so `data | helper(...)` runs `helper(...)(data)`). To make
+your *own* function `|`-able, wrap it with `pipeable` — either as a decorator
+(`@pipeable`) or inline (`data | pipeable(lambda x: x + 1)`).
 
 ## Overview
 
-| function (s)   | description  | 
+| function (s)   | description  |
 |---|---|
 | `pipe`  | run an input through a sequence of functions  |
+| `pipeable`  | wrap a plain one-arg function/lambda so it supports the `\\|` operator |
+| `Pipe`  | wrapper class that powers the `\\|` operator (returned by every helper) |
 | `append`/`alongwith`  | apply a function and return `(input, result)` as a `tuple` |
 | `fork`  | call `input.copy` if possible otheriwse create `n` duplicate `deepcopy`'s of `input` |
 | `spread`  | acts like `fork` if given an `int` otherwise acts like `many` |
@@ -17,6 +33,8 @@ Functional tools intended to be used with `pipe()`. Everything in this module ex
 """
 __all__ = [
     "pipe",
+    "Pipe",
+    "pipeable",
     "append",
     "alongwith",
     "fork",
@@ -28,7 +46,8 @@ __all__ = [
 
 import numpy as np
 import pandas as pd
-from typing import Union, Any
+from functools import update_wrapper, wraps
+from typing import Union, Any, Callable
 from collections.abc import Iterable
 from inspect import signature
 from toolz import curry, juxt
@@ -170,6 +189,107 @@ def pipe(
         return out
 
 
+class Pipe:
+    """Wrapper around a one-argument function that powers the `|` pipe operator.
+
+    A `Pipe` is both directly callable and `|`-able, so the same object works in both
+    pipelining styles:
+
+        result = data | step      # runs step(data) via __ror__
+        result = pipe(data, step)  # runs step(data) by calling it
+
+    `Pipe`s also compose with each other point-free, letting you build a reusable
+    pipeline and apply it later:
+
+        cleanup = pipeable(strip) | pipeable(dropna)  # a new Pipe
+        data | cleanup                                 # dropna(strip(data))
+
+    The `|` operator relies on Python falling back to `Pipe.__ror__` when the left
+    operand's own `__or__` returns `NotImplemented`. This works for plain Python
+    objects (lists, dicts, tuples, ints) and `polars` DataFrames, but **not** for
+    `numpy` arrays or `pandas` objects, whose `|` broadcasts element-wise. Start
+    those chains with `pipe(...)` instead.
+
+    Args:
+        func (Callable): a one-argument function applied to the piped data.
+    """
+
+    def __init__(self, func: Callable):
+        if not callable(func):
+            raise TypeError(f"Pipe expects a callable, but got {type(func).__name__}")
+        self.func = func
+        # Preserve the wrapped function's name/docstring for nicer reprs and help()
+        update_wrapper(self, func)
+
+    def __call__(self, data: Any) -> Any:
+        """Apply the wrapped function directly, e.g. inside `pipe()`."""
+        return self.func(data)
+
+    def __ror__(self, data: Any) -> Any:
+        """Enable `data | self` syntax, equivalent to `self.func(data)`."""
+        return self.func(data)
+
+    def __or__(self, other: Callable) -> "Pipe":
+        """Compose two steps point-free: `self | other` -> `other(self(x))`."""
+        if callable(other):
+            this, nxt = self.func, other
+            return Pipe(lambda data: nxt(this(data)))
+        return NotImplemented
+
+    def __repr__(self) -> str:
+        name = getattr(self.func, "__name__", repr(self.func))
+        return f"Pipe({name})"
+
+
+def _pipeify(verb: Callable) -> Callable:
+    """Make a *verb factory* `|`-able by wrapping the transform it returns in a `Pipe`.
+
+    Verbs in `utilz.dfverbs` are factories: calling `mutate(c="a + b")` returns a
+    one-argument function `call(df)` that does the work. This wrapper turns that
+    returned function into a `Pipe`, so `df | mutate(...)` works while
+    `pipe(df, mutate(...))` keeps working unchanged.
+
+    Verbs that return data directly (e.g. `read_csv`, `concat`) return a
+    non-callable, which is passed through untouched.
+
+    Args:
+        verb (Callable): a verb factory to make pipe-operator aware.
+
+    Returns:
+        Callable: a wrapper that returns a `Pipe` when the verb returns a transform.
+    """
+
+    @wraps(verb)
+    def wrapper(*args, **kwargs):
+        result = verb(*args, **kwargs)
+        if callable(result) and not isinstance(result, Pipe):
+            return Pipe(result)
+        return result
+
+    return wrapper
+
+
+def pipeable(func: Callable) -> Pipe:
+    """Wrap a plain one-argument function so it supports the `|` pipe operator.
+
+    Use as a decorator on your own pipeline steps, or inline to drop a bare lambda
+    into a chain:
+
+        @pipeable
+        def clean(df):
+            return df.dropna()
+
+        data | clean | pipeable(lambda x: x * 2)
+
+    Args:
+        func (Callable): a one-argument function to make `|`-able.
+
+    Returns:
+        Pipe: a callable wrapper that also supports `data | wrapper`.
+    """
+    return Pipe(func)
+
+
 @curry
 def pop(idx):
     """Given a tuple, removes an element located at an `idx`. Useful for pruning down a
@@ -189,7 +309,7 @@ def pop(idx):
                     f"expected a tuple of input data by received a single {type(data)}"
                 )
 
-        return remove
+        return Pipe(remove)
     else:
         raise TypeError("pop requires an integer index to of the ouput to drop")
 
@@ -205,29 +325,30 @@ def fork(n):
             return tuple([data.copy()] * n)
         return tuple([deepcopy(data)] * n)
 
-    return duplicate
+    return Pipe(duplicate)
 
 
-@curry
-def gather(func, data):
+def gather(func):
     """Wraps a function that takes multiple inputs to make the output of a previous
     function with multiple outputs easier to work with. Useful after a call to `append`,
     `spread`, `across` or `mapmany` e.g.
 
         gather(lambda first_name, last_name: first_name + last_name)
     """
-    if not (isinstance(data, (list, tuple)) and len(data) > 1):
-        raise TypeError(
-            f"gather expects the previous step's output to be a list/tuple of length > 1 but received a {type(data)}"
-        )
 
-    return func(*data)
+    def call(data):
+        if not (isinstance(data, (list, tuple)) and len(data) > 1):
+            raise TypeError(
+                f"gather expects the previous step's output to be a list/tuple of length > 1 but received a {type(data)}"
+            )
+        return func(*data)
+
+    return Pipe(call)
 
 
-@curry
-def unpack(func, data):
+def unpack(func):
     """Alias for `gather`"""
-    return gather(func, data)
+    return gather(func)
 
 
 @curry
@@ -245,17 +366,17 @@ def spread(*args):
                     return tuple([data.copy()] * args[0])
                 return tuple([deepcopy(data)] * args[0])
 
-            return duplicate
+            return Pipe(duplicate)
         else:
             raise ValueError(
-                f"only 1 function passed to spread. Use do() instead or simply call the function directly in the pipe"
+                "only 1 function passed to spread. Use do() instead or simply call the function directly in the pipe"
             )
 
     elif all(callable(a) for a in args):
         together = juxt(*args)
-        return together
+        return Pipe(together)
     else:
-        raise TypeError(f"spread expected an integer or 1+ functions")
+        raise TypeError("spread expected an integer or 1+ functions")
 
 
 @curry
@@ -280,7 +401,7 @@ def alongwith(func):
                 return (data, out)
         return (data, func)
 
-    return _alongwith
+    return Pipe(_alongwith)
 
 
 @curry

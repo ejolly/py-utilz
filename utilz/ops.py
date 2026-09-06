@@ -42,7 +42,7 @@ def many(funcs, data):
 
     if isinstance(data, (list, tuple)):
         raise TypeError(
-            f"Expected a single input but receive {len(data)}. Use mapmany() to operate on an iterable"
+            f"Expected a single input but receive {len(data)}. Use map(juxt(f1, f2), items) to operate on an iterable"
         )
     if not isinstance(funcs, (list, tuple)) or len(funcs) <= 1:
         raise ValueError(

@@ -10,8 +10,8 @@ import pickle
 import json
 from warnings import warn
 from .shorts import sort
-from .maps import mapcat, filter
-from toolz import pipe
+from .maps import map, filter
+from .pipes import pipe
 from fnmatch import fnmatchcase
 
 
@@ -159,7 +159,7 @@ def crawl(
         ignore = [ignore]
     ignore_list = [".git"] if ignore_git else []
     if respect_gitignore:
-        ignore_list += mapcat(lambda s: s.strip("\n"), load(".gitignore"))
+        ignore_list += pipe(load(".gitignore"), map(lambda s: s.strip("\n")), list)
 
     ignore_list += ignore
     # Split glob patterns and regular file/folder name matches

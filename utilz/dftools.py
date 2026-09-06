@@ -20,7 +20,8 @@ from functools import wraps
 from typing import Union, List
 from pandas.api.extensions import register_dataframe_accessor
 from pandas.core.groupby.groupby import GroupBy
-from utilz import filter, mapcat
+from .maps import filter, map
+from .pipes import pipe
 
 
 # Register a function as a method attached to the Pandas DataFrame. Note: credit for
@@ -160,7 +161,7 @@ def select(df, *args, **kwargs):
     drop, keep = filter("-", col_list, invert="split", assert_notempty=False)
     # Remove the prefix
     if len(drop):
-        drop = mapcat(lambda col: col[1:], drop)
+        drop = pipe(drop, map(lambda col: col[1:]), list)
     if len(keep):
         return df.drop(columns=drop).filter(items=keep, axis="columns")
     return df.drop(columns=drop)
@@ -187,7 +188,7 @@ def _select(dfg, *args):
 
     # Remove the prefix
     if len(drop):
-        drop = mapcat(lambda col: col[1:], drop)
+        drop = pipe(drop, map(lambda col: col[1:]), list)
 
     # Add the grouping cols to the drop list
     drop += dfg.grouper.names
